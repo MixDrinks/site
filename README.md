@@ -1,69 +1,56 @@
-# MixDrinksSite
+## Getting Started
 
-## Build Setup
+We provide a sample app using Nuxt.js that you can deploy on App Platform. These steps will get this sample application running for you using App Platform.
 
-```bash
-# install dependencies
-$ npm install
+**Note: Following these steps may result in charges for the use of DigitalOcean services.**
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+### Requirements
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+* You need a DigitalOcean account. If you don't already have one, you can sign up at https://cloud.digitalocean.com/registrations/new.
 
-# generate static project
-$ npm run generate
-```
+## Deploying the App
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+Click this button to deploy the app to the DigitalOcean App Platform. If you are not logged in, you will be prompted to log in with your DigitalOcean account.
 
-## Special Directories
+[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/digitalocean/sample-nuxtjs/tree/main)
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+Using this button disables the ability to automatically re-deploy your app when pushing to a branch or tag in your repository as you are using this repo directly.
 
-### `assets`
+If you want to automatically re-deploy your app, [fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) the GitHub repository to your account so that you have a copy of it stored to the cloud. Click the **Fork** button in the GitHub repository and follow the on-screen instructions.
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+After forking the repo, you should now be viewing this README in your own GitHub org (e.g. `https://github.com/<your-org>/sample-nuxtjs`). To deploy the new repo, visit https://cloud.digitalocean.com/apps and click **Create App**. Then, click **GitHub**, select the repository you created and select the `main` branch. App Platform will inspect the code, automatically detect the kind of component to create, and use the correct buildpack to create and deploy a container.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+After clicking the **Deploy to DigitalOcean** button or completing the instructions above to fork the repo, follow these steps:
 
-### `components`
+1. Configure the app such as specifying HTTP routes, environment variables or adding a database.
+1. Provide a name for your app and select which region you want to deploy your app to and click **Next**. The closest region to you should be selected by default. All App Platform apps are routed through a global CDN. So this will not affect your app performance, unless it needs to talk to external services.
+1. On the following screen, leave all the fields as they are and click **Next**.
+1. Confirm your **Plan** settings and how many containers you want to launch and click **Launch Basic/Pro App**.
+1. You should see a "Building..." progress indicator. You can click **View Logs** to see more details of the build.
+1. It can take a few minutes for the build to finish, but you can follow the progress in the **Deployments** tab.
+1. Once the build completes successfully, click the **Live App** link in the header and you should see your running application in a new tab, displaying the home page.
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+### Making Changes to Your App
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+If you followed the steps to fork the repo and used your own copy when deploying the app, you can push changes to your fork and see App Platform automatically re-deploy the update to your app. During these automatic deployments, your application will never pause or stop serving request because App Platform offers zero-downtime deployments.
 
-### `layouts`
+Here's an example code change you can make for this app:
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+1. Edit `pages/index.vue` and replace "Welcome to Nuxt.js" with a different greeting
+1. Commit the change to the `main` branch. Normally it's a better practice to create a new branch for your change and then merge that branch to `main` after review, but for this demo you can commit to the `main` branch directly.
+1. Visit https://cloud.digitalocean.com/apps and navigate to your sample app.
+1. You should see a "Building..." progress indicator, just like when you first created the app.
+1. Once the build completes successfully, click the **Live App** link in the header and you should see your updated application running. You may need to force refresh the page in your browser (e.g. using **Shift+Reload**).
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+### Learn More
 
+You can learn more about the App Platform and how to manage and update your application at https://www.digitalocean.com/docs/app-platform/.
 
-### `pages`
+## Deleting the App
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+When you no longer need this sample application running live, you can delete it by following these steps:
+1. Visit the Apps control panel at https://cloud.digitalocean.com/apps.
+2. Navigate to the sample app.
+3. In the **Settings** tab, click **Destroy**.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+**Note: If you do not delete your app, charges for using DigitalOcean services will continue to accrue.**
