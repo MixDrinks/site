@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "cross-env NODE_ENV=development nuxt",
     "build": "rm -r _static 2>/dev/null; nuxt build && nuxt export && mv dist _static && (rm _static/README.md || true)",
     "start": "serve -s _static -l tcp://0.0.0.0:${PORT:-8080} -n",
     "export": "nuxt export",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/style-resources": "1.2.1",
+    "cross-env": "^7.0.3",
     "node-sass": "^4.13.1",
     "nuxt": "^2.15.8",
     "sass-loader": "^10.1.1",

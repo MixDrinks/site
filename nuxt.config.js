@@ -1,9 +1,18 @@
+import { MasterKeys } from "./config";
+const isDev = process.env.NODE_ENV ? "dev" : "prod";
+
 export default {
+  env: {
+    baseUrl: MasterKeys[isDev].baseUrl,
+    api: MasterKeys[isDev].api,
+    imagesUrl: MasterKeys[isDev].imagesUrl,
+  },
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: "universal",
+
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -53,6 +62,11 @@ export default {
     scss: [], // alternative: scss
     less: [],
     stylus: [],
+  },
+  axios: {
+    withCredentials: true,
+    credentials: true,
+    // See https://github.com/nuxt-community/axios-module#options
   },
   /*
    ** Build configuration
