@@ -11,5 +11,5 @@ export const api = $axios.create({
 });
 
 export const getСocktails = () => {
-  return api.get(`/cocktails?query`);
+  return api.get(`/cocktails/filter`);
 };

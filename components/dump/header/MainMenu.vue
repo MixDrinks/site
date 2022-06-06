@@ -14,8 +14,8 @@ export default {
   data: () => ({
     menuList: [
       {
-        title: "firstItem",
-        url: "/",
+        title: "cocktails",
+        url: "/cocktails",
         id: 1,
       },
       {

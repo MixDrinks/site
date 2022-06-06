@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="main">
     <Header />
-    <Nuxt />
+    <Nuxt class="main__wrapper" />
     <Footer />
   </div>
 </template>
@@ -14,4 +14,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  &__wrapper {
+    flex: 1 1 auto;
+  }
+}
+</style>
