@@ -1,9 +1,9 @@
 <template>
-  <div class="">
+  <main class="wrapper">
     <div class="" v-for="cocktail in cocktails" :key="cocktail.id">
       {{ cocktail.name }}
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -24,4 +24,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.wrapper {
+  @include defaultWrapper;
+}
+</style>

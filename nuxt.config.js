@@ -36,10 +36,14 @@ export default {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
+  router: {
+    prefetchLinks: false,
+  },
+  loading: { color: "#fc6d1d" },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ["~~assets/css/index.css"],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -60,7 +64,7 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
   styleResources: {
     // your settings here
-    scss: [], // alternative: scss
+    scss: ["~~/assets/scss/variables.scss", "~~/assets/scss/mixins.scss"], // alternative: scss
     less: [],
     stylus: [],
   },
