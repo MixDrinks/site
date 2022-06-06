@@ -1,12 +1,11 @@
 <template>
   <main class="wrapper">
-    <div class="" v-for="cocktail in cocktails" :key="cocktail.id">
-      {{ cocktail.name }}
-    </div>
+    <HomePage class="home-page" :cocktails="cocktails" />
   </main>
 </template>
 
 <script>
+import HomePage from "~~/components/home/HomePage.vue";
 import { getСocktails } from "~~/api";
 export default {
   async asyncData({ error }) {
@@ -20,12 +19,16 @@ export default {
       cocktails: cocktails.data,
     };
   },
-  name: "HomePage",
+  name: "Home",
+  components: { HomePage },
 };
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
+}
+.home-page {
+  margin: $halfMargin 0;
 }
 </style>

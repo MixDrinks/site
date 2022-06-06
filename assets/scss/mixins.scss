@@ -7,3 +7,12 @@
   width: 100%;
   overflow: hidden;
 }
+@mixin fontSize24 {
+  font-size: 24px;
+  line-height: 32px;
+}
+@mixin fontSize24B {
+  @include fontSize24;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+}
