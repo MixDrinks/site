@@ -46,6 +46,7 @@ export default {
 }
 .header {
   &__wrapper {
+    z-index: 100;
     position: fixed;
     left: 0;
     top: 0;

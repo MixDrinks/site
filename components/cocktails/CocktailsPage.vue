@@ -1,13 +1,23 @@
 <template>
   <div class="сocktails">
+    <div class="сocktails__footer">
+      <Pagination
+        v-if="limit < totalItems"
+        class="сocktails__pagination"
+        :totalItems="totalItems"
+        :limit="limit"
+        :itemsCount="10"
+        @updateCocktails="updateCocktails"
+      />
+    </div>
     <div class="сocktails__header">
       <SearchField :list="cocktails" />
     </div>
-    <div class="сocktails__body">
-      <FilterList :filterList="tags" />
-    </div>
-
-    <!-- <div class="" v-for="cocktail in cocktails" :key="cocktail.id">
+    <div
+      class=""
+      v-for="cocktail in cocktailsFull.cocktails"
+      :key="cocktail.id"
+    >
       {{ cocktail.name }}
       <picture>
         <source
@@ -19,15 +29,19 @@
         />
         <img class="img" width="960" height="600" loading="lazy" />
       </picture>
-    </div> -->
+    </div>
+    <div class="сocktails__body">
+      <FilterList :filterList="tags" />
+    </div>
   </div>
 </template>
 
 <script>
-import SearchField from "~~/components/dump/UI/UX/SearchField.vue";
+import SearchField from "~~/components/dump/UI/SearchField.vue";
 import FilterList from "~~/components/cocktails/FilterList.vue";
+import Pagination from "~~/components/dump/Pagination.vue";
 export default {
-  components: { SearchField, FilterList },
+  components: { SearchField, FilterList, Pagination },
   name: "CocktailsPage",
   props: {
     cocktails: {
@@ -37,6 +51,26 @@ export default {
     tags: {
       type: Array,
       required: true,
+    },
+    cocktailsFull: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    itemsCount() {
+      return this.cocktailsFull.cocktails.length;
+    },
+    totalItems() {
+      return this.cocktailsFull.totalCount;
+    },
+    limit() {
+      return 10;
+    },
+  },
+  methods: {
+    updateCocktails(payload) {
+      this.$emit("updateCocktails", payload);
     },
   },
 };

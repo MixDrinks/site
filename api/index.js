@@ -12,8 +12,8 @@ export const api = $axios.create({
   credentials: true,
 });
 
-export const getСocktails = () => {
-  return api.get(`/cocktails/filter`);
+export const getСocktails = (queryParams) => {
+  return api.get(`/cocktails/filter${queryParams}`);
 };
 export const getСocktailsShort = () => {
   return api.get(`/cocktails/all`);

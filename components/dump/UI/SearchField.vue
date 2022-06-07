@@ -115,6 +115,8 @@ export default {
     }
   }
   &__result {
+    z-index: 10;
+
     position: absolute;
     top: 100%;
     width: 100%;
