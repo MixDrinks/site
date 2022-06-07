@@ -15,3 +15,9 @@ export const api = $axios.create({
 export const getСocktails = () => {
   return api.get(`/cocktails/filter`);
 };
+export const getСocktailsShort = () => {
+  return api.get(`/cocktails/all`);
+};
+export const getTags = () => {
+  return api.get(`/tags/all`);
+};

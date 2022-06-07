@@ -1,6 +1,6 @@
 <template>
   <main class="wrapper">
-    <HomePage class="home-page" />
+    <HomePage />
   </main>
 </template>
 
@@ -15,8 +15,5 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
-}
-.home-page {
-  margin: $halfMargin 0;
 }
 </style>

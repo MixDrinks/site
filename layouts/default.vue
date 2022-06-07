@@ -21,6 +21,8 @@ export default {
   min-height: 100vh;
   &__wrapper {
     flex: 1 1 auto;
+    margin-top: $shortMargin;
+    margin-bottom: $shortMargin;
   }
 }
 </style>

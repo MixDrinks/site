@@ -15,6 +15,11 @@
   font-size: 18px;
   line-height: 26px;
 }
+@mixin fontSize18M {
+  @include fontSize18;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
 @mixin fontSize18B {
   @include fontSize18;
   font-weight: bold;

@@ -14,7 +14,7 @@ export default {
   data: () => ({
     menuList: [
       {
-        title: "cocktails",
+        title: "Коктелі",
         url: "/cocktails",
         id: 1,
       },
