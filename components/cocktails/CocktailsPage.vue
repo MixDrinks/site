@@ -1,7 +1,9 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <!-- <SearchField :list="cocktails" /> -->
+      <ClientOnly>
+        <SearchField :list="cocktails" />
+      </ClientOnly>
     </div>
 
     <div class="сocktails__body">
