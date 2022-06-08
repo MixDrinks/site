@@ -10,9 +10,9 @@
         @updateCocktails="updateCocktails"
         :filterList="tags"
       />
-      <!-- <div class="cocktails__list">
+      <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
-      </div> -->
+      </div>
     </div>
     <!-- <div class="cocktails__footer">
       <Pagination
