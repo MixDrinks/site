@@ -1,27 +1,17 @@
 import { MasterKeys } from "./config";
 const isDev = process.env.NODE_ENV ? "dev" : "prod";
 
-export default {
+module.exports = {
   env: {
     baseUrl: MasterKeys[isDev].baseUrl,
     api: MasterKeys[isDev].api,
     imagesUrl: MasterKeys[isDev].imagesUrl,
   },
-  /*
-   ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
-   */
+
   mode: "universal",
 
-  /*
-   ** Nuxt target
-   ** See https://nuxtjs.org/api/configuration-target
-   */
   target: "server",
-  /*
-   ** Headers of the page
-   ** See https://nuxtjs.org/api/configuration-head
-   */
+
   head: {
     htmlAttrs: {
       lang: `uk`,
@@ -43,30 +33,17 @@ export default {
     prefetchLinks: false,
   },
   loading: { color: "#fc6d1d" },
-  /*
-   ** Global CSS
-   */
+
   css: ["~~assets/css/index.css"],
-  /*
-   ** Plugins to load before mounting the App
-   ** https://nuxtjs.org/guide/plugins
-   */
+
   plugins: [],
-  /*
-   ** Auto import components
-   ** See https://nuxtjs.org/api/configuration-components
-   */
+
   components: true,
-  /*
-   ** Nuxt.js dev-modules
-   */
+
   buildModules: [],
-  /*
-   ** Nuxt.js modules
-   */
+
   modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
   styleResources: {
-    // your settings here
     scss: ["~~/assets/scss/variables.scss", "~~/assets/scss/mixins.scss"], // alternative: scss
     less: [],
     stylus: [],
@@ -74,13 +51,40 @@ export default {
   axios: {
     withCredentials: true,
     credentials: true,
-    // See https://github.com/nuxt-community/axios-module#options
   },
-  /*
-   ** Build configuration
-   ** See https://nuxtjs.org/api/configuration-build/
-   */
+
   build: {
+    optimizeCss: true,
+
+    splitChunks: {
+      layouts: true,
+      pages: true,
+      commons: true,
+    },
+    optimization: {
+      minimize: isDev === "prod",
+    },
+    ...(isDev === "prod" && {
+      html: {
+        minify: {
+          collapseBooleanAttributes: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          processConditionalComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          trimCustomFragments: true,
+          useShortDoctype: true,
+        },
+      },
+    }),
+    ...(isDev === "prod" && {
+      extractCSS: {
+        ignoreOrder: true,
+      },
+    }),
+
     extend(config, ctx) {
       config.resolve = config.resolve || {};
       config.resolve.symlinks = false;

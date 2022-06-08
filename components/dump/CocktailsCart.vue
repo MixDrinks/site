@@ -45,8 +45,8 @@ export default {
   border-radius: 8px;
   &__img {
     .img {
-      max-width: 258;
-      height: 258;
+      max-width: 258px;
+      height: 258px;
       object-fit: cover;
       border-radius: 50%;
     }
