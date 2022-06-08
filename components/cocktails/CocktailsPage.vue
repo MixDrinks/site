@@ -5,29 +5,9 @@
     </div>
 
     <div class="сocktails__body">
-      <FilterList :filterList="tags" />
-      <div class="сocktails__list list">
-        <div
-          class="list__item"
-          v-for="cocktail in cocktailsFull.cocktails"
-          :key="cocktail.id"
-        >
-          <div class="list__item">
-            {{ cocktail.name }}
-          </div>
-          <div class="list__img">
-            <picture>
-              <source
-                v-for="img in cocktail.images"
-                :key="img.id"
-                :srcset="img.srcset"
-                :media="img.media"
-                :type="img.type"
-              />
-              <img class="img" width="960" height="600" loading="lazy" />
-            </picture>
-          </div>
-        </div>
+      <FilterList class="сocktails__filter" :filterList="tags" />
+      <div class="сocktails__list">
+        <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
     </div>
     <div class="сocktails__footer">
@@ -45,11 +25,12 @@
 </template>
 
 <script>
+import CocktailsList from "~~/components/dump/CocktailsList.vue";
 import SearchField from "~~/components/dump/UI/SearchField.vue";
 import FilterList from "~~/components/cocktails/FilterList.vue";
 import Pagination from "~~/components/dump/Pagination.vue";
 export default {
-  components: { SearchField, FilterList, Pagination },
+  components: { SearchField, FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
   props: {
     cocktails: {
@@ -91,6 +72,15 @@ export default {
 .сocktails {
   &__header {
     margin-bottom: $shortMargin;
+  }
+  &__body {
+    display: flex;
+  }
+  &__filter {
+    width: 250px;
+  }
+  &__list {
+    width: calc(100% - 250px);
   }
 }
 </style>
