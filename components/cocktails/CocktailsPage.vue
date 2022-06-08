@@ -11,7 +11,7 @@
         :filterList="tags"
       />
       <div class="сocktails__list">
-        <!-- <CocktailsList :cocktails="cocktailsFull.cocktails" /> -->
+        <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
     </div>
     <div class="сocktails__footer">
@@ -19,7 +19,7 @@
         class="сocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
         :limit="10"
-        :itemsCount="cocktails.length"
+        :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
       /> -->
     </div>
