@@ -4,14 +4,14 @@
       <FieldSearch :listSearch="cocktailsShort" />
     </div>
     <div class="cocktails__body">
-      <FilterList
+      <!-- <FilterList
         class="cocktails__filter"
         @updateCocktails="updateCocktails"
         :filterList="tags"
       />
       <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
-      </div>
+      </div> -->
     </div>
     <!-- <div class="cocktails__footer">
       <Pagination
