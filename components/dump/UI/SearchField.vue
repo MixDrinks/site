@@ -51,15 +51,15 @@ export default {
       }
     },
     searchValues(event) {
-      this.filteredList = [];
-      if (!!event.target.value) {
-        event.target.parentNode.parentNode.classList.add("filled");
-        this.filteredList = this.list.filter((listItem) => {
-          return listItem.name
-            .toLowerCase()
-            .includes(event.target.value.toLowerCase());
-        });
-      }
+      // this.filteredList = [];
+      // if (!!event.target.value) {
+      //   event.target.parentNode.parentNode.classList.add("filled");
+      //   this.filteredList = this.list.filter((listItem) => {
+      //     return listItem.name
+      //       .toLowerCase()
+      //       .includes(event.target.value.toLowerCase());
+      //   });
+      // }
     },
   },
 };
