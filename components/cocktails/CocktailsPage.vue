@@ -1,7 +1,7 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <SearchField />
+      <!-- <SearchField /> -->
     </div>
 
     <div class="сocktails__body">
