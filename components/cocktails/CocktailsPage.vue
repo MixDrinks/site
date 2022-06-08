@@ -1,5 +1,6 @@
 <template>
   <div class="cocktails">
+    test
     <!-- <div class="cocktails__header">
       <FieldSearch :listSearch="cocktailsShort" />
     </div> -->
@@ -13,7 +14,7 @@
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
     </div> -->
-    <div class="cocktails__footer">
+    <!-- <div class="cocktails__footer">
       <Pagination
         class="cocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
@@ -21,7 +22,7 @@
         :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
