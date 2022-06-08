@@ -1,7 +1,8 @@
 <template>
   <div class="cocktails">
-    <FieldSearch :listSearch="cocktailsShort" />
-    <div class="cocktails__header"></div>
+    <!-- <div class="cocktails__header">
+      <FieldSearch :listSearch="cocktailsShort" />
+    </div> -->
     <div class="cocktails__body">
       <FilterList
         class="cocktails__filter"
