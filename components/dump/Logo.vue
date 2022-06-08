@@ -19,7 +19,7 @@ export default {
   width: 120px;
   height: 48px;
 
-  background-color: $colorBlack;
+  background-color: $colorWhite;
   display: block;
 }
 </style>

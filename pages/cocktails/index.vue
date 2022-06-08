@@ -74,6 +74,39 @@ export default {
       // this.endLoading()
     },
   },
+  computed: {
+    canonical() {
+      return process.env.baseUrl + this.$nuxt.$route.path;
+    },
+  },
+  head() {
+    return {
+      title: "Категорія коктейлів",
+      link: [{ rel: "canonical", href: this.canonical }],
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: "Короткий опис категорія коктейлів",
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: "Категорія коктейлів",
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: "Короткий опис категорія коктейлів",
+        },
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: `${this.canonical}`,
+        },
+      ],
+    };
+  },
 };
 </script>
 

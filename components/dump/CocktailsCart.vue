@@ -9,7 +9,14 @@
           :media="img.media"
           :type="img.type"
         />
-        <img class="img" width="258" height="258" loading="lazy" />
+        <img
+          class="img"
+          width="258"
+          height="258"
+          loading="lazy"
+          alt=""
+          title=""
+        />
       </picture>
     </div>
     <div class="item__name">
