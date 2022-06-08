@@ -1,6 +1,6 @@
 <template>
   <div class="search-field">
-    <!-- <label class="search-field__wrapper">
+    <label class="search-field__wrapper">
       <div class="search-field__label label">Поиск</div>
       <input
         class="search-field__input input"
@@ -23,51 +23,51 @@
           </li>
         </ul>
       </div>
-    </transition> -->
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: "SearchField",
-  // data: () => ({
-  //   inputValue: "",
-  // }),
-  // computed: {
-  //   filteredList() {
-  //     let arr = [];
-  //     if (!!this.inputValue) {
-  //       arr = this.list.filter((listItem) => {
-  //         return listItem.name
-  //           .toLowerCase()
-  //           .includes(event.target.value.toLowerCase());
-  //       });
-  //     }
-  //     return arr;
-  //   },
-  // },
-  // props: {
-  //   list: {
-  //     type: Array,
-  //     required: true,
-  //   },
-  // },
-  // methods: {
-  //   inputClick(event) {
-  //     event.target.parentNode.parentNode.classList.add("focus");
-  //   },
-  //   inputBlur(event) {
-  //     event.target.parentNode.parentNode.classList.remove("focus");
-  //     if (!!!event.target.value) {
-  //       event.target.parentNode.parentNode.classList.remove("filled");
-  //     } else {
-  //       event.target.parentNode.parentNode.classList.add("filled");
-  //     }
-  //   },
-  //   searchValues(event) {
-  //     event.target.parentNode.parentNode.classList.add("filled");
-  //   },
-  // },
+  name: "FieldSearch",
+  data: () => ({
+    inputValue: "",
+  }),
+  computed: {
+    filteredList() {
+      let arr = [];
+      if (!!this.inputValue) {
+        arr = this.list.filter((listItem) => {
+          return listItem.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase());
+        });
+      }
+      return arr;
+    },
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true,
+    },
+  },
+  methods: {
+    inputClick(event) {
+      event.target.parentNode.parentNode.classList.add("focus");
+    },
+    inputBlur(event) {
+      event.target.parentNode.parentNode.classList.remove("focus");
+      if (!!!event.target.value) {
+        event.target.parentNode.parentNode.classList.remove("filled");
+      } else {
+        event.target.parentNode.parentNode.classList.add("filled");
+      }
+    },
+    searchValues(event) {
+      event.target.parentNode.parentNode.classList.add("filled");
+    },
+  },
 };
 </script>
 

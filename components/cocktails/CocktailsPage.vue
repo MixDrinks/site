@@ -1,7 +1,7 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <SearchField />
+      <FieldSearch :list="cocktails" />
     </div>
 
     <div class="сocktails__body">
@@ -28,11 +28,11 @@
 
 <script>
 import CocktailsList from "~~/components/dump/CocktailsList.vue";
-import SearchField from "~~/components/dump/UI/SearchField.vue";
+import FieldSearch from "~~/components/dump/UI/FieldSearch.vue";
 import FilterList from "~~/components/cocktails/FilterList.vue";
 import Pagination from "~~/components/dump/Pagination.vue";
 export default {
-  components: { SearchField, FilterList, Pagination, CocktailsList },
+  components: { FieldSearch, FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
   props: {
     cocktails: {
