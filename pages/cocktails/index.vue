@@ -11,7 +11,7 @@
 
 <script>
 import CocktailsPage from "~~/components/cocktails/CocktailsPage.vue";
-import { getСocktailsShort, getTags, getСocktails } from "~~/api";
+import { getCocktailsShort, getTags, getCocktails } from "~~/api";
 export default {
   async asyncData({ query, error }) {
     let queryParams = "?";
@@ -21,13 +21,13 @@ export default {
     for (let [key, value] of Object.entries(query)) {
       queryParams = `${queryParams}&${key}=${value}`;
     }
-    const cocktailsFullPromise = getСocktails(queryParams).catch(() => {
+    const cocktailsFullPromise = getCocktails(queryParams).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const cocktailsPromise = getСocktailsShort().catch(() => {
+    const cocktailsPromise = getCocktailsShort().catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
@@ -63,7 +63,7 @@ export default {
       for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
         queryParams = `${queryParams}&${key}=${value}`;
       }
-      const cocktails = await getСocktails(queryParams);
+      const cocktails = await getCocktails(queryParams);
       this.cocktailsFull = { ...cocktails.data };
       if (payload?.loadMore) {
         this.cocktailsFull.cocktails = [

@@ -12,10 +12,10 @@ export const api = $axios.create({
   credentials: true,
 });
 
-export const getСocktails = (queryParams) => {
+export const getCocktails = (queryParams) => {
   return api.get(`/cocktails/filter${queryParams}`);
 };
-export const getСocktailsShort = () => {
+export const getCocktailsShort = () => {
   return api.get(`/cocktails/all`);
 };
 export const getTags = () => {
