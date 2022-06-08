@@ -11,7 +11,7 @@
         :filterList="tags"
       />
       <div class="сocktails__list">
-        <CocktailsList :cocktails="cocktailsFull.cocktails" />
+        <!-- <CocktailsList :cocktails="cocktailsFull.cocktails" /> -->
       </div>
     </div>
     <div class="сocktails__footer">
