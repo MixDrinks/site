@@ -30,4 +30,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.item {
+  max-width: 300px;
+  &__img {
+    .img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  &__name {
+    @include fontSize18B;
+  }
+}
+</style>

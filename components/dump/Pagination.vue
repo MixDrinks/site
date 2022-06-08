@@ -1,6 +1,6 @@
 <template>
   <div class="pagination">
-    <!-- <TextBtn
+    <TextBtn
       class="pagination__load-more"
       v-show="nextPage"
       :isLink="true"
@@ -64,7 +64,7 @@
           Наступна сторінка
         </IconBtn>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 

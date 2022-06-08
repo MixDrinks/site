@@ -24,11 +24,12 @@ export default {
 .list {
   display: flex;
   flex-wrap: wrap;
-  margin-left: -10px;
-  margin-right: -10px;
+  margin-left: -25px;
+  margin-right: -25px;
   &__item {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
   }
 }
 </style>

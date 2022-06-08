@@ -11,15 +11,13 @@
       </div>
     </div>
     <div class="сocktails__footer">
-      <ClientOnly>
-        <Pagination
-          class="сocktails__pagination"
-          :totalItems="totalItems"
-          :limit="limit"
-          :itemsCount="10"
-          @updateCocktails="updateCocktails"
-        />
-      </ClientOnly>
+      <Pagination
+        class="сocktails__pagination"
+        :totalItems="totalItems"
+        :limit="limit"
+        :itemsCount="itemsCount"
+        @updateCocktails="updateCocktails"
+      />
     </div>
   </div>
 </template>
