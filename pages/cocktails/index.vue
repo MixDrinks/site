@@ -27,26 +27,31 @@ export default {
         message: "This page could not be found",
       });
     });
-    const cocktailsPromise = getСocktailsShort().catch(() => {
-      return error({
-        statusCode: 404,
-        message: "This page could not be found",
-      });
-    });
+    // const cocktailsPromise = getСocktailsShort().catch(() => {
+    //   return error({
+    //     statusCode: 404,
+    //     message: "This page could not be found",
+    //   });
+    // });
     const tagsPromise = getTags().catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const [cocktailsFull, cocktails, tags] = await Promise.all([
+    // const [cocktailsFull, cocktails, tags] = await Promise.all([
+    const [cocktailsFull, tags] = await Promise.all([
       cocktailsFullPromise,
-      cocktailsPromise,
+      // cocktailsPromise,
       tagsPromise,
     ]);
     return {
       cocktailsFull: cocktailsFull.data,
-      cocktails: cocktails.data,
+      cocktails: [
+        { id: 1432, name: "Тепле яблуко" },
+        { id: 1433, name: "Територія Хокінга" },
+        { id: 1434, name: "Том Коллінз" },
+      ],
       tags: tags.data,
     };
   },
