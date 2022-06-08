@@ -75,6 +75,7 @@ module.exports = {
           removeEmptyAttributes: true,
           removeRedundantAttributes: true,
           trimCustomFragments: true,
+          // useShortDoctype: true,
         },
       },
     }),
