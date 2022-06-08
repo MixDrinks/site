@@ -39,19 +39,6 @@ export default {
       required: true,
     },
   },
-  computed: {
-    filteredList() {
-      let arr = [];
-      if (!!this.inputValue) {
-        arr = this.listSearch.filter((listItem) => {
-          return listItem.name
-            .toLowerCase()
-            .includes(this.inputValue.toLowerCase());
-        });
-      }
-      return arr;
-    },
-  },
   methods: {
     inputClick() {
       this.$refs.searchField.classList.add("focus");
@@ -66,6 +53,19 @@ export default {
     },
     searchValues() {
       this.$refs.searchField.classList.add("filled");
+    },
+  },
+  computed: {
+    filteredList() {
+      let arr = [];
+      if (!!this.inputValue) {
+        arr = this.listSearch.filter((listItem) => {
+          return listItem.name
+            .toLowerCase()
+            .includes(this.inputValue.toLowerCase());
+        });
+      }
+      return arr;
     },
   },
 };
