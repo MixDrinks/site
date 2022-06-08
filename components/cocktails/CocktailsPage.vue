@@ -1,5 +1,6 @@
 <template>
   <div class="cocktails">
+    test
     <div class="cocktails__header">
       <h1 class="cocktails__title">Коктейлі</h1>
       <FieldSearch :listSearch="cocktailsShort" />

@@ -57,7 +57,7 @@ export default {
 
   background-color: $colorMain;
 
-  transition: background-color $defaultAnimTime;
+  transition: background-color $defaultAnimTime, box-shadow $defaultAnimTime;
   &::before {
     @include fullPseudoElement;
 
@@ -84,6 +84,7 @@ export default {
   &:not(.lock) {
     &:hover {
       background-color: $colorHover;
+      box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
     }
   }
 }
