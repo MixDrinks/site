@@ -1,7 +1,8 @@
 <template>
   <div class="cocktails">
-    <div class="cocktails__header"></div>
-    <FieldSearch :listSearch="cocktailsShort" />
+    <div class="cocktails__header">
+      <FieldSearch :listSearch="cocktailsShort" />
+    </div>
     <div class="cocktails__body">
       <FilterList
         class="cocktails__filter"
@@ -62,8 +63,13 @@ export default {
   &__header {
     margin-bottom: $shortMargin;
   }
+  &__footer {
+    margin-top: $shortMargin;
+  }
   &__body {
     display: flex;
+    margin-top: $shortMargin;
+    margin-bottom: $shortMargin;
   }
   &__filter {
     width: 250px;
