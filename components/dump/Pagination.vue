@@ -7,7 +7,7 @@
       :href="nextPage.link"
       @click="updateCocktails({ loadMore: true })"
     >
-      Показать еще {{ limit }}
+      Показати ще {{ limit }}
     </TextBtn>
     <div class="pagination__controls">
       <ul class="pagination__list">
