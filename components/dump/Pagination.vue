@@ -1,6 +1,7 @@
 <template>
   <div class="pagination">
     <TextBtn
+      v-if="itemsCount >= limit"
       class="pagination__load-more"
       v-show="nextPage"
       :isLink="true"
