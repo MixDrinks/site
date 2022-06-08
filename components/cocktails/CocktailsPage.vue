@@ -1,6 +1,6 @@
 <template>
   <div class="cocktails">
-    <!-- <div class="cocktails__header">
+    <div class="cocktails__header">
       <FieldSearch :listSearch="cocktailsShort" />
     </div>
     <div class="cocktails__body">
@@ -21,7 +21,7 @@
         :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
       />
-    </div> -->
+    </div>
   </div>
 </template>
 
