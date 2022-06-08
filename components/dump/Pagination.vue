@@ -2,14 +2,14 @@
   <div class="pagination">
     <TextBtn
       class="pagination__load-more"
-      v-if="nextPage"
+      v-show="nextPage"
       :isLink="true"
       :href="nextPage.link"
       @click="updateCocktails({ loadMore: true })"
     >
       Показать еще {{ limit }}
     </TextBtn>
-    <div class="pagination__controls" v-if="itemsCount <= limit">
+    <div class="pagination__controls" v-show="itemsCount <= limit">
       <ul class="pagination__list">
         <li class="pagination__item" v-for="page in pagination" :key="page.id">
           <TextBtn
