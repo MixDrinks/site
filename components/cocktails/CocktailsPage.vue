@@ -1,9 +1,7 @@
 <template>
   <div class="сocktails">
-    <div class="сocktails__header">
-      <FieldSearch :listSearch="cocktailsShort" />
-    </div>
-
+    <div class="сocktails__header"></div>
+    <FieldSearch :listSearch="cocktailsShort" />
     <div class="сocktails__body">
       <FilterList
         class="сocktails__filter"
