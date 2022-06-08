@@ -11,7 +11,7 @@
       />
     </label>
     <transition name="max-height">
-      <div class="search-field__result result" v-if="filteredList.length">
+      <div class="search-field__result result">
         <ul class="result__list">
           <li
             class="result__item"
@@ -59,8 +59,6 @@ export default {
             .toLowerCase()
             .includes(event.target.value.toLowerCase());
         });
-      } else {
-        this.filteredList = [];
       }
     },
   },
