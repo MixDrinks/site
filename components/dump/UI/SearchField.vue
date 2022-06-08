@@ -11,7 +11,7 @@
       />
     </label>
     <transition name="max-height">
-      <div class="search-field__result result" v-if="filteredList.length">
+      <div class="search-field__result result" v-show="filteredList.length">
         <ul class="result__list">
           <li
             class="result__item"
