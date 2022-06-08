@@ -36,7 +36,7 @@ export default {
   computed: {
     filteredList() {
       let arr = [];
-      if (!!inputValue) {
+      if (!!this.inputValue) {
         arr = this.list.filter((listItem) => {
           return listItem.name
             .toLowerCase()
@@ -66,7 +66,6 @@ export default {
     },
     searchValues(event) {
       event.target.parentNode.parentNode.classList.add("filled");
-      this.inputValue = event.target.value;
     },
   },
 };
