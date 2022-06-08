@@ -1,20 +1,20 @@
 <template>
-  <div class="сocktails">
-    <div class="сocktails__header"></div>
+  <div class="cocktails">
+    <div class="cocktails__header"></div>
     <FieldSearch :listSearch="cocktailsShort" />
-    <div class="сocktails__body">
+    <div class="cocktails__body">
       <FilterList
-        class="сocktails__filter"
+        class="cocktails__filter"
         @updateCocktails="updateCocktails"
         :filterList="tags"
       />
-      <div class="сocktails__list">
+      <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
     </div>
-    <div class="сocktails__footer">
+    <div class="cocktails__footer">
       <Pagination
-        class="сocktails__pagination"
+        class="cocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
         :limit="10"
         :itemsCount="cocktailsFull.cocktails.length"
@@ -58,7 +58,7 @@ export default {
 .img {
   display: block;
 }
-.сocktails {
+.cocktails {
   &__header {
     margin-bottom: $shortMargin;
   }
