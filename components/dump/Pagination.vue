@@ -1,10 +1,9 @@
 <template>
   <div class="pagination">
     <TextBtn
-      v-if="itemsCount >= limit"
       class="pagination__load-more"
-      v-show="nextPage"
-      :isLink="true"
+      v-if="!!nextPage"
+      :isLink="!!nextPage"
       :href="nextPage.link"
       @click="updateCocktails({ loadMore: true })"
     >
@@ -30,37 +29,21 @@
       <div class="pagination__btns">
         <IconBtn
           class="pagination__prev"
-          v-if="prevPage"
           direction="left"
-          :isLink="!!prevPage.link"
-          :href="prevPage.link"
+          :lock="!!!prevPage"
+          :isLink="!!prevPage"
+          :href="!!prevPage ? prevPage.link : '/'"
           @click.native="updateCocktails()"
         >
           Попередня сторінка
         </IconBtn>
         <IconBtn
-          class="pagination__prev"
-          v-else
-          direction="left"
-          :lock="!prevPage"
-        >
-          Попередня сторінка
-        </IconBtn>
-        <IconBtn
           class="pagination__next"
-          v-if="nextPage"
           direction="right"
-          :isLink="!!nextPage.link"
-          :href="nextPage.link"
+          :lock="!!!nextPage"
+          :isLink="!!nextPage"
+          :href="!!nextPage ? nextPage.link : '/'"
           @click.native="updateCocktails()"
-        >
-          Наступна сторінка
-        </IconBtn>
-        <IconBtn
-          class="pagination__next"
-          v-else
-          direction="right"
-          :lock="!nextPage"
         >
           Наступна сторінка
         </IconBtn>
