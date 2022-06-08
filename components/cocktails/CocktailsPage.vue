@@ -1,20 +1,19 @@
 <template>
   <div class="cocktails">
     test
-
     <div class="cocktails__header">
       <FieldSearch :listSearch="cocktailsShort" />
     </div>
-    <!-- <div class="cocktails__body">
+    <div class="cocktails__body">
       <FilterList
         class="cocktails__filter"
         @updateCocktails="updateCocktails"
         :filterList="tags"
       />
-      <div class="cocktails__list">
+      <!-- <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
-      </div>
-    </div> -->
+      </div> -->
+    </div>
     <!-- <div class="cocktails__footer">
       <Pagination
         class="cocktails__pagination"
