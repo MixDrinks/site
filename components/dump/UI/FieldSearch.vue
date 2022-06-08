@@ -1,9 +1,9 @@
 <template>
-  <div class="search-field">
-    <label class="search-field__wrapper">
-      <div class="search-field__label label">Поиск</div>
+  <div class="field-search" ref="searchField">
+    <label class="field-search__wrapper">
+      <div class="field-search__label label">Поиск</div>
       <input
-        class="search-field__input input"
+        class="field-search__input input"
         type="text"
         v-model="inputValue"
         @click="(event) => inputClick(event)"
@@ -12,7 +12,7 @@
       />
     </label>
     <transition name="max-height">
-      <div class="search-field__result result" v-if="inputValue">
+      <div class="field-search__result result" v-if="inputValue">
         <ul class="result__list">
           <li
             class="result__item"
@@ -33,46 +33,46 @@ export default {
   data: () => ({
     inputValue: "",
   }),
+  props: {
+    listSearch: {
+      type: Array,
+      required: true,
+    },
+  },
   computed: {
     filteredList() {
       let arr = [];
       if (!!this.inputValue) {
-        arr = this.list.filter((listItem) => {
+        arr = this.listSearch.filter((listItem) => {
           return listItem.name
             .toLowerCase()
-            .includes(event.target.value.toLowerCase());
+            .includes(this.inputValue.toLowerCase());
         });
       }
       return arr;
     },
   },
-  props: {
-    list: {
-      type: Array,
-      required: true,
-    },
-  },
   methods: {
-    inputClick(event) {
-      event.target.parentNode.parentNode.classList.add("focus");
+    inputClick() {
+      this.$refs.searchField.classList.add("focus");
     },
     inputBlur(event) {
-      event.target.parentNode.parentNode.classList.remove("focus");
+      this.$refs.searchField.classList.remove("focus");
       if (!!!event.target.value) {
-        event.target.parentNode.parentNode.classList.remove("filled");
+        this.$refs.searchField.classList.remove("filled");
       } else {
-        event.target.parentNode.parentNode.classList.add("filled");
+        this.$refs.searchField.classList.add("filled");
       }
     },
-    searchValues(event) {
-      event.target.parentNode.parentNode.classList.add("filled");
+    searchValues() {
+      this.$refs.searchField.classList.add("filled");
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.search-field {
+.field-search {
   width: 400px;
   position: relative;
   &__wrapper {

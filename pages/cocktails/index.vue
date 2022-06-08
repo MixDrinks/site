@@ -2,7 +2,7 @@
   <main class="wrapper">
     <CocktailsPage
       :cocktailsFull="cocktailsFull"
-      :cocktails="cocktails"
+      :cocktailsList="cocktailsList"
       :tags="tags"
       @updateCocktails="updateCocktails"
     />
@@ -39,14 +39,14 @@ export default {
         message: "This page could not be found",
       });
     });
-    const [cocktailsFull, cocktails, tags] = await Promise.all([
+    const [cocktailsFull, cocktailsList, tags] = await Promise.all([
       cocktailsFullPromise,
       cocktailsPromise,
       tagsPromise,
     ]);
     return {
       cocktailsFull: cocktailsFull.data,
-      cocktails: cocktails.data,
+      cocktailsList: cocktailsList.data,
       tags: tags.data,
     };
   },

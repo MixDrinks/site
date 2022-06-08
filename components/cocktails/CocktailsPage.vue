@@ -1,7 +1,7 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <FieldSearch :list="cocktails" />
+      <FieldSearch :listSearch="cocktailsList" />
     </div>
 
     <div class="сocktails__body">
@@ -35,7 +35,7 @@ export default {
   components: { FieldSearch, FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
   props: {
-    cocktails: {
+    cocktailsList: {
       type: Array,
       required: true,
     },
