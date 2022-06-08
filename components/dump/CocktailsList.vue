@@ -1,28 +1,16 @@
 <template>
   <div class="list">
     <div class="list__item" v-for="cocktail in cocktails" :key="cocktail.id">
-      <div class="list__item">
-        {{ cocktail.name }}
-      </div>
-      <div class="list__img">
-        <picture>
-          <source
-            v-for="img in cocktail.images"
-            :key="img.id"
-            :srcset="img.srcset"
-            :media="img.media"
-            :type="img.type"
-          />
-          <img class="img" width="960" height="600" loading="lazy" />
-        </picture>
-      </div>
+      <CocktailsCart :cocktail="cocktail" />
     </div>
   </div>
 </template>
 
 <script>
+import CocktailsCart from "~~/components/dump/CocktailsCart.vue";
 export default {
   name: "CocktailsList",
+  components: { CocktailsCart },
   props: {
     cocktails: {
       type: Array,
@@ -32,4 +20,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-right: -10px;
+  &__item {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+</style>
