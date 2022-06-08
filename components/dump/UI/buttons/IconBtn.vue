@@ -49,56 +49,41 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
+  @include defaultBtn;
   font-size: 0;
-  position: relative;
-  width: 48px;
-  height: 48px;
+  line-height: 0;
 
-  border-radius: 50%;
+  position: relative;
+
+  background-color: $colorMain;
+
   transition: background-color $defaultAnimTime;
   &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: block;
+    @include fullPseudoElement;
+
     mask-position: center;
     mask-repeat: no-repeat;
-    mask-image: url("/svg/icons/arrow.svg");
-    background-color: $colorMain;
-
-    transition: background-color $defaultAnimTime;
-  }
-  &:not(.lock) {
-    background-color: rgba($colorBlack, 0.5);
-    &::before {
-      background-color: $colorMain;
-    }
+    mask-image: url("/img/icons/arrow.svg");
+    background-color: $colorWhite;
   }
   &.lock {
     pointer-events: none;
-    background-color: $colorWhite;
-    &::before {
-      background-color: rgba($colorBlack, 0.5);
+    &::after {
+      @include fullPseudoElement;
+
+      background-color: rgba($colorWhite, 0.8);
+
+      z-index: 1;
     }
   }
-
   &--right {
     &::before {
       transform: rotate(180deg);
     }
   }
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
   &:not(.lock) {
     &:hover {
-      background-color: $colorBlack;
-    }
-    &:hover:before {
-      background-color: $colorWhite;
+      background-color: $colorHover;
     }
   }
 }

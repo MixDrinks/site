@@ -1,24 +1,26 @@
 <template>
   <div class="pagination">
-    <NuxtLink
+    <TextBtn
       class="pagination__load-more"
       v-if="nextPage"
-      :to="nextPage.link"
-      @click.native="updateCocktails({ loadMore: true })"
+      :isLink="true"
+      :href="nextPage.link"
+      @click="updateCocktails({ loadMore: true })"
     >
       Показать еще {{ limit }}
-    </NuxtLink>
+    </TextBtn>
     <div class="pagination__controls" v-if="itemsCount <= limit">
       <ul class="pagination__list">
         <li class="pagination__item" v-for="page in pagination" :key="page.id">
-          <NuxtLink
-            v-if="page.type === 'link'"
+          <TextBtn
             class="pagination__link"
-            :to="page.link"
+            v-if="page.type === 'link'"
+            :isLink="!!page.link"
+            :href="page.link"
             @click.native="updateCocktails()"
           >
             {{ page.title }}
-          </NuxtLink>
+          </TextBtn>
           <span class="pagination__link" :class="page.type" v-else>
             {{ page.title }}
           </span>
@@ -26,22 +28,40 @@
       </ul>
       <div class="pagination__btns">
         <IconBtn
+          class="pagination__prev"
           v-if="prevPage"
-          @click.native="updateCocktails()"
           direction="left"
-          :isLink="true"
+          :isLink="!!prevPage.link"
           :href="prevPage.link"
+          @click.native="updateCocktails()"
         >
-          предыдущая
+          Попередня сторінка
         </IconBtn>
         <IconBtn
-          v-if="nextPage"
-          @click.native="updateCocktails()"
-          direction="right"
-          :isLink="true"
-          :href="nextPage.link"
+          class="pagination__prev"
+          v-else
+          direction="left"
+          :lock="!prevPage"
         >
-          следующая
+          Попередня сторінка
+        </IconBtn>
+        <IconBtn
+          class="pagination__next"
+          v-if="nextPage"
+          direction="right"
+          :isLink="!!nextPage.link"
+          :href="nextPage.link"
+          @click.native="updateCocktails()"
+        >
+          Наступна сторінка
+        </IconBtn>
+        <IconBtn
+          class="pagination__next"
+          v-else
+          direction="right"
+          :lock="!nextPage"
+        >
+          Наступна сторінка
         </IconBtn>
       </div>
     </div>
@@ -50,8 +70,9 @@
 
 <script>
 import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
+import TextBtn from "./UI/buttons/TextBtn.vue";
 export default {
-  components: { IconBtn },
+  components: { IconBtn, TextBtn },
   name: "Pagination",
   props: {
     totalItems: {
@@ -181,27 +202,9 @@ export default {
 <style lang="scss" scoped>
 .pagination {
   &__load-more {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-transform: uppercase;
-    color: $colorWhite;
-
     margin-bottom: 24px;
-    background: $colorMain;
-    border-radius: 100px;
-    padding: 14px;
-
-    transition: color $defaultAnimTime, background-color $defaultAnimTime;
-
-    position: relative;
-    &:hover {
-      background-color: $colorHover;
-    }
   }
   &__controls {
-    margin-top: 24px;
     display: flex;
     justify-content: space-between;
   }
@@ -211,45 +214,41 @@ export default {
   &__list {
     display: flex;
   }
+  &__prev {
+    margin-right: 8px;
+  }
   &__item {
     &:not(:last-child) {
-      margin-right: 10px;
+      margin-right: 8px;
     }
   }
   &__link {
-    &:not(.dots) {
-      color: $colorWhite;
+    &.dots,
+    &.current {
+      padding: 8px;
 
-      border: 1px solid transparent;
+      min-width: 48px;
+      min-height: 48px;
 
-      background-color: $colorMain;
-      transition: color $defaultAnimTime, background-color $defaultAnimTime;
+      border-radius: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     &.dots {
-      font-size: 0;
-      line-height: 0;
       mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='2' viewBox='0 0 16 2' fill='none'%3E%3Cpath d='M0 0H2V2H0V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M7 0H9V2H7V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M14 0H16V2H14V0Z' fill='%23D8D8D8'/%3E%3C/svg%3E");
       mask-position: center;
       mask-repeat: no-repeat;
       background-color: $colorMain;
     }
-    min-width: 48px;
-    height: 48px;
-
-    border-radius: 100px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     &.current {
-      border: 1px solid $colorMain;
-      background-color: $colorWhite;
+      @include fontSize18M;
       color: $colorBlack;
-    }
-    &:not(.dots):not(.current):hover {
-      background-color: $colorHover;
-      color: $colorWhite;
+
+      border: 1px solid $colorMain;
+
+      background-color: $colorWhite;
     }
   }
 }

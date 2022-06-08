@@ -1,14 +1,14 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__footer">
-      <Pagination
+      <!-- <Pagination
         v-if="limit < totalItems"
         class="сocktails__pagination"
         :totalItems="totalItems"
         :limit="limit"
         :itemsCount="10"
         @updateCocktails="updateCocktails"
-      />
+      /> -->
     </div>
     <div class="сocktails__header">
       <SearchField :list="cocktails" />
