@@ -10,7 +10,7 @@
         @input="(event) => searchValues(event)"
       />
     </label>
-    <transition name="max-height">
+    <!-- <transition name="max-height">
       <div class="search-field__result result">
         <ul class="result__list">
           <li
@@ -22,7 +22,7 @@
           </li>
         </ul>
       </div>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
