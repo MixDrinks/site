@@ -1,9 +1,7 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <ClientOnly>
-        <SearchField :list="cocktails" />
-      </ClientOnly>
+      <!-- <SearchField :list="cocktails" /> -->
     </div>
 
     <div class="сocktails__body">
@@ -17,13 +15,13 @@
       </div>
     </div>
     <div class="сocktails__footer">
-      <!-- <Pagination
+      <Pagination
         class="сocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
         :limit="10"
         :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
-      /> -->
+      />
     </div>
   </div>
 </template>
