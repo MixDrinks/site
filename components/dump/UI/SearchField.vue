@@ -5,13 +5,14 @@
       <input
         class="search-field__input input"
         type="text"
+        v-model="inputValue"
         @click="(event) => inputClick(event)"
         @blur="(event) => inputBlur(event)"
         @input="(event) => searchValues(event)"
       />
     </label>
-    <!-- <transition name="max-height">
-      <div class="search-field__result result">
+    <transition name="max-height">
+      <div class="search-field__result result" v-if="inputValue">
         <ul class="result__list">
           <li
             class="result__item"
@@ -22,7 +23,7 @@
           </li>
         </ul>
       </div>
-    </transition> -->
+    </transition>
   </div>
 </template>
 
@@ -30,37 +31,43 @@
 export default {
   name: "SearchField",
   data: () => ({
-    filteredList: [],
+    inputValue: "",
   }),
-  // props: {
-  //   list: {
-  //     type: Array,
-  //     required: true,
-  //   },
-  // },
+  computed: {
+    filteredList() {
+      let arr = [];
+      if (!!inputValue) {
+        arr = this.list.filter((listItem) => {
+          return listItem.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase());
+        });
+      }
+      return arr;
+    },
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true,
+    },
+  },
   methods: {
-    // inputClick(event) {
-    //   event.target.parentNode.parentNode.classList.add("focus");
-    // },
-    // inputBlur(event) {
-    //   event.target.parentNode.parentNode.classList.remove("focus");
-    //   if (!!!event.target.value) {
-    //     event.target.parentNode.parentNode.classList.remove("filled");
-    //   } else {
-    //     event.target.parentNode.parentNode.classList.add("filled");
-    //   }
-    // },
-    // searchValues(event) {
-    //   this.filteredList = [];
-    //   if (!!event.target.value) {
-    //     event.target.parentNode.parentNode.classList.add("filled");
-    //     this.filteredList = this.list.filter((listItem) => {
-    //       return listItem.name
-    //         .toLowerCase()
-    //         .includes(event.target.value.toLowerCase());
-    //     });
-    //   }
-    // },
+    inputClick(event) {
+      event.target.parentNode.parentNode.classList.add("focus");
+    },
+    inputBlur(event) {
+      event.target.parentNode.parentNode.classList.remove("focus");
+      if (!!!event.target.value) {
+        event.target.parentNode.parentNode.classList.remove("filled");
+      } else {
+        event.target.parentNode.parentNode.classList.add("filled");
+      }
+    },
+    searchValues(event) {
+      event.target.parentNode.parentNode.classList.add("filled");
+      this.inputValue = event.target.value;
+    },
   },
 };
 </script>
