@@ -1,37 +1,43 @@
 <template>
   <div class="сocktails">
+    <div class="сocktails__header">
+      <SearchField :list="cocktails" />
+    </div>
+
+    <div class="сocktails__body">
+      <FilterList :filterList="tags" />
+      <div class="сocktails__list list">
+        <div
+          class="list__item"
+          v-for="cocktail in cocktailsFull.cocktails"
+          :key="cocktail.id"
+        >
+          <div class="list__item">
+            {{ cocktail.name }}
+          </div>
+          <div class="list__img">
+            <picture>
+              <source
+                v-for="img in cocktail.images"
+                :key="img.id"
+                :srcset="img.srcset"
+                :media="img.media"
+                :type="img.type"
+              />
+              <img class="img" width="960" height="600" loading="lazy" />
+            </picture>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="сocktails__footer">
-      <!-- <Pagination
-        v-if="limit < totalItems"
+      <Pagination
         class="сocktails__pagination"
         :totalItems="totalItems"
         :limit="limit"
         :itemsCount="10"
         @updateCocktails="updateCocktails"
-      /> -->
-    </div>
-    <div class="сocktails__header">
-      <SearchField :list="cocktails" />
-    </div>
-    <div
-      class=""
-      v-for="cocktail in cocktailsFull.cocktails"
-      :key="cocktail.id"
-    >
-      {{ cocktail.name }}
-      <picture>
-        <source
-          v-for="img in cocktail.images"
-          :key="img.id"
-          :srcset="img.srcset"
-          :media="img.media"
-          :type="img.type"
-        />
-        <img class="img" width="960" height="600" loading="lazy" />
-      </picture>
-    </div>
-    <div class="сocktails__body">
-      <FilterList :filterList="tags" />
+      />
     </div>
   </div>
 </template>
