@@ -1,7 +1,7 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <SearchField :list="cocktails" />
+      <!-- <SearchField :list="cocktails" /> -->
     </div>
 
     <div class="сocktails__body">

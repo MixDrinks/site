@@ -21,24 +21,29 @@ export default {
     for (let [key, value] of Object.entries(query)) {
       queryParams = `${queryParams}&${key}=${value}`;
     }
-    const cocktailsFull = await getСocktails(queryParams).catch(() => {
+    const cocktailsFullPromise = getСocktails(queryParams).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const cocktails = await getСocktailsShort().catch(() => {
+    const cocktailsPromise = getСocktailsShort().catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const tags = await getTags().catch(() => {
+    const tagsPromise = getTags().catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
+    const [cocktailsFull, cocktails, tags] = await Promise.all([
+      cocktailsFullPromise,
+      cocktailsPromise,
+      tagsPromise,
+    ]);
     return {
       cocktailsFull: cocktailsFull.data,
       cocktails: cocktails.data,
