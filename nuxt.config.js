@@ -14,7 +14,7 @@ module.exports = {
 
   head: {
     htmlAttrs: {
-      lang: `uk`,
+      lang: "uk",
     },
     title: process.env.npm_package_name || "",
     meta: [
