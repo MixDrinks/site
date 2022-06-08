@@ -1,6 +1,6 @@
 <template>
   <div class="cocktails">
-    <div class="cocktails__header">
+    <!-- <div class="cocktails__header">
       <FieldSearch :listSearch="cocktailsShort" />
     </div>
     <div class="cocktails__body">
@@ -12,7 +12,7 @@
       <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
-    </div>
+    </div> -->
     <div class="cocktails__footer">
       <Pagination
         class="cocktails__pagination"
