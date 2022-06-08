@@ -1,7 +1,7 @@
 <template>
   <div class="сocktails">
     <div class="сocktails__header">
-      <!-- <SearchField :list="cocktails" /> -->
+      <SearchField />
     </div>
 
     <div class="сocktails__body">
@@ -35,10 +35,6 @@ export default {
   components: { SearchField, FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
   props: {
-    cocktails: {
-      type: Array,
-      required: true,
-    },
     tags: {
       type: Array,
       required: true,
