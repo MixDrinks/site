@@ -27,6 +27,12 @@ export default {
         message: "This page could not be found",
       });
     });
+    const cocktails = await getСocktailsShort().catch(() => {
+      return error({
+        statusCode: 404,
+        message: "This page could not be found",
+      });
+    });
     const tags = await getTags().catch(() => {
       return error({
         statusCode: 404,
@@ -35,6 +41,7 @@ export default {
     });
     return {
       cocktailsFull: cocktailsFull.data,
+      cocktails: cocktails.data,
       tags: tags.data,
     };
   },
