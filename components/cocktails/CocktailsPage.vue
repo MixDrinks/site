@@ -5,11 +5,11 @@
     </div>
 
     <div class="сocktails__body">
-      <FilterList
+      <!-- <FilterList
         class="сocktails__filter"
         @updateCocktails="updateCocktails"
         :filterList="tags"
-      />
+      /> -->
       <div class="сocktails__list">
         <!-- <CocktailsList :cocktails="cocktailsFull.cocktails" /> -->
       </div>
