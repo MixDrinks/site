@@ -39,14 +39,26 @@ export default {
 
 <style lang="scss" scoped>
 .item {
-  max-width: 300px;
+  width: 100%;
+  height: 100%;
   padding: 20px;
   border: 1px solid rgba($colorMain, 0.1);
   border-radius: 8px;
+
+  transition: transform $defaultAnimTime, box-shadow $defaultAnimTime;
   &__img {
+    position: relative;
+    padding-top: 100%;
+    width: 100%;
     .img {
-      max-width: 258px;
-      height: 258px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-width: 100%;
+      width: 258px;
+      height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
@@ -57,6 +69,11 @@ export default {
     min-height: 52px;
 
     @include fontSize18B;
+  }
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 1px 10px rgba($colorHover, 0.3),
+      -5px -5px 40px rgba($colorHover, 0.1);
   }
 }
 </style>

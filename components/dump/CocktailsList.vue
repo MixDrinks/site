@@ -31,6 +31,18 @@ export default {
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 30px;
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 1199px) {
+      width: 50%;
+    }
+    @media (min-width: 1200px) and (max-width: 1599px) {
+      width: calc(100% / 3);
+    }
+    @media (min-width: 1600px) {
+      width: 25%;
+    }
   }
 }
 </style>
