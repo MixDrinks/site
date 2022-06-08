@@ -32,35 +32,35 @@ export default {
   data: () => ({
     filteredList: [],
   }),
-  props: {
-    list: {
-      type: Array,
-      required: true,
-    },
-  },
+  // props: {
+  //   list: {
+  //     type: Array,
+  //     required: true,
+  //   },
+  // },
   methods: {
-    inputClick(event) {
-      event.target.parentNode.parentNode.classList.add("focus");
-    },
-    inputBlur(event) {
-      event.target.parentNode.parentNode.classList.remove("focus");
-      if (!!!event.target.value) {
-        event.target.parentNode.parentNode.classList.remove("filled");
-      } else {
-        event.target.parentNode.parentNode.classList.add("filled");
-      }
-    },
-    searchValues(event) {
-      // this.filteredList = [];
-      // if (!!event.target.value) {
-      //   event.target.parentNode.parentNode.classList.add("filled");
-      //   this.filteredList = this.list.filter((listItem) => {
-      //     return listItem.name
-      //       .toLowerCase()
-      //       .includes(event.target.value.toLowerCase());
-      //   });
-      // }
-    },
+    // inputClick(event) {
+    //   event.target.parentNode.parentNode.classList.add("focus");
+    // },
+    // inputBlur(event) {
+    //   event.target.parentNode.parentNode.classList.remove("focus");
+    //   if (!!!event.target.value) {
+    //     event.target.parentNode.parentNode.classList.remove("filled");
+    //   } else {
+    //     event.target.parentNode.parentNode.classList.add("filled");
+    //   }
+    // },
+    // searchValues(event) {
+    //   this.filteredList = [];
+    //   if (!!event.target.value) {
+    //     event.target.parentNode.parentNode.classList.add("filled");
+    //     this.filteredList = this.list.filter((listItem) => {
+    //       return listItem.name
+    //         .toLowerCase()
+    //         .includes(event.target.value.toLowerCase());
+    //     });
+    //   }
+    // },
   },
 };
 </script>
