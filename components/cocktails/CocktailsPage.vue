@@ -1,19 +1,19 @@
 <template>
   <div class="cocktails">
-    <div class="cocktails__header">
+    <!-- <div class="cocktails__header">
       <FieldSearch :listSearch="cocktailsShort" />
-    </div>
-    <div class="cocktails__body">
-      <!-- <FilterList
+    </div> -->
+    <!-- <div class="cocktails__body">
+      <FilterList
         class="cocktails__filter"
         @updateCocktails="updateCocktails"
         :filterList="tags"
       />
       <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
-      </div> -->
-    </div>
-    <!-- <div class="cocktails__footer">
+      </div>
+    </div> -->
+    <div class="cocktails__footer">
       <Pagination
         class="cocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
@@ -21,7 +21,7 @@
         :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
       />
-    </div> -->
+    </div>
   </div>
 </template>
 
