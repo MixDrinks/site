@@ -9,7 +9,7 @@
           :media="img.media"
           :type="img.type"
         />
-        <img class="img" width="960" height="600" loading="lazy" />
+        <img class="img" width="258" height="162" loading="lazy" />
       </picture>
     </div>
     <div class="item__name">
@@ -33,6 +33,9 @@ export default {
 <style lang="scss" scoped>
 .item {
   max-width: 300px;
+  padding: 20px;
+  border: 1px solid rgba($colorMain, 0.3);
+  border-radius: 8px;
   &__img {
     .img {
       max-width: 100%;
@@ -40,6 +43,10 @@ export default {
     }
   }
   &__name {
+    text-align: center;
+    margin-top: $shortMargin;
+    min-height: 52px;
+
     @include fontSize18B;
   }
 }

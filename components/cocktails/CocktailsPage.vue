@@ -13,9 +13,9 @@
     <div class="сocktails__footer">
       <Pagination
         class="сocktails__pagination"
-        :totalItems="totalItems"
-        :limit="limit"
-        :itemsCount="itemsCount"
+        :totalItems="cocktailsFull.totalCount"
+        :limit="10"
+        :itemsCount="cocktails.length"
         @updateCocktails="updateCocktails"
       />
     </div>
@@ -42,17 +42,6 @@ export default {
     cocktailsFull: {
       type: Object,
       required: true,
-    },
-  },
-  computed: {
-    itemsCount() {
-      return this.cocktailsFull.cocktails.length;
-    },
-    totalItems() {
-      return this.cocktailsFull.totalCount;
-    },
-    limit() {
-      return 10;
     },
   },
   methods: {
