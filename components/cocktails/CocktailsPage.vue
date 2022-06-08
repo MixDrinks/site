@@ -1,10 +1,10 @@
 <template>
   <div class="cocktails">
     test
-    <FieldSearch :listSearch="cocktailsShort" />
-    <!-- <div class="cocktails__header">
+
+    <div class="cocktails__header">
       <FieldSearch :listSearch="cocktailsShort" />
-    </div> -->
+    </div>
     <!-- <div class="cocktails__body">
       <FilterList
         class="cocktails__filter"
