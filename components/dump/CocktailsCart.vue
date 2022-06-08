@@ -9,7 +9,7 @@
           :media="img.media"
           :type="img.type"
         />
-        <img class="img" width="258" height="162" loading="lazy" />
+        <img class="img" width="258" height="258" loading="lazy" />
       </picture>
     </div>
     <div class="item__name">
@@ -34,12 +34,14 @@ export default {
 .item {
   max-width: 300px;
   padding: 20px;
-  border: 1px solid rgba($colorMain, 0.3);
+  border: 1px solid rgba($colorMain, 0.1);
   border-radius: 8px;
   &__img {
     .img {
-      max-width: 100%;
-      height: auto;
+      max-width: 258;
+      height: 258;
+      object-fit: cover;
+      border-radius: 50%;
     }
   }
   &__name {

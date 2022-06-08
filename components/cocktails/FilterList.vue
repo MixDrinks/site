@@ -8,6 +8,7 @@
         v-for="filterItem in listWithURL"
         :key="filterItem.id"
         :to="filterItem.url"
+        @click.native="updateCocktails"
       >
         <div class="filter__checkbox"></div>
         <div class="filter__name">
@@ -25,6 +26,11 @@ export default {
     filterList: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    updateCocktails(payload) {
+      this.$emit("updateCocktails", payload);
     },
   },
   computed: {
@@ -60,6 +66,23 @@ export default {
 
 <style lang="scss" scoped>
 .filter {
+  &__wrapper {
+    max-height: 100vh;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: rgba($colorMain, 0.2);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($colorMain, 0.8);
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: $colorMain;
+    }
+  }
   &__checkbox {
     width: 20px;
     height: 20px;

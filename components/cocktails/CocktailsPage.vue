@@ -5,19 +5,23 @@
     </div>
 
     <div class="сocktails__body">
-      <FilterList class="сocktails__filter" :filterList="tags" />
+      <FilterList
+        class="сocktails__filter"
+        @updateCocktails="updateCocktails"
+        :filterList="tags"
+      />
       <div class="сocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
     </div>
     <div class="сocktails__footer">
-      <Pagination
+      <!-- <Pagination
         class="сocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
         :limit="10"
         :itemsCount="cocktails.length"
         @updateCocktails="updateCocktails"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -65,6 +69,7 @@ export default {
   }
   &__filter {
     width: 250px;
+    padding-right: 25px;
   }
   &__list {
     width: calc(100% - 250px);

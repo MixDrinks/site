@@ -9,7 +9,7 @@
     >
       Показать еще {{ limit }}
     </TextBtn>
-    <div class="pagination__controls" v-show="itemsCount <= limit">
+    <div class="pagination__controls">
       <ul class="pagination__list">
         <li class="pagination__item" v-for="page in pagination" :key="page.id">
           <TextBtn
