@@ -12,7 +12,7 @@
       <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
       </div>
-    </div> -->
+    </div>
     <div class="cocktails__footer">
       <Pagination
         class="cocktails__pagination"
@@ -21,7 +21,7 @@
         :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
