@@ -1,5 +1,5 @@
 <template>
-  <div class="item">
+  <NuxtLink :to="`${$nuxt.$route.path}/${cocktail.id}`" class="item">
     <div class="item__img">
       <picture>
         <source
@@ -22,7 +22,7 @@
     <div class="item__name">
       {{ cocktail.name }}
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script>
@@ -39,6 +39,8 @@ export default {
 
 <style lang="scss" scoped>
 .item {
+  display: block;
+
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -64,13 +66,21 @@ export default {
     }
   }
   &__name {
+    color: $colorMain;
     text-align: center;
     margin-top: $shortMargin;
     min-height: 52px;
 
     @include fontSize18B;
+
+    transition: color $defaultAnimTime;
   }
   &:hover {
+    .item {
+      &__name {
+        color: $colorHover;
+      }
+    }
     transform: translateY(-10px);
     box-shadow: 1px 10px rgba($colorHover, 0.3),
       -5px -5px 40px rgba($colorHover, 0.1);

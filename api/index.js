@@ -21,3 +21,6 @@ export const getCocktailsShort = () => {
 export const getTags = () => {
   return api.get(`/tags/all`);
 };
+export const getCocktail = (id) => {
+  return api.get(`/cocktails/full${id}`);
+};

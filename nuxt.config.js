@@ -54,36 +54,36 @@ module.exports = {
   },
 
   build: {
-    optimizeCss: true,
+    // optimizeCss: true,
 
-    splitChunks: {
-      layouts: true,
-      pages: true,
-      commons: true,
-    },
-    optimization: {
-      minimize: isDev === "prod",
-    },
-    ...(isDev === "prod" && {
-      html: {
-        minify: {
-          collapseBooleanAttributes: true,
-          decodeEntities: true,
-          minifyCSS: true,
-          minifyJS: true,
-          processConditionalComments: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          trimCustomFragments: true,
-          // useShortDoctype: true,
-        },
-      },
-    }),
-    ...(isDev === "prod" && {
-      extractCSS: {
-        ignoreOrder: true,
-      },
-    }),
+    // splitChunks: {
+    //   layouts: true,
+    //   pages: true,
+    //   commons: true,
+    // },
+    // optimization: {
+    //   minimize: isDev === "prod",
+    // },
+    // ...(isDev === "prod" && {
+    //   html: {
+    //     minify: {
+    //       collapseBooleanAttributes: true,
+    //       decodeEntities: true,
+    //       minifyCSS: true,
+    //       minifyJS: true,
+    //       processConditionalComments: true,
+    //       removeEmptyAttributes: true,
+    //       removeRedundantAttributes: true,
+    //       trimCustomFragments: true,
+    //       // useShortDoctype: true,
+    //     },
+    //   },
+    // }),
+    // ...(isDev === "prod" && {
+    //   extractCSS: {
+    //     ignoreOrder: true,
+    //   },
+    // }),
 
     extend(config, ctx) {
       config.resolve = config.resolve || {};
