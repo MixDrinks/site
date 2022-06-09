@@ -69,19 +69,7 @@ export default {
   &__wrapper {
     max-height: 100vh;
     overflow: auto;
-
-    &::-webkit-scrollbar {
-      width: 2px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: rgba($colorMain, 0.2);
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba($colorMain, 0.8);
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: $colorMain;
-    }
+    @include defaultWrapperScroll;
   }
   &__checkbox {
     width: 20px;

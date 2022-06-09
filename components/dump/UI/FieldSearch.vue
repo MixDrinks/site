@@ -1,7 +1,7 @@
 <template>
   <div class="search" ref="searchField">
     <label class="search__wrapper">
-      <div class="search__label label">Поиск</div>
+      <div class="search__label label">Пошук</div>
       <input
         class="search__input input"
         type="text"
@@ -19,7 +19,9 @@
             v-for="listItem in filteredList"
             :key="listItem.id"
           >
-            {{ listItem.name }}
+            <NuxtLink :to="`/cocktails/${listItem.id}`" class="result__link">
+              {{ listItem.name }}
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -135,21 +137,40 @@ export default {
     &__list {
       max-height: 200px;
       overflow: auto;
-      &::-webkit-scrollbar {
-        width: 2px;
-      }
-      &::-webkit-scrollbar-track {
-        background-color: rgba($colorMain, 0.2);
-      }
-      &::-webkit-scrollbar-thumb {
-        background-color: rgba($colorMain, 0.8);
-      }
-      &::-webkit-scrollbar-thumb:hover {
-        background-color: $colorMain;
-      }
+
+      @include defaultWrapperScroll;
     }
-    &__item {
+    &__link {
+      overflow: hidden;
+      position: relative;
+      @include fontSize16;
+
+      display: block;
       padding: 8px 0;
+      margin-right: 20px;
+
+      color: $colorMain;
+      &:after {
+        content: "";
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: 2px;
+
+        background-color: $colorHover;
+
+        transform: translateX(-100%);
+
+        transition: transform $defaultAnimTime;
+
+        z-index: 1;
+      }
+      &:hover::after {
+        transform: translateX(0);
+      }
     }
   }
 }
