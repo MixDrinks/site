@@ -11,8 +11,8 @@
         />
         <img
           class="img"
-          width="258"
-          height="258"
+          width="298"
+          height="298"
           loading="lazy"
           alt=""
           title=""
@@ -59,7 +59,7 @@ export default {
       right: 0;
       bottom: 0;
       max-width: 100%;
-      width: 258px;
+      width: 298px;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
