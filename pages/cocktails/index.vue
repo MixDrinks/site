@@ -1,5 +1,6 @@
 <template>
   <main class="wrapper">
+    <div>&nbsp;</div>
     <CocktailsPage
       :cocktailsFull="cocktailsFull"
       :cocktailsShort="cocktailsShort"

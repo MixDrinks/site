@@ -1,8 +1,9 @@
 <template>
-  <main class="wrapper">
+  <!-- <main class="wrapper">
     <div>&nbsp;</div>
     <CocktailPage :cocktail="cocktail" />
-  </main>
+  </main> -->
+  <CocktailPage :cocktail="cocktail" />
 </template>
 
 <script>
