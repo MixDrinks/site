@@ -135,6 +135,7 @@ export default {
     margin-bottom: $shortMargin;
 
     .img {
+      display: block;
       object-fit: cover;
     }
   }
@@ -185,6 +186,7 @@ export default {
     overflow: hidden;
     border: 1px solid $colorMain;
     .img {
+      display: block;
       object-fit: cover;
     }
   }
@@ -217,6 +219,7 @@ export default {
     overflow: hidden;
     border: 1px solid $colorMain;
     .img {
+      display: block;
       object-fit: cover;
     }
   }
