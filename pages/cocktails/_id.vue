@@ -1,5 +1,6 @@
 <template>
   <main class="wrapper">
+    test
     <CocktailPage :cocktail="cocktail" />
   </main>
 </template>

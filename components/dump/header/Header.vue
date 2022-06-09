@@ -29,7 +29,8 @@ export default {
 .header {
   background-color: $colorMain;
   &__wrapper {
-    padding: $defaultPadding;
+    padding-top: $defaultPadding;
+    padding-bottom: $defaultPadding;
     display: flex;
     align-items: center;
     justify-content: space-between;
