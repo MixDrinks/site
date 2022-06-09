@@ -20,14 +20,7 @@
             :media="img.media"
             :type="img.type"
           />
-          <img
-            class="img"
-            width="500"
-            height="500"
-            loading="lazy"
-            alt=""
-            title=""
-          />
+          <img class="img" width="500" height="500" alt="" title="" />
         </picture>
       </div>
       <div class="cocktail__recipe recipe">
@@ -38,11 +31,11 @@
             v-for="recipeItem in cocktail.receipt"
             :key="recipeItem"
           >
-            <div class="recipe__text">{{ recipeItem }}</div>
+            <span class="recipe__text">{{ recipeItem }}</span>
           </li>
         </ol>
       </div>
-      <ul class="cocktail__goods goods">
+      <div class="cocktail__goods goods">
         <div class="goods__title">Склад коктейлю {{ cocktail.name }}</div>
         <ul class="goods__list">
           <li
@@ -72,7 +65,7 @@
             <div class="goods__name">{{ good.name }}</div>
           </li>
         </ul>
-      </ul>
+      </div>
 
       <div class="cocktail__tools tools">
         <div class="tools__title">
