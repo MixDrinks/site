@@ -144,10 +144,12 @@ export default {
     padding-left: 100px;
   }
   &__goods {
+    flex-basis: 100%;
     margin-top: $shortMargin;
     margin-bottom: $shortMargin;
   }
   &__tools {
+    flex-basis: 100%;
     margin-top: $shortMargin;
     margin-bottom: $shortMargin;
   }
