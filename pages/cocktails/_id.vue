@@ -130,7 +130,7 @@ export default {
       cocktail: cocktail.data,
     };
   },
-  components: { CocktailPage },
+  // components: { CocktailPage },
   name: "Cocktails",
 };
 </script>
