@@ -1,7 +1,7 @@
 <template>
   <main class="wrapper">
+    test
     <CocktailPage :cocktail="cocktail" />
-    <div>test</div>
   </main>
 </template>
 
