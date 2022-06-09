@@ -1,6 +1,5 @@
 <template>
   <div class="cocktail">
-    test
     <div class="cocktail__header">
       <h1 class="cocktail__title">{{ cocktail.name }}</h1>
       <ul class="cocktail__tags tags">
