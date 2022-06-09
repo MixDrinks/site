@@ -1,6 +1,6 @@
 <template>
   <main class="wrapper">
-    <div>&nbsp;</div>
+    <div class="display">&nbsp;</div>
     <CocktailsPage
       :cocktailsFull="cocktailsFull"
       :cocktailsShort="cocktailsShort"
@@ -114,5 +114,8 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
+}
+.display {
+  display: none;
 }
 </style>

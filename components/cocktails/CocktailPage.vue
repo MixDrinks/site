@@ -187,7 +187,8 @@ export default {
     border: 1px solid $colorMain;
     .img {
       display: block;
-      object-fit: cover;
+      object-fit: contain;
+      padding: 5px;
     }
   }
 }
@@ -220,7 +221,8 @@ export default {
     border: 1px solid $colorMain;
     .img {
       display: block;
-      object-fit: cover;
+      object-fit: contain;
+      padding: 5px;
     }
   }
 }
