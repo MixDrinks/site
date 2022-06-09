@@ -1,6 +1,6 @@
 <template>
   <main class="wrapper">
-    test
+    <div>test</div>
     <CocktailPage :cocktail="cocktail" />
   </main>
 </template>
