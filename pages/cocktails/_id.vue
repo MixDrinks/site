@@ -1,9 +1,8 @@
 <template>
-  <!-- <main class="wrapper">
-    <div>&nbsp;</div>
+  <main class="wrapper">
+    <div class="display">&nbsp;</div>
     <CocktailPage :cocktail="cocktail" />
-  </main> -->
-  <CocktailPage :cocktail="cocktail" />
+  </main>
 </template>
 
 <script>
@@ -29,5 +28,8 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
+}
+.display {
+  display: none;
 }
 </style>
