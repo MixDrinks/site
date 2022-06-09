@@ -131,6 +131,9 @@ export default {
   }
   &__img {
     flex-basis: 500px;
+
+    margin-bottom: $shortMargin;
+
     .img {
       object-fit: cover;
     }
@@ -140,17 +143,17 @@ export default {
     flex-wrap: wrap;
   }
   &__recipe {
+    margin-bottom: $shortMargin;
+
     flex-basis: calc(100% - 500px);
     padding-left: 100px;
   }
   &__goods {
     flex-basis: 100%;
-    margin-top: $shortMargin;
     margin-bottom: $shortMargin;
   }
   &__tools {
     flex-basis: 100%;
-    margin-top: $shortMargin;
     margin-bottom: $shortMargin;
   }
 }
