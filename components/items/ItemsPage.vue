@@ -13,7 +13,14 @@
             :media="img.media"
             :type="img.type"
           />
-          <img class="img" width="500" height="500" alt="" title="" />
+          <img
+            class="img"
+            width="500"
+            height="500"
+            loading="lazy"
+            :alt="`Зображення ${items.name}`"
+            title=""
+          />
         </picture>
       </div>
       <div class="items__about about">

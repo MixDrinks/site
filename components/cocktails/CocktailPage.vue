@@ -20,7 +20,14 @@
             :media="img.media"
             :type="img.type"
           />
-          <img class="img" width="500" height="500" alt="" title="" />
+          <img
+            class="img"
+            width="500"
+            height="500"
+            loading="lazy"
+            :alt="`Зображення коктейля ${cocktail.name}`"
+            title=""
+          />
         </picture>
       </div>
       <div class="cocktail__recipe recipe">
@@ -57,7 +64,7 @@
                   width="150"
                   height="150"
                   loading="lazy"
-                  alt=""
+                  :alt="`Зображення ${good.name}`"
                   title=""
                 />
               </picture>
@@ -91,7 +98,7 @@
                   width="150"
                   height="150"
                   loading="lazy"
-                  alt=""
+                  :alt="`Зображення ${tool.name}`"
                   title=""
                 />
               </picture>
@@ -281,11 +288,12 @@ export default {
     }
   }
   &__name {
-    @include fontSize18B;
+    font-style: italic;
+    @include fontSize16M;
     display: block;
-    padding: 5px 10px;
-    border-radius: 8px;
-    background-color: rgba($colorBlack, 0.4);
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: $colorMain;
     color: $colorWhite;
 
     transition: background-color $defaultAnimTime;

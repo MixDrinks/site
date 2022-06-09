@@ -14,7 +14,7 @@
           width="298"
           height="298"
           loading="lazy"
-          alt=""
+          :alt="`Зображення коктейля ${cocktail.name}`"
           title=""
         />
       </picture>
