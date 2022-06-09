@@ -1,7 +1,7 @@
 <template>
   <div class="cocktail">
     <div class="cocktail__header">
-      <h1 class="cocktail__title">{{ cocktail.name }}</h1>
+      <h1 class="cocktail__title" itemprop="name">{{ cocktail.name }}</h1>
       <ul class="cocktail__tags tags">
         <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
           <NuxtLink :to="`/cocktails?tags=${tag.id}`" class="tags__link">
@@ -32,7 +32,7 @@
       </div>
       <div class="cocktail__recipe recipe">
         <div class="recipe__title">Рецепт коктейлю {{ cocktail.name }}</div>
-        <ol class="recipe__list">
+        <ol class="recipe__list" itemprop="recipeInstructions">
           <li
             class="recipe__item"
             v-for="recipeItem in cocktail.receipt"
@@ -79,7 +79,11 @@
           Потрібні штучки для пригоування {{ cocktail.name }}
         </div>
         <ul class="tools__list">
-          <li class="tools__item" v-for="tool in cocktail.tools" :key="tool.id">
+          <li
+            class="tools__item"
+            v-for="tool in cocktail.tools"
+            :key="tool.name"
+          >
             <div class="tools__img">
               <picture>
                 <source

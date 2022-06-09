@@ -1,51 +1,44 @@
 <template>
   <main class="wrapper">
     <div class="display">&nbsp;</div>
-    <CocktailPage :cocktail="cocktail" />
+    <ItemsPage :items="items" />
   </main>
 </template>
 
 <script>
-import CocktailPage from "~~/components/cocktails/CocktailPage.vue";
-import { getCocktail } from "~~/api";
+import ItemsPage from "~~/components/items/ItemsPage.vue";
+import { getItems } from "~~/api";
 export default {
   async asyncData({ route, error }) {
-    const cocktail = await getCocktail(`?id=${route.params.id}`).catch(() => {
+    const items = await getItems(`?id=${route.params.id}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
     return {
-      cocktail: cocktail.data,
+      items: items.data,
     };
-  },
-  components: { CocktailPage },
-  name: "Cocktail",
-  computed: {
-    canonical() {
-      return process.env.baseUrl + this.$nuxt.$route.path;
-    },
   },
   head() {
     return {
-      title: `Коктейль ${this.cocktail.name} в домашніх умовах`,
+      title: `${this.items.name} використовується в приготувані коктейлів`,
       link: [{ rel: "canonical", href: this.canonical }],
       meta: [
         {
           hid: "description",
           name: "description",
-          content: `Як приготувати коктейль ${this.cocktail.name} в домашніх умовах, читайте тут!`,
+          content: `${this.items.name} історія та в яких коктейлях можна використати`,
         },
         {
           hid: "og:title",
           name: "og:title",
-          content: `Коктейль ${this.cocktail.name} в домашніх умовах`,
+          content: `${this.items.name} використовується в приготувані коктейлів`,
         },
         {
           hid: "og:description",
           property: "og:description",
-          content: `Як приготувати коктейль ${this.cocktail.name} в домашніх умовах, читайте тут!`,
+          content: `${this.items.name} історія та в яких коктейлях можна використати`,
         },
         {
           hid: "og:url",
@@ -55,6 +48,8 @@ export default {
       ],
     };
   },
+  components: { ItemsPage },
+  name: "Item",
 };
 </script>
 

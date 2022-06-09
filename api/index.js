@@ -24,3 +24,6 @@ export const getTags = () => {
 export const getCocktail = (id) => {
   return api.get(`/cocktails/full${id}`);
 };
+export const getItems = (id) => {
+  return api.get(`items/full${id}`);
+};
