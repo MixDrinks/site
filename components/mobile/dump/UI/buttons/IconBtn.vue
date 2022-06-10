@@ -65,7 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  @include defaultBtnMob;
+  @include defaultBtn;
   font-size: 0;
   line-height: 0;
 

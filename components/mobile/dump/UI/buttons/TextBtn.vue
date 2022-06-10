@@ -30,7 +30,7 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  @include defaultBtnMob;
+  @include defaultBtn;
   @include fontSize18M;
   color: $colorWhite;
 

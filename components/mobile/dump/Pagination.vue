@@ -9,54 +9,52 @@
     >
       Показати ще {{ limit }}
     </TextBtn>
-    <div class="pagination__controls">
-      <ul class="pagination__list">
-        <li class="pagination__item" v-for="page in pagination" :key="page.id">
-          <TextBtn
-            class="pagination__link"
-            v-if="page.type === 'link'"
-            :isLink="!!page.link"
-            :href="page.link"
-            @click.native="updateCocktails()"
-          >
-            {{ page.title }}
-          </TextBtn>
-          <span class="pagination__link" :class="page.type" v-else>
-            {{ page.title }}
-          </span>
-        </li>
-      </ul>
-      <div class="pagination__btns">
-        <IconBtn
-          class="pagination__prev"
-          direction="top"
-          icon="/img/icons/arrow.svg"
-          :lock="!!!prevPage"
-          :isLink="!!prevPage"
-          :href="!!prevPage ? prevPage.link : '/'"
+    <ul class="pagination__list">
+      <li class="pagination__item" v-for="page in pagination" :key="page.id">
+        <TextBtn
+          class="pagination__link"
+          v-if="page.type === 'link'"
+          :isLink="!!page.link"
+          :href="page.link"
           @click.native="updateCocktails()"
         >
-          Попередня сторінка
-        </IconBtn>
-        <IconBtn
-          class="pagination__next"
-          direction="bottom"
-          icon="/img/icons/arrow.svg"
-          :lock="!!!nextPage"
-          :isLink="!!nextPage"
-          :href="!!nextPage ? nextPage.link : '/'"
-          @click.native="updateCocktails()"
-        >
-          Наступна сторінка
-        </IconBtn>
-      </div>
+          {{ page.title }}
+        </TextBtn>
+        <span class="pagination__link" :class="page.type" v-else>
+          {{ page.title }}
+        </span>
+      </li>
+    </ul>
+    <div class="pagination__btns">
+      <IconBtn
+        class="pagination__prev"
+        direction="top"
+        icon="/img/icons/arrow.svg"
+        :lock="!!!prevPage"
+        :isLink="!!prevPage"
+        :href="!!prevPage ? prevPage.link : '/'"
+        @click.native="updateCocktails()"
+      >
+        Попередня сторінка
+      </IconBtn>
+      <IconBtn
+        class="pagination__next"
+        direction="bottom"
+        icon="/img/icons/arrow.svg"
+        :lock="!!!nextPage"
+        :isLink="!!nextPage"
+        :href="!!nextPage ? nextPage.link : '/'"
+        @click.native="updateCocktails()"
+      >
+        Наступна сторінка
+      </IconBtn>
     </div>
   </div>
 </template>
 
 <script>
-import IconBtn from "~~/components/mobile/dump/UI/buttons/IconBtn.vue";
-import TextBtn from "~~/components/mobile/dump/UI/buttons/TextBtn.vue";
+import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
+import TextBtn from "~~/components/dump/UI/buttons/TextBtn.vue";
 export default {
   components: { IconBtn, TextBtn },
   name: "Pagination",
@@ -190,33 +188,35 @@ export default {
   &__load-more {
     margin-bottom: $halfShortMargin;
   }
-  &__controls {
+  &__btns {
     display: flex;
     justify-content: space-between;
   }
-  &__btns {
-    display: flex;
-  }
   &__list {
+    margin-bottom: $halfShortMargin;
     display: flex;
+    transform: translateX(-50%);
+    position: relative;
+    left: 50%;
+    justify-content: center;
   }
   &__prev {
     margin-right: 8px;
   }
   &__item {
     &:not(:last-child) {
-      margin-right: 8px;
+      margin-right: 2px;
     }
   }
   &__link {
     &.dots,
     &.current {
-      padding: 8px;
+      padding: 4px;
 
-      min-width: 48px;
-      min-height: 48px;
+      min-width: 40px;
+      min-height: 40px;
 
-      border-radius: 8px;
+      border-radius: 4px;
 
       display: flex;
       align-items: center;

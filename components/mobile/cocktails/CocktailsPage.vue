@@ -1,37 +1,31 @@
 <template>
   <div class="cocktails">
-    <div class="cocktails__header">
-      <h1 class="cocktails__title">Коктейлі</h1>
-      device
-      <FieldSearch :listSearch="cocktailsShort" />
-    </div>
-    <div class="cocktails__body">
-      <FilterList
-        class="cocktails__filter"
-        @updateCocktails="updateCocktails"
-        :filterList="tags"
-      />
-      <div class="cocktails__list">
-        <CocktailsList :cocktails="cocktailsFull.cocktails" />
-      </div>
-    </div>
-    <div class="cocktails__footer">
-      <Pagination
-        class="cocktails__pagination"
-        :totalItems="cocktailsFull.totalCount"
-        :limit="10"
-        :itemsCount="cocktailsFull.cocktails.length"
-        @updateCocktails="updateCocktails"
-      />
-    </div>
+    <h1 class="cocktails__title">Коктейлі</h1>
+    <FieldSearch class="cocktails__search" :listSearch="cocktailsShort" />
+    <FilterList
+      class="cocktails__filter"
+      @updateCocktails="updateCocktails"
+      :filterList="tags"
+    />
+    <CocktailsList
+      class="cocktails__list"
+      :cocktails="cocktailsFull.cocktails"
+    />
+    <Pagination
+      class="cocktails__pagination"
+      :totalItems="cocktailsFull.totalCount"
+      :limit="10"
+      :itemsCount="cocktailsFull.cocktails.length"
+      @updateCocktails="updateCocktails"
+    />
   </div>
 </template>
 
 <script>
-import CocktailsList from "~~/components/dump/CocktailsList.vue";
-import FieldSearch from "~~/components/dump/UI/FieldSearch.vue";
-import FilterList from "~~/components/cocktails/FilterList.vue";
-import Pagination from "~~/components/dump/Pagination.vue";
+import CocktailsList from "~~/components/mobile/dump/CocktailsList.vue";
+import FieldSearch from "~~/components/mobile/dump/UI/FieldSearch.vue";
+import FilterList from "~~/components/mobile/cocktails/FilterList.vue";
+import Pagination from "~~/components/mobile/dump/Pagination.vue";
 export default {
   components: { FieldSearch, FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
@@ -64,27 +58,15 @@ export default {
 .cocktails {
   &__title {
     @include fontSize48B;
+    margin-bottom: $halfShortMargin;
   }
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: $shortMargin;
-  }
-  &__footer {
-    margin-top: $shortMargin;
-  }
-  &__body {
-    display: flex;
-    margin-top: $shortMargin;
-    margin-bottom: $shortMargin;
-  }
-  &__filter {
-    width: 250px;
-    padding-right: 25px;
+  &__search {
+    margin-bottom: $halfShortMargin;
   }
   &__list {
-    width: calc(100% - 250px);
+    margin-bottom: $halfShortMargin;
+  }
+  &__pagination {
   }
 }
 </style>

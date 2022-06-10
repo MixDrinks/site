@@ -1,59 +1,63 @@
 <template>
   <div class="filter">
-    <div class="filter__header">
-      <div class="filter__title">Фільтр</div>
-      <transition name="fate-in" appear>
-        <IconBtn
-          class="filter__close"
-          v-if="!!activeFilter.length"
-          direction="top"
-          type="short"
-          icon="/img/icons/croos.svg"
-          :isLink="true"
-          href="/cocktails"
-        >
-          Закрити всі фільтри
-        </IconBtn>
-      </transition>
-    </div>
-
-    <div class="tag-cloud">
-      <transition-group
-        class="tag-cloud__list"
-        name="fate-in"
-        mode="page"
-        appear
-      >
-        <div
-          class="tag-cloud__item"
-          v-for="filterItem in activeFilter"
-          :key="filterItem.id"
-        >
+    <transition name="max-height">
+      <div class="filter__main" v-show="isFilterOpen">
+        <div class="filter__header">
+          <div class="filter__title">Фільтр</div>
+          <transition name="fate-in" appear>
+            <IconBtn
+              class="filter__close"
+              v-if="!!activeFilter.length"
+              direction="top"
+              type="short"
+              icon="/img/icons/croos.svg"
+              :isLink="true"
+              href="/cocktails"
+            >
+              Закрити всі фільтри
+            </IconBtn>
+          </transition>
+        </div>
+        <div class="tag-cloud">
+          <transition-group
+            class="tag-cloud__list"
+            name="fate-in"
+            mode="page"
+            appear
+          >
+            <div
+              class="tag-cloud__item"
+              v-for="filterItem in activeFilter"
+              :key="filterItem.id"
+            >
+              <NuxtLink
+                class="tag-cloud__link"
+                :to="filterItem.url"
+                @click.native="updateCocktails"
+              >
+                {{ filterItem.name }}
+              </NuxtLink>
+            </div>
+          </transition-group>
+        </div>
+        <div class="filter__wrapper">
           <NuxtLink
-            class="tag-cloud__link"
+            class="filter__item"
+            :class="{ active: filterItem.active }"
+            v-for="filterItem in listWithURL"
+            :key="filterItem.id"
             :to="filterItem.url"
             @click.native="updateCocktails"
           >
-            {{ filterItem.name }}
+            <div class="filter__checkbox"></div>
+            <div class="filter__name">
+              {{ filterItem.name }}
+            </div>
           </NuxtLink>
         </div>
-      </transition-group>
-    </div>
-    <div class="filter__wrapper">
-      <NuxtLink
-        class="filter__item"
-        :class="{ active: filterItem.active }"
-        v-for="filterItem in listWithURL"
-        :key="filterItem.id"
-        :to="filterItem.url"
-        @click.native="updateCocktails"
-      >
-        <div class="filter__checkbox"></div>
-        <div class="filter__name">
-          {{ filterItem.name }}
-        </div>
-      </NuxtLink>
-    </div>
+      </div>
+    </transition>
+    <div class="filter__btn" @click="isFilterOpen = !isFilterOpen">Фільтр</div>
   </div>
 </template>
 
@@ -62,6 +66,9 @@ import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
 export default {
   components: { IconBtn },
   name: "FilterList",
+  data: () => ({
+    isFilterOpen: false,
+  }),
   props: {
     filterList: {
       type: Array,
@@ -116,15 +123,44 @@ export default {
 }
 
 .filter {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 2;
+  &__main {
+    padding: $halfPadding 10vw;
+    background-color: $colorWhite;
+    box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
+  }
+
+  &__btn {
+    @include fontSize18B;
+    color: $colorWhite;
+    text-align: center;
+
+    padding: $halfPadding 10vw;
+
+    background-color: $colorMain;
+
+    position: relative;
+    z-index: 3;
+
+    transition: background-color $defaultAnimTime;
+
+    &:hover,
+    &:focus {
+      background-color: $colorHover;
+    }
+  }
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    margin-bottom: $halfShortMargin;
   }
   &__wrapper {
-    max-height: 100vh;
+    max-height: 40vh;
     overflow: auto;
     @include defaultWrapperScroll;
   }
@@ -141,7 +177,6 @@ export default {
   }
   &__title {
     @include fontSize24B;
-    color: $colorBlack;
   }
   &__name {
     @include fontSize18M;
@@ -157,7 +192,7 @@ export default {
     display: flex;
     align-items: center;
 
-    padding: 15px 0;
+    padding: 8px 0;
 
     cursor: pointer;
     &:hover,
@@ -192,13 +227,15 @@ export default {
   }
 }
 .tag-cloud {
+  margin-top: $halfPadding;
+  margin-bottom: $halfPadding;
   &__list {
     display: flex;
     flex-wrap: wrap;
 
-    margin: -4px;
-
-    padding: $halfPadding 0;
+    overflow: auto;
+    @include defaultWrapperScroll;
+    max-height: 90px;
   }
   &__link {
     @include fontSize14;
@@ -246,7 +283,21 @@ export default {
     }
   }
   &__item {
-    padding: 4px;
+    padding: 1px;
+  }
+}
+.max-height-enter-active {
+  animation: max-height $defaultAnimTime;
+}
+.max-height-leave-active {
+  animation: max-height $defaultAnimTime reverse;
+}
+@keyframes max-height {
+  0% {
+    max-height: 0;
+  }
+  100% {
+    max-height: calc(40vh + 186px);
   }
 }
 </style>
