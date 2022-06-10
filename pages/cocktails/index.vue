@@ -60,7 +60,6 @@ export default {
       tags: tags.data,
     };
   },
-  name: "Cocktails",
   methods: {
     async updateCocktails(payload) {
       // this.startLoading()

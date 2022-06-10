@@ -44,7 +44,6 @@ export default {
       items: items.data,
     };
   },
-  name: "Item",
   components: { ItemsPage },
   methods: {
     async updateCocktails(payload) {

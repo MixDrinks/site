@@ -7,7 +7,6 @@
 <script>
 import HomePage from "~~/components/home/HomePage.vue";
 export default {
-  name: "Home",
   components: { HomePage },
   computed: {
     canonical() {

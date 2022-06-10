@@ -21,7 +21,6 @@ export default {
     };
   },
   components: { CocktailPage },
-  name: "Cocktail",
   computed: {
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
