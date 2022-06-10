@@ -130,7 +130,9 @@ export default {
     margin-bottom: $halfShortMargin;
 
     .img {
-      @include fullPseudoElement;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -167,6 +169,7 @@ export default {
   &__link {
     display: block;
     height: 100%;
+    max-width: 110px;
     padding: 4px 4px 12px;
     border-radius: 8px;
 
