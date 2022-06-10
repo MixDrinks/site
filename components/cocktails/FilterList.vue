@@ -1,6 +1,44 @@
 <template>
   <div class="filter">
-    <div class="filter__title">Фільтр</div>
+    <div class="filter__header">
+      <div class="filter__title">Фільтр</div>
+      <transition name="fate-in" appear>
+        <IconBtn
+          class="filter__btn"
+          v-if="!!activeFilter.length"
+          direction="top"
+          type="short"
+          icon="/img/icons/croos.svg"
+          :isLink="true"
+          href="/cocktails"
+        >
+          Закрити всі фільтри
+        </IconBtn>
+      </transition>
+    </div>
+
+    <div class="tag-cloud">
+      <transition-group
+        class="tag-cloud__list"
+        name="fate-in"
+        mode="page"
+        appear
+      >
+        <div
+          class="tag-cloud__item"
+          v-for="filterItem in activeFilter"
+          :key="filterItem.id"
+        >
+          <NuxtLink
+            class="tag-cloud__link"
+            :to="filterItem.url"
+            @click.native="updateCocktails"
+          >
+            {{ filterItem.name }}
+          </NuxtLink>
+        </div>
+      </transition-group>
+    </div>
     <div class="filter__wrapper">
       <NuxtLink
         class="filter__item"
@@ -20,7 +58,9 @@
 </template>
 
 <script>
+import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
 export default {
+  components: { IconBtn },
   name: "FilterList",
   props: {
     filterList: {
@@ -60,12 +100,29 @@ export default {
 
       return arr;
     },
+    activeFilter() {
+      return this.listWithURL.filter((item) => item.active);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.fate-in-enter-active {
+  animation: fade-in $defaultAnimTime;
+}
+.fate-in-leave-active {
+  animation: fade-in $defaultAnimTime reverse;
+}
+
 .filter {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: $halfShortMargin;
+  }
   &__wrapper {
     max-height: 100vh;
     overflow: auto;
@@ -85,8 +142,6 @@ export default {
   &__title {
     @include fontSize24B;
     color: $colorBlack;
-
-    margin-bottom: $halfShortMargin;
   }
   &__name {
     @include fontSize18M;
@@ -134,6 +189,64 @@ export default {
         }
       }
     }
+  }
+}
+.tag-cloud {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin: -4px;
+
+    padding: $halfPadding 0;
+  }
+  &__link {
+    @include fontSize14;
+    color: $colorMain;
+
+    display: block;
+    padding: 3px 20px 3px 5px;
+
+    position: relative;
+
+    border: 1px solid $colorMain;
+    border-radius: 4px;
+
+    transition: color $defaultAnimTime, background-color $defaultAnimTime;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      height: 1px;
+      width: 13px;
+      background-color: $colorMain;
+
+      top: calc(50% - 0.5px);
+      right: 4px;
+
+      transition: background-color $defaultAnimTime;
+    }
+    &::after {
+      transform: rotate(45deg);
+    }
+    &::before {
+      transform: rotate(-45deg);
+    }
+
+    &:hover {
+      background-color: $colorMain;
+      color: $colorWhite;
+    }
+    &:hover::after,
+    &:hover::before {
+      background-color: $colorWhite;
+    }
+  }
+  &__item {
+    padding: 4px;
   }
 }
 </style>

@@ -44,7 +44,11 @@ module.exports = {
 
   modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
   styleResources: {
-    scss: ["~~/assets/scss/variables.scss", "~~/assets/scss/mixins.scss"], // alternative: scss
+    scss: [
+      "~~/assets/scss/variables.scss",
+      "~~/assets/scss/mixins.scss",
+      "~~/assets/scss/keyframes.scss ",
+    ], // alternative: scss
     less: [],
     stylus: [],
   },

@@ -29,7 +29,8 @@
       <div class="pagination__btns">
         <IconBtn
           class="pagination__prev"
-          direction="left"
+          direction="top"
+          icon="/img/icons/arrow.svg"
           :lock="!!!prevPage"
           :isLink="!!prevPage"
           :href="!!prevPage ? prevPage.link : '/'"
@@ -39,7 +40,8 @@
         </IconBtn>
         <IconBtn
           class="pagination__next"
-          direction="right"
+          direction="bottom"
+          icon="/img/icons/arrow.svg"
           :lock="!!!nextPage"
           :isLink="!!nextPage"
           :href="!!nextPage ? nextPage.link : '/'"

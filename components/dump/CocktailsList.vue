@@ -1,5 +1,5 @@
 <template>
-  <transition-group class="list" name="test" mode="page" appear>
+  <transition-group class="list" name="fate-in" mode="page" appear>
     <div class="list__item" v-for="cocktail in cocktails" :key="cocktail.id">
       <CocktailsCart :cocktail="cocktail" />
     </div>
@@ -21,19 +21,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test-enter-active {
+.fate-in-enter-active {
   animation: fade-in $defaultAnimTime;
 }
-@keyframes fade-in {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+
 .list {
   display: flex;
   flex-wrap: wrap;

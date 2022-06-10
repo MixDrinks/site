@@ -1,19 +1,27 @@
 <template>
   <NuxtLink
     class="btn"
-    :class="[{ lock: lock }, `btn--${direction}`]"
+    :class="[{ lock: lock }, `btn--${direction}`, type]"
     @click.native="click()"
     :to="href"
     v-if="isLink"
   >
+    <span
+      class="btn__icon icon"
+      :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
+    ></span>
     <slot />
   </NuxtLink>
   <button
     class="btn"
-    :class="[{ lock: lock }, `btn--${direction}`]"
+    :class="[{ lock: lock }, `btn--${direction}`, type]"
     v-else
     @click="click()"
   >
+    <span
+      class="btn__icon icon"
+      :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
+    ></span>
     <slot />
   </button>
 </template>
@@ -36,7 +44,15 @@ export default {
     },
     direction: {
       type: String,
-      default: "left",
+      default: "top",
+    },
+    icon: {
+      type: String,
+      require: true,
+    },
+    type: {
+      type: String,
+      default: "big",
     },
   },
   methods: {
@@ -58,13 +74,20 @@ export default {
   background-color: $colorMain;
 
   transition: background-color $defaultAnimTime, box-shadow $defaultAnimTime;
-  &::before {
+  .icon {
     @include fullPseudoElement;
 
+    mask-size: 20px;
     mask-position: center;
     mask-repeat: no-repeat;
-    mask-image: url("/img/icons/arrow.svg");
     background-color: $colorWhite;
+  }
+  &.short {
+    min-width: 30px;
+    min-height: 30px;
+    .icon {
+      mask-size: 14px;
+    }
   }
   &.lock {
     pointer-events: none;
@@ -76,8 +99,8 @@ export default {
       z-index: 1;
     }
   }
-  &--right {
-    &::before {
+  &--bottom {
+    .icon {
       transform: rotate(180deg);
     }
   }
