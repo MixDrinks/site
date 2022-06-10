@@ -7,10 +7,9 @@ module.exports = {
     api: MasterKeys[isDev].api,
     imagesUrl: MasterKeys[isDev].imagesUrl,
   },
-
+  ssr: true,
   mode: "universal",
-
-  // target: "server",
+  target: "server",
 
   head: {
     htmlAttrs: {
