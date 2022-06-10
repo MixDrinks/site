@@ -175,9 +175,8 @@ export default {
           color: $colorHover;
         }
       }
-      transform: translateY(-10px);
-      box-shadow: 1px 10px rgba($colorHover, 0.3),
-        -5px -5px 40px rgba($colorHover, 0.1);
+      transform: translateY(-4px);
+      box-shadow: 1px 4px rgba($colorHover, 0.3);
     }
   }
   &__item {
