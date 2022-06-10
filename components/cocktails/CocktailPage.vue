@@ -45,31 +45,29 @@
       <div class="cocktail__goods goods">
         <div class="goods__title">Склад коктейлю {{ cocktail.name }}</div>
         <ul class="goods__list">
-          <li
-            class="goods__item"
-            v-for="good in cocktail.goods"
-            :key="good.name"
-          >
-            <div class="goods__img">
-              <picture>
-                <source
-                  v-for="img in good.images"
-                  :key="img.id"
-                  :srcset="img.srcset"
-                  :media="img.media"
-                  :type="img.type"
-                />
-                <img
-                  class="img"
-                  width="150"
-                  height="150"
-                  loading="lazy"
-                  :alt="`Зображення ${good.name}`"
-                  title=""
-                />
-              </picture>
-            </div>
-            <div class="goods__name">{{ good.name }}</div>
+          <li class="goods__item" v-for="good in cocktail.goods" :key="good.id">
+            <NuxtLink class="goods__link" :to="`/ingredients/${good.id}`">
+              <div class="goods__img">
+                <picture>
+                  <source
+                    v-for="img in good.images"
+                    :key="img.id"
+                    :srcset="img.srcset"
+                    :media="img.media"
+                    :type="img.type"
+                  />
+                  <img
+                    class="img"
+                    width="150"
+                    height="150"
+                    loading="lazy"
+                    :alt="`Зображення ${good.name}`"
+                    title=""
+                  />
+                </picture>
+              </div>
+              <div class="goods__name">{{ good.name }}</div>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -79,31 +77,29 @@
           Потрібні штучки для пригоування {{ cocktail.name }}
         </div>
         <ul class="tools__list">
-          <li
-            class="tools__item"
-            v-for="tool in cocktail.tools"
-            :key="tool.name"
-          >
-            <div class="tools__img">
-              <picture>
-                <source
-                  v-for="img in tool.images"
-                  :key="img.id"
-                  :srcset="img.srcset"
-                  :media="img.media"
-                  :type="img.type"
-                />
-                <img
-                  class="img"
-                  width="150"
-                  height="150"
-                  loading="lazy"
-                  :alt="`Зображення ${tool.name}`"
-                  title=""
-                />
-              </picture>
-            </div>
-            <div class="tools__name">{{ tool.name }}</div>
+          <li class="tools__item" v-for="tool in cocktail.tools" :key="tool.id">
+            <NuxtLink class="tools__link" :to="`/ingredients/${tool.id}`">
+              <div class="tools__img">
+                <picture>
+                  <source
+                    v-for="img in tool.images"
+                    :key="img.id"
+                    :srcset="img.srcset"
+                    :media="img.media"
+                    :type="img.type"
+                  />
+                  <img
+                    class="img"
+                    width="150"
+                    height="150"
+                    loading="lazy"
+                    :alt="`Зображення ${tool.name}`"
+                    title=""
+                  />
+                </picture>
+              </div>
+              <div class="tools__name">{{ tool.name }}</div>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -162,40 +158,7 @@ export default {
     margin-bottom: $shortMargin;
   }
 }
-.tools {
-  &__title {
-    color: $colorBlack;
-    @include fontSize24B;
-
-    margin-bottom: $shortMargin;
-  }
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -10px;
-  }
-  &__item {
-    padding: 10px;
-  }
-  &__name {
-    max-width: 150px;
-    color: $colorMain;
-    @include fontSize14;
-    text-align: center;
-
-    margin-top: 12px;
-  }
-  &__img {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid $colorMain;
-    .img {
-      display: block;
-      object-fit: contain;
-      padding: 5px;
-    }
-  }
-}
+.tools,
 .goods {
   &__title {
     color: $colorBlack;
@@ -206,10 +169,29 @@ export default {
   &__list {
     display: flex;
     flex-wrap: wrap;
-    margin: -10px;
+    margin: -4px;
+  }
+  &__link {
+    display: block;
+    height: 100%;
+    padding: 4px 4px 12px;
+    border-radius: 8px;
+
+    transition: transform $defaultAnimTime, box-shadow $defaultAnimTime;
+    &:hover {
+      .tools,
+      .goods {
+        &__name {
+          color: $colorHover;
+        }
+      }
+      transform: translateY(-10px);
+      box-shadow: 1px 10px rgba($colorHover, 0.3),
+        -5px -5px 40px rgba($colorHover, 0.1);
+    }
   }
   &__item {
-    padding: 10px;
+    padding: 4px;
   }
   &__name {
     max-width: 150px;
@@ -218,6 +200,8 @@ export default {
     text-align: center;
 
     margin-top: 12px;
+
+    transition: color $defaultAnimTime;
   }
   &__img {
     border-radius: 8px;
