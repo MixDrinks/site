@@ -63,7 +63,11 @@
                 />
               </picture>
             </div>
-            <div class="goods__name">{{ good.name }}</div>
+            <div class="goods__name">
+              {{ good.name }}<br /><strong>
+                {{ good.amount }} {{ good.unit }}.
+              </strong>
+            </div>
           </NuxtLink>
         </li>
       </ul>
