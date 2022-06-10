@@ -10,7 +10,7 @@ module.exports = {
 
   mode: "universal",
 
-  target: "server",
+  // target: "server",
 
   head: {
     htmlAttrs: {
