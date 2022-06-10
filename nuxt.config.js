@@ -9,8 +9,7 @@ module.exports = {
   },
   ssr: true,
   mode: "universal",
-  // target: "server",
-  target: "static",
+  target: "server",
 
   head: {
     htmlAttrs: {
