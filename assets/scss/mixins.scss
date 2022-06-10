@@ -39,6 +39,13 @@
   right: 0;
   bottom: 0;
 }
+@mixin scrollNone {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
 @mixin defaultWrapperScroll {
   scrollbar-width: thin;
   scrollbar-color: rgba($colorMain, 0.8) rgba($colorMain, 0.2);

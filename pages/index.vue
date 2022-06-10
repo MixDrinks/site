@@ -1,16 +1,26 @@
 <template>
   <main class="wrapper">
-    <HomePage />
+    <component v-if="isMobile" :is="HomePageMob" />
+    <component v-else :is="HomePage" />
   </main>
 </template>
 
 <script>
-import HomePage from "~~/components/home/HomePage.vue";
 export default {
-  components: { HomePage },
   computed: {
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
+    },
+    isMobile() {
+      return this.$device.isMobile;
+    },
+  },
+  methods: {
+    HomePage: () => {
+      return import("~~/components/home/HomePage.vue");
+    },
+    HomePageMob: () => {
+      return import("~~/components/mobile/home/HomePage.vue");
     },
   },
   head() {

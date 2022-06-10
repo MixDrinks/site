@@ -1,12 +1,12 @@
 <template>
   <main class="wrapper">
     <div class="display">&nbsp;</div>
-    <CocktailPage :cocktail="cocktail" />
+    <component v-if="isMobile" :is="CocktailPageMob" :cocktail="cocktail" />
+    <component v-else :is="CocktailPage" :cocktail="cocktail" />
   </main>
 </template>
 
 <script>
-import CocktailPage from "~~/components/cocktails/CocktailPage.vue";
 import { getCocktail } from "~~/api";
 export default {
   async asyncData({ route, error }) {
@@ -20,8 +20,18 @@ export default {
       cocktail: cocktail.data,
     };
   },
-  components: { CocktailPage },
+  methods: {
+    CocktailPage: () => {
+      return import("~~/components/cocktails/CocktailPage.vue");
+    },
+    CocktailPageMob: () => {
+      return import("~~/components/mobile/cocktails/CocktailPage.vue");
+    },
+  },
   computed: {
+    isMobile() {
+      return this.$device.isMobile;
+    },
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
     },

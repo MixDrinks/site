@@ -1,13 +1,12 @@
 <template>
-  <div class="error-500 wrapper">
-    {{ error }}
-    <h1>500</h1>
-    <p>The link you clicked on may be broken or no longer exist.</p>
+  <div class="error-404 wrapper">
+    <h1>{{ error.statusCode }}</h1>
+    <p>{{ error.message }}</p>
   </div>
 </template>
 <script>
 export default {
-  name: "Error500",
+  name: "Error404",
   props: {
     error: {
       type: Object,

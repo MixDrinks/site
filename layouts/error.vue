@@ -1,14 +1,12 @@
 <template>
   <div class="error">
-    <component :is="errorPage" :error="error" />
+    <component v-if="isMobile" :is="Error404Mob" :error="error" />
+    <component v-else :is="Error404" :error="error" />
   </div>
 </template>
 <script>
-import Error404 from "~~/components/error/404.vue";
-import Error500 from "~~/components/error/500.vue";
 export default {
   name: "error",
-  // layout: "default", // optional
   props: {
     error: {
       type: Object,
@@ -16,11 +14,16 @@ export default {
     },
   },
   computed: {
-    errorPage() {
-      if (this.error.statusCode === 404) {
-        return Error404;
-      }
-      return Error500;
+    isMobile() {
+      return this.$device.isMobile;
+    },
+  },
+  methods: {
+    Error404: () => {
+      return import("~~/components/error/404.vue");
+    },
+    Error404Mob: () => {
+      return import("~~/components/mobile/error/404.vue");
     },
   },
 };
