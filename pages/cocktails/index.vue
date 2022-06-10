@@ -1,7 +1,17 @@
 <template>
   <main class="wrapper">
     <div class="display">&nbsp;</div>
-    <CocktailsPage
+    <component
+      v-if="isMobile"
+      :is="CocktailsPageMob"
+      :cocktailsFull="cocktailsFull"
+      :cocktailsShort="cocktailsShort"
+      :tags="tags"
+      @updateCocktails="updateCocktails"
+    />
+    <component
+      v-else
+      :is="CocktailsPage"
       :cocktailsFull="cocktailsFull"
       :cocktailsShort="cocktailsShort"
       :tags="tags"
@@ -11,7 +21,6 @@
 </template>
 
 <script>
-import CocktailsPage from "~~/components/cocktails/CocktailsPage.vue";
 import { getCocktailsShort, getTags, getCocktails } from "~~/api";
 export default {
   async asyncData({ query, error }) {
@@ -52,7 +61,6 @@ export default {
     };
   },
   name: "Cocktails",
-  components: { CocktailsPage },
   methods: {
     async updateCocktails(payload) {
       // this.startLoading()
@@ -74,8 +82,17 @@ export default {
       }
       // this.endLoading()
     },
+    CocktailsPage: () => {
+      return import("~~/components/cocktails/CocktailsPage.vue");
+    },
+    CocktailsPageMob: () => {
+      return import("~~/components/mobile/cocktails/CocktailsPage.vue");
+    },
   },
   computed: {
+    isMobile() {
+      return this.$device.isMobile;
+    },
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
     },

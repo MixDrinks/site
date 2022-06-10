@@ -43,6 +43,7 @@ module.exports = {
   buildModules: [],
 
   modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
+  buildModules: ["@nuxtjs/device"],
   styleResources: {
     scss: [
       "~~/assets/scss/variables.scss",

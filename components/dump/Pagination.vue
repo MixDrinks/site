@@ -56,7 +56,7 @@
 
 <script>
 import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
-import TextBtn from "./UI/buttons/TextBtn.vue";
+import TextBtn from "~~/components/dump/UI/buttons/TextBtn.vue";
 export default {
   components: { IconBtn, TextBtn },
   name: "Pagination",
