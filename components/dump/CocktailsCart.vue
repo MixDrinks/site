@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`${$nuxt.$route.path}/${cocktail.id}`" class="item">
+  <NuxtLink :to="`/cocktails/${cocktail.id}`" class="item">
     <div class="item__img">
       <picture>
         <source
@@ -59,7 +59,7 @@ export default {
       right: 0;
       bottom: 0;
       max-width: 100%;
-      width: 298px;
+      width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;

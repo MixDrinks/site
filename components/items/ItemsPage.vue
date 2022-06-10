@@ -27,28 +27,67 @@
         <div class="about__title">Опис {{ items.name }}</div>
         <div class="about__text">{{ items.about }}</div>
       </div>
+      <div class="items__list cocktails">
+        <h2 class="cocktails__title">
+          Коктейлі з використанням {{ items.name }}
+        </h2>
+        <CocktailsList :cocktails="cocktailsFull.cocktails" />
+      </div>
     </div>
-    <div class="items__footer"></div>
+    <div class="items__footer">
+      <Pagination
+        class="items__pagination"
+        :totalItems="cocktailsFull.totalCount"
+        :limit="10"
+        :itemsCount="cocktailsFull.cocktails.length"
+        @updateCocktails="updateCocktails"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import CocktailsList from "~~/components/dump/CocktailsList.vue";
+import Pagination from "~~/components/dump/Pagination.vue";
 export default {
+  components: { Pagination, CocktailsList },
   name: "ItemsPage",
   props: {
     items: {
       type: Object,
       require: true,
     },
+    cocktailsFull: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    updateCocktails(payload) {
+      this.$emit("updateCocktails", payload);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.cocktails {
+  &__title {
+    @include fontSize24B;
+    color: $colorBlack;
+    margin-bottom: $shortMargin;
+  }
+}
 .items {
   &__title {
     @include fontSize48B;
     margin-bottom: $shortMargin;
+  }
+  &__footer {
+    margin-top: $shortMargin;
+  }
+  &__list {
+    flex-basis: 100%;
   }
   &__img {
     flex-basis: 500px;
