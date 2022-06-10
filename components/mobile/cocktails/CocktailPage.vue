@@ -119,15 +119,10 @@ export default {
 .cocktail {
   &__title {
     @include fontSize48B;
-    margin-bottom: $halfShortMargin;
-  }
-  &__tags {
-    margin-bottom: $halfShortMargin;
   }
   &__img {
     position: relative;
     padding-top: 100%;
-    margin-bottom: $halfShortMargin;
 
     .img {
       position: absolute;
@@ -138,13 +133,12 @@ export default {
       object-fit: contain;
     }
   }
-  &__recipe {
-    margin-bottom: $halfShortMargin;
-  }
-  &__goods {
-    margin-bottom: $halfShortMargin;
-  }
-  &__tools {
+  &__tags,
+  &__recipe,
+  &__goods,
+  &__tools,
+  &__img,
+  &__title {
     margin-bottom: $halfShortMargin;
   }
 }

@@ -68,25 +68,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.cocktails {
-  &__title {
-    @include fontSize24B;
-    color: $colorBlack;
-    margin-bottom: $halfShortMargin;
-  }
-  &__list {
-    margin-bottom: $halfShortMargin;
-  }
-}
 .items {
   &__title {
     @include fontSize48B;
-    margin-bottom: $halfShortMargin;
   }
   &__img {
     position: relative;
     padding-top: 100%;
-    margin-bottom: $halfShortMargin;
 
     .img {
       position: absolute;
@@ -97,16 +85,18 @@ export default {
       object-fit: contain;
     }
   }
+  &__title,
+  &__img,
+  &__list,
   &__about {
     margin-bottom: $halfShortMargin;
   }
 }
-.about {
-  margin-bottom: $halfShortMargin;
+.about,
+.cocktails {
   &__title {
     color: $colorBlack;
     @include fontSize24B;
-
     margin-bottom: $halfShortMargin;
   }
   &__text {
