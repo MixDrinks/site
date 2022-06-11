@@ -133,8 +133,8 @@ export default {
     height: 20px;
     margin-right: 10px;
 
-    border: 1px solid $colorBlack;
-    border-radius: 5px;
+    border: 1px solid $colorMain;
+    border-radius: 2px;
 
     background-color: transparent;
     transition: border $defaultAnimTime, background-color $defaultAnimTime;

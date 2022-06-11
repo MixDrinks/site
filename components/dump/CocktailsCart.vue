@@ -44,7 +44,7 @@ export default {
   width: 100%;
   height: 100%;
   padding: 20px;
-  border: 1px solid rgba($colorMain, 0.1);
+  // border: 1px solid rgba($colorMain, 0.1);
   border-radius: 8px;
 
   transition: transform $defaultAnimTime, box-shadow $defaultAnimTime;
