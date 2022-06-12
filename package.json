@@ -8,8 +8,7 @@
     "start": "serve -s _static -l tcp://0.0.0.0:${PORT:-8080} -n",
     "export": "nuxt export",
     "serve": "nuxt serve",
-    "buildstart": "nuxt build && nuxt start",
-    "nuxtstart": "nuxt start"
+    "buildstart": "nuxt build && nuxt start"
   },
   "engines": {
     "node": "14.16.0"
