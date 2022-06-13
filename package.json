@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nuxt",
-    "build": "rm -r _static 2>/dev/null; nuxt build && nuxt export && mv dist _static && (rm _static/README.md || true)",
-    "start": "serve -s _static -l tcp://0.0.0.0:${PORT:-8080} -n",
+    "build": "nuxt build",
+    "start": "nuxt start",
     "export": "nuxt export",
     "serve": "nuxt serve",
     "buildstart": "nuxt build && nuxt start"
