@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "export": "nuxt export",
-    "serve": "nuxt serve",
-    "buildstart": "nuxt build && nuxt start"
+    "dev": "cross-env NODE_ENV=dev nuxt",
+    "build": "cross-env NODE_ENV=prod nuxt build",
+    "start": "cross-env NODE_ENV=prod nuxt start",
+    "export": "cross-env NODE_ENV=prod nuxt export",
+    "serve": "cross-env NODE_ENV=prod nuxt serve",
+    "buildstart": "cross-env NODE_ENV=prod nuxt build && nuxt start"
   },
   "engines": {
     "node": "14.16.0"

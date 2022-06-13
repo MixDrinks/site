@@ -9,6 +9,8 @@
         class="cocktails__filter"
         @updateCocktails="updateCocktails"
         :filterList="tags"
+        :tagsCount="cocktailsFull.cocktailsByTagCounts"
+        :totalCount="cocktailsFull.totalCount"
       />
       <div class="cocktails__list">
         <CocktailsList :cocktails="cocktailsFull.cocktails" />
@@ -16,6 +18,7 @@
     </div>
     <div class="cocktails__footer">
       <Pagination
+        v-if="cocktailsFull.totalCount > 10"
         class="cocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
         :limit="10"

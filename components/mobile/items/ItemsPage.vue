@@ -34,6 +34,7 @@
       />
     </div>
     <Pagination
+      v-if="cocktailsFull.totalCount > 10"
       class="items__pagination"
       :totalItems="cocktailsFull.totalCount"
       :limit="10"

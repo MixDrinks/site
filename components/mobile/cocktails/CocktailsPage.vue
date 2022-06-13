@@ -6,12 +6,15 @@
       class="cocktails__filter"
       @updateCocktails="updateCocktails"
       :filterList="tags"
+      :tagsCount="cocktailsFull.cocktailsByTagCounts"
+      :totalCount="cocktailsFull.totalCount"
     />
     <CocktailsList
       class="cocktails__list"
       :cocktails="cocktailsFull.cocktails"
     />
     <Pagination
+      v-if="cocktailsFull.totalCount > 10"
       class="cocktails__pagination"
       :totalItems="cocktailsFull.totalCount"
       :limit="10"
@@ -65,8 +68,6 @@ export default {
   }
   &__list {
     margin-bottom: $halfShortMargin;
-  }
-  &__pagination {
   }
 }
 </style>

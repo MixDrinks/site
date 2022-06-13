@@ -1,5 +1,5 @@
 import { MasterKeys } from "./config";
-const isDev = process.env.NODE_ENV ? "dev" : "prod";
+const isDev = process.env.NODE_ENV;
 
 module.exports = {
   env: {
@@ -12,8 +12,8 @@ module.exports = {
   target: "server",
 
   server: {
-    host: '0.0.0.0',
-    port: 8080
+    host: "0.0.0.0",
+    port: 8080,
   },
 
   head: {

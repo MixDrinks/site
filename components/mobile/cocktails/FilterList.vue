@@ -3,7 +3,9 @@
     <transition name="max-height">
       <div class="filter__main" v-show="isFilterOpen">
         <div class="filter__header">
-          <div class="filter__title">Фільтр</div>
+          <div class="filter__title">
+            Фільтр <span class="filter__total-count">{{ totalCount }}</span>
+          </div>
           <transition name="fate-in" appear>
             <IconBtn
               class="filter__close"
@@ -13,6 +15,7 @@
               icon="/img/icons/croos.svg"
               :isLink="true"
               href="/cocktails"
+              @click.native="updateCocktails"
             >
               Закрити всі фільтри
             </IconBtn>
@@ -53,6 +56,7 @@
             <div class="filter__name">
               {{ filterItem.name }}
             </div>
+            <div class="filter__count">{{ filterItem.count }}</div>
           </NuxtLink>
         </div>
       </div>
@@ -73,6 +77,14 @@ export default {
     filterList: {
       type: Array,
       required: true,
+    },
+    tagsCount: {
+      type: Object,
+      require: true,
+    },
+    totalCount: {
+      type: Number,
+      default: 0,
     },
   },
   methods: {
@@ -102,6 +114,7 @@ export default {
           ...filterItem,
           url: url,
           active: active,
+          count: this.tagsCount[filterItem.id],
         });
       });
 
@@ -129,6 +142,15 @@ export default {
   left: 0;
 
   z-index: 2;
+  &__total-count {
+    display: inline-block;
+    padding: 3px 10px 4px;
+    border-radius: 20px;
+    @include fontSize16M;
+    line-height: 1;
+    background-color: $colorMain;
+    color: $colorWhite;
+  }
   &__main {
     padding: $halfPadding 10vw;
     background-color: $colorWhite;
@@ -179,6 +201,9 @@ export default {
     @include fontSize24B;
   }
   &__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @include fontSize18M;
     color: $colorBlack;
 
@@ -188,11 +213,35 @@ export default {
       text-transform: uppercase;
     }
   }
+  &__count {
+    @include fontSize14;
+    line-height: 1;
+    color: $colorWhite;
+
+    margin-left: 10px;
+
+    padding: 2px 5px 3px;
+
+    background-color: $colorMain;
+
+    border-radius: 20px;
+  }
   &__item {
+    &.lock {
+      pointer-events: none;
+      position: relative;
+
+      &::after {
+        @include fullPseudoElement;
+        z-index: 1;
+        background-color: rgba($colorWhite, 0.8);
+      }
+    }
     display: flex;
     align-items: center;
 
     padding: 8px 0;
+    margin-right: 10px;
 
     cursor: pointer;
     &:hover,
