@@ -46,7 +46,7 @@
         <div class="goods__title">Склад коктейлю {{ cocktail.name }}</div>
         <ul class="goods__list">
           <li class="goods__item" v-for="good in cocktail.goods" :key="good.id">
-            <NuxtLink class="goods__link" :to="`/ingredients/${good.id}`">
+            <NuxtLink class="goods__link" :to="`/goods/${good.id}`">
               <div class="goods__img">
                 <picture>
                   <source
@@ -82,7 +82,7 @@
         </div>
         <ul class="tools__list">
           <li class="tools__item" v-for="tool in cocktail.tools" :key="tool.id">
-            <NuxtLink class="tools__link" :to="`/ingredients/${tool.id}`">
+            <NuxtLink class="tools__link" :to="`/tools/${tool.id}`">
               <div class="tools__img">
                 <picture>
                   <source

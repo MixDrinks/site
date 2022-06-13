@@ -29,7 +29,7 @@ export default {
     for (let [key, value] of Object.entries(query)) {
       queryParams = `${queryParams}&${key}=${value}`;
     }
-    queryParams = `${queryParams}&items=${route.params.id}`;
+    queryParams = `${queryParams}&goods=${route.params.id}`;
 
     const itemsPromise = getItems(`?id=${route.params.id}`).catch(() => {
       return error({
@@ -63,7 +63,7 @@ export default {
       for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
         queryParams = `${queryParams}&${key}=${value}`;
       }
-      queryParams = `${queryParams}&items=${this.$nuxt.$route.params.id}`;
+      queryParams = `${queryParams}&goods=${this.$nuxt.$route.params.id}`;
       const cocktails = await getCocktails(queryParams);
       this.cocktailsFull = { ...cocktails.data };
       if (payload?.loadMore) {
