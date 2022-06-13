@@ -1,47 +1,120 @@
 <template>
   <main class="wrapper">
-    <component v-if="isMobile" :is="HomePageMob" />
-    <component v-else :is="HomePage" />
+    <div class="display">&nbsp;</div>
+    <component
+      v-if="isMobile"
+      :is="CocktailsPageMob"
+      :cocktailsFull="cocktailsFull"
+      :cocktailsShort="cocktailsShort"
+      :tags="tags"
+      @updateCocktails="updateCocktails"
+    />
+    <component
+      v-else
+      :is="CocktailsPage"
+      :cocktailsFull="cocktailsFull"
+      :cocktailsShort="cocktailsShort"
+      :tags="tags"
+      @updateCocktails="updateCocktails"
+    />
   </main>
 </template>
 
 <script>
+import { getCocktailsShort, getTags, getCocktails } from "~~/api";
 export default {
-  computed: {
-    canonical() {
-      return process.env.baseUrl + this.$nuxt.$route.path;
+  async asyncData({ query, error }) {
+    let queryParams = "?";
+    if (query && !query.page) {
+      queryParams = "?page=0";
+    }
+    for (let [key, value] of Object.entries(query)) {
+      queryParams = `${queryParams}&${key}=${value}`;
+    }
+    const cocktailsFullPromise = getCocktails(queryParams).catch(() => {
+      return error({
+        statusCode: 404,
+        message: "This page could not be found",
+      });
+    });
+    const cocktailsPromise = getCocktailsShort().catch(() => {
+      return error({
+        statusCode: 404,
+        message: "This page could not be found",
+      });
+    });
+    const tagsPromise = getTags().catch(() => {
+      return error({
+        statusCode: 404,
+        message: "This page could not be found",
+      });
+    });
+    const [cocktailsFull, cocktailsShort, tags] = await Promise.all([
+      cocktailsFullPromise,
+      cocktailsPromise,
+      tagsPromise,
+    ]);
+    return {
+      cocktailsFull: cocktailsFull.data,
+      cocktailsShort: cocktailsShort.data,
+      tags: tags.data,
+    };
+  },
+  methods: {
+    async updateCocktails(payload) {
+      // this.startLoading()
+      let items = [...this.cocktailsFull.cocktails];
+      let queryParams = "?";
+      if (this.$nuxt.$route.query && !this.$nuxt.$route.query.page) {
+        queryParams = "?page=0";
+      }
+      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+        queryParams = `${queryParams}&${key}=${value}`;
+      }
+      const cocktails = await getCocktails(queryParams);
+      this.cocktailsFull = { ...cocktails.data };
+      if (payload?.loadMore) {
+        this.cocktailsFull.cocktails = [
+          ...items,
+          ...this.cocktailsFull.cocktails,
+        ];
+      }
+      // this.endLoading()
     },
+    CocktailsPage: () => {
+      return import("~~/components/cocktails/CocktailsPage.vue");
+    },
+    CocktailsPageMob: () => {
+      return import("~~/components/mobile/cocktails/CocktailsPage.vue");
+    },
+  },
+  computed: {
     isMobile() {
       return this.$device.isMobile;
     },
-  },
-  methods: {
-    HomePage: () => {
-      return import("~~/components/home/HomePage.vue");
-    },
-    HomePageMob: () => {
-      return import("~~/components/mobile/home/HomePage.vue");
+    canonical() {
+      return process.env.baseUrl + this.$nuxt.$route.path;
     },
   },
   head() {
     return {
-      title: "Головна сторінка коктейлів",
+      title: "Категорія коктейлів",
       link: [{ rel: "canonical", href: this.canonical }],
       meta: [
         {
           hid: "description",
           name: "description",
-          content: "Короткий опис головна сторінка коктейлів",
+          content: "Короткий опис категорія коктейлів",
         },
         {
           hid: "og:title",
           name: "og:title",
-          content: "Головна сторінка коктейлів",
+          content: "Категорія коктейлів",
         },
         {
           hid: "og:description",
           property: "og:description",
-          content: "Короткий опис головна сторінка коктейлів",
+          content: "Короткий опис категорія коктейлів",
         },
         {
           hid: "og:url",
@@ -57,5 +130,8 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
+}
+.display {
+  display: none;
 }
 </style>

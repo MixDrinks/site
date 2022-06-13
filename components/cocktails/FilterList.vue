@@ -12,7 +12,7 @@
           type="short"
           icon="/img/icons/croos.svg"
           :isLink="true"
-          href="/cocktails"
+          href="/"
           @click.native="updateCocktails"
         >
           Закрити всі фільтри
@@ -97,9 +97,7 @@ export default {
           const arrayTags = this.$nuxt.$route.query.tags.split(",");
           if (arrayTags.find((item) => item == filterItem.id)) {
             const newArr = arrayTags.filter((item) => item != filterItem.id);
-            url = newArr.length
-              ? `?tags=${newArr.join(",")}`
-              : `/${this.$nuxt.$route.path}`;
+            url = newArr.length ? `?tags=${newArr.join(",")}` : `/`;
             active = true;
           } else {
             url = `?tags=${arrayTags.join(",")},${filterItem.id}`;

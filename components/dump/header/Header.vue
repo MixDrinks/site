@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header__wrapper wrapper" ref="header">
       <Logo />
-      <MainMenu />
+      <!-- <MainMenu /> -->
     </div>
   </header>
 </template>
