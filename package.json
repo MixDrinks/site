@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nuxt",
-    "prepare": "nuxt --hostname '0.0.0.0' --port 8000",
+    "prepare": "nuxt --hostname '0.0.0.0' --port 8080",
     "build": "nuxt build",
     "start": "nuxt start",
     "export": "nuxt export",
