@@ -207,6 +207,7 @@ export default {
 
     transition: color $defaultAnimTime;
 
+    max-width: calc(100% - 80px);
     &::first-letter {
       text-transform: uppercase;
     }
