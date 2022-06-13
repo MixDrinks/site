@@ -11,6 +11,11 @@ module.exports = {
   mode: "universal",
   target: "server",
 
+  server: {
+    host: '0.0.0.0',
+    port: 8080
+  },
+
   head: {
     htmlAttrs: {
       lang: "uk",
