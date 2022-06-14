@@ -2,7 +2,7 @@
   <div class="cocktail">
     <div class="cocktail__header">
       <h1 class="cocktail__title" itemprop="name">{{ cocktail.name }}</h1>
-      <div class="cocktail__views">
+      <div class="cocktail__views" v-if="!!cocktail.visitCount">
         Переглядів <strong>{{ cocktail.visitCount }}</strong>
       </div>
       <ul class="cocktail__tags tags">
