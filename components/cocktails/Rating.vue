@@ -1,20 +1,44 @@
 <template>
-  <div class="rating" @mouseleave="hoverItem = null">
-    <div class="rating__star-wrapper star__wrapper">
+  <div
+    class="rating"
+    itemprop="aggregateRating"
+    itemscope=""
+    itemtype="http://schema.org/AggregateRating"
+  >
+    <div
+      class="rating__wrapper"
+      @mouseleave="hoverItem = null"
+      :class="{ lock: isRatingBeenSet }"
+    >
+      <div class="rating__star-wrapper star__wrapper">
+        <div
+          class="star__item"
+          v-for="star in stars"
+          :key="star.id"
+          @mouseover="hoverItem = star.id"
+          :class="{ hover: star.id <= hoverItem }"
+          @click="setRating(star.id)"
+        >
+          <div class="star--gray"></div>
+          <div class="star--full" :style="'width:' + star.width"></div>
+        </div>
+      </div>
       <div
-        class="star__item"
-        v-for="star in stars"
-        :key="star.id"
-        @mouseover="hoverItem = star.id"
-        :class="{ hover: star.id <= hoverItem }"
-        @click="setRating(star.id)"
+        class="rating__value"
+        itemprop="ratingValue"
+        v-if="!!curentRatingValue"
       >
-        <div class="star--gray"></div>
-        <div class="star--full" :style="'width:' + star.width"></div>
+        {{ curentRatingValue }}
+      </div>
+      <div
+        class="rating__count"
+        itemprop="reviewCount"
+        v-if="!!curentRatingCount"
+      >
+        {{ curentRatingCount }}
       </div>
     </div>
-    <div class="rating__value">{{ ratingValue }}</div>
-    <div class="rating__count">{{ ratingCount }}</div>
+    <div class="rating__text" v-if="isRatingBeenSet">Дякуємо що оцінили</div>
   </div>
 </template>
 
@@ -24,6 +48,10 @@ export default {
   name: "Rating",
   data: () => ({
     hoverItem: null,
+    ratinglist: [],
+    curentRatingCount: 0,
+    curentRatingValue: null,
+    isRatingBeenSet: false,
   }),
   props: {
     ratingCount: {
@@ -38,6 +66,17 @@ export default {
   methods: {
     setRating(value) {
       updateRating(this.curentPage, value);
+      localStorage.setItem("ratinglist", [...this.ratinglist, this.curentPage]);
+      if (this.curentRatingValue) {
+        this.curentRatingValue = (
+          (this.ratingValue * this.ratingCount + value) /
+          (this.ratingCount + 1)
+        ).toFixed(1);
+      } else {
+        this.curentRatingValue = value;
+      }
+      this.curentRatingCount = this.ratingCount + 1;
+      this.isRatingBeenSet = true;
     },
   },
   computed: {
@@ -48,10 +87,10 @@ export default {
       let arr = [];
       for (let index = 1; index <= 5; index++) {
         let width;
-        if (index < this.ratingValue) {
+        if (index < this.curentRatingValue) {
           width = 1;
-        } else if (1 - (index - this.ratingValue) > 0) {
-          width = 1 - (index - this.ratingValue);
+        } else if (1 - (index - this.curentRatingValue) > 0) {
+          width = 1 - (index - this.curentRatingValue);
         } else {
           width = 0;
         }
@@ -63,16 +102,37 @@ export default {
       return arr;
     },
   },
+  mounted() {
+    this.curentRatingCount = this.ratingCount;
+    if (this.ratingValue) {
+      this.curentRatingValue = this.ratingValue.toFixed(1);
+    }
+    if (localStorage.getItem("ratinglist"))
+      this.ratinglist = localStorage.getItem("ratinglist").split(",");
+    this.isRatingBeenSet = this.ratinglist.includes(this.curentPage);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .rating {
+  &__text {
+    margin-top: 8px;
+    @include fontSize16;
+    color: $colorBlack;
+  }
+
   &__count {
     @include defaultCount;
   }
-  display: flex;
-  align-items: center;
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    // &.lock {
+    //   pointer-events: none;
+    // }
+  }
+
   &__value {
     color: $colorMain;
     @include fontSize16M;

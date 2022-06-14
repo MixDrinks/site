@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import Rating from "./Rating.vue";
+import Rating from "~~/components/cocktails/Rating.vue";
 export default {
   name: "CocktailPage",
   components: { Rating },

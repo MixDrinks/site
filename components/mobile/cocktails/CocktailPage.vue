@@ -4,6 +4,10 @@
     <div class="cocktail__views" v-if="!!cocktail.visitCount">
       Переглядів <strong>{{ cocktail.visitCount }}</strong>
     </div>
+    <Rating
+      :ratingCount="cocktail.ratingCount"
+      :ratingValue="cocktail.rating"
+    />
     <ul class="cocktail__tags tags">
       <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
         <NuxtLink :to="`/?tags=${tag.id}`" class="tags__link">
@@ -111,8 +115,10 @@
 </template>
 
 <script>
+import Rating from "~~/components/cocktails/Rating.vue";
 export default {
   name: "CocktailPage",
+  components: { Rating },
   props: {
     cocktail: {
       type: Object,
