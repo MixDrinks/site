@@ -6,7 +6,7 @@ export const api = $axios.create({
   baseURL: process.env.api,
   headers: {
     "Access-Control-Allow-Credentials": true,
-    "Content-Type": "application/hal+json",
+    "Content-Type": "application/json",
     Accept: "application/json",
   },
   credentials: true,
