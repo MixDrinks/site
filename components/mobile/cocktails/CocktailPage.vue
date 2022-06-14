@@ -1,6 +1,9 @@
 <template>
   <div class="cocktail">
     <h1 class="cocktail__title" itemprop="name">{{ cocktail.name }}</h1>
+    <div class="cocktail__views">
+      Переглядів <strong>{{ cocktail.visitCount }}</strong>
+    </div>
     <ul class="cocktail__tags tags">
       <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
         <NuxtLink :to="`/cocktails?tags=${tag.id}`" class="tags__link">
@@ -121,6 +124,11 @@ export default {
 
 <style lang="scss" scoped>
 .cocktail {
+  &__views {
+    margin-bottom: $halfShortMargin;
+    margin-top: $halfShortMargin;
+    @include fontSize16M;
+  }
   &__title {
     @include fontSize48B;
   }

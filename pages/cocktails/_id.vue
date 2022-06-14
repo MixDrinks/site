@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { getCocktail } from "~~/api";
+import { getCocktail, cocktailsVisit } from "~~/api";
 export default {
   async asyncData({ route, error }) {
     const cocktail = await getCocktail(`?id=${route.params.id}`).catch(() => {
@@ -63,6 +63,9 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    cocktailsVisit(this.$nuxt.$route.params.id);
   },
 };
 </script>

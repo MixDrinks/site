@@ -1,7 +1,7 @@
 <template>
   <div class="search" :class="{ filled: inputValue }">
     <label class="search__wrapper">
-      <div class="search__label label">Пошук</div>
+      <div class="search__label label">Пошук коктейля</div>
       <input
         ref="searchInput"
         class="search__input input"
