@@ -28,7 +28,9 @@ export const cocktailsVisit = (id) => {
   return api.post(`cocktails/visit?id=${id}`);
 };
 export const updateRating = (id, value) => {
-  return api.post(`cocktails/score?id=${id}`, { value: value });
+  var formdata = new FormData();
+  formdata.append("value", value);
+  return api.post(`cocktails/score?id=${id}`, formdata);
 };
 export const getItems = (id) => {
   return api.get(`items/full${id}`);
