@@ -68,10 +68,12 @@ export default {
       updateRating(this.curentPage, value);
       localStorage.setItem("ratinglist", [...this.ratinglist, this.curentPage]);
       if (this.curentRatingValue) {
-        this.curentRatingValue = (
-          (this.ratingValue * this.ratingCount + value) /
-          (this.ratingCount + 1)
-        ).toFixed(1);
+        this.curentRatingValue = Number(
+          (
+            (this.ratingValue * this.ratingCount + value) /
+            (this.ratingCount + 1)
+          ).toFixed(1)
+        );
       } else {
         this.curentRatingValue = value;
       }
@@ -105,7 +107,7 @@ export default {
   mounted() {
     this.curentRatingCount = this.ratingCount;
     if (this.ratingValue) {
-      this.curentRatingValue = this.ratingValue.toFixed(1);
+      this.curentRatingValue = Number(this.ratingValue.toFixed(1));
     }
     if (localStorage.getItem("ratinglist"))
       this.ratinglist = localStorage.getItem("ratinglist").split(",");
