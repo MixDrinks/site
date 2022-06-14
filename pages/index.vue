@@ -5,7 +5,6 @@
       v-if="isMobile"
       :is="CocktailsPageMob"
       :cocktailsFull="cocktailsFull"
-      :cocktailsShort="cocktailsShort"
       :tags="tags"
       @updateCocktails="updateCocktails"
     />
@@ -13,7 +12,6 @@
       v-else
       :is="CocktailsPage"
       :cocktailsFull="cocktailsFull"
-      :cocktailsShort="cocktailsShort"
       :tags="tags"
       @updateCocktails="updateCocktails"
     />
@@ -21,7 +19,7 @@
 </template>
 
 <script>
-import { getCocktailsShort, getTags, getCocktails } from "~~/api";
+import { getTags, getCocktails } from "~~/api";
 export default {
   async asyncData({ query, error }) {
     let queryParams = "?";
@@ -37,26 +35,18 @@ export default {
         message: "This page could not be found",
       });
     });
-    const cocktailsPromise = getCocktailsShort().catch(() => {
-      return error({
-        statusCode: 404,
-        message: "This page could not be found",
-      });
-    });
     const tagsPromise = getTags().catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const [cocktailsFull, cocktailsShort, tags] = await Promise.all([
+    const [cocktailsFull, tags] = await Promise.all([
       cocktailsFullPromise,
-      cocktailsPromise,
       tagsPromise,
     ]);
     return {
       cocktailsFull: cocktailsFull.data,
-      cocktailsShort: cocktailsShort.data,
       tags: tags.data,
     };
   },

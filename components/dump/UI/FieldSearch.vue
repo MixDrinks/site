@@ -1,14 +1,12 @@
 <template>
-  <div class="search" ref="searchField">
+  <div class="search" :class="{ filled: inputValue }">
     <label class="search__wrapper">
       <div class="search__label label">Пошук</div>
       <input
+        ref="searchInput"
         class="search__input input"
         type="text"
         v-model="inputValue"
-        @click="(event) => inputClick(event)"
-        @blur="(event) => inputBlur(event)"
-        @input="(event) => searchValues(event)"
       />
     </label>
     <transition name="max-height">
@@ -19,7 +17,11 @@
             v-for="listItem in filteredList"
             :key="listItem.id"
           >
-            <NuxtLink :to="`/cocktails/${listItem.id}`" class="result__link">
+            <NuxtLink
+              :to="`/cocktails/${listItem.id}`"
+              class="result__link"
+              @click.native="removeSearch"
+            >
               {{ listItem.name }}
             </NuxtLink>
           </li>
@@ -30,31 +32,17 @@
 </template>
 
 <script>
+import { getCocktailsShort } from "~~/api";
 export default {
   name: "FieldSearch",
   data: () => ({
     inputValue: "",
+    listSearch: [],
   }),
-  props: {
-    listSearch: {
-      type: Array,
-      required: true,
-    },
-  },
   methods: {
-    inputClick() {
-      this.$refs.searchField.classList.add("focus");
-    },
-    inputBlur(event) {
-      this.$refs.searchField.classList.remove("focus");
-      if (!!!event.target.value) {
-        this.$refs.searchField.classList.remove("filled");
-      } else {
-        this.$refs.searchField.classList.add("filled");
-      }
-    },
-    searchValues() {
-      this.$refs.searchField.classList.add("filled");
+    removeSearch() {
+      this.$refs.searchInput.value = "";
+      this.inputValue = "";
     },
   },
   computed: {
@@ -69,6 +57,18 @@ export default {
       }
       return arr;
     },
+  },
+  mounted() {
+    getCocktailsShort()
+      .then((response) => {
+        this.listSearch = response.data;
+      })
+      .catch(() => {
+        return error({
+          statusCode: 404,
+          message: "This page could not be found",
+        });
+      });
   },
 };
 </script>
@@ -85,7 +85,7 @@ export default {
     position: absolute;
     left: 0;
     @include fontSize14;
-    color: rgba($colorBlack, 0.8);
+    color: rgba($colorWhite, 0.8);
     top: 50%;
     transform: translateY(-50%);
     transition: top $defaultAnimTime, transform $defaultAnimTime;
@@ -95,31 +95,29 @@ export default {
 
     border: 0;
     padding: 20px 0 12px;
-    box-shadow: inset 0px -2px 0px $colorMain;
+    box-shadow: inset 0px -2px 0px $colorWhite;
 
     @include fontSize18B;
 
-    color: $colorBlack;
+    color: $colorWhite;
   }
   &:hover {
     .input {
-      box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
+      box-shadow: inset 0px -3px 0px rgba($colorWhite, 0.8);
     }
     .label {
-      color: $colorBlack;
+      color: $colorWhite;
     }
   }
-  &.focus,
   &.filled {
     .label {
-      color: $colorBlack;
       top: 0%;
       transform: translateY(0);
     }
   }
   &:not(:hover).filled {
     .input {
-      box-shadow: inset 0px -2px 0px $colorMain;
+      box-shadow: inset 0px -2px 0px $colorWhite;
     }
   }
   &__result {

@@ -1,10 +1,18 @@
 <template>
   <div class="filter">
+    <transition name="opacity">
+      <div
+        class="filter__background"
+        @click="isFilterOpen = !isFilterOpen"
+        v-if="isFilterOpen"
+      ></div>
+    </transition>
     <transition name="max-height">
       <div class="filter__main" v-show="isFilterOpen">
         <div class="filter__header">
           <div class="filter__title">
-            Фільтр <span class="filter__total-count">{{ totalCount }}</span>
+            Фільтр
+            <span class="filter__total-count">{{ totalCount }}</span>
           </div>
           <transition name="fate-in" appear>
             <IconBtn
@@ -46,7 +54,10 @@
         <div class="filter__wrapper">
           <NuxtLink
             class="filter__item"
-            :class="{ active: filterItem.active }"
+            :class="[
+              { active: filterItem.active },
+              { lock: !!!filterItem.count },
+            ]"
             v-for="filterItem in listWithURL"
             :key="filterItem.id"
             :to="filterItem.url"
@@ -56,12 +67,17 @@
             <div class="filter__name">
               {{ filterItem.name }}
             </div>
-            <div class="filter__count">{{ filterItem.count }}</div>
+            <div class="filter__count" v-if="!filterItem.active">
+              {{ filterItem.count }}
+            </div>
           </NuxtLink>
         </div>
       </div>
     </transition>
-    <div class="filter__btn" @click="isFilterOpen = !isFilterOpen">Фільтр</div>
+    <div class="filter__btn" @click="isFilterOpen = !isFilterOpen">
+      <span v-if="isFilterOpen">Закрити</span>
+      <span v-else>Фільтр</span>
+    </div>
   </div>
 </template>
 
@@ -115,7 +131,7 @@ export default {
           count: this.tagsCount[filterItem.id],
         });
       });
-
+      arr.reverse().sort((a, b) => (a.count === 0 ? 1 : -1));
       return arr;
     },
     activeFilter() {
@@ -134,12 +150,24 @@ export default {
 }
 
 .filter {
+  &__background {
+    @include fullPseudoElement;
+    background-color: rgba($colorBlack, 0.1);
+    pointer-events: all;
+  }
+
   position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
-
+  top: 0;
   z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+
   &__total-count {
     display: inline-block;
     padding: 3px 10px 4px;
@@ -150,12 +178,16 @@ export default {
     color: $colorWhite;
   }
   &__main {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
     padding: $halfPadding 10vw;
     background-color: $colorWhite;
     box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
   }
 
   &__btn {
+    pointer-events: all;
     @include fontSize18B;
     color: $colorWhite;
     text-align: center;
@@ -339,6 +371,12 @@ export default {
 }
 .max-height-leave-active {
   animation: max-height $defaultAnimTime reverse;
+}
+.opacity-enter-active {
+  animation: opacity $defaultAnimTime;
+}
+.opacity-leave-active {
+  animation: opacity $defaultAnimTime reverse;
 }
 @keyframes max-height {
   0% {

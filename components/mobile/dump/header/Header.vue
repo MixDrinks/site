@@ -2,6 +2,7 @@
   <header class="header">
     <div class="header__wrapper wrapper" ref="header">
       <Logo />
+      <FieldSearch />
       <!-- <MainMenu /> -->
     </div>
   </header>
@@ -10,8 +11,9 @@
 <script>
 import MainMenu from "~~/components/mobile/dump/header/MainMenu.vue";
 import Logo from "~~/components/mobile/dump/Logo.vue";
+import FieldSearch from "~~/components/mobile/dump/UI/FieldSearch.vue";
 export default {
-  components: { Logo, MainMenu },
+  components: { Logo, MainMenu, FieldSearch },
   name: "Header",
   data: () => ({
     scrollVerticalvalue: null,
@@ -25,15 +27,13 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
+  overflow: visible;
 }
 .header {
   background-color: $colorMain;
   &__wrapper {
-    padding-top: $defaultPadding;
-    padding-bottom: $defaultPadding;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding-top: $halfPadding;
+    padding-bottom: $halfPadding;
   }
 }
 </style>

@@ -2,7 +2,6 @@
   <div class="cocktails">
     <div class="cocktails__header">
       <h1 class="cocktails__title">Коктейлі</h1>
-      <FieldSearch :listSearch="cocktailsShort" />
     </div>
     <div class="cocktails__body">
       <FilterList
@@ -31,17 +30,12 @@
 
 <script>
 import CocktailsList from "~~/components/dump/CocktailsList.vue";
-import FieldSearch from "~~/components/dump/UI/FieldSearch.vue";
 import FilterList from "~~/components/cocktails/FilterList.vue";
 import Pagination from "~~/components/dump/Pagination.vue";
 export default {
-  components: { FieldSearch, FilterList, Pagination, CocktailsList },
+  components: { FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
   props: {
-    cocktailsShort: {
-      type: Array,
-      required: true,
-    },
     tags: {
       type: Array,
       required: true,

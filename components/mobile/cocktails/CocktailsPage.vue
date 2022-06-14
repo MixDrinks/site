@@ -1,7 +1,6 @@
 <template>
   <div class="cocktails">
     <h1 class="cocktails__title">Коктейлі</h1>
-    <FieldSearch class="cocktails__search" :listSearch="cocktailsShort" />
     <FilterList
       class="cocktails__filter"
       @updateCocktails="updateCocktails"
@@ -26,17 +25,12 @@
 
 <script>
 import CocktailsList from "~~/components/mobile/dump/CocktailsList.vue";
-import FieldSearch from "~~/components/mobile/dump/UI/FieldSearch.vue";
 import FilterList from "~~/components/mobile/cocktails/FilterList.vue";
 import Pagination from "~~/components/mobile/dump/Pagination.vue";
 export default {
-  components: { FieldSearch, FilterList, Pagination, CocktailsList },
+  components: { FilterList, Pagination, CocktailsList },
   name: "CocktailsPage",
   props: {
-    cocktailsShort: {
-      type: Array,
-      required: true,
-    },
     tags: {
       type: Array,
       required: true,

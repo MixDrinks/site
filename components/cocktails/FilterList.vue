@@ -110,7 +110,7 @@ export default {
           count: this.tagsCount[filterItem.id],
         });
       });
-
+      arr.reverse().sort((a, b) => (a.count === 0 ? 1 : -1));
       return arr;
     },
     activeFilter() {

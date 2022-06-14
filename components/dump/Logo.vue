@@ -1,6 +1,6 @@
 <template>
-  <div class="logo" v-if="isHomePage">Logo</div>
-  <NuxtLink class="logo" to="/" v-else> Logo </NuxtLink>
+  <div class="logo" v-if="isHomePage">MIXdrinks</div>
+  <NuxtLink class="logo" to="/" v-else> MIXdrinks </NuxtLink>
 </template>
 
 <script>
@@ -16,10 +16,12 @@ export default {
 
 <style lang="scss" scoped>
 .logo {
-  width: 120px;
-  height: 48px;
+  font-family: cursive;
+  @include fontSize24B;
+  color: $colorWhite;
 
-  background-color: $colorWhite;
+  padding: 15px 15px 15px 0;
+
   display: block;
 }
 </style>
