@@ -245,17 +245,7 @@ export default {
     }
   }
   &__count {
-    @include fontSize14;
-    line-height: 1;
-    color: $colorWhite;
-
-    margin-left: 10px;
-
-    padding: 2px 5px 3px;
-
-    background-color: $colorMain;
-
-    border-radius: 20px;
+    @include defaultCount;
   }
   &__item {
     &.lock {

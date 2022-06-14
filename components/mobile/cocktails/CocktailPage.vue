@@ -6,7 +6,7 @@
     </div>
     <ul class="cocktail__tags tags">
       <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
-        <NuxtLink :to="`/cocktails?tags=${tag.id}`" class="tags__link">
+        <NuxtLink :to="`/?tags=${tag.id}`" class="tags__link">
           <span class="tags__name">{{ tag.name }}</span>
         </NuxtLink>
       </li>
