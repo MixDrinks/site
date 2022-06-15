@@ -10,7 +10,7 @@
 import { getCocktail, cocktailsVisit } from "~~/api";
 export default {
   async asyncData({ route, error }) {
-    const cocktail = await getCocktail(`?id=${route.params.id}`).catch(() => {
+    const cocktail = await getCocktail(route.params.id).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",

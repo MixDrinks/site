@@ -11,7 +11,6 @@ export const api = $axios.create({
   },
   credentials: true,
 });
-
 export const getCocktails = (queryParams) => {
   return api.get(`/cocktails/filter${queryParams}`);
 };
@@ -22,15 +21,18 @@ export const getTags = () => {
   return api.get(`/tags/all`);
 };
 export const getCocktail = (id) => {
-  return api.get(`/cocktails/full${id}`);
+  return api.get(`/cocktails/full?id=${id}`, {
+    headers: {
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+      Expires: "0",
+    },
+  });
 };
 export const cocktailsVisit = (id) => {
   return api.post(`cocktails/visit?id=${id}`);
 };
 export const updateRating = (id, value) => {
-  // var formdata = new FormData();
-  // formdata.append("value", value);
-  // return api.post(`cocktails/score?id=${id}`, formdata);
   return api.post(`cocktails/score?id=${id}`, { value: value });
 };
 export const getItems = (id) => {

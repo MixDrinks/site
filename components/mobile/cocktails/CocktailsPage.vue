@@ -1,6 +1,7 @@
 <template>
   <div class="cocktails">
     <h1 class="cocktails__title">Коктейлі</h1>
+    <Sorting class="cocktails__sorting" @updateCocktails="updateCocktails" />
     <FilterList
       class="cocktails__filter"
       @updateCocktails="updateCocktails"
@@ -27,8 +28,9 @@
 import CocktailsList from "~~/components/mobile/dump/CocktailsList.vue";
 import FilterList from "~~/components/mobile/cocktails/FilterList.vue";
 import Pagination from "~~/components/mobile/dump/Pagination.vue";
+import Sorting from "~~/components/cocktails/Sorting.vue";
 export default {
-  components: { FilterList, Pagination, CocktailsList },
+  components: { FilterList, Pagination, CocktailsList, Sorting },
   name: "CocktailsPage",
   props: {
     tags: {
@@ -61,6 +63,9 @@ export default {
     margin-bottom: $halfShortMargin;
   }
   &__list {
+    margin-bottom: $halfShortMargin;
+  }
+  &__sorting {
     margin-bottom: $halfShortMargin;
   }
 }

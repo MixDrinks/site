@@ -2,6 +2,7 @@
   <div class="cocktails">
     <div class="cocktails__header">
       <h1 class="cocktails__title">Коктейлі</h1>
+      <Sorting @updateCocktails="updateCocktails" />
     </div>
     <div class="cocktails__body">
       <FilterList
@@ -32,8 +33,9 @@
 import CocktailsList from "~~/components/dump/CocktailsList.vue";
 import FilterList from "~~/components/cocktails/FilterList.vue";
 import Pagination from "~~/components/dump/Pagination.vue";
+import Sorting from "~~/components/cocktails/Sorting.vue";
 export default {
-  components: { FilterList, Pagination, CocktailsList },
+  components: { FilterList, Pagination, CocktailsList, Sorting },
   name: "CocktailsPage",
   props: {
     tags: {

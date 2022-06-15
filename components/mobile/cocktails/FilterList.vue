@@ -22,7 +22,7 @@
               type="short"
               icon="/img/icons/croos.svg"
               :isLink="true"
-              href="/"
+              :href="`?${query}`"
               @click.native="updateCocktails"
             >
               Закрити всі фільтри
@@ -109,19 +109,30 @@ export default {
     },
   },
   computed: {
+    query() {
+      let temp = "";
+      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+        if (key != "page" && key != "tags") {
+          temp = temp + `&${key}=${value}`;
+        }
+      }
+      return temp;
+    },
     listWithURL() {
       let arr = [];
       this.filterList.forEach((filterItem) => {
-        let url = `?tags=${filterItem.id}`;
+        let url = `?tags=${filterItem.id}${this.query}`;
         let active = false;
         if (this.$nuxt.$route.query.tags) {
           const arrayTags = this.$nuxt.$route.query.tags.split(",");
           if (arrayTags.find((item) => item == filterItem.id)) {
             const newArr = arrayTags.filter((item) => item != filterItem.id);
-            url = newArr.length ? `?tags=${newArr.join(",")}` : `/`;
+            url = newArr.length
+              ? `?tags=${newArr.join(",")}${this.query}`
+              : `?${this.query}`;
             active = true;
           } else {
-            url = `?tags=${arrayTags.join(",")},${filterItem.id}`;
+            url = `?tags=${arrayTags.join(",")},${filterItem.id}${this.query}`;
           }
         }
         arr.push({
