@@ -19,8 +19,16 @@
         />
       </picture>
     </div>
-    <div class="item__name">
-      {{ cocktail.name }}
+    <div class="item__info">
+      <div class="item__name">
+        {{ cocktail.name }}
+      </div>
+      <div class="item__rating" v-if="!!cocktail.rating">
+        Оцінка користувачів <strong>{{ cocktail.rating }}</strong>
+      </div>
+      <div class="item__visit-count" v-if="!!cocktail.visitCount">
+        Кількість переглядів <strong>{{ cocktail.visitCount }}</strong>
+      </div>
     </div>
   </NuxtLink>
 </template>
@@ -39,6 +47,11 @@ export default {
 
 <style lang="scss" scoped>
 .item {
+  &__rating,
+  &__visit-count {
+    @include fontSize14;
+    color: $colorMain;
+  }
   display: flex;
   align-items: center;
 
@@ -55,9 +68,11 @@ export default {
       border-radius: 8px;
     }
   }
-  &__name {
+  &__info {
     width: calc(100% - 100px);
     padding-left: 10px;
+  }
+  &__name {
     color: $colorMain;
     @include fontSize18B;
 

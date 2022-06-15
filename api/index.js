@@ -12,13 +12,13 @@ export const api = $axios.create({
   credentials: true,
 });
 export const getCocktails = (queryParams) => {
-  return api.get(`/cocktails/filter${queryParams}`);
-};
-export const getCocktailsShort = () => {
-  return api.get(`/cocktails/all`);
-};
-export const getTags = () => {
-  return api.get(`/tags/all`);
+  return api.get(`/cocktails/filter${queryParams}`, {
+    headers: {
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+      Expires: "0",
+    },
+  });
 };
 export const getCocktail = (id) => {
   return api.get(`/cocktails/full?id=${id}`, {
@@ -28,6 +28,12 @@ export const getCocktail = (id) => {
       Expires: "0",
     },
   });
+};
+export const getCocktailsShort = () => {
+  return api.get(`/cocktails/all`);
+};
+export const getTags = () => {
+  return api.get(`/tags/all`);
 };
 export const cocktailsVisit = (id) => {
   return api.post(`cocktails/visit?id=${id}`);
