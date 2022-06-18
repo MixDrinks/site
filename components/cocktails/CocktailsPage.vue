@@ -8,8 +8,10 @@
       <FilterList
         class="cocktails__filter"
         @updateCocktails="updateCocktails"
-        :filterList="tags"
+        :filterList="allFilters"
         :tagsCount="cocktailsFull.cocktailsByTagCounts"
+        :goodCount="cocktailsFull.cocktailsByGoodCounts"
+        :toolCount="cocktailsFull.cocktailsByToolCounts"
         :totalCount="cocktailsFull.totalCount"
       />
       <div class="cocktails__list">
@@ -41,6 +43,9 @@ export default {
     tags: {
       type: Array,
       required: true,
+    },
+    allFilters: {
+      require: true,
     },
     cocktailsFull: {
       type: Object,

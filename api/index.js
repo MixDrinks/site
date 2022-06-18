@@ -32,6 +32,9 @@ export const getCocktail = (id) => {
 export const getCocktailsShort = () => {
   return api.get(`/cocktails/all`);
 };
+export const getAllFilters = () => {
+  return api.get(`/meta/all`);
+};
 export const getTags = () => {
   return api.get(`/tags/all`);
 };

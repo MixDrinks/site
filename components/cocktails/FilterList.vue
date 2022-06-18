@@ -1,8 +1,8 @@
 <template>
-  <div class="filter">
-    <div class="filter__header">
-      <div class="filter__title">
-        Фільтр <span class="filter__total-count">{{ totalCount }}</span>
+  <div class="filters">
+    <div class="filters__header">
+      <div class="filters__title">
+        Фільтри <span class="filters__total-count">{{ totalCount }}</span>
       </div>
       <transition name="fate-in" appear>
         <IconBtn
@@ -12,10 +12,10 @@
           type="short"
           icon="/img/icons/croos.svg"
           :isLink="true"
-          :href="`?${query}`"
+          :href="`?${queryWithoutFilter}`"
           @click.native="updateCocktails"
         >
-          Закрити всі фільтри
+          Відмінити всі фільтри
         </IconBtn>
       </transition>
     </div>
@@ -30,7 +30,7 @@
         <div
           class="tag-cloud__item"
           v-for="filterItem in activeFilter"
-          :key="filterItem.id"
+          :key="filterItem.name"
         >
           <NuxtLink
             class="tag-cloud__link"
@@ -42,38 +42,39 @@
         </div>
       </transition-group>
     </div>
-    <div class="filter__wrapper">
-      <NuxtLink
-        class="filter__item"
-        :class="[{ active: filterItem.active }, { lock: !!!filterItem.count }]"
+    <div class="filters__wrapper">
+      <FilterItem
+        class="filters__list"
         v-for="filterItem in listWithURL"
         :key="filterItem.id"
-        :to="filterItem.url"
-        @click.native="updateCocktails"
-      >
-        <div class="filter__checkbox"></div>
-        <div class="filter__name">
-          {{ filterItem.name }}
-        </div>
-        <div class="filter__count" v-if="!filterItem.active">
-          {{ filterItem.count }}
-        </div>
-      </NuxtLink>
+        :filterItem="filterItem"
+        :list="filterItem.filterList"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { filter } from "~~/utils/filter";
 import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
+import FilterItem from "./FilterItem.vue";
 export default {
-  components: { IconBtn },
+  components: { IconBtn, FilterItem },
   name: "FilterList",
   props: {
     filterList: {
-      type: Array,
+      type: Object,
       required: true,
     },
     tagsCount: {
+      type: Object,
+      require: true,
+    },
+    goodCount: {
+      type: Object,
+      require: true,
+    },
+    toolCount: {
       type: Object,
       require: true,
     },
@@ -88,10 +89,29 @@ export default {
     },
   },
   computed: {
+    filter() {
+      return filter;
+    },
     query() {
       let temp = "";
       for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-        if (key != "page" && key != "tags") {
+        if (key != "page") {
+          temp = temp + `&${key}=${value}`;
+        }
+      }
+      return temp;
+    },
+    arrFilterNames() {
+      let arr = [];
+      this.filter.forEach((el) => {
+        arr.push(el.value);
+      });
+      return arr;
+    },
+    queryWithoutFilter() {
+      let temp = "";
+      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+        if (key != "page" && !this.arrFilterNames.includes(key)) {
           temp = temp + `&${key}=${value}`;
         }
       }
@@ -99,33 +119,65 @@ export default {
     },
     listWithURL() {
       let arr = [];
-      this.filterList.forEach((filterItem) => {
-        let url = `?tags=${filterItem.id}${this.query}`;
-        let active = false;
-        if (this.$nuxt.$route.query.tags) {
-          const arrayTags = this.$nuxt.$route.query.tags.split(",");
-          if (arrayTags.find((item) => item == filterItem.id)) {
-            const newArr = arrayTags.filter((item) => item != filterItem.id);
-            url = newArr.length
-              ? `?tags=${newArr.join(",")}${this.query}`
-              : `?${this.query}`;
-            active = true;
-          } else {
-            url = `?tags=${arrayTags.join(",")},${filterItem.id}${this.query}`;
+      this.filter.forEach((filterItem) => {
+        const machineValue = filterItem.value;
+        const filterListObj = this.filterList[machineValue];
+        let newFilterList = [];
+        let filterListArr = [];
+        let query = "";
+        for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+          if (key != "page" && key != machineValue) {
+            query = query + `&${key}=${value}`;
           }
         }
+        for (let [key, value] of Object.entries(filterListObj)) {
+          filterListArr.push({
+            id: key,
+            name: value,
+          });
+        }
+        filterListArr.forEach((subfilterItem) => {
+          let url = `?${machineValue}=${subfilterItem.id}${query}`;
+          let active = false;
+          if (this.$nuxt.$route.query[machineValue]) {
+            const arrayTags = this.$nuxt.$route.query[machineValue].split(",");
+            if (arrayTags.find((item) => item == subfilterItem.id)) {
+              const newArr = arrayTags.filter(
+                (item) => item != subfilterItem.id
+              );
+              url = newArr.length
+                ? `?${machineValue}=${newArr.join(",")}${query}`
+                : `?${query}`;
+              active = true;
+            } else {
+              url = `?${machineValue}=${arrayTags.join(",")},${
+                subfilterItem.id
+              }${query}`;
+            }
+          }
+          newFilterList.push({
+            ...subfilterItem,
+            url: url,
+            active: active,
+            count: this[filterItem.count][subfilterItem.id],
+          });
+        });
+        newFilterList.reverse().sort((a, b) => (a.count === 0 ? 1 : -1));
         arr.push({
-          ...filterItem,
-          url: url,
-          active: active,
-          count: this.tagsCount[filterItem.id],
+          title: filterItem.name,
+          id: filterItem.id,
+          filterList: [...newFilterList],
         });
       });
-      arr.reverse().sort((a, b) => (a.count === 0 ? 1 : -1));
+
       return arr;
     },
     activeFilter() {
-      return this.listWithURL.filter((item) => item.active);
+      let arr = [];
+      this.listWithURL.forEach((el) => {
+        arr = [...arr, ...el.filterList];
+      });
+      return arr.filter((item) => item.active);
     },
   },
 };
@@ -138,8 +190,16 @@ export default {
 .fate-in-leave-active {
   animation: fade-in $defaultAnimTime reverse;
 }
-
-.filter {
+.filters {
+  &__list {
+    &:not(:last-child) {
+      padding-bottom: $defaultPadding;
+      border-bottom: 1px solid rgba($colorMain, 0.2);
+    }
+    &:not(:first-child) {
+      padding-top: $defaultPadding;
+    }
+  }
   &__total-count {
     display: inline-block;
     padding: 3px 10px 4px;
@@ -149,6 +209,7 @@ export default {
     background-color: $colorMain;
     color: $colorWhite;
   }
+
   &__header {
     display: flex;
     align-items: center;
@@ -156,89 +217,9 @@ export default {
 
     margin-bottom: $halfShortMargin;
   }
-  &__wrapper {
-    max-height: 100vh;
-    overflow: auto;
-    @include defaultWrapperScroll;
-  }
-  &__checkbox {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-
-    border: 1px solid $colorMain;
-    border-radius: 2px;
-
-    background-color: transparent;
-    transition: border $defaultAnimTime, background-color $defaultAnimTime;
-  }
   &__title {
     @include fontSize24B;
     color: $colorBlack;
-  }
-  &__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @include fontSize18M;
-    color: $colorBlack;
-
-    transition: color $defaultAnimTime;
-    max-width: calc(100% - 80px);
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-  &__count {
-    @include defaultCount;
-  }
-  &__item {
-    &.lock {
-      pointer-events: none;
-      position: relative;
-
-      &::after {
-        @include fullPseudoElement;
-        z-index: 1;
-        background-color: rgba($colorWhite, 0.8);
-      }
-    }
-    display: flex;
-    align-items: center;
-
-    padding: 15px 0;
-    margin-right: 10px;
-
-    cursor: pointer;
-    &:hover,
-    &:focus {
-      .filter {
-        &__checkbox {
-          border: 1px solid $colorMain;
-          background-color: rgba($colorMain, 0.2);
-        }
-        &__name {
-          color: $colorMain;
-        }
-      }
-    }
-    &.active {
-      .filter {
-        &__checkbox {
-          border: 1px solid $colorMain;
-          background-color: $colorMain;
-
-          position: relative;
-          &::before {
-            @include fullPseudoElement;
-
-            background-image: url("/img/icons/check-mark.svg");
-            background-repeat: no-repeat;
-            background-position: center;
-          }
-        }
-      }
-    }
   }
 }
 .tag-cloud {

@@ -6,6 +6,7 @@
       :is="CocktailsPageMob"
       :cocktailsFull="cocktailsFull"
       :tags="tags"
+      :allFilters="allFilters"
       @updateCocktails="updateCocktails"
     />
     <component
@@ -13,13 +14,14 @@
       :is="CocktailsPage"
       :cocktailsFull="cocktailsFull"
       :tags="tags"
+      :allFilters="allFilters"
       @updateCocktails="updateCocktails"
     />
   </main>
 </template>
 
 <script>
-import { getTags, getCocktails } from "~~/api";
+import { getTags, getCocktails, getAllFilters } from "~~/api";
 export default {
   async asyncData({ query, error }) {
     let queryParams = "?";
@@ -35,19 +37,27 @@ export default {
         message: "This page could not be found",
       });
     });
+    const allFiltersPromise = getAllFilters().catch(() => {
+      return error({
+        statusCode: 404,
+        message: "This page could not be found",
+      });
+    });
     const tagsPromise = getTags().catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const [cocktailsFull, tags] = await Promise.all([
+    const [cocktailsFull, allFilters, tags] = await Promise.all([
       cocktailsFullPromise,
+      allFiltersPromise,
       tagsPromise,
     ]);
     return {
       cocktailsFull: cocktailsFull.data,
       tags: tags.data,
+      allFilters: allFilters.data,
     };
   },
   methods: {
