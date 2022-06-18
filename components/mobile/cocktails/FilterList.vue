@@ -2,7 +2,7 @@
   <div class="filters">
     <transition name="opacity">
       <div
-        class="filter__background"
+        class="filters__background"
         @click="isFilterOpen = !isFilterOpen"
         v-if="isFilterOpen"
       ></div>
@@ -225,7 +225,11 @@ export default {
 
 .filters {
   &__background {
-    @include fullPseudoElement;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
     background-color: rgba($colorBlack, 0.1);
     pointer-events: all;
   }
@@ -234,7 +238,6 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  top: 0;
   z-index: 2;
 
   display: flex;
