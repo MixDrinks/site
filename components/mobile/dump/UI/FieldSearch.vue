@@ -100,7 +100,7 @@ export default {
 
     color: $colorWhite;
   }
-  &:hover {
+  &:focus {
     .input {
       box-shadow: inset 0px -3px 0px rgba($colorWhite, 0.8);
     }
@@ -114,7 +114,7 @@ export default {
       transform: translateY(0);
     }
   }
-  &:not(:hover).filled {
+  &:not(:focus).filled {
     .input {
       box-shadow: inset 0px -2px 0px $colorWhite;
     }
@@ -165,7 +165,7 @@ export default {
 
         z-index: 1;
       }
-      &:hover::after {
+      &:focus::after {
         transform: translateX(0);
       }
     }

@@ -38,7 +38,6 @@ export default {
 
   transition: color $defaultAnimTime, background-color $defaultAnimTime,
     box-shadow $defaultAnimTime;
-  &:hover,
   &:focus {
     background-color: $colorHover;
     color: $colorWhite;

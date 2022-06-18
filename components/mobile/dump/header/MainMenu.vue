@@ -50,7 +50,7 @@ export default {
     color: $colorWhite;
 
     transition: color $defaultAnimTime, text-shadow $defaultAnimTime;
-    &:hover {
+    &:focus {
       color: rgba($colorWhite, 0.9);
       text-shadow: 4px 4px 0px$colorBlack;
     }

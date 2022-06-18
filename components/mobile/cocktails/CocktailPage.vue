@@ -191,7 +191,7 @@ export default {
     border-radius: 8px;
 
     transition: transform $defaultAnimTime, box-shadow $defaultAnimTime;
-    &:hover {
+    &:focus {
       .tools,
       .goods {
         &__name {
@@ -303,7 +303,7 @@ export default {
     &::first-letter {
       text-transform: uppercase;
     }
-    &:hover {
+    &:focus {
       background-color: $colorHover;
     }
   }

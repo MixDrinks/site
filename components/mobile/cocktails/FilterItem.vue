@@ -140,7 +140,7 @@ export default {
 
       color: $colorMain;
     }
-    &:hover {
+    &:focus {
       .input {
         box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
       }
@@ -154,7 +154,7 @@ export default {
         transform: translateY(0);
       }
     }
-    &:not(:hover).filled {
+    &:not(:focus).filled {
       .input {
         box-shadow: inset 0px -2px 0px $colorMain;
       }
@@ -178,7 +178,7 @@ export default {
     height: 24px;
     border-radius: 4px;
     background-color: $colorMain;
-    &:hover {
+    &:focus {
       background-color: $colorHover;
     }
     &::after,
@@ -269,7 +269,6 @@ export default {
     margin-right: 10px;
 
     cursor: pointer;
-    &:hover,
     &:focus {
       .filter {
         &__checkbox {

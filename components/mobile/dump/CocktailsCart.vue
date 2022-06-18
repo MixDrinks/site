@@ -136,7 +136,7 @@ export default {
 
     transition: color $defaultAnimTime;
   }
-  &:hover {
+  &:focus {
     .item {
       &__name {
         color: $colorHover;

@@ -258,7 +258,7 @@ export default {
 
     transition: background-color $defaultAnimTime;
 
-    &:hover,
+    border-top: 1px solid $colorWhite;
     &:focus {
       background-color: $colorHover;
     }
@@ -334,12 +334,12 @@ export default {
       transform: rotate(-45deg);
     }
 
-    &:hover {
+    &:focus {
       background-color: $colorMain;
       color: $colorWhite;
     }
-    &:hover::after,
-    &:hover::before {
+    &:focus::after,
+    &:focus::before {
       background-color: $colorWhite;
     }
   }

@@ -105,7 +105,7 @@ export default {
     }
   }
   &:not(.lock) {
-    &:hover {
+    &:focus {
       background-color: $colorHover;
       box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
     }

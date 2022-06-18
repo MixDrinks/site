@@ -1,7 +1,43 @@
 <template>
   <footer class="footer">
     <div class="wrapper">
-      <div class="footer__wrapper"></div>
+      <div class="footer__wrapper">
+        <div class="footer__item">
+          <div class="footer__title">Про проєкт</div>
+          <a
+            class="footer__link"
+            href="https://github.com/MixDrinks"
+            target="_blank"
+          >
+            Код проєкту
+          </a>
+          <a
+            class="footer__link"
+            href="https://mixdrinks.github.io/backend/"
+            target="_blank"
+          >
+            Документація аpi проєкту
+          </a>
+        </div>
+
+        <div class="footer__item">
+          <div class="footer__title">Розробники</div>
+          <a
+            class="footer__link"
+            href="https://github.com/VovaStelmashchuk"
+            target="_blank"
+          >
+            Back-end Volodymyr Stelmashchuk
+          </a>
+          <a
+            class="footer__link"
+            href="https://github.com/BuJlJlu"
+            target="_blank"
+          >
+            Front-end Mykola Holovashchenko
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
@@ -18,7 +54,30 @@ export default {
 }
 .footer {
   &__wrapper {
-    padding: $defaultPadding 0;
+    padding: $defaultPadding 0 72px;
+  }
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: $halfShortMargin;
+    }
+  }
+  &__title {
+    color: $colorWhite;
+    @include fontSize18B;
+    margin-bottom: $halfPadding;
+  }
+  &__link {
+    @include fontSize16M;
+    display: block;
+    color: rgba($colorWhite, 0.8);
+    padding: 5px;
+    margin-left: -5px;
+    transition: $defaultAnimTime border-color, $defaultAnimTime color;
+    border-bottom: 1px solid transparent;
+    &:focus {
+      color: $colorWhite;
+      border-color: $colorWhite;
+    }
   }
   background-color: $colorMain;
 }
