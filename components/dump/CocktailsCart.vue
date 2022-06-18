@@ -2,7 +2,7 @@
   <NuxtLink :to="`/cocktails/${cocktail.id}`" class="item">
     <div class="item__info" v-if="!!cocktail.rating || !!cocktail.visitCount">
       <div class="item__rating rating" v-if="!!cocktail.rating">
-        <div class="rating__text">{{ cocktail.rating }}</div>
+        <div class="rating__text">{{ Number(cocktail.rating.toFixed(1)) }}</div>
       </div>
       <div class="item__visit-count visit-count" v-if="!!cocktail.visitCount">
         <div class="visit-count__text">{{ cocktail.visitCount }}</div>
@@ -111,7 +111,7 @@ export default {
       left: 0;
       top: 0;
       object-fit: cover;
-      border-radius: 50%;
+      border-radius: 25%;
     }
   }
   &__name {

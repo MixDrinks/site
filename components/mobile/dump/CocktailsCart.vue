@@ -22,7 +22,9 @@
     <div class="item__info">
       <div class="item__user-info">
         <div class="item__rating rating" v-if="!!cocktail.rating">
-          <div class="rating__text">{{ cocktail.rating }}</div>
+          <div class="rating__text">
+            {{ Number(cocktail.rating.toFixed(1)) }}
+          </div>
         </div>
         <div class="item__visit-count visit-count" v-if="!!cocktail.visitCount">
           <div class="visit-count__text">{{ cocktail.visitCount }}</div>
