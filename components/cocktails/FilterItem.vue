@@ -26,6 +26,7 @@
         <div class="filter__items">
           <div v-for="filterItem in listSearch" :key="filterItem.id">
             <NuxtLink
+              :title="filterItem.name"
               rel="tag"
               v-if="!!filterItem.count"
               class="filter__item"
