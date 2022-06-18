@@ -20,10 +20,10 @@
     </div>
     <div class="cocktails__footer">
       <Pagination
-        v-if="cocktailsFull.totalCount > 10"
+        v-if="cocktailsFull.totalCount > 24"
         class="cocktails__pagination"
         :totalItems="cocktailsFull.totalCount"
-        :limit="10"
+        :limit="24"
         :itemsCount="cocktailsFull.cocktails.length"
         @updateCocktails="updateCocktails"
       />
