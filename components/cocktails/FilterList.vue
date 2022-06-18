@@ -156,7 +156,7 @@ export default {
             count: this[filterItem.count][subfilterItem.id],
           });
         });
-        newFilterList.reverse().sort((a, b) => (a.count === 0 ? 1 : -1));
+        newFilterList.sort((a, b) => (a.count > b.count ? -1 : 1));
         arr.push({
           title: filterItem.name,
           id: filterItem.id,

@@ -1,11 +1,10 @@
 <template>
   <div class="filter">
-    <div class="filter__header">
+    <div class="filter__header" @click="toggleList(filterItem.id)">
       <div class="filter__title">{{ filterItem.title }}</div>
       <div
         class="filter__toggler"
         :class="{ close: isCloseFilter.includes(filterItem.id) }"
-        @click="toggleList(filterItem.id)"
       ></div>
     </div>
     <transition name="max-height">
