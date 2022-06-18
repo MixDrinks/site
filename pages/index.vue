@@ -89,7 +89,7 @@ export default {
       if (Object.entries(this.$nuxt.$route.query).length === 0) {
         return "index, follow";
       } else {
-        return "noindex, follow";
+        return "noindex, nofollow";
       }
     },
   },
