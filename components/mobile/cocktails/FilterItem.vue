@@ -111,7 +111,6 @@ export default {
 <style lang="scss" scoped>
 .max-height-enter-active {
   animation: max-height $defaultAnimTime;
-  overflow: hidden;
 }
 .max-height-leave-active {
   animation: max-height $defaultAnimTime reverse;
@@ -176,7 +175,6 @@ export default {
   }
   &__toggler {
     position: relative;
-    cursor: pointer;
     width: 24px;
     height: 24px;
     border-radius: 4px;
@@ -194,6 +192,8 @@ export default {
       top: calc(50% - 1px);
 
       transition: transform $defaultAnimTime;
+
+      display: block;
     }
     &::after {
       transform: rotate(-45deg);

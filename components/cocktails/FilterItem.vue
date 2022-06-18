@@ -111,11 +111,9 @@ export default {
 <style lang="scss" scoped>
 .max-height-enter-active {
   animation: max-height $defaultAnimTime;
-  overflow: hidden;
 }
 .max-height-leave-active {
   animation: max-height $defaultAnimTime reverse;
-  overflow: hidden;
 }
 .filter {
   .search {
