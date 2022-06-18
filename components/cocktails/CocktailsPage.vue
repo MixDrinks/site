@@ -41,6 +41,7 @@ export default {
   name: "CocktailsPage",
   props: {
     allFilters: {
+      type: Object,
       require: true,
     },
     cocktailsFull: {

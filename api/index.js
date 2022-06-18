@@ -35,9 +35,6 @@ export const getCocktailsShort = () => {
 export const getAllFilters = () => {
   return api.get(`/meta/all`);
 };
-export const getTags = () => {
-  return api.get(`/tags/all`);
-};
 export const cocktailsVisit = (id) => {
   return api.post(`cocktails/visit?id=${id}`);
 };

@@ -5,8 +5,10 @@
     <FilterList
       class="cocktails__filter"
       @updateCocktails="updateCocktails"
-      :filterList="tags"
+      :filterList="allFilters"
       :tagsCount="cocktailsFull.cocktailsByTagCounts"
+      :goodCount="cocktailsFull.cocktailsByGoodCounts"
+      :toolCount="cocktailsFull.cocktailsByToolCounts"
       :totalCount="cocktailsFull.totalCount"
     />
     <CocktailsList
@@ -33,9 +35,9 @@ export default {
   components: { FilterList, Pagination, CocktailsList, Sorting },
   name: "CocktailsPage",
   props: {
-    tags: {
-      type: Array,
-      required: true,
+    allFilters: {
+      type: Object,
+      require: true,
     },
     cocktailsFull: {
       type: Object,

@@ -47,17 +47,21 @@
   }
 }
 @mixin defaultCount {
-  @include fontSize16M;
-  line-height: 1;
+  
+  
   color: $colorWhite;
 
   margin-left: 10px;
 
   @media (max-width: 1199px) {
     padding: 2px 5px 3px;
+    @include fontSize14;
+    line-height: 1;
   }
   @media(min-width: 1200px) {
     padding: 2px 6px 3px;
+    @include fontSize16M;
+    line-height: 1;
   }
 
   background-color: $colorMain;

@@ -5,7 +5,6 @@
       v-if="isMobile"
       :is="CocktailsPageMob"
       :cocktailsFull="cocktailsFull"
-      :tags="tags"
       :allFilters="allFilters"
       @updateCocktails="updateCocktails"
     />
@@ -42,20 +41,12 @@ export default {
         message: "This page could not be found",
       });
     });
-    const tagsPromise = getTags().catch(() => {
-      return error({
-        statusCode: 404,
-        message: "This page could not be found",
-      });
-    });
-    const [cocktailsFull, allFilters, tags] = await Promise.all([
+    const [cocktailsFull, allFilters] = await Promise.all([
       cocktailsFullPromise,
       allFiltersPromise,
-      tagsPromise,
     ]);
     return {
       cocktailsFull: cocktailsFull.data,
-      tags: tags.data,
       allFilters: allFilters.data,
     };
   },
