@@ -49,6 +49,7 @@
         :key="filterItem.id"
         :filterItem="filterItem"
         :list="filterItem.filterList"
+        @updateCocktails="updateCocktails"
       />
     </div>
   </div>
