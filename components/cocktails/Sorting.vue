@@ -64,10 +64,7 @@ export default {
 
 <style lang="scss" scoped>
 .sorting {
-  display: flex;
-  align-items: center;
   &__title {
-    margin-right: $halfShortMargin;
     @include fontSize16M;
   }
   &__list {
@@ -79,6 +76,7 @@ export default {
     }
   }
   &__link {
+    display: block;
     @include fontSize14;
     padding: 4px 4px;
 
@@ -99,6 +97,18 @@ export default {
         border-bottom-color: $colorMain;
       }
     }
+  }
+  @media (max-width: 1199px) {
+    &__title {
+      margin-bottom: 8px;
+    }
+  }
+  @media (min-width: 1200px) {
+    &__title {
+      margin-right: $halfShortMargin;
+    }
+    display: flex;
+    align-items: center;
   }
 }
 </style>

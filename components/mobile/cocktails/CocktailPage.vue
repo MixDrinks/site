@@ -5,6 +5,7 @@
       Переглядів <strong>{{ cocktail.visitCount }}</strong>
     </div>
     <Rating
+      class="cocktail__rating"
       :ratingCount="cocktail.ratingCount"
       :ratingValue="cocktail.rating"
     />
@@ -136,7 +137,10 @@ export default {
     @include fontSize16M;
   }
   &__title {
-    @include fontSize48B;
+    @include fontSize32B;
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
   &__img {
     position: relative;
@@ -156,7 +160,8 @@ export default {
   &__goods,
   &__tools,
   &__img,
-  &__title {
+  &__title,
+  &__rating {
     margin-bottom: $halfShortMargin;
   }
 }

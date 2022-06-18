@@ -2,21 +2,24 @@
   <div class="cocktail">
     <div class="cocktail__header">
       <h1 class="cocktail__title" itemprop="name">{{ cocktail.name }}</h1>
-      <div class="cocktail__views" v-if="!!cocktail.visitCount">
-        Переглядів <strong>{{ cocktail.visitCount }}</strong>
+      <div class="cocktail__user-info">
+        <div class="cocktail__views" v-if="!!cocktail.visitCount">
+          Переглядів <strong>{{ cocktail.visitCount }}</strong>
+        </div>
+        <Rating
+          class="cocktail__rating"
+          :ratingCount="cocktail.ratingCount"
+          :ratingValue="cocktail.rating"
+        />
       </div>
-      <Rating
-        :ratingCount="cocktail.ratingCount"
-        :ratingValue="cocktail.rating"
-      />
-      <ul class="cocktail__tags tags">
-        <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
-          <NuxtLink :to="`/?tags=${tag.id}`" class="tags__link">
-            <span class="tags__name">{{ tag.name }}</span>
-          </NuxtLink>
-        </li>
-      </ul>
     </div>
+    <ul class="cocktail__tags tags">
+      <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
+        <NuxtLink :to="`/?tags=${tag.id}`" class="tags__link">
+          <span class="tags__name">{{ tag.name }}</span>
+        </NuxtLink>
+      </li>
+    </ul>
     <div class="cocktail__body">
       <div class="cocktail__img">
         <picture>
@@ -135,12 +138,23 @@ export default {
 
 <style lang="scss" scoped>
 .cocktail {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__user-info {
+    display: flex;
+    align-items: center;
+  }
   &__views {
-    padding-top: $halfPadding;
-    @include fontSize24B;
+    margin-right: $halfShortMargin;
+    @include fontSize18M;
   }
   &__title {
     @include fontSize48B;
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
   &__tags {
     margin-top: $shortMargin;

@@ -119,10 +119,9 @@ export default {
 <style lang="scss" scoped>
 .rating {
   &__text {
-    @include fontSize16;
+    @include fontSize14;
     color: $colorBlack;
   }
-
   &__count {
     @include defaultCount;
   }

@@ -20,14 +20,16 @@
       </picture>
     </div>
     <div class="item__info">
+      <div class="item__user-info">
+        <div class="item__rating rating" v-if="!!cocktail.rating">
+          <div class="rating__text">{{ cocktail.rating }}</div>
+        </div>
+        <div class="item__visit-count visit-count" v-if="!!cocktail.visitCount">
+          <div class="visit-count__text">{{ cocktail.visitCount }}</div>
+        </div>
+      </div>
       <div class="item__name">
         {{ cocktail.name }}
-      </div>
-      <div class="item__rating" v-if="!!cocktail.rating">
-        Оцінка користувачів <strong>{{ cocktail.rating }}</strong>
-      </div>
-      <div class="item__visit-count" v-if="!!cocktail.visitCount">
-        Кількість переглядів <strong>{{ cocktail.visitCount }}</strong>
       </div>
     </div>
   </NuxtLink>
@@ -47,13 +49,61 @@ export default {
 
 <style lang="scss" scoped>
 .item {
+  &__user-info {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  &__rating {
+    margin-right: 10px;
+  }
+  .visit-count {
+    display: flex;
+    align-items: center;
+    &__text {
+      color: $colorBlack;
+      margin-left: 5px;
+      @include fontSize14;
+    }
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: $colorMain;
+      mask-size: cover;
+      mask-image: url("/img/icons/eye.svg");
+    }
+  }
+  .rating {
+    display: flex;
+    align-items: center;
+    &__text {
+      color: $colorBlack;
+      margin-left: 5px;
+      @include fontSize14;
+    }
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: $colorRating;
+      mask-size: cover;
+      mask-image: url("/img/icons/star.svg");
+    }
+  }
   &__rating,
   &__visit-count {
     @include fontSize14;
     color: $colorMain;
   }
+
+  position: relative;
   display: flex;
-  align-items: center;
+  align-items: stretch;
 
   padding: 10px;
   border: 1px solid rgba($colorMain, 0.1);
@@ -70,9 +120,15 @@ export default {
   }
   &__info {
     width: calc(100% - 100px);
-    padding-left: 10px;
+    padding: 20px 0 20px 10px;
+    display: flex;
+    align-items: center;
   }
   &__name {
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
     color: $colorMain;
     @include fontSize18B;
 

@@ -1,5 +1,13 @@
 <template>
   <NuxtLink :to="`/cocktails/${cocktail.id}`" class="item">
+    <div class="item__info" v-if="!!cocktail.rating || !!cocktail.visitCount">
+      <div class="item__rating rating" v-if="!!cocktail.rating">
+        <div class="rating__text">{{ cocktail.rating }}</div>
+      </div>
+      <div class="item__visit-count visit-count" v-if="!!cocktail.visitCount">
+        <div class="visit-count__text">{{ cocktail.visitCount }}</div>
+      </div>
+    </div>
     <div class="item__img">
       <picture>
         <source
@@ -22,14 +30,6 @@
     <div class="item__name">
       {{ cocktail.name }}
     </div>
-    <div class="item__info" v-if="!!cocktail.rating || !!cocktail.visitCount">
-      <div class="item__rating" v-if="!!cocktail.rating">
-        Оцінка користувачів <strong>{{ cocktail.rating }}</strong>
-      </div>
-      <div class="item__visit-count" v-if="!!cocktail.visitCount">
-        Кількість переглядів <strong>{{ cocktail.visitCount }}</strong>
-      </div>
-    </div>
   </NuxtLink>
 </template>
 
@@ -47,11 +47,49 @@ export default {
 
 <style lang="scss" scoped>
 .item {
+  .visit-count {
+    display: flex;
+    align-items: center;
+    &__text {
+      color: $colorBlack;
+      margin-left: 10px;
+      @include fontSize14;
+    }
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: $colorMain;
+      mask-size: cover;
+      mask-image: url("/img/icons/eye.svg");
+    }
+  }
+  .rating {
+    display: flex;
+    align-items: center;
+    &__text {
+      color: $colorBlack;
+      margin-left: 10px;
+      @include fontSize14;
+    }
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-color: $colorRating;
+      mask-size: cover;
+      mask-image: url("/img/icons/star.svg");
+    }
+  }
+  &__rating {
+    margin-right: 10px;
+  }
   &__info {
-    margin-top: $halfShortMargin;
-    text-align: center;
-    @include fontSize14;
-    color: $colorMain;
+    margin-bottom: $halfShortMargin;
+    display: flex;
+    justify-content: flex-end;
   }
   display: block;
 
@@ -77,6 +115,9 @@ export default {
     }
   }
   &__name {
+    &::first-letter {
+      text-transform: uppercase;
+    }
     color: $colorMain;
     text-align: center;
     margin-top: $shortMargin;
