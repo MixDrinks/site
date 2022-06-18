@@ -40,10 +40,6 @@ export default {
   components: { FilterList, Pagination, CocktailsList, Sorting },
   name: "CocktailsPage",
   props: {
-    tags: {
-      type: Array,
-      required: true,
-    },
     allFilters: {
       require: true,
     },

@@ -61,6 +61,7 @@ export default {
           property: "og:url",
           content: `${this.canonical}`,
         },
+        { name: "robots", content: "index, follow" },
       ],
     };
   },

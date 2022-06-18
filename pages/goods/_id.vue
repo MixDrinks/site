@@ -88,6 +88,13 @@ export default {
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
     },
+    indexPage() {
+      if (Object.entries(this.$nuxt.$route.query).length === 0) {
+        return "index, follow";
+      } else {
+        return "noindex, follow";
+      }
+    },
   },
   head() {
     return {
@@ -114,6 +121,7 @@ export default {
           property: "og:url",
           content: `${this.canonical}`,
         },
+        { name: "robots", content: this.indexPage },
       ],
     };
   },

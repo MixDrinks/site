@@ -6,6 +6,7 @@
       :isLink="!!nextPage"
       :href="nextPage.link"
       @click="updateCocktails({ loadMore: true })"
+      rel="nofollow"
     >
       Показати ще {{ limit }}
     </TextBtn>
@@ -34,6 +35,7 @@
         :isLink="!!prevPage"
         :href="!!prevPage ? prevPage.link : '/'"
         @click.native="updateCocktails()"
+        rel="prev"
       >
         Попередня сторінка
       </IconBtn>
@@ -45,6 +47,7 @@
         :isLink="!!nextPage"
         :href="!!nextPage ? nextPage.link : '/'"
         @click.native="updateCocktails()"
+        rel="next"
       >
         Наступна сторінка
       </IconBtn>

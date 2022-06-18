@@ -119,7 +119,6 @@ export default {
 <style lang="scss" scoped>
 .rating {
   &__text {
-    margin-top: 8px;
     @include fontSize16;
     color: $colorBlack;
   }
@@ -130,9 +129,9 @@ export default {
   &__wrapper {
     display: flex;
     align-items: center;
-    // &.lock {
-    //   pointer-events: none;
-    // }
+    &.lock {
+      pointer-events: none;
+    }
   }
 
   &__value {

@@ -53,6 +53,7 @@
         </div>
         <div class="filter__wrapper">
           <NuxtLink
+            rel="tag"
             class="filter__item"
             :class="[
               { active: filterItem.active },

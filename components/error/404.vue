@@ -1,8 +1,8 @@
 <template>
   <div class="error-404 wrapper">
-    {{ error }}
+    <!-- {{ error }} -->
     <h1>404</h1>
-    <p>The link you clicked on may be broken or no longer exist.</p>
+    <p>Упс, такої сторінки не існує</p>
   </div>
 </template>
 <script>
