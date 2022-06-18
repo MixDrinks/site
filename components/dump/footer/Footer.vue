@@ -16,7 +16,7 @@
             href="https://mixdrinks.github.io/backend/"
             target="_blank"
           >
-            Документація аpi проєкту
+            Документація API проєкту
           </a>
         </div>
 
