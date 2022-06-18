@@ -8,51 +8,56 @@
         @click="toggleList(filterItem.id)"
       ></div>
     </div>
-    <div class="filter__wrapper" v-if="!isCloseFilter.includes(filterItem.id)">
-      <div class="filter__search search" :class="{ filled: !!searchValue }">
-        <label class="search__wrapper">
-          <div class="search__label label">Пошук</div>
-          <input
-            ref="searchInput"
-            class="search__input input"
-            type="text"
-            v-model="searchValue"
-          />
-        </label>
-      </div>
-      <div class="filter__items">
-        <div v-for="filterItem in listSearch" :key="filterItem.id">
-          <NuxtLink
-            rel="tag"
-            v-if="!!filterItem.count"
-            class="filter__item"
-            :class="{ active: filterItem.active }"
-            :to="filterItem.url"
-            @click.native="updateCocktails"
-          >
-            <div class="filter__checkbox"></div>
-            <div class="filter__name">
-              {{ filterItem.name }}
-            </div>
-            <div class="filter__count" v-if="!filterItem.active">
-              {{ filterItem.count }}
-            </div>
-          </NuxtLink>
-          <div v-else class="filter__item lock">
-            <div class="filter__checkbox"></div>
-            <div class="filter__name">
-              {{ filterItem.name }}
-            </div>
-            <div class="filter__count">
-              {{ filterItem.count }}
+    <transition name="max-height">
+      <div
+        class="filter__wrapper"
+        v-if="!isCloseFilter.includes(filterItem.id)"
+      >
+        <div class="filter__search search" :class="{ filled: !!searchValue }">
+          <label class="search__wrapper">
+            <div class="search__label label">Пошук</div>
+            <input
+              ref="searchInput"
+              class="search__input input"
+              type="text"
+              v-model="searchValue"
+            />
+          </label>
+        </div>
+        <div class="filter__items">
+          <div v-for="filterItem in listSearch" :key="filterItem.id">
+            <NuxtLink
+              rel="tag"
+              v-if="!!filterItem.count"
+              class="filter__item"
+              :class="{ active: filterItem.active }"
+              :to="filterItem.url"
+              @click.native="updateCocktails"
+            >
+              <div class="filter__checkbox"></div>
+              <div class="filter__name">
+                {{ filterItem.name }}
+              </div>
+              <div class="filter__count" v-if="!filterItem.active">
+                {{ filterItem.count }}
+              </div>
+            </NuxtLink>
+            <div v-else class="filter__item lock">
+              <div class="filter__checkbox"></div>
+              <div class="filter__name">
+                {{ filterItem.name }}
+              </div>
+              <div class="filter__count">
+                {{ filterItem.count }}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="filter__text" v-if="listSearch.length === 0">
-          нічого не знайдено
+          <div class="filter__text" v-if="listSearch.length === 0">
+            нічого не знайдено
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -104,6 +109,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.max-height-enter-active {
+  animation: max-height $defaultAnimTime;
+  overflow: hidden;
+}
+.max-height-leave-active {
+  animation: max-height $defaultAnimTime reverse;
+}
 .filter {
   .search {
     &__wrapper {
