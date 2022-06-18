@@ -38,7 +38,7 @@
         {{ curentRatingCount }}
       </div>
     </div>
-    <div class="rating__text" v-if="isRatingBeenSet">Дякуємо що оцінили</div>
+    <div class="rating__text" v-if="isRatingBeenSet">Дякуємо, що оцінили</div>
   </div>
 </template>
 
