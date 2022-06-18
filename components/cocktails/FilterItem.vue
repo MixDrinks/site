@@ -9,7 +9,7 @@
       ></div>
     </div>
     <div class="filter__wrapper" v-if="!isCloseFilter.includes(filterItem.id)">
-      <div class="filter__search search">
+      <div class="filter__search search" :class="{ filled: !!searchValue }">
         <label class="search__wrapper">
           <div class="search__label label">Пошук</div>
           <input
@@ -47,6 +47,9 @@
               {{ filterItem.count }}
             </div>
           </div>
+        </div>
+        <div class="filter__text" v-if="listSearch.length === 0">
+          нічого не знайдено
         </div>
       </div>
     </div>
@@ -102,6 +105,55 @@ export default {
 
 <style lang="scss" scoped>
 .filter {
+  .search {
+    &__wrapper {
+      position: relative;
+      display: block;
+    }
+    &__label {
+      position: absolute;
+      left: 0;
+      @include fontSize14;
+      color: rgba($colorMain, 0.8);
+      top: 50%;
+      transform: translateY(-50%);
+      transition: top $defaultAnimTime, transform $defaultAnimTime;
+    }
+    &__input {
+      width: 100%;
+
+      border: 0;
+      padding: 20px 0 12px;
+      box-shadow: inset 0px -2px 0px $colorMain;
+
+      @include fontSize18B;
+
+      color: $colorMain;
+    }
+    &:hover {
+      .input {
+        box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
+      }
+      .label {
+        color: $colorMain;
+      }
+    }
+    &.filled {
+      .label {
+        top: 0%;
+        transform: translateY(0);
+      }
+    }
+    &:not(:hover).filled {
+      .input {
+        box-shadow: inset 0px -2px 0px $colorMain;
+      }
+    }
+  }
+  &__text {
+    @include fontSize14;
+    color: $colorMain;
+  }
   &__search {
     margin-bottom: $halfPadding;
   }

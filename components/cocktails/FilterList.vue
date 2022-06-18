@@ -122,20 +122,13 @@ export default {
       let arr = [];
       this.filter.forEach((filterItem) => {
         const machineValue = filterItem.value;
-        const filterListObj = this.filterList[machineValue];
+        const filterListArr = this.filterList[machineValue];
         let newFilterList = [];
-        let filterListArr = [];
         let query = "";
         for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
           if (key != "page" && key != machineValue) {
             query = query + `&${key}=${value}`;
           }
-        }
-        for (let [key, value] of Object.entries(filterListObj)) {
-          filterListArr.push({
-            id: key,
-            name: value,
-          });
         }
         filterListArr.forEach((subfilterItem) => {
           let url = `?${machineValue}=${subfilterItem.id}${query}`;
