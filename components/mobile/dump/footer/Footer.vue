@@ -3,6 +3,16 @@
     <div class="wrapper">
       <div class="footer__wrapper">
         <div class="footer__item">
+          <div class="footer__title">Зворотній зв'язок</div>
+          <a
+            class="footer__link"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdW4lCa0JMcIQ3gqDdGve-GxOQuqD3zbRpkKSQzkOyzzr0W2A/viewform"
+            target="_blank"
+          >
+            Форма зворотного зв'язку
+          </a>
+        </div>
+        <div class="footer__item">
           <div class="footer__title">Про проєкт</div>
           <a
             class="footer__link"
