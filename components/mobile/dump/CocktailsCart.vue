@@ -1,40 +1,45 @@
 <template>
-  <NuxtLink :to="`/cocktails/${cocktail.id}`" class="item">
-    <div class="item__img">
-      <picture>
-        <source
-          v-for="img in cocktail.images"
-          :key="img.id"
-          :srcset="img.srcset"
-          :media="img.media"
-          :type="img.type"
-        />
-        <img
-          class="img"
-          width="100"
-          height="100"
-          loading="lazy"
-          :alt="`Зображення коктейля ${cocktail.name}`"
-          title=""
-        />
-      </picture>
-    </div>
-    <div class="item__info">
-      <div class="item__user-info">
-        <div class="item__rating rating" v-if="!!cocktail.rating">
-          <div class="rating__text">
-            {{ Number(cocktail.rating.toFixed(1)) }}
+  <transition name="fate-in" appear>
+    <NuxtLink :to="`/cocktails/${cocktail.id}`" class="item">
+      <div class="item__img">
+        <picture>
+          <source
+            v-for="img in cocktail.images"
+            :key="img.id"
+            :srcset="img.srcset"
+            :media="img.media"
+            :type="img.type"
+          />
+          <img
+            class="img"
+            width="100"
+            height="100"
+            loading="lazy"
+            :alt="`Зображення коктейля ${cocktail.name}`"
+            title=""
+          />
+        </picture>
+      </div>
+      <div class="item__info">
+        <div class="item__user-info">
+          <div class="item__rating rating" v-if="!!cocktail.rating">
+            <div class="rating__text">
+              {{ Number(cocktail.rating.toFixed(1)) }}
+            </div>
+          </div>
+          <div
+            class="item__visit-count visit-count"
+            v-if="!!cocktail.visitCount"
+          >
+            <div class="visit-count__text">{{ cocktail.visitCount }}</div>
           </div>
         </div>
-        <div class="item__visit-count visit-count" v-if="!!cocktail.visitCount">
-          <div class="visit-count__text">{{ cocktail.visitCount }}</div>
+        <div class="item__name">
+          {{ cocktail.name }}
         </div>
       </div>
-      <div class="item__name">
-        {{ cocktail.name }}
-      </div>
-    </div>
-  </NuxtLink>
+    </NuxtLink>
+  </transition>
 </template>
 
 <script>
@@ -50,6 +55,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fate-in-enter-active {
+  animation: fade-in $defaultAnimTime;
+}
+
 .item {
   &__user-info {
     display: flex;
