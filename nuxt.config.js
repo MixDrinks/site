@@ -89,8 +89,7 @@ module.exports = {
   },
 
   build: {
-    // optimizeCss: true,
-
+    optimizeCss: true,
     // splitChunks: {
     //   layouts: true,
     //   pages: true,
