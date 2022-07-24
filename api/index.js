@@ -21,7 +21,7 @@ export const getCocktails = (queryParams) => {
   });
 };
 export const getCocktail = (id) => {
-  return api.get(`/cocktails/full?id=${id}`, {
+  return api.get(`/v2/cocktails/full?id=${id}`, {
     headers: {
       "Cache-Control": "no-cache",
       Pragma: "no-cache",
@@ -36,11 +36,11 @@ export const getAllFilters = () => {
   return api.get(`/v2/filters`);
 };
 export const cocktailsVisit = (id) => {
-  return api.post(`cocktails/visit?id=${id}`);
+  return api.post(`/v2/cocktails/visit?id=${id}`);
 };
 export const updateRating = (id, value) => {
-  return api.post(`cocktails/score?id=${id}`, { value: value });
+  return api.post(`/v2/cocktails/score?id=${id}`, { value: value });
 };
 export const getItems = (id) => {
-  return api.get(`items/full${id}`);
+  return api.get(`/v2/items/full${id}`);
 };
