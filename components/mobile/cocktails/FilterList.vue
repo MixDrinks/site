@@ -54,10 +54,9 @@
         <div class="filters__wrapper">
           <FilterItem
             class="filters__list"
-            v-for="filterItem in listWithURL"
+            v-for="filterItem in filterListWithUrl"
             :key="filterItem.id"
             :filterItem="filterItem"
-            :list="filterItem.filterList"
             @updateCocktails="updateCocktails"
           />
         </div>
@@ -71,7 +70,6 @@
 </template>
 
 <script>
-import { filter } from "~~/utils/filter";
 import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
 import FilterItem from "./FilterItem.vue";
 export default {
@@ -82,24 +80,16 @@ export default {
   }),
   props: {
     filterList: {
-      type: Object,
+      type: Array,
       required: true,
-    },
-    tagsCount: {
-      type: Object,
-      require: true,
-    },
-    goodCount: {
-      type: Object,
-      require: true,
-    },
-    toolCount: {
-      type: Object,
-      require: true,
     },
     totalCount: {
       type: Number,
       default: 0,
+    },
+    futureCounts: {
+      type: Object,
+      require: true,
     },
   },
   methods: {
@@ -108,9 +98,6 @@ export default {
     },
   },
   computed: {
-    filter() {
-      return filter;
-    },
     query() {
       let temp = "";
       for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
@@ -120,10 +107,49 @@ export default {
       }
       return temp;
     },
+    filterListWithUrl() {
+      let arr = [...this.filterList];
+      arr.forEach((filter) => {
+        const machineValue = filter.queryName;
+        const isHaveQuery = !!this.$nuxt.$route.query[machineValue];
+        const arrayTags = isHaveQuery
+          ? this.$nuxt.$route.query[machineValue].split(",")
+          : false;
+        let query = "";
+        for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+          if (key != "page" && key != machineValue) {
+            query = query + `&${key}=${value}`;
+          }
+        }
+        filter.items.forEach((item) => {
+          let url = `?${machineValue}=${item.id}${query}`;
+          let active = false;
+          if (isHaveQuery) {
+            if (arrayTags.find((tag) => tag == item.id)) {
+              const newArr = arrayTags.filter((tag) => tag != item.id);
+              url = newArr.length
+                ? `?${machineValue}=${newArr.join(",")}${query}`
+                : `?${query}`;
+              active = true;
+            } else {
+              url = `?${machineValue}=${arrayTags.join(",")},${
+                item.id
+              }${query}`;
+            }
+          }
+          item.cocktailCount = this.futureCounts[filter.id].find(
+            (el) => el.id === item.id
+          ).count;
+          item.url = url;
+          item.active = active;
+        });
+      });
+      return arr;
+    },
     arrFilterNames() {
       let arr = [];
-      this.filter.forEach((el) => {
-        arr.push(el.value);
+      this.filterList.forEach((el) => {
+        arr.push(el.queryName);
       });
       return arr;
     },
@@ -136,58 +162,10 @@ export default {
       }
       return temp;
     },
-    listWithURL() {
-      let arr = [];
-      this.filter.forEach((filterItem) => {
-        const machineValue = filterItem.value;
-        const filterListArr = this.filterList[machineValue];
-        let newFilterList = [];
-        let query = "";
-        for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-          if (key != "page" && key != machineValue) {
-            query = query + `&${key}=${value}`;
-          }
-        }
-        filterListArr.forEach((subfilterItem) => {
-          let url = `?${machineValue}=${subfilterItem.id}${query}`;
-          let active = false;
-          if (this.$nuxt.$route.query[machineValue]) {
-            const arrayTags = this.$nuxt.$route.query[machineValue].split(",");
-            if (arrayTags.find((item) => item == subfilterItem.id)) {
-              const newArr = arrayTags.filter(
-                (item) => item != subfilterItem.id
-              );
-              url = newArr.length
-                ? `?${machineValue}=${newArr.join(",")}${query}`
-                : `?${query}`;
-              active = true;
-            } else {
-              url = `?${machineValue}=${arrayTags.join(",")},${
-                subfilterItem.id
-              }${query}`;
-            }
-          }
-          newFilterList.push({
-            ...subfilterItem,
-            url: url,
-            active: active,
-            count: this[filterItem.count][subfilterItem.id],
-          });
-        });
-        newFilterList.sort((a, b) => (a.count > b.count ? -1 : 1));
-        arr.push({
-          title: filterItem.name,
-          id: filterItem.id,
-          filterList: [...newFilterList],
-        });
-      });
-
-      return arr;
-    },
     activeFilter() {
       let arr = [];
-      this.listWithURL.forEach((el) => {
-        arr = [...arr, ...el.filterList];
+      this.filterListWithUrl.forEach((el) => {
+        arr = [...arr, ...el.items];
       });
       return arr.filter((item) => item.active);
     },

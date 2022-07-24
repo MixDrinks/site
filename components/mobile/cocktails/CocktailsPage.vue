@@ -6,10 +6,8 @@
       class="cocktails__filter"
       @updateCocktails="updateCocktails"
       :filterList="allFilters"
-      :tagsCount="cocktailsFull.cocktailsByTagCounts"
-      :goodCount="cocktailsFull.cocktailsByGoodCounts"
-      :toolCount="cocktailsFull.cocktailsByToolCounts"
       :totalCount="cocktailsFull.totalCount"
+      :futureCounts="cocktailsFull.futureCounts"
     />
     <CocktailsList
       class="cocktails__list"
@@ -36,7 +34,7 @@ export default {
   name: "CocktailsPage",
   props: {
     allFilters: {
-      type: Object,
+      type: Array,
       require: true,
     },
     cocktailsFull: {

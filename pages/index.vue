@@ -50,6 +50,12 @@ export default {
       allFilters: allFilters.data,
     };
   },
+  beforeMount() {
+    window.addEventListener("popstate", this.updateCocktails, false);
+  },
+  beforeDestroy() {
+    window.removeEventListener("popstate", this.updateCocktails, false);
+  },
   methods: {
     async updateCocktails(payload) {
       // this.startLoading()

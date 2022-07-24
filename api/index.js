@@ -12,7 +12,7 @@ export const api = $axios.create({
   credentials: true,
 });
 export const getCocktails = (queryParams) => {
-  return api.get(`/cocktails/filter${queryParams}`, {
+  return api.get(`/v2/search/cocktails${queryParams}`, {
     headers: {
       "Cache-Control": "no-cache",
       Pragma: "no-cache",
@@ -33,7 +33,7 @@ export const getCocktailsShort = () => {
   return api.get(`/cocktails/all`);
 };
 export const getAllFilters = () => {
-  return api.get(`/meta/all`);
+  return api.get(`/v2/filters`);
 };
 export const cocktailsVisit = (id) => {
   return api.post(`cocktails/visit?id=${id}`);

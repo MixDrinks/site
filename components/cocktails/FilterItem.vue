@@ -1,7 +1,7 @@
 <template>
   <div class="filter">
     <div class="filter__header" @click="toggleList(filterItem.id)">
-      <div class="filter__title">{{ filterItem.title }}</div>
+      <div class="filter__title">{{ filterItem.name }}</div>
       <div
         class="filter__toggler"
         :class="{ close: isCloseFilter.includes(filterItem.id) }"
@@ -28,7 +28,7 @@
             <NuxtLink
               :title="filterItem.name"
               rel="tag"
-              v-if="!!filterItem.count"
+              v-if="!!filterItem.cocktailCount"
               class="filter__item"
               :class="{ active: filterItem.active }"
               :to="filterItem.url"
@@ -39,7 +39,7 @@
                 {{ filterItem.name }}
               </div>
               <div class="filter__count" v-if="!filterItem.active">
-                {{ filterItem.count }}
+                {{ filterItem.cocktailCount }}
               </div>
             </NuxtLink>
             <div v-else class="filter__item lock">
@@ -48,7 +48,7 @@
                 {{ filterItem.name }}
               </div>
               <div class="filter__count">
-                {{ filterItem.count }}
+                {{ filterItem.cocktailCount }}
               </div>
             </div>
           </div>
@@ -81,27 +81,27 @@ export default {
     },
   },
   computed: {
+    filterItemSort() {
+      let arr = [...this.filterItem.items];
+      return arr.sort((a, b) => (a.cocktailCount > b.cocktailCount ? -1 : 1));
+    },
     listSearch() {
       if (!!this.searchValue) {
         let arr = [];
-        arr = this.list.filter((listItem) => {
+        arr = this.filterItemSort.filter((listItem) => {
           return listItem.name
             .toLowerCase()
             .includes(this.searchValue.toLowerCase());
         });
         return arr;
       } else {
-        return this.list;
+        return this.filterItemSort;
       }
     },
   },
   props: {
     filterItem: {
       type: Object,
-      require: true,
-    },
-    list: {
-      type: Array,
       require: true,
     },
   },

@@ -2,7 +2,6 @@
   <div class="main">
     <component v-if="isMobile" :is="HeaderMob" />
     <component v-else :is="Header" />
-    <Header />
     <Nuxt class="main__wrapper" />
     <component v-if="isMobile" :is="FooterMob" />
     <component v-else :is="Footer" />
