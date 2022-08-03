@@ -1,4 +1,4 @@
-# The frontend of mixdrinks.org. The ukrainian cocktails database.
+## The frontend of [mixdrinks.org](https://mixdrinks.org). The ukrainian cocktails database.
 
 The site provides a list of cocktails and recipes. 
 
