@@ -26,7 +26,7 @@
             </a>
             <a
               class="footer__link"
-              href="https://mixdrinks.github.io/backend/"
+              href="https://mixdrinks.github.io/docs/"
               target="_blank"
             >
               Документація API проєкту
