@@ -48,7 +48,23 @@
       </ol>
     </div>
     <div class="cocktail__goods goods">
-      <div class="goods__title">Склад коктейлю {{ cocktail.name }}</div>
+      <div class="cocktail__goods goods">
+        <div class="goods__title">Склад коктейлю {{ cocktail.name }}</div>
+        <div class="goods__counter-wrapper">
+          <IconBtn
+              :lock="counter === 1"
+              icon="/img/icons/minus.svg"
+              @click="dec()"/>
+
+          <div class="goods__counter">
+            {{ counter }}
+          </div>
+          <IconBtn
+              icon="/img/icons/plus.svg"
+              @click="inc()"
+          />
+        </div>
+      </div>
       <ul class="goods__list">
         <li class="goods__item" v-for="good in cocktail.goods" :key="good.id">
           <NuxtLink class="goods__link" :to="`/goods/${good.id}`">
@@ -73,7 +89,7 @@
             </div>
             <div class="goods__name">
               {{ good.name }}<br /><strong>
-                {{ good.amount }} {{ good.unit }}.
+                {{ good.amount * counter }} {{ good.unit }}.
               </strong>
             </div>
           </NuxtLink>
@@ -117,9 +133,25 @@
 
 <script>
 import Rating from "~~/components/cocktails/Rating.vue";
+import IconBtn from "~/components/dump/UI/buttons/IconBtn.vue";
+
 export default {
   name: "CocktailPage",
-  components: { Rating },
+  components: {IconBtn, Rating },
+  data: () => ({
+        counter: 1
+      }
+  ),
+  methods: {
+    inc() {
+      this.counter++
+    },
+    dec() {
+      if (this.counter > 1) {
+        this.counter--
+      }
+    }
+  },
   props: {
     cocktail: {
       type: Object,
@@ -167,6 +199,25 @@ export default {
 }
 .tools,
 .goods {
+  &__counter-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: $halfShortMargin;
+  }
+  &__counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid $colorMain;
+    color: $colorMain;
+    margin-left: $halfShortMargin;
+    margin-right: $halfShortMargin;
+    @include fontSize18B;
+  }
   &__title {
     color: $colorBlack;
     @include fontSize24B;
