@@ -70,8 +70,6 @@ module.exports = {
 
   components: true,
 
-  buildModules: [],
-
   modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
   buildModules: ["@nuxtjs/device"],
   styleResources: {
