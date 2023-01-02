@@ -1,5 +1,8 @@
 <template>
-  <div class="search" :class="{ filled: inputValue }">
+  <div
+    class="search"
+    :class="{ filled: inputValue }"
+  >
     <label class="search__wrapper">
       <div class="search__label label">Пошук коктейля</div>
       <input
@@ -10,7 +13,10 @@
       />
     </label>
     <transition name="max-height">
-      <div class="search__result result" v-if="inputValue">
+      <div
+        class="search__result result"
+        v-if="inputValue"
+      >
         <ul class="result__list">
           <li
             class="result__item"
@@ -39,12 +45,18 @@ export default {
     inputValue: "",
     listSearch: [],
   }),
+
+  async fetch() {
+    this.listSearch = await getCocktailsShort().then((res) => res.data);
+  },
+
   methods: {
     removeSearch() {
       this.$refs.searchInput.value = "";
       this.inputValue = "";
     },
   },
+
   computed: {
     filteredList() {
       let arr = [];
@@ -57,18 +69,6 @@ export default {
       }
       return arr;
     },
-  },
-  mounted() {
-    getCocktailsShort()
-      .then((response) => {
-        this.listSearch = response.data;
-      })
-      .catch(() => {
-        return error({
-          statusCode: 404,
-          message: "This page could not be found",
-        });
-      });
   },
 };
 </script>

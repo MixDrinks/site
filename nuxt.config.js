@@ -88,6 +88,12 @@ module.exports = {
 
   build: {
     optimizeCss: true,
+    postcss: {
+      plugins: {
+        autoprefixer: {},
+      },
+    },
+
     // splitChunks: {
     //   layouts: true,
     //   pages: true,
@@ -96,21 +102,21 @@ module.exports = {
     // optimization: {
     //   minimize: isDev === "prod",
     // },
-    // ...(isDev === "prod" && {
-    //   html: {
-    //     minify: {
-    //       collapseBooleanAttributes: true,
-    //       decodeEntities: true,
-    //       minifyCSS: true,
-    //       minifyJS: true,
-    //       processConditionalComments: true,
-    //       removeEmptyAttributes: true,
-    //       removeRedundantAttributes: true,
-    //       trimCustomFragments: true,
-    //       // useShortDoctype: true,
-    //     },
-    //   },
-    // }),
+    ...(isDev === "prod" && {
+      html: {
+        minify: {
+          collapseBooleanAttributes: true,
+          decodeEntities: true,
+          minifyCSS: true,
+          minifyJS: true,
+          processConditionalComments: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          trimCustomFragments: true,
+          useShortDoctype: true,
+        },
+      },
+    }),
     // ...(isDev === "prod" && {
     //   extractCSS: {
     //     ignoreOrder: true,

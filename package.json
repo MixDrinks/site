@@ -23,6 +23,11 @@
     "serve": "^13.0.2"
   },
   "devDependencies": {
-    "@nuxtjs/device": "^2.1.0"
+    "@nuxtjs/device": "^2.1.0",
+    "css-loader": "^5.0.0",
+    "postcss": "^8.4.14",
+    "postcss-import": "^13.0.0",
+    "postcss-loader": "^4.1.0",
+    "postcss-url": "^10.1.1"
   }
 }
