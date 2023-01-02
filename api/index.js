@@ -12,22 +12,10 @@ export const api = $axios.create({
   credentials: true,
 });
 export const getCocktails = (queryParams) => {
-  return api.get(`/v2/search/cocktails${queryParams}`, {
-    headers: {
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
-      Expires: "0",
-    },
-  });
+  return api.get(`/v2/search/cocktails${queryParams}`);
 };
 export const getCocktail = (id) => {
-  return api.get(`/v2/cocktails/full?id=${id}`, {
-    headers: {
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
-      Expires: "0",
-    },
-  });
+  return api.get(`/v2/cocktails/full?id=${id}`);
 };
 export const getCocktailsShort = () => {
   return api.get(`/cocktails/all`);
