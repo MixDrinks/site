@@ -1,9 +1,11 @@
 <template>
   <div
     class="rating"
-    itemprop="aggregateRating"
-    itemscope=""
-    itemtype="http://schema.org/AggregateRating"
+    :itemprop="!!curentRatingValue ? 'aggregateRating' : false"
+    :itemscope="!!curentRatingValue ? '' : false"
+    :itemtype="
+      !!curentRatingValue ? 'http://schema.org/AggregateRating' : false
+    "
   >
     <div
       class="rating__wrapper"
@@ -20,7 +22,10 @@
           @click="setRating(star.id)"
         >
           <div class="star--gray"></div>
-          <div class="star--full" :style="'width:' + star.width"></div>
+          <div
+            class="star--full"
+            :style="'width:' + star.width"
+          ></div>
         </div>
       </div>
       <div
@@ -38,7 +43,12 @@
         {{ curentRatingCount }}
       </div>
     </div>
-    <div class="rating__text" v-if="isRatingBeenSet">Дякуємо, що оцінили</div>
+    <div
+      class="rating__text"
+      v-if="isRatingBeenSet"
+    >
+      Дякуємо, що оцінили
+    </div>
   </div>
 </template>
 
