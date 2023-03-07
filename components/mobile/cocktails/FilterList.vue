@@ -17,24 +17,23 @@
             Фільтр
             <span class="filters__total-count">{{ totalCount }}</span>
           </div>
-          <div @click="updateCocktails">
-            <transition
-              name="fate-in"
-              appear
+          <transition
+            name="fate-in"
+            appear
+          >
+            <IconBtn
+              class="filter__close"
+              v-show="activeFilter.length"
+              direction="top"
+              type="short"
+              icon="/img/icons/croos.svg"
+              :isLink="true"
+              :href="`?${queryWithoutFilter}`"
+              @click="updateCocktails"
             >
-              <IconBtn
-                class="filters__close"
-                v-if="!!activeFilter.length"
-                direction="top"
-                type="short"
-                icon="/img/icons/croos.svg"
-                :isLink="true"
-                :href="`?${queryWithoutFilter}`"
-              >
-                Закрити всі фільтри
-              </IconBtn>
-            </transition>
-          </div>
+              Відмінити всі фільтри
+            </IconBtn>
+          </transition>
         </div>
         <div
           class="tag-cloud"
