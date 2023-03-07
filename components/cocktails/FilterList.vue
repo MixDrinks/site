@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     updateCocktails(payload) {
-      console.log("test");
       this.$emit("updateCocktails", payload);
     },
   },
