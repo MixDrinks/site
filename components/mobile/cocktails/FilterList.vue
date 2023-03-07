@@ -8,28 +8,38 @@
       ></div>
     </transition>
     <transition name="max-height">
-      <div class="filters__main" v-show="isFilterOpen">
+      <div
+        class="filters__main"
+        v-show="isFilterOpen"
+      >
         <div class="filters__header">
           <div class="filters__title">
             Фільтр
             <span class="filters__total-count">{{ totalCount }}</span>
           </div>
-          <transition name="fate-in" appear>
-            <IconBtn
-              class="filters__close"
-              v-if="!!activeFilter.length"
-              direction="top"
-              type="short"
-              icon="/img/icons/croos.svg"
-              :isLink="true"
-              :href="`?${queryWithoutFilter}`"
-              @click.native="updateCocktails"
+          <div @click="updateCocktails">
+            <transition
+              name="fate-in"
+              appear
             >
-              Закрити всі фільтри
-            </IconBtn>
-          </transition>
+              <IconBtn
+                class="filters__close"
+                v-if="!!activeFilter.length"
+                direction="top"
+                type="short"
+                icon="/img/icons/croos.svg"
+                :isLink="true"
+                :href="`?${queryWithoutFilter}`"
+              >
+                Закрити всі фільтри
+              </IconBtn>
+            </transition>
+          </div>
         </div>
-        <div class="tag-cloud">
+        <div
+          class="tag-cloud"
+          @click="updateCocktails"
+        >
           <transition-group
             class="tag-cloud__list"
             name="fate-in"
@@ -44,7 +54,6 @@
               <NuxtLink
                 class="tag-cloud__link"
                 :to="filterItem.url"
-                @click.native="updateCocktails"
               >
                 {{ filterItem.name }}
               </NuxtLink>
@@ -62,7 +71,10 @@
         </div>
       </div>
     </transition>
-    <div class="filters__btn" @click="isFilterOpen = !isFilterOpen">
+    <div
+      class="filters__btn"
+      @click="isFilterOpen = !isFilterOpen"
+    >
       <span v-if="isFilterOpen">Закрити</span>
       <span v-else>Фільтр</span>
     </div>

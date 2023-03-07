@@ -4,24 +4,31 @@
       <div class="filters__title">
         Фільтри <span class="filters__total-count">{{ totalCount }}</span>
       </div>
-      <transition name="fate-in" appear>
-        <IconBtn
-          class="filter__close"
-          v-if="!!activeFilter.length"
-          direction="top"
-          type="short"
-          icon="/img/icons/croos.svg"
-          :isLink="true"
-          :href="`?${queryWithoutFilter}`"
-          @click.native="updateCocktails"
+      <div @click="updateCocktails">
+        <transition
+          name="fate-in"
+          appear
         >
-          Відмінити всі фільтри
-        </IconBtn>
-      </transition>
+          <IconBtn
+            class="filter__close"
+            v-if="!!activeFilter.length"
+            direction="top"
+            type="short"
+            icon="/img/icons/croos.svg"
+            :isLink="true"
+            :href="`?${queryWithoutFilter}`"
+          >
+            Відмінити всі фільтри
+          </IconBtn>
+        </transition>
+      </div>
     </div>
 
-    <div class="tag-cloud">
-      <transition-group
+    <div
+      class="tag-cloud"
+      @click="updateCocktails"
+    >
+      <div
         class="tag-cloud__list"
         name="fate-in"
         mode="page"
@@ -35,12 +42,11 @@
           <NuxtLink
             class="tag-cloud__link"
             :to="filterItem.url"
-            @click.native="updateCocktails"
           >
             {{ filterItem.name }}
           </NuxtLink>
         </div>
-      </transition-group>
+      </div>
     </div>
     <div class="filters__wrapper">
       <FilterItem
@@ -76,6 +82,7 @@ export default {
   },
   methods: {
     updateCocktails(payload) {
+      console.log("test");
       this.$emit("updateCocktails", payload);
     },
   },
