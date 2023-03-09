@@ -1,78 +1,90 @@
 <template>
   <div class="cocktail">
-    <div class="cocktail__header">
-      <h1 class="cocktail__title" itemprop="name">{{ cocktail.name }}</h1>
-      <div class="cocktail__user-info">
-        <div class="cocktail__views" v-if="!!cocktail.visitCount">
+    <div class="cocktail__header cocktail-header">
+      <h1 class="cocktail-header-title cocktail-header__title" itemprop="name">
+        <span class="cocktail-header-title__label">
+          {{ cocktail.name }}
+        </span>
+      </h1>
+      <div class="cocktail-header__user-info cocktail-header-user-info">
+        <div class="cocktail-header-user-info__views" v-if="!!cocktail.visitCount">
           Переглядів <strong>{{ cocktail.visitCount }}</strong>
         </div>
         <Rating
-          class="cocktail__rating"
+          class="cocktail-header-user-info__rating"
           :ratingCount="cocktail.ratingCount"
           :ratingValue="cocktail.rating"
         />
       </div>
     </div>
-    <ul class="cocktail__tags tags">
-      <li class="tags__item" v-for="tag in cocktail.tags" :key="tag.id">
-        <NuxtLink :to="`/?tags=${tag.id}`" class="tags__link">
-          <span class="tags__name">{{ tag.name }}</span>
+    <ul class="cocktail__tags cocktail-tags">
+      <li class="cocktail-tags__item cocktail-tags-item" v-for="tag in cocktail.tags" :key="tag.id">
+        <NuxtLink :to="`/?tags=${tag.id}`" class="cocktail-tags-item__link cocktail-tags-item-link">
+          <span class="cocktail-tags-item-link__label">{{ tag.name }}</span>
         </NuxtLink>
       </li>
     </ul>
-    <div class="cocktail__body">
-      <div class="cocktail__img">
-        <picture>
-          <source
-            v-for="img in cocktail.images"
-            :key="img.id"
-            :srcset="img.srcset"
-            :media="img.media"
-            :type="img.type"
-          />
-          <img
-            class="img"
-            width="500"
-            height="500"
-            loading="lazy"
-            :alt="`Зображення коктейля ${cocktail.name}`"
-            title=""
-          />
-        </picture>
-      </div>
-      <div class="cocktail__recipe recipe">
-        <div class="recipe__title">Рецепт коктейлю {{ cocktail.name }}</div>
-        <ol class="recipe__list" itemprop="recipeInstructions">
+    <div class="cocktail__body cocktail-body">
+      <picture class="cocktail-body__picture">
+        <source
+          v-for="img in cocktail.images"
+          :key="img.id"
+          :srcset="img.srcset"
+          :media="img.media"
+          :type="img.type"
+        />
+        <img
+          class="cocktail-body__img"
+          width="500"
+          height="500"
+          loading="lazy"
+          :alt="`Зображення коктейля ${cocktail.name}`"
+          title=""
+        />
+      </picture>
+      <div class="cocktail-body__recipe cocktail-body-recipe">
+        <h2 class="cocktail-body-recipe__title cocktail-body-recipe-title">
+          <span class="cocktail-body-recipe-title__label">
+            Рецепт коктейлю {{ cocktail.name }}
+          </span>
+        </h2>
+        <ol class="cocktail-body-recipe__list cocktail-body-recipe-list" itemprop="recipeInstructions">
           <li
-            class="recipe__item"
+            class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
             v-for="recipeItem in cocktail.receipt"
             :key="recipeItem"
           >
-            <span class="recipe__text">{{ recipeItem }}</span>
+            <span class="cocktail-body-recipe-list-item__label">{{ recipeItem }}</span>
           </li>
         </ol>
       </div>
-      <div class="cocktail__goods goods">
-        <div class="goods__title">Склад коктейлю {{ cocktail.name }}</div>
-        <div class="goods__counter-wrapper">
+      <div class="cocktail-body__goods cocktail-body-goods">
+        <h2 class="cocktail-body-goods__title cocktail-body-goods-title">
+          <span class="cocktail-body-goods-title__label">
+            Склад коктейлю {{ cocktail.name }}
+          </span>
+        </h2>
+        <div class="cocktail-body-goods__counter cocktail-body-goods-counter">
           <IconBtn
+              class="cocktail-body-goods-counter__btn cocktail-body-goods-counter__btn--dec"
               :lock="counter === 1"
               icon="/img/icons/minus.svg"
               @click="dec()"/>
 
-          <div class="goods__counter">
+          <div class="cocktail-body-goods-counter__value">
             {{ counter }}
           </div>
           <IconBtn
+              class="cocktail-body-goods-counter__btn cocktail-body-goods-counter__btn--inc"
               icon="/img/icons/plus.svg"
               @click="inc()"
           />
         </div>
-        <ul class="goods__list">
-          <li class="goods__item" v-for="good in cocktail.goods" :key="good.id">
-            <NuxtLink class="goods__link" :to="`/goods/${good.id}`">
-              <div class="goods__img">
-                <picture>
+        <ul class="cocktail-body-goods__list cocktail-body-goods-list">
+          <li class="cocktail-body-goods-list__item cocktail-body-goods-list-item" v-for="good in cocktail.goods" :key="good.id">
+            <NuxtLink class="cocktail-body-goods-list-item__link cocktail-body-goods-list-item-link" :to="`/goods/${good.id}`">
+              <picture
+                class="cocktail-body-goods-list-item-link__picture">
                   <source
                     v-for="img in good.images"
                     :key="img.id"
@@ -81,7 +93,7 @@
                     :type="img.type"
                   />
                   <img
-                    class="img"
+                    class="cocktail-body-goods-list-item-link__img"
                     width="150"
                     height="150"
                     loading="lazy"
@@ -89,8 +101,7 @@
                     title=""
                   />
                 </picture>
-              </div>
-              <div class="goods__name">
+              <div class="cocktail-body-goods-list-item-link__label">
                 {{ good.name }}<br /><strong>
                   {{ good.amount * counter }} {{ good.unit }}.
                 </strong>
@@ -99,16 +110,16 @@
           </li>
         </ul>
       </div>
-
-      <div class="cocktail__tools tools">
-        <div class="tools__title">
-          Потрібні штучки для пригоування {{ cocktail.name }}
-        </div>
-        <ul class="tools__list">
-          <li class="tools__item" v-for="tool in cocktail.tools" :key="tool.id">
-            <NuxtLink class="tools__link" :to="`/tools/${tool.id}`">
-              <div class="tools__img">
-                <picture>
+      <div class="cocktail-body__tools cocktail-body-tools">
+        <h2 class="cocktail-body-tools__title cocktail-body-tools-title">
+          <sapn class="cocktail-body-tools-title__label">
+            Потрібні штучки для пригоування {{ cocktail.name }}
+          </sapn>
+        </h2>
+        <ul class="cocktail-body-tools__list cocktail-body-tools-list">
+          <li class="cocktail-body-tools-list__item cocktail-body-tools-list-item" v-for="tool in cocktail.tools" :key="tool.id">
+            <NuxtLink class="cocktail-body-tools-list-item__link cocktail-body-tools-list-item-link" :to="`/tools/${tool.id}`">
+              <picture class="cocktail-body-tools-list-item-link__picture">
                   <source
                     v-for="img in tool.images"
                     :key="img.id"
@@ -117,7 +128,7 @@
                     :type="img.type"
                   />
                   <img
-                    class="img"
+                    class="cocktail-body-tools-list-item-link__img"
                     width="150"
                     height="150"
                     loading="lazy"
@@ -125,14 +136,14 @@
                     title=""
                   />
                 </picture>
+              <div class="cocktail-body-tools-list-item-link__label">
+                {{ tool.name }}
               </div>
-              <div class="tools__name">{{ tool.name }}</div>
             </NuxtLink>
           </li>
         </ul>
       </div>
     </div>
-    <div class="cocktail__footer"></div>
   </div>
 </template>
 
@@ -167,206 +178,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.cocktail {
-  &__header {
-    display: flex;
-    justify-content: space-between;
-  }
-  &__user-info {
-    display: flex;
-    align-items: center;
-  }
-  &__views {
-    margin-right: $halfShortMargin;
-    @include fontSize18M;
-  }
-  &__title {
-    @include fontSize48B;
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-  &__tags {
-    margin-top: $shortMargin;
-    margin-bottom: $shortMargin;
-  }
-  &__img {
-    flex-basis: 500px;
-
-    margin-bottom: $shortMargin;
-
-    .img {
-      display: block;
-      object-fit: cover;
-    }
-  }
-  &__body {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  &__recipe {
-    margin-bottom: $shortMargin;
-
-    flex-basis: calc(100% - 500px);
-    padding-left: 100px;
-  }
-  &__goods {
-    flex-basis: 100%;
-    margin-bottom: $shortMargin;
-  }
-  &__tools {
-    flex-basis: 100%;
-    margin-bottom: $shortMargin;
-  }
-}
-.tools,
-.goods {
-  &__counter-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: $halfShortMargin;
-  }
-  &__counter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-basis: 40px;
-    height: 40px;
-    border-radius: 4px;
-    border: 1px solid $colorMain;
-    color: $colorMain;
-    margin-left: $halfShortMargin;
-    margin-right: $halfShortMargin;
-    @include fontSize18B;
-  }
-  &__title {
-    color: $colorBlack;
-    @include fontSize24B;
-
-    margin-bottom: $shortMargin;
-  }
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -4px;
-  }
-  &__link {
-    display: block;
-    height: 100%;
-    padding: 4px 4px 12px;
-    border-radius: 8px;
-
-    transition: transform $defaultAnimTime, box-shadow $defaultAnimTime;
-    &:hover {
-      .tools,
-      .goods {
-        &__name {
-          color: $colorHover;
-        }
-      }
-      transform: translateY(-10px);
-      box-shadow: 1px 10px rgba($colorHover, 0.3),
-        -5px -5px 40px rgba($colorHover, 0.1);
-    }
-  }
-  &__item {
-    padding: 4px;
-  }
-  &__name {
-    max-width: 150px;
-    color: $colorMain;
-    @include fontSize14;
-    text-align: center;
-
-    margin-top: 12px;
-
-    transition: color $defaultAnimTime;
-  }
-  &__img {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid $colorMain;
-    .img {
-      display: block;
-      object-fit: contain;
-      padding: 5px;
-    }
-  }
-}
-
-.recipe {
-  &__title {
-    color: $colorBlack;
-    @include fontSize24B;
-
-    margin-bottom: $shortMargin;
-  }
-  list-style: none;
-  counter-reset: counter;
-  &__item {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    counter-increment: counter;
-    &::before {
-      @include fontSize18B;
-      color: $colorWhite;
-
-      width: 40px;
-      height: 40px;
-
-      margin-right: $halfShortMargin;
-
-      border-radius: 4px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-basis: 40px;
-
-      background-color: $colorMain;
-
-      content: counter(counter);
-    }
-    &:not(:last-child) {
-      margin-bottom: $halfShortMargin;
-      padding-bottom: $halfShortMargin;
-
-      border-bottom: 1px solid $colorMain;
-    }
-  }
-  &__text {
-    flex-basis: calc(100% - 64px);
-    @include fontSize18M;
-  }
-}
-.tags {
-  display: flex;
-
-  &__item {
-    &:not(:last-child) {
-      margin-right: 10px;
-    }
-  }
-  &__name {
-    font-style: italic;
-    @include fontSize16M;
-    display: block;
-    padding: 3px 8px;
-    border-radius: 4px;
-    background-color: $colorMain;
-    color: $colorWhite;
-
-    transition: background-color $defaultAnimTime;
-    &::first-letter {
-      text-transform: uppercase;
-    }
-    &:hover {
-      background-color: $colorHover;
-    }
-  }
-}
+@import './styles/cocktail-page.scss'
 </style>
