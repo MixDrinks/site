@@ -64,51 +64,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  @include defaultBtnMob;
-  font-size: 0;
-  line-height: 0;
-
-  position: relative;
-
-  background-color: $colorMain;
-
-  transition: background-color $defaultAnimTime, box-shadow $defaultAnimTime;
-  .icon {
-    @include fullPseudoElement;
-
-    mask-size: 20px;
-    mask-position: center;
-    mask-repeat: no-repeat;
-    background-color: $colorWhite;
-  }
-  &.short {
-    min-width: 30px;
-    min-height: 30px;
-    .icon {
-      mask-size: 14px;
-    }
-  }
-  &.lock {
-    pointer-events: none;
-    &::after {
-      @include fullPseudoElement;
-
-      background-color: rgba($colorWhite, 0.8);
-
-      z-index: 1;
-    }
-  }
-  &--bottom {
-    .icon {
-      transform: rotate(180deg);
-    }
-  }
-  &:not(.lock) {
-    &:hover {
-      background-color: $colorHover;
-      box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
-    }
-  }
-}
+@import './styles/icon-btn.scss'
 </style>

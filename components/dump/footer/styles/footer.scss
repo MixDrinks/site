@@ -1,0 +1,131 @@
+.footer {
+    background-color: $colorMain;
+
+    &__content {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1900px;
+        width: 100%;
+    }
+}
+
+.footer-content {
+    overflow: hidden;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 32px;
+    padding-bottom: 48px;
+
+    @media (min-width: 1023px) {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 32px;
+        padding-left: clamp(40px,100vw/19,100px);
+        padding-right: clamp(40px,100vw/19,100px);
+    }
+
+    &__communication {
+        margin-bottom: 24px;
+        @media (min-width: 1023px) {
+            margin-bottom: unset;
+        }
+    }
+
+    &__about {
+        margin-bottom: 24px;
+        @media (min-width: 1023px) {
+            margin-bottom: unset;
+        }
+    }
+}
+
+.footer-content-communication {
+    &__item {
+        &:not(:last-child) {
+            margin-bottom: 24px;
+
+            @media (min-width: 1023px)  {
+                margin-right: $shortMargin;
+                margin-bottom: unset;
+            }
+        }
+    }
+
+    @media (min-width: 1023px) {
+        display: flex;
+    }
+}
+
+.footer-content-communication-item {
+
+    &__title {
+        margin-bottom: $halfPadding;
+    }
+
+    &__link {
+        @include fontSize16M;
+        display: block;
+        color: rgba($colorWhite, 0.8);
+        padding: 5px;
+        margin-left: -5px;
+        transition: $defaultAnimTime border-color, $defaultAnimTime color;
+        border-bottom: 1px solid transparent;
+
+        &:hover {
+            color: $colorWhite;
+            border-color: $colorWhite;
+        }
+    }
+}
+
+.footer-content-communication-item-title {
+    &__label {
+        color: $colorWhite;
+        @include fontSize18B;
+    }
+}
+
+.footer-content-about {
+    &__item {
+        &:not(:last-child) {
+            margin-bottom: 24px;
+
+            @media (min-width: 1023px)  {
+                margin-right: $shortMargin;
+                margin-bottom: unset;
+            }
+        }
+    }
+
+    @media (min-width: 1023px) {
+        display: flex;
+    }
+}
+
+.footer-content-about-item {
+    &__title {
+        margin-bottom: $halfPadding;
+    }
+
+    &__link {
+        @include fontSize16M;
+        display: block;
+        color: rgba($colorWhite, 0.8);
+        padding: 5px;
+        margin-left: -5px;
+        transition: $defaultAnimTime border-color, $defaultAnimTime color;
+        border-bottom: 1px solid transparent;
+
+        &:hover {
+            color: $colorWhite;
+            border-color: $colorWhite;
+        }
+    }
+}
+
+.footer-content-about-item-title {
+    &__label {
+        color: $colorWhite;
+        @include fontSize18B;
+    }
+}

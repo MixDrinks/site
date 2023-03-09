@@ -15,13 +15,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  font-family: cursive;
-  @include fontSize24B;
-  color: $colorWhite;
-
-  padding: 15px 15px 15px 0;
-
-  display: block;
-}
+@import './styles/logo.scss'
 </style>

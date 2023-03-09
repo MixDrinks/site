@@ -1,6 +1,5 @@
 <template>
-  <div class="error-404 wrapper">
-    <!-- {{ error }} -->
+  <div class="error">
     <h1>404</h1>
     <p>Упс, такої сторінки не існує</p>
   </div>
@@ -17,7 +16,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.wrapper {
-  @include defaultWrapper;
-}
+@import './styles/404.scss'
 </style>

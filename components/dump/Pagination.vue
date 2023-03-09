@@ -10,11 +10,11 @@
     >
       Показати ще {{ limit }}
     </TextBtn>
-    <div class="pagination__controls">
-      <ul class="pagination__list">
-        <li class="pagination__item" v-for="page in pagination" :key="page.id">
+    <div class="pagination__controls pagination-controls">
+      <ul class="pagination-controls__list pagination-controls-list">
+        <li class="pagination-controls-list__item pagination-controls-list-item" v-for="page in pagination" :key="page.id">
           <TextBtn
-            class="pagination__link"
+            class="pagination-controls-list-item__link"
             v-if="page.type === 'link'"
             :isLink="!!page.link"
             :href="page.link"
@@ -22,15 +22,14 @@
           >
             {{ page.title }}
           </TextBtn>
-          <span class="pagination__link" :class="page.type" v-else>
+          <span class="pagination-controls-list-item__link" :class="`pagination-controls-list-item__link--${page.type}`" v-else>
             {{ page.title }}
           </span>
         </li>
       </ul>
-      <div class="pagination__btns">
+      <div class="pagination-controls__btns pagination-controls-btns">
         <IconBtn
-          v-if="!!prevPage"
-          class="pagination__prev"
+          class="pagination-controls-btns__item pagination-controls-btns__item--prev"
           direction="top"
           icon="/img/icons/arrow.svg"
           :lock="!!!prevPage"
@@ -42,8 +41,7 @@
           Попередня сторінка
         </IconBtn>
         <IconBtn
-          v-if="!!nextPage"
-          class="pagination__next"
+          class="pagination-controls-btns__item pagination-controls-btns__item--next"
           direction="bottom"
           icon="/img/icons/arrow.svg"
           :lock="!!!nextPage"
@@ -60,8 +58,8 @@
 </template>
 
 <script>
-import IconBtn from "~~/components/mobile/dump/UI/buttons/IconBtn.vue";
-import TextBtn from "~~/components/mobile/dump/UI/buttons/TextBtn.vue";
+import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
+import TextBtn from "~~/components/dump/UI/buttons/TextBtn.vue";
 export default {
   components: { IconBtn, TextBtn },
   name: "Pagination",
@@ -191,56 +189,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pagination {
-  &__load-more {
-    margin-bottom: $halfShortMargin;
-  }
-  &__controls {
-    display: flex;
-    justify-content: space-between;
-  }
-  &__btns {
-    display: flex;
-  }
-  &__list {
-    display: flex;
-  }
-  &__prev {
-    margin-right: 8px;
-  }
-  &__item {
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
-  }
-  &__link {
-    &.dots,
-    &.current {
-      padding: 8px;
-
-      min-width: 48px;
-      min-height: 48px;
-
-      border-radius: 8px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    &.dots {
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='2' viewBox='0 0 16 2' fill='none'%3E%3Cpath d='M0 0H2V2H0V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M7 0H9V2H7V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M14 0H16V2H14V0Z' fill='%23D8D8D8'/%3E%3C/svg%3E");
-      mask-position: center;
-      mask-repeat: no-repeat;
-      background-color: $colorMain;
-    }
-    &.current {
-      @include fontSize18M;
-      color: $colorBlack;
-
-      border: 1px solid $colorMain;
-
-      background-color: $colorWhite;
-    }
-  }
-}
+@import './styles/pagination.scss'
 </style>

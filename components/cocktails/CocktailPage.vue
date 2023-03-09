@@ -112,9 +112,9 @@
       </div>
       <div class="cocktail-body__tools cocktail-body-tools">
         <h2 class="cocktail-body-tools__title cocktail-body-tools-title">
-          <sapn class="cocktail-body-tools-title__label">
+          <span class="cocktail-body-tools-title__label">
             Потрібні штучки для пригоування {{ cocktail.name }}
-          </sapn>
+          </span>
         </h2>
         <ul class="cocktail-body-tools__list cocktail-body-tools-list">
           <li class="cocktail-body-tools-list__item cocktail-body-tools-list-item" v-for="tool in cocktail.tools" :key="tool.id">

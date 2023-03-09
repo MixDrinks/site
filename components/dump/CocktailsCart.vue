@@ -1,18 +1,17 @@
 <template>
   <transition name="fate-in" appear>
-    <NuxtLink :to="`/cocktails/${cocktail.id}`" class="item">
-      <div class="item__info" v-if="!!cocktail.rating || !!cocktail.visitCount">
-        <div class="item__rating rating" v-if="!!cocktail.rating">
-          <div class="rating__text">
+    <NuxtLink :to="`/cocktails/${cocktail.id}`" class="cart">
+      <div class="cart__info cart-info" v-if="!!cocktail.rating || !!cocktail.visitCount">
+        <div class="cart-info__rating cart-info-rating" v-if="!!cocktail.rating">
+          <div class="cart-info-rating__label">
             {{ Number(cocktail.rating.toFixed(1)) }}
           </div>
         </div>
-        <div class="item__visit-count visit-count" v-if="!!cocktail.visitCount">
-          <div class="visit-count__text">{{ cocktail.visitCount }}</div>
+        <div class="cart-info__visit-count cart-info-visit-count" v-if="!!cocktail.visitCount">
+          <div class="cart-info-visit-count__label">{{ cocktail.visitCount }}</div>
         </div>
       </div>
-      <div class="item__img">
-        <picture>
+        <picture class="cart__picture">
           <source
             v-for="img in cocktail.images"
             :key="img.id"
@@ -21,7 +20,7 @@
             :type="img.type"
           />
           <img
-            class="img"
+            class="cart__img"
             width="298"
             height="298"
             loading="lazy"
@@ -29,8 +28,7 @@
             title=""
           />
         </picture>
-      </div>
-      <div class="item__name">
+      <div class="cart__name">
         {{ cocktail.name }}
       </div>
     </NuxtLink>
@@ -50,98 +48,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fate-in-enter-active {
-  animation: fade-in $defaultAnimTime;
-}
-.item {
-  .visit-count {
-    display: flex;
-    align-items: center;
-    &__text {
-      color: $colorBlack;
-      margin-left: 10px;
-      @include fontSize14;
-    }
-    &::before {
-      content: "";
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-      background-color: $colorMain;
-      mask-size: cover;
-      mask-image: url("/img/icons/eye.svg");
-    }
-  }
-  .rating {
-    display: flex;
-    align-items: center;
-    &__text {
-      color: $colorBlack;
-      margin-left: 10px;
-      @include fontSize14;
-    }
-    &::before {
-      content: "";
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-      background-color: $colorRating;
-      mask-size: cover;
-      mask-image: url("/img/icons/star.svg");
-    }
-  }
-  &__rating {
-    margin-right: 10px;
-  }
-  &__info {
-    margin-bottom: $halfShortMargin;
-    display: flex;
-    justify-content: flex-end;
-  }
-  display: block;
-
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  // border: 1px solid rgba($colorMain, 0.1);
-  border-radius: 8px;
-
-  transition: transform $defaultAnimTime, box-shadow $defaultAnimTime;
-  &__img {
-    position: relative;
-    padding-top: 100%;
-    width: 100%;
-    .img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      object-fit: cover;
-      border-radius: 25%;
-    }
-  }
-  &__name {
-    &::first-letter {
-      text-transform: uppercase;
-    }
-    color: $colorMain;
-    text-align: center;
-    margin-top: $shortMargin;
-
-    @include fontSize18B;
-
-    transition: color $defaultAnimTime;
-  }
-  &:hover {
-    .item {
-      &__name {
-        color: $colorHover;
-      }
-    }
-    transform: translateY(-10px);
-    box-shadow: 1px 10px rgba($colorHover, 0.3),
-      -5px -5px 40px rgba($colorHover, 0.1);
-  }
-}
+@import './styles/cocktails-cart.scss'
 </style>

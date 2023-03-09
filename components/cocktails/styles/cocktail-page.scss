@@ -126,18 +126,21 @@
 
     &__img {
         width: 100%;
-        margin-bottom: 24px;
+        max-height: 500px;
         display: block;
-
+        margin-bottom: 24px;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: contain;
 
         @media (max-width: 1024px) {
             height: auto;
         }
 
         @media (min-width: 1023px) {
-            max-width: 500px;
-            margin-bottom: 48px;
-            object-fit: cover;
+            width: 500px;
+           
+            margin-bottom: unset;
         }
     }
 

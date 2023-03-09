@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <div class="list__item" v-for="cocktail in cocktails" :key="cocktail.id">
+    <div class="list__item list-item" v-for="cocktail in cocktails" :key="cocktail.id">
       <CocktailsCart :cocktail="cocktail" />
     </div>
   </div>
@@ -21,28 +21,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  margin-left: -15px;
-  margin-right: -15px;
-  &__item {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 30px;
-    @media (max-width: 767px) {
-      width: 100%;
-    }
-    @media (min-width: 768px) and (max-width: 1199px) {
-      width: 50%;
-    }
-    @media (min-width: 1200px) and (max-width: 1599px) {
-      width: calc(100% / 3);
-    }
-    @media (min-width: 1600px) {
-      width: 25%;
-    }
-  }
-}
+@import './styles/cocktails-list.scss'
 </style>

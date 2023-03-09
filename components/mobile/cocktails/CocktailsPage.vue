@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import CocktailsList from "~~/components/mobile/dump/CocktailsList.vue";
+import CocktailsList from "~~/components/dump/CocktailsList.vue";
 import FilterList from "~~/components/mobile/cocktails/FilterList.vue";
-import Pagination from "~~/components/mobile/dump/Pagination.vue";
+import Pagination from "~~/components/dump/Pagination.vue";
 import Sorting from "~~/components/cocktails/Sorting.vue";
 export default {
   components: { FilterList, Pagination, CocktailsList, Sorting },

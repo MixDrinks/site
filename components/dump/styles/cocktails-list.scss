@@ -1,0 +1,27 @@
+.list {
+  @media (min-width: 1023px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  @media (min-width: 1199px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: 1599px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.list-item {
+  @media (min-width: 1023px) {
+    padding-bottom: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    &:not(:last-child) {
+      padding-bottom: 8px;
+    }
+  }
+}

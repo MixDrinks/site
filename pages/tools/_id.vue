@@ -2,14 +2,6 @@
   <main class="wrapper">
     <div class="display">&nbsp;</div>
     <component
-      v-if="isMobile"
-      :is="ItemsPageMob"
-      :cocktailsFull="cocktailsFull"
-      :items="items"
-      @updateCocktails="updateCocktails"
-    />
-    <component
-      v-else
       :is="ItemsPage"
       :cocktailsFull="cocktailsFull"
       :items="items"
@@ -77,14 +69,8 @@ export default {
     ItemsPage: () => {
       return import("~~/components/items/ItemsPage.vue");
     },
-    ItemsPageMob: () => {
-      return import("~~/components/mobile/items/ItemsPage.vue");
-    },
   },
   computed: {
-    isMobile() {
-      return this.$device.isMobile;
-    },
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
     },

@@ -1,0 +1,134 @@
+.search {
+    position: relative;
+
+    &__result {
+        z-index: 10;
+
+        position: absolute;
+        top: 100%;
+        width: 100%;
+    }
+}
+
+.search-header {
+    $self: &;
+    position: relative;
+    display: block;
+
+    &:hover {
+        #{$self}__input {
+            box-shadow: inset 0px -3px 0px rgba($colorWhite, 0.8);
+        }
+        #{$self}__label {
+            color: $colorWhite;
+        }
+    }
+
+    &:not(:hover)#{&--filled} {
+        #{$self}__input {
+            box-shadow: inset 0px -2px 0px $colorWhite;
+        }
+    }
+
+    &--filled {
+        #{$self}__label {
+            top: 0%;
+            transform: translateY(0);
+        }
+    }
+
+    &__label {
+        position: absolute;
+        left: 0;
+        @include fontSize14;
+        color: rgba($colorWhite, 0.8);
+        top: 50%;
+        transform: translateY(-50%);
+        transition: top $defaultAnimTime, transform $defaultAnimTime;
+    }
+
+    &__input {
+        width: 100%;
+
+        border: 0;
+        padding: 20px 0 12px;
+        box-shadow: inset 0px -2px 0px $colorWhite;
+
+        @include fontSize18B;
+
+        color: $colorWhite;
+    }
+}
+
+.search-result {
+    border: 1px solid rgba($colorBlack, 0.1);
+    border-radius: 0 0 10px 10px;
+    background-color: $colorWhite;
+    padding: 16px $defaultPadding;
+
+    &__list {
+        max-height: 200px;
+        overflow: auto;
+    }
+}
+
+.search-result-list {
+    @include defaultWrapperScroll;
+}
+
+.search-result-list-item {
+    &__link {
+        overflow: hidden;
+        position: relative;
+        @include fontSize16;
+
+        display: block;
+        padding: 8px 0;
+        margin-right: 20px;
+
+        color: $colorMain;
+
+        &:after {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            height: 2px;
+
+            background-color: $colorHover;
+
+            transform: translateX(-100%);
+
+            transition: transform $defaultAnimTime;
+
+            z-index: 1;
+        }
+
+        &:hover::after {
+            transform: translateX(0);
+        }
+    }
+}
+
+.max-height-enter-active {
+    animation: max-height $defaultAnimTime;
+    overflow: hidden;
+}
+
+.max-height-leave-active {
+    animation: max-height $defaultAnimTime reverse;
+    overflow: hidden;
+}
+
+@keyframes max-height {
+    0% {
+        max-height: 0;
+    }
+
+    100% {
+        max-height: 232px;
+    }
+}
