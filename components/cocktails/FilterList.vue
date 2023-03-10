@@ -27,11 +27,11 @@
         </transition>
       </div>
 
-      <div
+      <div 
         class="filters__tag-cloud filters-tag-cloud"
         @click="updateCocktails"
       >
-        <div
+        <transition-group
           class="filters-tag-cloud__list filters-tag-cloud-list"
           name="fate-in"
           mode="page"
@@ -49,7 +49,7 @@
               {{ filterItem.name }}
             </NuxtLink>
           </div>
-        </div>
+        </transition-group>
       </div>
       <div class="filters__wrapper filters-wrapper">
         <FilterItem
@@ -172,11 +172,8 @@ export default {
       return temp;
     },
     activeFilter() {
-      let arr = [];
-      this.filterListWithUrl.forEach((el) => {
-        arr = [...arr, ...el.items];
-      });
-      return arr.filter((item) => item.active);
+      const arr = this.filterListWithUrl.map(el => el.items).flat()
+      return arr.filter((item) => item.active)
     },
   },
 };

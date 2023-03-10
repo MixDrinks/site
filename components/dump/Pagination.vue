@@ -16,7 +16,7 @@
           class="pagination-controls-list__item pagination-controls-list-item" 
           v-for="page in pagination" 
           :key="page.id" 
-          @click="updateCocktails()"
+          @click="updateCocktails"
         >
           <TextBtn
             class="pagination-controls-list-item__link"
@@ -39,7 +39,7 @@
           :lock="!!!prevPage"
           :isLink="!!prevPage"
           :href="!!prevPage ? prevPage.link : '/'"
-          @click.native="updateCocktails()"
+          @click.native="updateCocktails"
           rel="prev"
         >
           Попередня сторінка
@@ -51,7 +51,7 @@
           :lock="!!!nextPage"
           :isLink="!!nextPage"
           :href="!!nextPage ? nextPage.link : '/'"
-          @click.native="updateCocktails()"
+          @click.native="updateCocktails"
           rel="next"
         >
           Наступна сторінка
