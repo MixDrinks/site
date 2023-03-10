@@ -178,5 +178,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktail-page.scss'
+@import './styles/cocktail-page'
 </style>

@@ -1,8 +1,6 @@
 <template>
   <main class="wrapper">
-    <div class="display">&nbsp;</div>
-    <component
-      :is="ItemsPage"
+    <ItemsPage
       :cocktailsFull="cocktailsFull"
       :items="items"
       @updateCocktails="updateCocktails"
@@ -11,8 +9,12 @@
 </template>
 
 <script>
+import ItemsPage from '~~/components/items/ItemsPage.vue'
 import { getItems, getCocktails } from "~~/api";
 export default {
+  components: {
+    ItemsPage
+  },
   async asyncData({ route, error, query }) {
     let queryParams = "?";
     if (query && !query.page) {
@@ -66,9 +68,6 @@ export default {
       }
       // this.endLoading()
     },
-    ItemsPage: () => {
-      return import("~~/components/items/ItemsPage.vue");
-    },
   },
   computed: {
     canonical() {
@@ -119,7 +118,5 @@ export default {
 .wrapper {
   @include defaultWrapper;
 }
-.display {
-  display: none;
-}
+
 </style>

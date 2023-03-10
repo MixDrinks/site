@@ -1,10 +1,10 @@
 <template>
   <div class="filter">
-    <div class="filter__header" @click="toggleList(filterItem.id)">
-      <div class="filter__title">{{ filterItem.name }}</div>
+    <div class="filter__header filter-header" @click="toggleList(filterItem.id)">
+      <div class="filter-header__title">{{ filterItem.name }}</div>
       <div
-        class="filter__toggler"
-        :class="{ close: isCloseFilter.includes(filterItem.id) }"
+        class="filter-header__toggler"
+        :class="{ 'filter-header__toggler--close': isCloseFilter.includes(filterItem.id) }"
       ></div>
     </div>
     <transition name="max-height">
@@ -12,47 +12,47 @@
         class="filter__wrapper"
         v-if="!isCloseFilter.includes(filterItem.id)"
       >
-        <div class="filter__search search" :class="{ filled: !!searchValue }">
-          <label class="search__wrapper">
-            <div class="search__label label">Пошук</div>
+        <div class="filter__search filter-search" v-if="filterItem.items.length > 6">
+          <label class="filter-search__input filter-search-input" :class="{ 'filter-search-input--filled': !!searchValue }">
+            <div class="filter-search-input__label">Пошук</div>
             <input
               ref="searchInput"
-              class="search__input input"
+              class="filter-search-input__value"
               type="text"
               v-model="searchValue"
             />
           </label>
         </div>
-        <div class="filter__items">
+        <div class="filter__list filter-list">
           <div v-for="filterItem in listSearch" :key="filterItem.id">
             <NuxtLink
               :title="filterItem.name"
               rel="tag"
               v-if="!!filterItem.cocktailCount"
-              class="filter__item"
-              :class="{ active: filterItem.active }"
+              class="filter-list__item filter-list-item"
+              :class="{ 'filter-list-item--active': filterItem.active }"
               :to="filterItem.url"
               @click.native="updateCocktails"
             >
-              <div class="filter__checkbox"></div>
-              <div class="filter__name">
+              <div class="filter-list-item__checkbox"></div>
+              <div class="filter-list-item__name">
                 {{ filterItem.name }}
               </div>
-              <div class="filter__count" v-if="!filterItem.active">
+              <div class="filter-list-item__count" v-if="!filterItem.active">
                 {{ filterItem.cocktailCount }}
               </div>
             </NuxtLink>
-            <div v-else class="filter__item lock">
-              <div class="filter__checkbox"></div>
-              <div class="filter__name">
+            <div v-else class="filter-list__item filter-list-item filter-list-item--lock">
+              <div class="filter-list-item__checkbox"></div>
+              <div class="filter-list-item__name">
                 {{ filterItem.name }}
               </div>
-              <div class="filter__count">
+              <div class="filter-list-item__count">
                 {{ filterItem.cocktailCount }}
               </div>
             </div>
           </div>
-          <div class="filter__text" v-if="listSearch.length === 0">
+          <div class="filter-list__text" v-if="listSearch.length === 0">
             нічого не знайдено
           </div>
         </div>
@@ -109,196 +109,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.max-height-enter-active {
-  animation: max-height $defaultAnimTime;
-}
-.max-height-leave-active {
-  animation: max-height $defaultAnimTime reverse;
-}
-.filter {
-  .search {
-    &__wrapper {
-      position: relative;
-      display: block;
-    }
-    &__label {
-      position: absolute;
-      left: 0;
-      @include fontSize14;
-      color: rgba($colorMain, 0.8);
-      top: 50%;
-      transform: translateY(-50%);
-      transition: top $defaultAnimTime, transform $defaultAnimTime;
-    }
-    &__input {
-      width: 100%;
-
-      border: 0;
-      padding: 20px 0 12px;
-      box-shadow: inset 0px -2px 0px $colorMain;
-
-      @include fontSize18B;
-
-      color: $colorMain;
-    }
-    &:hover {
-      .input {
-        box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
-      }
-      .label {
-        color: $colorMain;
-      }
-    }
-    &.filled {
-      .label {
-        top: 0%;
-        transform: translateY(0);
-      }
-    }
-    &:not(:hover).filled {
-      .input {
-        box-shadow: inset 0px -2px 0px $colorMain;
-      }
-    }
-  }
-  &__text {
-    @include fontSize14;
-    color: $colorMain;
-  }
-  &__search {
-    margin-bottom: $halfPadding;
-  }
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  }
-  &__toggler {
-    position: relative;
-
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background-color: $colorMain;
-    &:hover {
-      background-color: $colorHover;
-    }
-    &::after,
-    &::before {
-      content: "";
-      position: absolute;
-      background-color: $colorWhite;
-      width: 8px;
-      height: 2px;
-      top: calc(50% - 1px);
-
-      transition: transform $defaultAnimTime;
-    }
-    &::after {
-      transform: rotate(-45deg);
-      left: calc(50% - 2px);
-    }
-    &::before {
-      transform: rotate(45deg);
-      left: calc(50% - 6px);
-    }
-    &.close {
-      &::after {
-        transform: rotate(45deg);
-      }
-      &::before {
-        transform: rotate(-45deg);
-      }
-    }
-  }
-  &__title {
-    @include fontSize18B;
-    color: $colorBlack;
-  }
-  &__wrapper {
-    margin-top: $halfPadding;
-  }
-  &__items {
-    max-height: 50vh;
-    overflow: auto;
-    @include defaultWrapperScroll;
-  }
-  &__checkbox {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-
-    border: 1px solid $colorMain;
-    border-radius: 2px;
-
-    background-color: transparent;
-    transition: border $defaultAnimTime, background-color $defaultAnimTime;
-  }
-
-  &__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @include fontSize16M;
-    color: $colorBlack;
-
-    transition: color $defaultAnimTime;
-    max-width: calc(100% - 80px);
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-  &__count {
-    @include defaultCount;
-  }
-  &__item {
-    &.lock {
-      pointer-events: none;
-      position: relative;
-
-      &::after {
-        @include fullPseudoElement;
-        z-index: 1;
-        background-color: rgba($colorWhite, 0.8);
-      }
-    }
-    display: flex;
-    align-items: center;
-
-    padding: 15px 0;
-    margin-right: 10px;
-
-    cursor: pointer;
-    &:hover,
-    &:focus {
-      .filter {
-        &__checkbox {
-          border: 1px solid $colorMain;
-          background-color: rgba($colorMain, 0.2);
-        }
-        &__name {
-          color: $colorMain;
-        }
-      }
-    }
-    &.active {
-      .filter {
-        &__checkbox {
-          border: 1px solid $colorMain;
-          background-color: $colorMain;
-
-          position: relative;
-          &::before {
-            @include fullPseudoElement;
-
-            background-image: url("/img/icons/check-mark.svg");
-            background-repeat: no-repeat;
-            background-position: center;
-          }
-        }
-      }
-    }
-  }
-}
+@import './styles/filter-item'
 </style>

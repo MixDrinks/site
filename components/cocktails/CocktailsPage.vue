@@ -1,31 +1,27 @@
 <template>
   <div class="cocktails">
-    <div class="cocktails__header">
-      <h1 class="cocktails__title">Коктейлі</h1>
-      <Sorting @updateCocktails="updateCocktails" />
+    <div class="cocktails__header cocktails-header">
+      <h1 class="cocktails-header__title">Коктейлі</h1>
+      <Sorting class="cocktails-header__sorting" @updateCocktails="updateCocktails" />
     </div>
-    <div class="cocktails__body">
+    <div class="cocktails__body cocktails-body">
       <FilterList
-        class="cocktails__filter"
+        class="cocktails-body__filter"
         @updateCocktails="updateCocktails"
         :filterList="allFilters"
         :totalCount="cocktailsFull.totalCount"
         :futureCounts="cocktailsFull.futureCounts"
       />
-      <div class="cocktails__list">
-        <CocktailsList :cocktails="cocktailsFull.cocktails" />
-      </div>
+      <CocktailsList class="cocktails-body__list" :cocktails="cocktailsFull.cocktails" />
     </div>
-    <div class="cocktails__footer">
-      <Pagination
-        v-if="cocktailsFull.totalCount > 24"
-        class="cocktails__pagination"
-        :totalItems="cocktailsFull.totalCount"
-        :limit="24"
-        :itemsCount="cocktailsFull.cocktails.length"
-        @updateCocktails="updateCocktails"
-      />
-    </div>
+    <Pagination
+      v-if="cocktailsFull.totalCount > 24"
+      class="cocktails__pagination"
+      :totalItems="cocktailsFull.totalCount"
+      :limit="24"
+      :itemsCount="cocktailsFull.cocktails.length"
+      @updateCocktails="updateCocktails"
+    />
   </div>
 </template>
 
@@ -56,33 +52,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img {
-  display: block;
-}
-.cocktails {
-  &__title {
-    @include fontSize48B;
-  }
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: $shortMargin;
-  }
-  &__footer {
-    margin-top: $shortMargin;
-  }
-  &__body {
-    display: flex;
-    margin-top: $shortMargin;
-    margin-bottom: $shortMargin;
-  }
-  &__filter {
-    width: 250px;
-    padding-right: 25px;
-  }
-  &__list {
-    width: calc(100% - 250px);
-  }
-}
+@import './styles/cocktails-page'
 </style>

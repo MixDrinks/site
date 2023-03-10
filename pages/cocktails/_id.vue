@@ -66,7 +66,4 @@ export default {
 .wrapper {
   @include defaultWrapper;
 }
-.display {
-  display: none;
-}
 </style>

@@ -70,5 +70,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/field-search.scss'
+@import './styles/field-search'
 </style>

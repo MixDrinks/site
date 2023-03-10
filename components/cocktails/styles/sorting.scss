@@ -1,0 +1,57 @@
+.sorting {
+  @media (min-width: 1023px) {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    @include fontSize16M;
+    margin-bottom: 8px;
+
+    @media (min-width: 1023px) {
+      margin-right: $halfShortMargin;
+      margin-bottom: unset;
+    }
+  }
+
+  &__list {
+    display: flex;
+  }
+}
+
+.sorting-list {
+
+  &__item {
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+.sorting-list-item {
+
+  &__link {
+    display: block;
+    @include fontSize14;
+    padding: 4px 4px;
+
+    border-bottom: 1px solid transparent;
+    color: $colorMain;
+
+    transition: border-bottom-color $defaultAnimTime,
+      background-color $defaultAnimTime, color $defaultAnimTime;
+
+    &:hover {
+      border-bottom-color: $colorMain;
+    }
+
+    &--active {
+      color: $colorWhite;
+      background-color: $colorMain;
+
+      &:hover {
+        background-color: $colorHover;
+      }
+    }
+  }
+}

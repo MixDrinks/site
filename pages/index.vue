@@ -1,16 +1,6 @@
 <template>
   <main class="wrapper">
-    <div class="display">&nbsp;</div>
-    <component
-      v-if="isMobile"
-      :is="CocktailsPageMob"
-      :cocktailsFull="cocktailsFull"
-      :allFilters="allFilters"
-      @updateCocktails="updateCocktails"
-    />
-    <component
-      v-else
-      :is="CocktailsPage"
+    <CocktailsPage 
       :cocktailsFull="cocktailsFull"
       :allFilters="allFilters"
       @updateCocktails="updateCocktails"
@@ -19,8 +9,12 @@
 </template>
 
 <script>
-import { getTags, getCocktails, getAllFilters } from "~~/api";
+import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
+import { getCocktails, getAllFilters } from "~~/api";
 export default {
+  components: {
+    CocktailsPage
+  },
   async asyncData({ query, error }) {
     let queryParams = "?";
     if (query && !query.page) {
@@ -77,17 +71,8 @@ export default {
       }
       // this.endLoading()
     },
-    CocktailsPage: () => {
-      return import("~~/components/cocktails/CocktailsPage.vue");
-    },
-    CocktailsPageMob: () => {
-      return import("~~/components/mobile/cocktails/CocktailsPage.vue");
-    },
   },
   computed: {
-    isMobile() {
-      return this.$device.isMobile;
-    },
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
     },
@@ -136,8 +121,5 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   @include defaultWrapper;
-}
-.display {
-  display: none;
 }
 </style>

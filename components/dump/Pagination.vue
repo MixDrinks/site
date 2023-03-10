@@ -12,13 +12,17 @@
     </TextBtn>
     <div class="pagination__controls pagination-controls">
       <ul class="pagination-controls__list pagination-controls-list">
-        <li class="pagination-controls-list__item pagination-controls-list-item" v-for="page in pagination" :key="page.id">
+        <li 
+          class="pagination-controls-list__item pagination-controls-list-item" 
+          v-for="page in pagination" 
+          :key="page.id" 
+          @click="updateCocktails()"
+        >
           <TextBtn
             class="pagination-controls-list-item__link"
             v-if="page.type === 'link'"
             :isLink="!!page.link"
             :href="page.link"
-            @click.native="updateCocktails()"
           >
             {{ page.title }}
           </TextBtn>
@@ -189,5 +193,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/pagination.scss'
+@import './styles/pagination'
 </style>

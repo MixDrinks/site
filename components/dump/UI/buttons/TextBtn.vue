@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/text-btn.scss'
+@import './styles/text-btn'
 </style>

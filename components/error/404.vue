@@ -16,5 +16,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import './styles/404.scss'
+@import './styles/404'
 </style>

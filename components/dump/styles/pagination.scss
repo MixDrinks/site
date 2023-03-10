@@ -1,105 +1,107 @@
 .pagination {
-    &__load-more {
-        margin-bottom: $halfShortMargin;
-    }
+  &__load-more {
+    margin-bottom: $halfShortMargin;
+  }
 }
 
 .pagination-controls {
+  @media (min-width: 1023px) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__list {
+    transform: translateX(-50%);
+    position: relative;
+    left: 50%;
+
     @media (min-width: 1023px) {
-        display: flex;
-        justify-content: space-between;
+      position: static;
+      left: unset;
+      transform: translateX(0);
     }
+  }
 
-    &__list {
-        transform: translateX(-50%);
-        position: relative;
-        left: 50%;
-        @media (min-width: 1023px) {
-            position: static;
-            left: unset;
-            transform: translateX(0);
-        }
-    }   
+  &__btns {
+    margin-top: $halfShortMargin;
 
-    &__btns {
-        margin-top: $halfShortMargin;
-
-        @media (min-width: 1023px) {
-            margin-top: unset
-        }
+    @media (min-width: 1023px) {
+      margin-top: unset
     }
+  }
 }
 
 .pagination-controls-list {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 
-    @media (min-width: 1023px) {
-        justify-content: flex-start;
+  @media (min-width: 1023px) {
+    justify-content: flex-start;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-right: 2px;
+
+      @media (min-width: 1023px) {
+        margin-right: 8px;
+      }
     }
-
-    &__item {
-        &:not(:last-child) {
-            margin-right: 2px;
-
-            @media (min-width: 1023px) {
-                margin-right: 8px;
-            }
-        }
-    }
+  }
 }
 
 .pagination-controls-list-item {
 
-    &__link {
-        &--dots,
-        &--current {
-            padding: 4px;
+  &__link {
 
-            min-width: 40px;
-            min-height: 40px;
+    &--dots,
+    &--current {
+      padding: 4px;
 
-            border-radius: 4px;
+      min-width: 40px;
+      min-height: 40px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+      border-radius: 4px;
 
-            @media (min-width: 1023px) {
-                padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-                min-width: 48px;
-                min-height: 48px;
+      @media (min-width: 1023px) {
+        padding: 8px;
 
-                border-radius: 8px;
-            }
-        }
+        min-width: 48px;
+        min-height: 48px;
 
-        &--dots {
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='2' viewBox='0 0 16 2' fill='none'%3E%3Cpath d='M0 0H2V2H0V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M7 0H9V2H7V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M14 0H16V2H14V0Z' fill='%23D8D8D8'/%3E%3C/svg%3E");
-            mask-position: center;
-            mask-repeat: no-repeat;
-            background-color: $colorMain;
-        }
-
-        &--current {
-            @include fontSize18M;
-            color: $colorBlack;
-
-            border: 1px solid $colorMain;
-
-            background-color: $colorWhite;
-        }
+        border-radius: 8px;
+      }
     }
+
+    &--dots {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='2' viewBox='0 0 16 2' fill='none'%3E%3Cpath d='M0 0H2V2H0V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M7 0H9V2H7V0Z' fill='%23D8D8D8'/%3E%3Cpath d='M14 0H16V2H14V0Z' fill='%23D8D8D8'/%3E%3C/svg%3E");
+      mask-position: center;
+      mask-repeat: no-repeat;
+      background-color: $colorMain;
+    }
+
+    &--current {
+      @include fontSize18M;
+      color: $colorBlack;
+
+      border: 1px solid $colorMain;
+
+      background-color: $colorWhite;
+    }
+  }
 }
 
 .pagination-controls-btns {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    &__item {
-        &--prev {
-            margin-right: 8px;
-        }
+  &__item {
+    &--prev {
+      margin-right: 8px;
     }
+  }
 }

@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktails-list.scss'
+@import './styles/cocktails-list'
 </style>

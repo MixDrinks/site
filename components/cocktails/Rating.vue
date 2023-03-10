@@ -8,35 +8,35 @@
     "
   >
     <div
-      class="rating__wrapper"
+      class="rating__wrapper rating-wrapper"
       @mouseleave="hoverItem = null"
-      :class="{ lock: isRatingBeenSet }"
+      :class="{ 'rating__wrapper--lock': isRatingBeenSet }"
     >
-      <div class="rating__star-wrapper star__wrapper">
+      <div class="rating-wrapper__stars rating-wrapper-stars">
         <div
-          class="star__item"
+          class="rating-wrapper-stars__item rating-wrapper-stars-item"
           v-for="star in stars"
           :key="star.id"
           @mouseover="hoverItem = star.id"
-          :class="{ hover: star.id <= hoverItem }"
+          :class="{ 'rating-wrapper-stars-item--hover': star.id <= hoverItem }"
           @click="setRating(star.id)"
         >
-          <div class="star--gray"></div>
+          <div class="rating-wrapper-stars-item__start--gray"></div>
           <div
-            class="star--full"
+            class="rating-wrapper-stars-item__start--full"
             :style="'width:' + star.width"
           ></div>
         </div>
       </div>
       <div
-        class="rating__value"
+        class="rating-wrapper__value"
         itemprop="ratingValue"
         v-if="!!curentRatingValue"
       >
         {{ curentRatingValue }}
       </div>
       <div
-        class="rating__count"
+        class="rating-wrapper__count"
         itemprop="reviewCount"
         v-if="!!curentRatingCount"
       >
@@ -127,75 +127,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.rating {
-  &__text {
-    @include fontSize14;
-    color: $colorBlack;
-  }
-  &__count {
-    @include defaultCount;
-  }
-  &__wrapper {
-    display: flex;
-    align-items: center;
-    &.lock {
-      pointer-events: none;
-    }
-  }
-
-  &__value {
-    color: $colorMain;
-    @include fontSize16M;
-  }
-  &__star-wrapper {
-    margin-right: 12px;
-  }
-  .star {
-    &__wrapper {
-      display: flex;
-      justify-content: space-between;
-    }
-    &__item {
-      width: 16px;
-      margin: 0 2px;
-      height: 16px;
-      position: relative;
-      &.hover {
-        .star {
-          &--gray {
-            cursor: pointer;
-            background-color: rgba($colorRating, 0.8);
-            z-index: 3;
-          }
-        }
-      }
-    }
-    &--full,
-    &--gray {
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      position: absolute;
-      mask-size: cover;
-      mask-image: url("/img/icons/star.svg");
-
-      transition: background-color $defaultAnimTime;
-    }
-    &--full {
-      z-index: 2;
-    }
-    &--gray {
-      z-index: 1;
-      background-color: rgba($colorBlack, 0.3);
-    }
-    &__wrapper:not(:hover) {
-      .star {
-        &--full {
-          background-color: $colorRating;
-        }
-      }
-    }
-  }
-}
+@import './styles/rating'
 </style>

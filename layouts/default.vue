@@ -24,17 +24,12 @@ export default {
   min-height: 100vh;
   &__wrapper {
     flex: 1 1 auto;
-  }
-  @media (min-width: 768px) {
-    &__wrapper {
+    margin-top: $halfShortMargin;
+    margin-bottom: $halfShortMargin;
+
+    @media (min-width: 1023px) {
       margin-top: $shortMargin;
       margin-bottom: $shortMargin;
-    }
-  }
-  @media (max-width: 767px) {
-    &__wrapper {
-      margin-top: $halfShortMargin;
-      margin-bottom: $halfShortMargin;
     }
   }
 }

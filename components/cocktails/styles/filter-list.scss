@@ -1,0 +1,255 @@
+.filters {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+
+  @media (min-width: 1023px) {
+    position: static;
+    right: unset;
+    bottom: unset;
+    left: unset;
+    z-index: 0;
+
+
+    padding-right: 25px;
+  }
+
+  &__main {
+    background-color: $colorWhite;
+    box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
+    position: relative;
+    z-index: 1;
+    padding: $halfPadding 10vw;
+
+    &--hidden {
+      display: none;
+    }
+
+    @media (min-width: 1023px) {
+      display: block;
+      position: static;
+      z-index: unset;
+      padding: unset;
+      box-shadow: unset;
+    }
+  }
+
+  &__header {
+    margin-bottom: $halfShortMargin;
+  }
+
+  &__tag-cloud {
+    margin-top: $halfPadding;
+    margin-bottom: $halfPadding;
+
+    @media (min-width: 1023px) {
+      margin: -4px;
+    }
+  }
+
+  &__wrapper {
+    height: 50vh;
+
+    overflow: auto;
+    @include defaultWrapperScroll;
+
+    @media (min-width: 1023px) {
+      height: unset;
+    }
+  }
+
+  &__btn {
+    pointer-events: all;
+    @include fontSize18B;
+    color: $colorWhite;
+    text-align: center;
+
+    padding: $halfPadding 10vw;
+
+    background-color: $colorMain;
+
+    position: relative;
+    z-index: 3;
+
+    transition: background-color $defaultAnimTime;
+
+    border-top: 1px solid $colorWhite;
+
+    &:focus {
+      background-color: $colorHover;
+    }
+
+    @media (min-width: 1023px) {
+      display: none;
+    }
+  }
+
+  &__background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    background-color: rgba($colorBlack, 0.1);
+    pointer-events: all;
+
+    @media (min-width: 1023px) {
+      display: none;
+    }
+  }
+}
+
+.filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filters-header-title {
+  @include fontSize24B;
+  color: $colorBlack;
+
+  &__count {
+    display: inline-block;
+    padding: 3px 10px 4px;
+    border-radius: 20px;
+    @include fontSize16M;
+    line-height: 1;
+    background-color: $colorMain;
+    color: $colorWhite;
+  }
+}
+
+.filters-tag-cloud {
+
+  &__list {
+    overflow: auto;
+
+    max-height: 90px;
+
+    @media (min-width: 1023px) {
+      max-height: unset;
+    }
+  }
+}
+
+.filters-tag-cloud-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  padding: $halfPadding 0;
+
+  @include defaultWrapperScroll;
+}
+
+.filters-tag-cloud-list-item {
+  padding: 1px;
+
+  @media (min-width: 1023px) {
+    padding: 4px;
+  }
+
+  &__link {
+    @include fontSize14;
+    color: $colorMain;
+
+    display: block;
+    padding: 3px 20px 3px 5px;
+
+    position: relative;
+
+    border: 1px solid $colorMain;
+    border-radius: 4px;
+
+    transition: color $defaultAnimTime, background-color $defaultAnimTime;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      height: 1px;
+      width: 13px;
+      background-color: $colorMain;
+
+      top: calc(50% - 0.5px);
+      right: 4px;
+
+      transition: background-color $defaultAnimTime;
+    }
+
+    &::after {
+      transform: rotate(45deg);
+    }
+
+    &::before {
+      transform: rotate(-45deg);
+    }
+
+    &:hover {
+      background-color: $colorMain;
+      color: $colorWhite;
+    }
+
+    &:hover::after,
+    &:hover::before {
+      background-color: $colorWhite;
+    }
+  }
+}
+
+.filters-wrapper {
+  padding-right: 20px;
+
+  @media (min-width: 1023px) {
+    padding-right: unset;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      padding-bottom: $halfPadding;
+      border-bottom: 1px solid rgba($colorMain, 0.2);
+
+      @media (min-width: 1023px) {
+        padding-bottom: $defaultPadding;
+      }
+    }
+
+    &:not(:first-child) {
+      padding-top: $halfPadding;
+
+      @media (min-width: 1023px) {
+        padding-top: $defaultPadding;
+      }
+    }
+  }
+}
+
+.fate-in-enter-active {
+  animation: fade-in $defaultAnimTime;
+}
+
+.fate-in-leave-active {
+  animation: fade-in $defaultAnimTime reverse;
+}
+
+.max-height-enter-active {
+  animation: max-height $defaultAnimTime;
+}
+
+.max-height-leave-active {
+  animation: max-height $defaultAnimTime reverse;
+}
+
+.opacity-enter-active {
+  animation: opacity $defaultAnimTime;
+}
+
+.opacity-leave-active {
+  animation: opacity $defaultAnimTime reverse;
+}
