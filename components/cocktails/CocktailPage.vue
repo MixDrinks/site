@@ -59,7 +59,7 @@
         </ol>
       </div>
       <CocktailComponents class="cocktail-body__goods" :title="`Склад коктейлю ${cocktail.name}`" :components="cocktail.goods" withCounter />
-      <CocktailComponents class="cocktail-body__tools" :title="`Потрібні штучки для пригоування ${cocktail.name}`" :components="cocktail.tools" />
+      <CocktailComponents class="cocktail-body__tools" :title="`Потрібні штучки для приготування ${cocktail.name}`" :components="cocktail.tools" />
     </div>
   </div>
 </template>
