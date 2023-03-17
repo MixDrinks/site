@@ -20,7 +20,10 @@ Run command
 ```shell
 npm run start
 ```
-
+To run Cypress tests
+```shell
+npx cypress open
+```
 Tech stack
 - VueJs
 - NuxtJs

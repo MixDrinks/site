@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "css-loader": "^5.0.0",
+    "cypress": "^12.8.1",
     "postcss": "^8.4.14",
     "postcss-import": "^13.0.0",
     "postcss-loader": "^4.1.0",
