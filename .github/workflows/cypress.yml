@@ -1,19 +1,19 @@
-name: E2E on Chrome
-
-on: [push]
-
+name: End-to-end tests
+on: push
 jobs:
-  install:
-    runs-on: ubuntu-latest
+  cypress-run:
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Cypress run
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Run Tests
         uses: cypress-io/github-action@v5
         with:
-          project: ./site
-          browser: chrome
           build: npm run build
-          start: npm run start
+          start: npm run dev
           wait-on: "http://localhost:8080"
