@@ -6,8 +6,6 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "http://localhost:8080/",
     specPattern: 'cypress/e2e/tests/*.{js,jsx,ts,tsx}',
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
+    setupNodeEvents(on, config) {},
   },
 });
