@@ -18,5 +18,5 @@ jobs:
       - name: Run Tests
         uses: cypress-io/github-action@v2
         with:
-          # we have already installed everything
           install: false
+          working-directory: cypress
