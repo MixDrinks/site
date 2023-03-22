@@ -5,11 +5,18 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: actions/checkout@v2
+
+      - name: Set up node
+        uses: actions/setup-node@v2
         with:
-          build: npm run build
-          start: npm run dev
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Tests
+        uses: cypress-io/github-action@v2
+        with:
+          # we have already installed everything
+          install: false
