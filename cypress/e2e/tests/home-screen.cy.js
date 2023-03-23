@@ -23,20 +23,32 @@ describe("Home screen tests", () => {
   it("Applying sorting", () => {
     cy.intercept({
       method: "GET",
-      url: "/v2/search/cocktails*",
+      url: "/v2/search/cocktails?page=0&sort=biggest-rate",
     }).as("sortingApplied");
+
     cy.get(".logo").should("contain", "MIXdrinks");
 
-    cy.get(".sorting__list").find('[href="/?sort=biggest-rate"]').click();
-    cy.wait("@sortingApplied");
-    cy.url().should("contain", "?sort=biggest-rate");
+
+    cy.contains(".sorting__list", 'Найкраща оцінка').click();
+    cy.contains(".sorting__list", 'Найкраща оцінка').click();
+
+    cy.wait("@sortingApplied").its('response.body').then((body) => {
+      const cocktails = body.cocktails
+      cy.get('.cocktails-body__list .list__item').each(item => {
+        const itemText = item.text().trim()
+        expect(itemText).to.contain(cocktails[item.index()].name)
+      })
+    })
+
+
   });
 
   it("Applying filter", () => {
-    cy.intercept({
-      method: "GET",
-      url: "/v2/search/cocktails*",
-    }).as("sortingApplied");
+    // cy.intercept({
+    //   method: "GET",
+    //   url: "/v2/search/cocktails*",
+    // }).as("sortingApplied");
+
 
     cy.get('[title="міцні"]').find('.filter-list-item__checkbox').click({force:true})
 
