@@ -9,8 +9,7 @@ module.exports = defineConfig({
   },
   video: false,
   e2e: {
-    baseUrl: "https://mixdrinks.org/",
-    // baseUrl: "http://localhost:8080",
+    baseUrl: "http://localhost:8080/",
     specPattern: 'cypress/e2e/tests/*.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {},
   },
