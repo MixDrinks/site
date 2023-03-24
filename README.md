@@ -20,9 +20,14 @@ Run command
 ```shell
 npm run start
 ```
-To run Cypress tests
+To run Cypress tests in the headless mode and get report run
 ```shell
-npx cypress open
+npm run cy:e2e
+```
+
+To run autotests locally:
+```
+npm run cy:open
 ```
 Tech stack
 - VueJs

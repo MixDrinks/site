@@ -20,15 +20,13 @@ describe("Home screen tests", () => {
     })
   });
 
-  it("Applying sorting", () => {
+  it("items should be reordered after sorting applying", () => {
     cy.intercept({
       method: "GET",
       url: "/v2/search/cocktails?page=0&sort=biggest-rate",
     }).as("sortingApplied");
 
     cy.get(".logo").should("contain", "MIXdrinks");
-
-
     cy.contains(".sorting__list", 'Найкраща оцінка').click();
     cy.contains(".sorting__list", 'Найкраща оцінка').click();
 
@@ -43,19 +41,29 @@ describe("Home screen tests", () => {
 
   });
 
-  it("Applying filter", () => {
-    // cy.intercept({
-    //   method: "GET",
-    //   url: "/v2/search/cocktails*",
-    // }).as("sortingApplied");
+  it("items should be filteres after applying a filter", () => {
+    cy.intercept({
+      method: "GET",
+      url: "/v2/search/cocktails?page=0&alcohol_volume=1",
+    }).as("sortingApplied");
+    let firstItemName
+    cy.get(".list").find(".cart__name").first().invoke('text').then((itemTitle) => {
+      firstItemName = itemTitle
+    })
+    console.log(firstItemName)
 
-
-    cy.get('[title="міцні"]').find('.filter-list-item__checkbox').click({force:true})
-
-    cy.wait("@sortingApplied");
+    cy.get('[title="слабоалкогольні"]').find('.filter-list-item__checkbox').click()
     cy.get('[class="filters-tag-cloud-list-item__link nuxt-link-active"]').should('exist')
-    cy.get('[class="filters-tag-cloud-list-item__link nuxt-link-active"]').click()
-    cy.get('[class="filters-tag-cloud-list-item__link nuxt-link-active"]').should('not.exist')
-    // cy.url().should("contain", "?sort=biggest-rate");
+    cy.get('[title="слабоалкогольні"]').find('.filter-list-item__checkbox').click()
+
+    cy.wait("@sortingApplied").its('response.body').then( (body) => {
+      const cocktails = body.cocktails
+      cy.get('.cocktails-body__list .list__item').each(item => {
+        const itemText = item.text().trim()
+        expect(itemText).to.contain(cocktails[item.index()].name)
+      })
+      cy.get(".list").find(".cart__name").first().should('not.contain', firstItemName)
+
+    });
   });
 });
