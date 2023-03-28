@@ -33,7 +33,7 @@
             </a>
             <a
               class="footer-content-about-item__link"
-              href="https://mixdrinks.github.io/docs/"
+              href="https://api.mixdrinks.org/docs/index.html"
               target="_blank"
             >
               Документація API проєкту
