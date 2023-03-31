@@ -21,6 +21,20 @@
           <div class="footer-content-about__item footer-content-about-item">
             <h4 class="footer-content-about-item__title footer-content-about-item-title">
               <span class="footer-content-about-item-title__label">
+                Публічні документи
+              </span>
+            </h4>
+            <a
+                class="footer-content-about-item__link"
+                href="/privacy"
+                target="_blank"
+            >
+              Політика конфіденційності
+            </a>
+          </div>
+          <div class="footer-content-about__item footer-content-about-item">
+            <h4 class="footer-content-about-item__title footer-content-about-item-title">
+              <span class="footer-content-about-item-title__label">
                 Про проєкт
               </span>
             </h4>
@@ -47,7 +61,7 @@
             </h4>
             <a
               class="footer-content-about-item__link"
-              href="https://github.com/VovaStelmashchuk"
+              href="https://bento.me/vovastelmashchuk"
               target="_blank"
             >
               Back-end Volodymyr Stelmashchuk
