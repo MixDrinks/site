@@ -38,6 +38,12 @@
             >
               Документація API проєкту
             </a>
+            <a
+              class="footer-content-about-item__link"
+              href="/privacy"
+            >
+              Політика конфіденційності
+            </a>
           </div>
           <div class="footer-content-about__item footer-content-about-item">
             <h4 class="footer-content-about-item__title footer-content-about-item-title">
@@ -47,7 +53,7 @@
             </h4>
             <a
               class="footer-content-about-item__link"
-              href="https://github.com/VovaStelmashchuk"
+              href="https://bento.me/vovastelmashchuk"
               target="_blank"
             >
               Back-end Volodymyr Stelmashchuk
