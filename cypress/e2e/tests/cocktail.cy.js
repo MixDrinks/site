@@ -11,7 +11,7 @@ describe('A cocktail\'s screen tests', () => {
     cy.get(".cocktails-body__list")
       .find(".list__item")
       .eq(0)
-      .click()
+      .click() 
 
     cy.wait('@cocktail').then( cocktail => {
       const details = cocktail.response.body;
