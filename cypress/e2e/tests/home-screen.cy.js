@@ -1,9 +1,11 @@
 describe("Home screen tests", () => {
+  const interceptSorting = ( sortingParam ) => {
+    cy.intercept({
+      method: "GET",
+      url: `/v2/search/cocktails?page=0&${sortingParam}`,
+    }).as("sortingApplied");
+  }
   beforeEach("Open home screen", () => {
-    // cy.intercept({
-    //   method: "GET",
-    //   url: "/v2/search/cocktails*",
-    // }).as("sortingApplied");
     cy.visit("/");
   });
 
@@ -24,12 +26,8 @@ describe("Home screen tests", () => {
   });
 
   it("items should be reordered after sorting applying", () => {
-    cy.intercept({
-      method: "GET",
-      url: "/v2/search/cocktails?page=0&sort=biggest-rate",
-    }).as("sortingApplied");
+    interceptSorting("sort=biggest-rate")
 
-    cy.get(".logo").should("contain", "MIXdrinks");
     cy.contains(".sorting__list", 'Найкраща оцінка').click();
     cy.contains(".sorting__list", 'Найкраща оцінка').click();
 
@@ -41,19 +39,15 @@ describe("Home screen tests", () => {
       })
     })
 
-
   });
 
   it("items should be filteres after applying a filter", () => {
-    cy.intercept({
-      method: "GET",
-      url: "/v2/search/cocktails?page=0&alcoholvolume=1",
-    }).as("sortingApplied");
+    interceptSorting("alcohol-volume=1")
+
     let firstItemName
     cy.get(".list").find(".cart__name").first().invoke('text').then((itemTitle) => {
       firstItemName = itemTitle
     })
-    console.log(firstItemName)
 
     cy.get('[title="слабоалкогольні"]').find('.filter-list-item__checkbox').click()
     cy.get('[class="filters-tag-cloud-list-item__link nuxt-link-active"]').should('exist')
@@ -66,7 +60,6 @@ describe("Home screen tests", () => {
         expect(itemText).to.contain(cocktails[item.index()].name)
       })
       cy.get(".list").find(".cart__name").first().should('not.contain', firstItemName)
-
     });
   });
 });

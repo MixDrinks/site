@@ -14,9 +14,9 @@
     "mochawesome:merge": "npx mochawesome-merge \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx marge mochawesome.json",
     "junit:merge": "npx junit-merge -d cypress/results/junit -o  cypress/results/junit/result.xml",
     "cypress:run": "npm run prereport && npx cypress run",
-    "cy:e2e": "npm run cypress:run && npm run mochawesome:merge",
+    "cy:e2e": "npm run cypress:run; npm run mochawesome:merge",
     "cy:open": "npx cypress open --browser chrome",
-    "cypress:e2e": "start-test dev http-get://localhost:8080 cy:e2e"
+    "cypress:e2e": "start-test dev http-get://localhost:8080 cypress:run; npm run mochawesome:merge"
   },
   "engines": {
     "node": "14.16.0"
