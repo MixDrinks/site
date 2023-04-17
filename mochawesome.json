@@ -1,0 +1,207 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 4,
+    "passes": 3,
+    "pending": 0,
+    "failures": 1,
+    "testsRegistered": 4,
+    "passPercent": 75,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2023-04-17T10:03:32.823Z",
+    "end": "2023-04-17T10:03:45.814Z",
+    "duration": 12991
+  },
+  "results": [
+    {
+      "uuid": "88f1a218-412d-4043-b67b-080c7dfc24da",
+      "title": "",
+      "fullFile": "cypress/e2e/tests/home-screen.cy.js",
+      "file": "cypress/e2e/tests/home-screen.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "2a245559-a751-468e-853a-3646e1b792b7",
+          "title": "Home screen tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "The cocktails list should be visible",
+              "fullTitle": "Home screen tests The cocktails list should be visible",
+              "timedOut": null,
+              "duration": 873,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: 'https://whale-app-iz3av.ondigitalocean.app/v2/search/cocktails?page=0',\n  headers: {\n    'Content-Type': 'application/json'\n  }\n}).then(cocktailsList => {\n  const cocktails = cocktailsList.body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n});",
+              "err": {},
+              "uuid": "d3d4b124-94bc-4da7-a1d6-bc46d7038ef6",
+              "parentUUID": "2a245559-a751-468e-853a-3646e1b792b7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "items should be reordered after sorting applying",
+              "fullTitle": "Home screen tests items should be reordered after sorting applying",
+              "timedOut": null,
+              "duration": 2863,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept({\n  method: \"GET\",\n  url: \"/v2/search/cocktails?page=0&sort=biggest-rate\"\n}).as(\"sortingApplied\");\ncy.get(\".logo\").should(\"contain\", \"MIXdrinks\");\ncy.contains(\".sorting__list\", 'Найкраща оцінка').click();\ncy.contains(\".sorting__list\", 'Найкраща оцінка').click();\ncy.wait(\"@sortingApplied\").its('response.body').then(body => {\n  const cocktails = body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n});",
+              "err": {},
+              "uuid": "394ff419-0c59-4af1-8d32-3cffa1dfe15c",
+              "parentUUID": "2a245559-a751-468e-853a-3646e1b792b7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "items should be filteres after applying a filter",
+              "fullTitle": "Home screen tests items should be filteres after applying a filter",
+              "timedOut": null,
+              "duration": 6739,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept({\n  method: \"GET\",\n  url: \"/v2/search/cocktails?page=0&alcoholvolume=1\"\n}).as(\"sortingApplied\");\nlet firstItemName;\ncy.get(\".list\").find(\".cart__name\").first().invoke('text').then(itemTitle => {\n  firstItemName = itemTitle;\n});\nconsole.log(firstItemName);\ncy.get('[title=\"слабоалкогольні\"]').find('.filter-list-item__checkbox').click();\ncy.get('[class=\"filters-tag-cloud-list-item__link nuxt-link-active\"]').should('exist');\ncy.get('[title=\"слабоалкогольні\"]').find('.filter-list-item__checkbox').click();\ncy.wait(\"@sortingApplied\").its('response.body').then(body => {\n  const cocktails = body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n  cy.get(\".list\").find(\".cart__name\").first().should('not.contain', firstItemName);\n});",
+              "err": {
+                "message": "CypressError: Timed out retrying after 5000ms: `cy.wait()` timed out waiting `5000ms` for the 1st request to the route: `sortingApplied`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 5000ms: `cy.wait()` timed out waiting `5000ms` for the 1st request to the route: `sortingApplied`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (http://localhost:8080/__cypress/runner/cypress_runner.js:154824:18)\n    at Object.errByPath (http://localhost:8080/__cypress/runner/cypress_runner.js:154879:10)\n    at checkForXhr (http://localhost:8080/__cypress/runner/cypress_runner.js:141777:92)\n    at <unknown> (http://localhost:8080/__cypress/runner/cypress_runner.js:141800:28)\n    at tryCatcher (http://localhost:8080/__cypress/runner/cypress_runner.js:8914:23)\n    at Promise.attempt.Promise.try (http://localhost:8080/__cypress/runner/cypress_runner.js:6188:29)\n    at whenStable (http://localhost:8080/__cypress/runner/cypress_runner.js:146742:65)\n    at <unknown> (http://localhost:8080/__cypress/runner/cypress_runner.js:146183:14)\n    at tryCatcher (http://localhost:8080/__cypress/runner/cypress_runner.js:8914:23)\n    at Promise._settlePromiseFromHandler (http://localhost:8080/__cypress/runner/cypress_runner.js:6849:31)\n    at Promise._settlePromise (http://localhost:8080/__cypress/runner/cypress_runner.js:6906:18)\n    at Promise._settlePromise0 (http://localhost:8080/__cypress/runner/cypress_runner.js:6951:10)\n    at Promise._settlePromises (http://localhost:8080/__cypress/runner/cypress_runner.js:7031:18)\n    at Promise._fulfill (http://localhost:8080/__cypress/runner/cypress_runner.js:6975:18)\n    at <unknown> (http://localhost:8080/__cypress/runner/cypress_runner.js:8589:46)\nFrom Your Spec Code:\n    at Context.eval (webpack:///./cypress/e2e/tests/home-screen.cy.js:62:7)",
+                "diff": null
+              },
+              "uuid": "d043814f-5442-41a4-afb6-66a7505d4ec7",
+              "parentUUID": "2a245559-a751-468e-853a-3646e1b792b7",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d3d4b124-94bc-4da7-a1d6-bc46d7038ef6",
+            "394ff419-0c59-4af1-8d32-3cffa1dfe15c"
+          ],
+          "failures": [
+            "d043814f-5442-41a4-afb6-66a7505d4ec7"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 10475,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "5d386203-72b8-4040-bf15-f9d5c6f3d174",
+      "title": "",
+      "fullFile": "cypress/e2e/tests/cocktail.cy.js",
+      "file": "cypress/e2e/tests/cocktail.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4438dd7e-fdb3-4af2-aa56-3c459b0016ba",
+          "title": "A cocktail's screen tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Check the required elements are shown on the page",
+              "fullTitle": "A cocktail's screen tests Check the required elements are shown on the page",
+              "timedOut": null,
+              "duration": 1558,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept({\n  method: \"GET\",\n  url: \"/v2/cocktails/full*\"\n}).as(\"cocktail\");\ncy.get(\".cocktails-body__list\").find(\".list__item\").eq(0).click();\ncy.wait('@cocktail').then(cocktail => {\n  const details = cocktail.response.body;\n  const receipt = details.receipt;\n  const goods = details.goods;\n  const tools = details.tools;\n  cy.get('.cocktail-header-title').should('contain', details.name);\n  cy.get('h1').should('contain', details.name);\n  cy.get('.cocktail-body-recipe-list .cocktail-body-recipe-list-item').each(listItem => {\n    const itemText = listItem.text();\n    expect(itemText).to.equal(receipt[listItem.index()]);\n  });\n  cy.get('.cocktail-body__goods .сomponents-list-item').each(listItem => {\n    const itemText = listItem.text();\n    expect(itemText).contains(goods[listItem.index()].name);\n  });\n  cy.get('.cocktail-body__tools .сomponents-list-item').each(listItem => {\n    const itemText = listItem.text();\n    expect(itemText).contains(tools[listItem.index()].name);\n  });\n});",
+              "err": {},
+              "uuid": "d09758d4-3a41-4246-b100-b1891481e2f0",
+              "parentUUID": "4438dd7e-fdb3-4af2-aa56-3c459b0016ba",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d09758d4-3a41-4246-b100-b1891481e2f0"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1558,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

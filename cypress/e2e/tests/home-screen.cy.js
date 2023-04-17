@@ -1,6 +1,9 @@
 describe("Home screen tests", () => {
   beforeEach("Open home screen", () => {
-
+    // cy.intercept({
+    //   method: "GET",
+    //   url: "/v2/search/cocktails*",
+    // }).as("sortingApplied");
     cy.visit("/");
   });
 
@@ -44,7 +47,7 @@ describe("Home screen tests", () => {
   it("items should be filteres after applying a filter", () => {
     cy.intercept({
       method: "GET",
-      url: "/v2/search/cocktails?page=0&alcohol_volume=1",
+      url: "/v2/search/cocktails?page=0&alcoholvolume=1",
     }).as("sortingApplied");
     let firstItemName
     cy.get(".list").find(".cart__name").first().invoke('text').then((itemTitle) => {

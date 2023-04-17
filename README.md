@@ -26,7 +26,7 @@ npm run cy:e2e
 ```
 
 To run autotests locally:
-```
+```shell
 npm run cy:open
 ```
 Tech stack
