@@ -12,13 +12,13 @@
     "hasOther": false,
     "skipped": 0,
     "hasSkipped": false,
-    "start": "2023-04-17T11:49:02.403Z",
-    "end": "2023-04-17T11:49:11.674Z",
-    "duration": 9271
+    "start": "2023-04-17T12:57:44.011Z",
+    "end": "2023-04-17T12:57:51.260Z",
+    "duration": 7249
   },
   "results": [
     {
-      "uuid": "3e3920be-a8c7-4088-85fa-67f3f3fdd7e7",
+      "uuid": "fa2348b7-4d42-4e0e-a360-3dc95fa1cdac",
       "title": "",
       "fullFile": "cypress/e2e/tests/home-screen.cy.js",
       "file": "cypress/e2e/tests/home-screen.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "60927323-8386-4f37-ba0b-331b606d7f71",
+          "uuid": "c58bd32c-8e48-46e6-96eb-138daab8ade1",
           "title": "Home screen tests",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "The cocktails list should be visible",
               "fullTitle": "Home screen tests The cocktails list should be visible",
               "timedOut": null,
-              "duration": 910,
+              "duration": 938,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -47,8 +47,8 @@
               "context": null,
               "code": "cy.request({\n  method: 'GET',\n  url: 'https://whale-app-iz3av.ondigitalocean.app/v2/search/cocktails?page=0',\n  headers: {\n    'Content-Type': 'application/json'\n  }\n}).then(cocktailsList => {\n  const cocktails = cocktailsList.body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n});",
               "err": {},
-              "uuid": "efb7d324-2346-4a6c-a065-1b500e127c33",
-              "parentUUID": "60927323-8386-4f37-ba0b-331b606d7f71",
+              "uuid": "7fc3fafd-875d-4717-b3b1-b9ce99d21e84",
+              "parentUUID": "c58bd32c-8e48-46e6-96eb-138daab8ade1",
               "isHook": false,
               "skipped": false
             },
@@ -56,17 +56,17 @@
               "title": "items should be reordered after sorting applying",
               "fullTitle": "Home screen tests items should be reordered after sorting applying",
               "timedOut": null,
-              "duration": 1951,
+              "duration": 1900,
               "state": "passed",
               "speed": "fast",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "cy.intercept({\n  method: \"GET\",\n  url: \"/v2/search/cocktails?page=0&sort=biggest-rate\"\n}).as(\"sortingApplied\");\ncy.get(\".logo\").should(\"contain\", \"MIXdrinks\");\ncy.contains(\".sorting__list\", 'Найкраща оцінка').click();\ncy.contains(\".sorting__list\", 'Найкраща оцінка').click();\ncy.wait(\"@sortingApplied\").its('response.body').then(body => {\n  const cocktails = body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n});",
+              "code": "interceptSorting(\"sort=biggest-rate\");\ncy.contains(\".sorting__list\", 'Найкраща оцінка').click();\ncy.contains(\".sorting__list\", 'Найкраща оцінка').click();\ncy.wait(\"@sortingApplied\").its('response.body').then(body => {\n  const cocktails = body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n});",
               "err": {},
-              "uuid": "ffd3ebaf-450b-4a13-8560-89601a5cc067",
-              "parentUUID": "60927323-8386-4f37-ba0b-331b606d7f71",
+              "uuid": "f5ba54a6-fd5c-4df6-93b0-1eecd7a15813",
+              "parentUUID": "c58bd32c-8e48-46e6-96eb-138daab8ade1",
               "isHook": false,
               "skipped": false
             },
@@ -74,31 +74,31 @@
               "title": "items should be filteres after applying a filter",
               "fullTitle": "Home screen tests items should be filteres after applying a filter",
               "timedOut": null,
-              "duration": 1725,
+              "duration": 1699,
               "state": "passed",
               "speed": "fast",
               "pass": true,
               "fail": false,
               "pending": false,
               "context": null,
-              "code": "cy.intercept({\n  method: \"GET\",\n  url: \"/v2/search/cocktails?page=0&alcohol-volume=1\"\n}).as(\"sortingApplied\");\nlet firstItemName;\ncy.get(\".list\").find(\".cart__name\").first().invoke('text').then(itemTitle => {\n  firstItemName = itemTitle;\n});\ncy.get('[title=\"слабоалкогольні\"]').find('.filter-list-item__checkbox').click();\ncy.get('[class=\"filters-tag-cloud-list-item__link nuxt-link-active\"]').should('exist');\ncy.get('[title=\"слабоалкогольні\"]').find('.filter-list-item__checkbox').click();\ncy.wait(\"@sortingApplied\").its('response.body').then(body => {\n  const cocktails = body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n  cy.get(\".list\").find(\".cart__name\").first().should('not.contain', firstItemName);\n});",
+              "code": "interceptSorting(\"alcohol-volume=1\");\nlet firstItemName;\ncy.get(\".list\").find(\".cart__name\").first().invoke('text').then(itemTitle => {\n  firstItemName = itemTitle;\n});\ncy.get('[title=\"слабоалкогольні\"]').find('.filter-list-item__checkbox').click();\ncy.get('[class=\"filters-tag-cloud-list-item__link nuxt-link-active\"]').should('exist');\ncy.get('[title=\"слабоалкогольні\"]').find('.filter-list-item__checkbox').click();\ncy.wait(\"@sortingApplied\").its('response.body').then(body => {\n  const cocktails = body.cocktails;\n  cy.get('.cocktails-body__list .list__item').each(item => {\n    const itemText = item.text().trim();\n    expect(itemText).to.contain(cocktails[item.index()].name);\n  });\n  cy.get(\".list\").find(\".cart__name\").first().should('not.contain', firstItemName);\n});",
               "err": {},
-              "uuid": "0f790e0e-928e-405d-a433-96a833fc3e93",
-              "parentUUID": "60927323-8386-4f37-ba0b-331b606d7f71",
+              "uuid": "b0c10573-1ba8-4503-af9e-6277a95ec98e",
+              "parentUUID": "c58bd32c-8e48-46e6-96eb-138daab8ade1",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "efb7d324-2346-4a6c-a065-1b500e127c33",
-            "ffd3ebaf-450b-4a13-8560-89601a5cc067",
-            "0f790e0e-928e-405d-a433-96a833fc3e93"
+            "7fc3fafd-875d-4717-b3b1-b9ce99d21e84",
+            "f5ba54a6-fd5c-4df6-93b0-1eecd7a15813",
+            "b0c10573-1ba8-4503-af9e-6277a95ec98e"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 4586,
+          "duration": 4537,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -114,7 +114,7 @@
       "_timeout": 2000
     },
     {
-      "uuid": "ade53d44-6d6e-44aa-b802-79e061ada3ed",
+      "uuid": "75283735-dc8d-4047-a301-86371a4cd65e",
       "title": "",
       "fullFile": "cypress/e2e/tests/cocktail.cy.js",
       "file": "cypress/e2e/tests/cocktail.cy.js",
@@ -123,7 +123,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "bb2aebf5-69c6-47fc-870f-327042542ce3",
+          "uuid": "6fcaf8ab-dfd4-4380-8ddf-d6d32361e905",
           "title": "A cocktail's screen tests",
           "fullFile": "",
           "file": "",
@@ -134,7 +134,7 @@
               "title": "Check the required elements are shown on the page",
               "fullTitle": "A cocktail's screen tests Check the required elements are shown on the page",
               "timedOut": null,
-              "duration": 3764,
+              "duration": 1821,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -143,20 +143,20 @@
               "context": null,
               "code": "cy.intercept({\n  method: \"GET\",\n  url: \"/v2/cocktails/full*\"\n}).as(\"cocktail\");\ncy.get(\".cocktails-body__list\").find(\".list__item\").eq(0).click();\ncy.wait('@cocktail').then(cocktail => {\n  const details = cocktail.response.body;\n  const receipt = details.receipt;\n  const goods = details.goods;\n  const tools = details.tools;\n  cy.get('.cocktail-header-title').should('contain', details.name);\n  cy.get('h1').should('contain', details.name);\n  cy.get('.cocktail-body-recipe-list .cocktail-body-recipe-list-item').each(listItem => {\n    const itemText = listItem.text();\n    expect(itemText).to.equal(receipt[listItem.index()]);\n  });\n  cy.get('.cocktail-body__goods .сomponents-list-item').each(listItem => {\n    const itemText = listItem.text();\n    expect(itemText).contains(goods[listItem.index()].name);\n  });\n  cy.get('.cocktail-body__tools .сomponents-list-item').each(listItem => {\n    const itemText = listItem.text();\n    expect(itemText).contains(tools[listItem.index()].name);\n  });\n});",
               "err": {},
-              "uuid": "c91024a1-0821-4b1f-99b1-fbd2433ae2c2",
-              "parentUUID": "bb2aebf5-69c6-47fc-870f-327042542ce3",
+              "uuid": "2bba79a2-0127-4f07-b9fe-79b7e696a2a1",
+              "parentUUID": "6fcaf8ab-dfd4-4380-8ddf-d6d32361e905",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "c91024a1-0821-4b1f-99b1-fbd2433ae2c2"
+            "2bba79a2-0127-4f07-b9fe-79b7e696a2a1"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 3764,
+          "duration": 1821,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
