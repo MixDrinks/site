@@ -6,6 +6,7 @@
         class="sorting-list__item sorting-list-item"
         @click="updateCocktails()"
         v-for="sortItem in sortWithUrl"
+        :data-cy="`sorting ${sortItem.id}`"
         :key="sortItem.id"
       >
         <NuxtLink

@@ -10,7 +10,7 @@ module.exports = defineConfig({
   video: false,
   e2e: {
     baseUrl: "http://localhost:8080/",
-    specPattern: 'cypress/e2e/tests/*.{js,jsx,ts,tsx}',
+    specPattern: 'cypress/tests/*.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {},
   },
 });

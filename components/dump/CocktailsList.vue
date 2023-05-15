@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <div class="list__item list-item" v-for="cocktail in cocktails" :key="cocktail.id">
+    <div class="list__item list-item" v-for="cocktail in cocktails" :key="cocktail.id" data-cy="cocktailCard">
       <CocktailsCart :cocktail="cocktail" />
     </div>
   </div>
