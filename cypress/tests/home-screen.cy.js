@@ -11,22 +11,6 @@ describe("Home screen tests", () => {
     cy.visit("/");
   });
 
-  it("The cocktails list should be visible", async () => {
-    cy.request({
-      method: 'GET',
-      url: 'https://whale-app-iz3av.ondigitalocean.app/v2/search/cocktails?page=0',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((cocktailsList) => {
-      const cocktails = cocktailsList.body.cocktails
-      cy.get(homePage.vertical.selector.cocktailCard).each(item => {
-        const itemText = item.text().trim()
-        expect(itemText).to.contain(cocktails[item.index()].name)
-      })
-    })
-  });
-
   it("items should be reordered after sorting applying", () => {
     interceptSorting("sort=biggest-rate")
 

@@ -31,7 +31,7 @@ forEverySize(({ viewport }) => {
     cy.visit("/");
   });
 
-  it("The cocktails list should be visible", () => {
+  it("can view the cocktails list and open the detailed cocktail screen", () => {
     cy.intercept({
         method: "GET",
         url: "/v2/cocktails/full*",
