@@ -41,6 +41,7 @@
             class="filters-tag-cloud-list__item filters-tag-cloud-list-item"
             v-for="filterItem in activeFilter"
             :key="filterItem.name"
+            :data-cy="`filterTag ${filterItem.id}`"
           >
             <NuxtLink
               class="filters-tag-cloud-list-item__link"

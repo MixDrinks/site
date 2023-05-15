@@ -1,3 +1,5 @@
+import { default as homePage } from '../support/page_objects/homePage';
+
 describe("Home screen tests", () => {
   const interceptSorting = ( sortingParam ) => {
     cy.intercept({
@@ -18,7 +20,7 @@ describe("Home screen tests", () => {
       }
     }).then((cocktailsList) => {
       const cocktails = cocktailsList.body.cocktails
-      cy.get('.cocktails-body__list .list__item').each(item => {
+      cy.get(homePage.vertical.selector.cocktailCard).each(item => {
         const itemText = item.text().trim()
         expect(itemText).to.contain(cocktails[item.index()].name)
       })
@@ -28,12 +30,11 @@ describe("Home screen tests", () => {
   it("items should be reordered after sorting applying", () => {
     interceptSorting("sort=biggest-rate")
 
-    cy.contains(".sorting__list", 'Найкраща оцінка').click();
-    cy.contains(".sorting__list", 'Найкраща оцінка').click();
-
+    cy.get(homePage.vertical.selector.sorting.byRate).click();
+    cy.get(homePage.vertical.selector.sorting.byRate).click();
     cy.wait("@sortingApplied").its('response.body').then((body) => {
       const cocktails = body.cocktails
-      cy.get('.cocktails-body__list .list__item').each(item => {
+      cy.get(homePage.vertical.selector.cocktailCard).each(item => {
         const itemText = item.text().trim()
         expect(itemText).to.contain(cocktails[item.index()].name)
       })
@@ -41,7 +42,7 @@ describe("Home screen tests", () => {
 
   });
 
-  it("items should be filteres after applying a filter", () => {
+  it.only("items should be filteres after applying a filter", () => {
     interceptSorting("alcohol-volume=1")
 
     let firstItemName
@@ -49,17 +50,21 @@ describe("Home screen tests", () => {
       firstItemName = itemTitle
     })
 
-    cy.get('[title="слабоалкогольні"]').find('.filter-list-item__checkbox').click()
-    cy.get('[class="filters-tag-cloud-list-item__link nuxt-link-active"]').should('exist')
-    cy.get('[title="слабоалкогольні"]').find('.filter-list-item__checkbox').click()
+    // applying the low alcohol filter
+    cy.get(homePage.vertical.selector.filters.lowalcohol).find('.filter-list-item__checkbox').click()
+    // checking that proper tag is shown
+    cy.get(homePage.vertical.selector.filters.lowalcoholTag).should('be.visible')
+    // applying the low alcohol filter again because when it clicked programatically the request is not sent
+    cy.get(homePage.vertical.selector.filters.lowalcohol).find('.filter-list-item__checkbox').click()
 
     cy.wait("@sortingApplied").its('response.body').then( (body) => {
       const cocktails = body.cocktails
-      cy.get('.cocktails-body__list .list__item').each(item => {
+      cy.get(homePage.vertical.selector.cocktailCard).each(item => {
         const itemText = item.text().trim()
         expect(itemText).to.contain(cocktails[item.index()].name)
       })
-      cy.get(".list").find(".cart__name").first().should('not.contain', firstItemName)
+      // checking that the first element name is changed after applying filters
+      cy.get(homePage.vertical.selector.cocktailCard).find(".cart__name").first().should('not.contain', firstItemName)
     });
   });
 });

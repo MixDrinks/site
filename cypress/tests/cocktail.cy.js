@@ -33,7 +33,6 @@ describe('A cocktail\'s screen tests', () => {
         const itemText = listItem.text()
         expect(itemText).contains(tools[listItem.index()].name)
       })
-
     })
 
   })
