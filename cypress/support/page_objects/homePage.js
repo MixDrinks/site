@@ -13,6 +13,7 @@ export default {
             },
             cocktailCard: '[data-cy="cocktailCard"]',
             search: '.search',
+            searchSuggestions: '.search-result-list-item'
         }
     }
 }

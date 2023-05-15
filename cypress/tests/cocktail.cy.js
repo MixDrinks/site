@@ -1,3 +1,4 @@
+import {default as cocktailPage} from '../support/page_objects/cocktailPage'
 describe('A cocktail\'s screen tests', () => {
   beforeEach('Open the site', () => {
     cy.visit('/')
@@ -19,17 +20,16 @@ describe('A cocktail\'s screen tests', () => {
       const goods = details.goods
       const tools = details.tools
 
-      cy.get('.cocktail-header-title').should('contain', details.name)
-      cy.get('h1').should('contain', details.name)
-      cy.get('.cocktail-body-recipe-list .cocktail-body-recipe-list-item').each(listItem => {
+      cy.get(cocktailPage.vertical.selector.title).should('contain', details.name)
+      cy.get(cocktailPage.vertical.selector.recipeItem).each(listItem => {
         const itemText = listItem.text()
         expect(itemText).to.equal(receipt[listItem.index()])
       })
-      cy.get('.cocktail-body__goods .сomponents-list-item').each(listItem => {
+      cy.get(cocktailPage.vertical.selector.component).find('[data-cy="ingredient"]').each(listItem => {
         const itemText = listItem.text()
         expect(itemText).contains(goods[listItem.index()].name)
       })
-      cy.get('.cocktail-body__tools .сomponents-list-item').each(listItem => {
+      cy.get(cocktailPage.vertical.selector.tools).find('[data-cy="ingredient"]').each(listItem => {
         const itemText = listItem.text()
         expect(itemText).contains(tools[listItem.index()].name)
       })

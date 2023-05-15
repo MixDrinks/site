@@ -16,7 +16,7 @@
         @click="inc()" />
     </div>
     <ul class="сomponents__list сomponents-list">
-      <li class="сomponents-list__item сomponents-list-item" v-for="item in components" :key="item.url">
+      <li data-cy="ingredient" class="сomponents-list__item сomponents-list-item" v-for="item in components" :key="item.url">
         <NuxtLink class="сomponents-list-item__link сomponents-list-item-link" :to="`/${item.url}`">
           <picture class="сomponents-list-item-link__picture">
             <source v-for="img in item.images" :key="img.id" :srcset="img.srcset" :media="img.media" :type="img.type" />

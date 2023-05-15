@@ -51,6 +51,7 @@
         <ol class="cocktail-body-recipe__list cocktail-body-recipe-list" itemprop="recipeInstructions">
           <li
             class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
+            data-cy="recipe_step"
             v-for="recipeItem in cocktail.receipt"
             :key="recipeItem"
           >
@@ -58,8 +59,8 @@
           </li>
         </ol>
       </div>
-      <CocktailComponents class="cocktail-body__goods" :title="`Склад коктейлю ${cocktail.name}`" :components="cocktail.goods" withCounter />
-      <CocktailComponents class="cocktail-body__tools" :title="`Потрібні штучки для приготування ${cocktail.name}`" :components="cocktail.tools" />
+      <CocktailComponents data-cy="goods" class="cocktail-body__goods" :title="`Склад коктейлю ${cocktail.name}`" :components="cocktail.goods" withCounter />
+      <CocktailComponents data-cy="tools" class="cocktail-body__tools" :title="`Потрібні штучки для приготування ${cocktail.name}`" :components="cocktail.tools" />
     </div>
   </div>
 </template>

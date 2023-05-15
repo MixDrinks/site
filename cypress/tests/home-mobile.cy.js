@@ -1,4 +1,5 @@
 import { default as homePage } from '../support/page_objects/homePage';
+import { default as cocktailPage } from '../support/page_objects/cocktailPage';
 
 const defaultSizes = ['iphone-6', 'ipad-2', 'macbook-13'];
 
@@ -23,7 +24,7 @@ function forEverySize(options) {
 
 export default forEverySize;
 
-describe("Home screen tests", () => {
+describe("Home screen elements on the different screen resolutions", () => {
 forEverySize(({ viewport }) => {
 
   beforeEach("Open home screen", () => {
@@ -58,17 +59,16 @@ forEverySize(({ viewport }) => {
         const goods = details.goods
         const tools = details.tools
   
-        cy.get('.cocktail-header-title').should('contain', details.name)
-        cy.get('h1').should('contain', details.name)
-        cy.get('.cocktail-body-recipe-list .cocktail-body-recipe-list-item').each(listItem => {
+        cy.get(cocktailPage.vertical.selector.title).should('contain', details.name)
+        cy.get(cocktailPage.vertical.selector.recipeItem).each(listItem => {
           const itemText = listItem.text()
           expect(itemText).to.equal(receipt[listItem.index()])
         })
-        cy.get('.cocktail-body__goods .сomponents-list-item').each(listItem => {
+        cy.get(cocktailPage.vertical.selector.component).find('[data-cy="ingredient"]').each(listItem => {
           const itemText = listItem.text()
           expect(itemText).contains(goods[listItem.index()].name)
         })
-        cy.get('.cocktail-body__tools .сomponents-list-item').each(listItem => {
+        cy.get(cocktailPage.vertical.selector.tools).find('[data-cy="ingredient"]').each(listItem => {
           const itemText = listItem.text()
           expect(itemText).contains(tools[listItem.index()].name)
         })

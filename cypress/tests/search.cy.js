@@ -1,4 +1,5 @@
 import {default as homePage} from '../support/page_objects/homePage'
+
 describe("search cocktail tests", () => {
     beforeEach('Open home screen', () => {
         cy.visit('/')
@@ -7,7 +8,7 @@ describe("search cocktail tests", () => {
     it('search from home screen', () => {
         let searchSuggestion;
         cy.get(homePage.vertical.selector.search).type('м')
-        cy.get('.search-result-list-item').first().then((searchSug) => {
+        cy.get(homePage.vertical.selector.searchSuggestions).first().then((searchSug) => {
             searchSuggestion = searchSug.text().trim()
             console.log(searchSuggestion)
             cy.wrap(searchSug).click()
