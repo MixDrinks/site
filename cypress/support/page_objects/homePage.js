@@ -11,7 +11,8 @@ export default {
                 lowalcohol: '[title="слабоалкогольні"]',
                 lowalcoholTag: '[data-cy="filterTag 1"]'
             },
-            cocktailCard: '[data-cy="cocktailCard"]'
+            cocktailCard: '[data-cy="cocktailCard"]',
+            search: '.search',
         }
     }
 }

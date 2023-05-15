@@ -32,6 +32,7 @@ describe("Home screen tests", () => {
 
     cy.get(homePage.vertical.selector.sorting.byRate).click();
     cy.get(homePage.vertical.selector.sorting.byRate).click();
+    cy.get(homePage.vertical.selector.sorting.byRate).click();
     cy.wait("@sortingApplied").its('response.body').then((body) => {
       const cocktails = body.cocktails
       cy.get(homePage.vertical.selector.cocktailCard).each(item => {
@@ -42,11 +43,11 @@ describe("Home screen tests", () => {
 
   });
 
-  it("items should be filteres after applying a filter", () => {
+  it("items should be filteres after applying a low alcohol filter", () => {
     interceptSorting("alcohol-volume=1")
 
     let firstItemName
-    cy.get(".list").find(".cart__name").first().invoke('text').then((itemTitle) => {
+    cy.get(homePage.vertical.selector.cocktailCard).find(".cart__name").first().invoke('text').then((itemTitle) => {
       firstItemName = itemTitle
     })
 
