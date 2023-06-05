@@ -38,3 +38,8 @@ npm run cypress:e2e
 Tech stack
 - VueJs
 - NuxtJs
+
+For update sitemap.xml from backend api
+```bash
+curl https://api.mixdrinks.org/sitemap.xml --output static/sitemap.xml -H 'Content-Type: application/xml' -H 'Accept: application/xml'
+```
