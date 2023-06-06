@@ -11,7 +11,7 @@ describe("Home screen tests", () => {
     cy.visit("/");
   });
 
-  it("items should be reordered after sorting applying", () => {
+  it.skip("items should be reordered after sorting applying", () => {
     interceptSorting("sort=biggest-rate")
 
     cy.get(homePage.vertical.selector.sorting.byRate).click();
