@@ -1,18 +1,23 @@
 <template>
   <div class="search">
-    <label class="search__header search-header" :class="{ 'search-header--filled': inputValue }">
+    <label
+      class="search__header search-header"
+      :class="{ 'search-header--filled': inputValue }"
+    >
       <div class="search-header__label">Пошук коктейля</div>
       <input
         ref="searchInput"
         class="search-header__input"
         type="text"
         v-model="inputValue"
+        @focus="focusInput = !focusInput"
+        @blur="focusInput = !focusInput"
       />
     </label>
     <transition name="max-height">
       <div
         class="search__result search-result"
-        v-if="inputValue"
+        v-if="focusInput && inputValue"
       >
         <ul class="search-result__list search-result-list">
           <li
@@ -28,6 +33,14 @@
               {{ listItem.name }}
             </NuxtLink>
           </li>
+          <li
+            v-if="!!!filteredList.length && inputValue"
+            class="search-result-list__item search-result-list-item"
+          >
+            <span class="search-result-list-item__span">
+              Нічого не знайдено
+            </span>
+          </li>
         </ul>
       </div>
     </transition>
@@ -41,6 +54,7 @@ export default {
   data: () => ({
     inputValue: "",
     listSearch: [],
+    focusInput: false,
   }),
 
   async fetch() {
@@ -54,6 +68,9 @@ export default {
     },
   },
   computed: {
+    focusInput() {
+      return this.$refs.searchInput;
+    },
     filteredList() {
       let arr = [];
       if (!!this.inputValue) {
@@ -70,5 +87,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/field-search'
+@import "./styles/field-search";
 </style>
