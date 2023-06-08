@@ -1,6 +1,6 @@
 import { MasterKeys } from "./config";
+const axios = require("axios");
 const isDev = process.env.NODE_ENV;
-
 module.exports = {
   env: {
     baseUrl: MasterKeys[isDev].baseUrl,
@@ -70,7 +70,7 @@ module.exports = {
 
   components: true,
 
-  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources", "@nuxtjs/sitemap"],
   styleResources: {
     scss: [
       "~~/assets/scss/variables.scss",
@@ -80,6 +80,18 @@ module.exports = {
     less: [],
     stylus: [],
   },
+  sitemap: [
+    {
+      path: "/sitemap.xml",
+      hostname: MasterKeys[isDev].baseUrl,
+      routes: async () => {
+        const { data } = await axios.get(
+          "https://api.mixdrinks.org/sitemap.xml"
+        );
+        return data;
+      },
+    },
+  ],
   axios: {
     withCredentials: true,
     credentials: true,
