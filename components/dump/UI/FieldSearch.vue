@@ -68,9 +68,6 @@ export default {
     },
   },
   computed: {
-    focusInput() {
-      return this.$refs.searchInput;
-    },
     filteredList() {
       let arr = [];
       if (!!this.inputValue) {
