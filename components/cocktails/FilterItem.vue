@@ -47,7 +47,7 @@
               v-if="!!filterItem.cocktailCount"
               class="filter-list__item filter-list-item"
               :class="{ 'filter-list-item--active': filterItem.active }"
-              :to="filterItem.url"
+              :to="filterItem.url + query"
             >
               <div class="filter-list-item__checkbox"></div>
               <div class="filter-list-item__name">
@@ -108,6 +108,15 @@ export default {
     filterItemSort() {
       let arr = [...this.filterItem.items];
       return arr.sort((a, b) => (a.cocktailCount > b.cocktailCount ? -1 : 1));
+    },
+    query() {
+      let query = "?";
+      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+        if (key != "page") {
+          query = query + `&${key}=${value}`;
+        }
+      }
+      return query;
     },
     listSearch() {
       if (!!this.searchValue) {
