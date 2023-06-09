@@ -64,5 +64,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/icon-btn'
+@import "./styles/icon-btn";
 </style>

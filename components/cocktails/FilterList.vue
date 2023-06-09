@@ -2,11 +2,12 @@
   <div class="filters">
     <div
       class="filters__main"
-      :class="{'filters__main--hidden': !isFilterOpen}"
-      >
+      :class="{ 'filters__main--hidden': !isFilterOpen }"
+    >
       <div class="filters__header filters-header">
         <div class="filters-header__title filters-header-title">
-          Фільтри <span class="filters-header-title__count">{{ totalCount }}</span>
+          Фільтри
+          <span class="filters-header-title__count">{{ totalCount }}</span>
         </div>
         <transition
           name="fate-in"
@@ -19,7 +20,7 @@
             type="short"
             icon="/img/icons/croos.svg"
             :isLink="true"
-            :href="`?${queryWithoutFilter}`"
+            :href="`${queryWithoutFilter}`"
             @click="updateCocktails"
           >
             Відмінити всі фільтри
@@ -27,7 +28,7 @@
         </transition>
       </div>
 
-      <div 
+      <div
         class="filters__tag-cloud filters-tag-cloud"
         @click="updateCocktails"
       >
@@ -120,41 +121,25 @@ export default {
     filterListWithUrl() {
       let arr = [...this.filterList];
       arr.forEach((filter) => {
-        const machineValue = filter.queryName;
-        const isHaveQuery = !!this.$nuxt.$route.query[machineValue];
-        const arrayTags = isHaveQuery
-          ? this.$nuxt.$route.query[machineValue].split(",")
-          : false;
-        let query = "";
-        for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-          if (key != "page" && key != machineValue) {
-            query = query + `&${key}=${value}`;
-          }
-        }
         filter.items.forEach((item) => {
-          let url = `?${machineValue}=${item.id}${query}`;
-          let active = false;
-          if (isHaveQuery) {
-            if (arrayTags.find((tag) => tag == item.id)) {
-              const newArr = arrayTags.filter((tag) => tag != item.id);
-              url = newArr.length
-                ? `?${machineValue}=${newArr.join(",")}${query}`
-                : `?${query}`;
-              active = true;
-            } else {
-              url = `?${machineValue}=${arrayTags.join(",")},${
-                item.id
-              }${query}`;
-            }
-          }
-          item.cocktailCount = this.futureCounts[filter.id].find(
+          const curentItem = this.futureCounts[filter.id].find(
             (el) => el.id === item.id
-          ).count;
-          item.url = url;
-          item.active = active;
+          );
+          item.url = `/${curentItem.query}${this.query}`;
+          item.cocktailCount = curentItem.count;
+          item.active = curentItem.isActive;
         });
       });
       return arr;
+    },
+    query() {
+      let query = "?";
+      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
+        if (key != "page") {
+          query = query + `&${key}=${value}`;
+        }
+      }
+      return query;
     },
     arrFilterNames() {
       let arr = [];
@@ -170,16 +155,16 @@ export default {
           temp = temp + `&${key}=${value}`;
         }
       }
-      return temp;
+      return `/?${temp}`;
     },
     activeFilter() {
-      const arr = this.filterListWithUrl.map(el => el.items).flat()
-      return arr.filter((item) => item.active)
+      const arr = this.filterListWithUrl.map((el) => el.items).flat();
+      return arr.filter((item) => item.active);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import './styles/filter-list'
+@import "./styles/filter-list";
 </style>

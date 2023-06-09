@@ -22,14 +22,14 @@ export default {
     } else if (!!Object.keys(query).length && !!!query.page) {
       page = "&page=0";
     }
-    const cocktailsFullPromise = getCocktails(
-      route.fullPath.slice(1) + page
-    ).catch(() => {
-      return error({
-        statusCode: 404,
-        message: "This page could not be found",
-      });
-    });
+    const cocktailsFullPromise = getCocktails(route.fullPath + page).catch(
+      () => {
+        return error({
+          statusCode: 404,
+          message: "This page could not be found",
+        });
+      }
+    );
     const allFiltersPromise = getAllFilters().catch(() => {
       return error({
         statusCode: 404,
@@ -64,9 +64,7 @@ export default {
         page = "&page=0";
       }
       let items = [...this.cocktailsFull.cocktails];
-      const cocktails = await getCocktails(
-        this.$nuxt.$route.fullPath.slice(1) + page
-      );
+      const cocktails = await getCocktails(this.$nuxt.$route.fullPath + page);
       this.cocktailsFull = { ...cocktails.data };
       if (payload?.loadMore) {
         this.cocktailsFull.cocktails = [

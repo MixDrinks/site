@@ -12,7 +12,7 @@ export const api = $axios.create({
   credentials: true,
 });
 export const getCocktails = (queryParams) => {
-  return api.get(`/v2/search/cocktails${queryParams}`);
+  return api.get(`/v2/filter${queryParams}`);
 };
 export const getCocktail = (id) => {
   return api.get(`/v2/cocktails/full?id=${id}`);

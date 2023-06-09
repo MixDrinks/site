@@ -1,10 +1,17 @@
 <template>
   <div class="filter">
-    <div class="filter__header filter-header" @click="toggleList(filterItem.id)">
+    <div
+      class="filter__header filter-header"
+      @click="toggleList(filterItem.id)"
+    >
       <div class="filter-header__title">{{ filterItem.name }}</div>
       <div
         class="filter-header__toggler"
-        :class="{ 'filter-header__toggler--close': isCloseFilter.includes(filterItem.id) }"
+        :class="{
+          'filter-header__toggler--close': isCloseFilter.includes(
+            filterItem.id
+          ),
+        }"
       ></div>
     </div>
     <transition name="max-height">
@@ -12,8 +19,14 @@
         class="filter__wrapper"
         v-if="!isCloseFilter.includes(filterItem.id)"
       >
-        <div class="filter__search filter-search" v-if="filterItem.items.length > 6">
-          <label class="filter-search__input filter-search-input" :class="{ 'filter-search-input--filled': !!searchValue }">
+        <div
+          class="filter__search filter-search"
+          v-if="filterItem.items.length > 6"
+        >
+          <label
+            class="filter-search__input filter-search-input"
+            :class="{ 'filter-search-input--filled': !!searchValue }"
+          >
             <div class="filter-search-input__label">Пошук</div>
             <input
               ref="searchInput"
@@ -24,7 +37,10 @@
           </label>
         </div>
         <div class="filter__list filter-list">
-          <div v-for="filterItem in listSearch" :key="filterItem.id">
+          <div
+            v-for="filterItem in listSearch"
+            :key="filterItem.id"
+          >
             <NuxtLink
               :title="filterItem.name"
               rel="tag"
@@ -32,17 +48,22 @@
               class="filter-list__item filter-list-item"
               :class="{ 'filter-list-item--active': filterItem.active }"
               :to="filterItem.url"
-              @click.native="updateCocktails"
             >
               <div class="filter-list-item__checkbox"></div>
               <div class="filter-list-item__name">
                 {{ filterItem.name }}
               </div>
-              <div class="filter-list-item__count" v-if="!filterItem.active">
+              <div
+                class="filter-list-item__count"
+                v-if="!filterItem.active"
+              >
                 {{ filterItem.cocktailCount }}
               </div>
             </NuxtLink>
-            <div v-else class="filter-list__item filter-list-item filter-list-item--lock">
+            <div
+              v-else
+              class="filter-list__item filter-list-item filter-list-item--lock"
+            >
               <div class="filter-list-item__checkbox"></div>
               <div class="filter-list-item__name">
                 {{ filterItem.name }}
@@ -52,7 +73,10 @@
               </div>
             </div>
           </div>
-          <div class="filter-list__text" v-if="listSearch.length === 0">
+          <div
+            class="filter-list__text"
+            v-if="listSearch.length === 0"
+          >
             нічого не знайдено
           </div>
         </div>
@@ -109,5 +133,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/filter-item'
+@import "./styles/filter-item";
 </style>
