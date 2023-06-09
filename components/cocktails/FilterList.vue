@@ -109,15 +109,6 @@ export default {
     },
   },
   computed: {
-    query() {
-      let temp = "";
-      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-        if (key != "page") {
-          temp = temp + `&${key}=${value}`;
-        }
-      }
-      return temp;
-    },
     filterListWithUrl() {
       let arr = [...this.filterList];
       arr.forEach((filter) => {
@@ -125,21 +116,12 @@ export default {
           const curentItem = this.futureCounts[filter.id].find(
             (el) => el.id === item.id
           );
-          item.url = `/${curentItem.query}${this.query}`;
+          item.url = `/${curentItem.query}`;
           item.cocktailCount = curentItem.count;
           item.active = curentItem.isActive;
         });
       });
       return arr;
-    },
-    query() {
-      let query = "?";
-      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-        if (key != "page") {
-          query = query + `&${key}=${value}`;
-        }
-      }
-      return query;
     },
     arrFilterNames() {
       let arr = [];
