@@ -33,10 +33,10 @@
             </a>
             <a
               class="footer-content-about-item__link"
-              href="https://api.mixdrinks.org/docs/index.html"
+              href="https://docs.mixdrinks.org/"
               target="_blank"
             >
-              Документація API проєкту
+              Документація проєкту
             </a>
             <a
               class="footer-content-about-item__link"
