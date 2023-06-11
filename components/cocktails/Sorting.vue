@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { sort } from "~~/utils/sort.js";
+import { sort } from "~~/utils/sort";
 export default {
   name: "Sorting",
   methods: {
@@ -64,5 +64,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/sorting'
+@import "./styles/sorting";
 </style>

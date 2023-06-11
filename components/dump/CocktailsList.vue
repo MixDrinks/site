@@ -1,6 +1,11 @@
 <template>
   <div class="list">
-    <div class="list__item list-item" v-for="cocktail in cocktails" :key="cocktail.id" data-cy="cocktailCard">
+    <div
+      class="list__item list-item"
+      v-for="cocktail in cocktails"
+      :key="cocktail.id"
+      data-cy="cocktailCard"
+    >
       <CocktailsCart :cocktail="cocktail" />
     </div>
   </div>
@@ -14,12 +19,12 @@ export default {
   props: {
     cocktails: {
       type: Array,
-      require: true,
+      required: true,
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktails-list'
+@import "./styles/cocktails-list";
 </style>

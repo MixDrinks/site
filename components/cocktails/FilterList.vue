@@ -100,7 +100,7 @@ export default {
     },
     futureCounts: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
   methods: {

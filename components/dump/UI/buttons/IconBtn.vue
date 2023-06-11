@@ -48,7 +48,7 @@ export default {
     },
     icon: {
       type: String,
-      require: true,
+      required: true,
     },
     type: {
       type: String,
