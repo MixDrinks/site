@@ -12,6 +12,7 @@
 import CocktailsPage from "~~/components/cocktails/CocktailsPage.vue";
 import { getCocktails, getAllFilters } from "~~/api";
 export default {
+  scrollToTop: false,
   components: {
     CocktailsPage,
   },
