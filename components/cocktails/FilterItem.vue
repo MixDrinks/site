@@ -38,38 +38,53 @@
         </div>
         <div class="filter__list filter-list">
           <div
-            v-for="filterItem in listSearch"
-            :key="filterItem.id"
+            v-for="listItem in listSearch"
+            :key="listItem.id"
           >
             <NuxtLink
-              :title="filterItem.name"
+              :title="listItem.name"
               rel="tag"
-              v-if="!!filterItem.cocktailCount"
+              v-if="!!listItem.cocktailCount"
               class="filter-list__item filter-list-item"
-              :class="{ 'filter-list-item--active': filterItem.active }"
-              :to="filterItem.url + query"
+              :class="{ 'filter-list-item--active': listItem.active }"
+              :to="listItem.url + query"
             >
-              <div class="filter-list-item__checkbox"></div>
-              <div class="filter-list-item__name">
-                {{ filterItem.name }}
-              </div>
-              <div
+              <span
+                class="filter-list-item__radio"
+                v-if="filterItem.selectionType === types.single"
+              ></span>
+              <span
+                class="filter-list-item__checkbox"
+                v-else
+              ></span>
+              <span class="filter-list-item__name">
+                {{ listItem.selectionType }}
+                {{ listItem.name }}
+              </span>
+              <span
                 class="filter-list-item__count"
-                v-if="!filterItem.active"
+                v-if="!listItem.active"
               >
-                {{ filterItem.cocktailCount }}
-              </div>
+                {{ listItem.cocktailCount }}
+              </span>
             </NuxtLink>
             <div
               v-else
               class="filter-list__item filter-list-item filter-list-item--lock"
             >
-              <div class="filter-list-item__checkbox"></div>
+              <span
+                class="filter-list-item__radio"
+                v-if="filterItem.selectionType === types.single"
+              ></span>
+              <span
+                class="filter-list-item__checkbox"
+                v-else
+              ></span>
               <div class="filter-list-item__name">
-                {{ filterItem.name }}
+                {{ listItem.name }}
               </div>
               <div class="filter-list-item__count">
-                {{ filterItem.cocktailCount }}
+                {{ listItem.cocktailCount }}
               </div>
             </div>
           </div>
@@ -86,6 +101,7 @@
 </template>
 
 <script>
+import { types } from "~~/utils/selectionType";
 export default {
   name: "FilterItem",
   data: () => ({
@@ -105,6 +121,9 @@ export default {
     },
   },
   computed: {
+    types() {
+      return types;
+    },
     filterItemSort() {
       let arr = [...this.filterItem.items];
       return arr.sort((a, b) => (a.cocktailCount > b.cocktailCount ? -1 : 1));
@@ -135,7 +154,7 @@ export default {
   props: {
     filterItem: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
 };
