@@ -53,7 +53,10 @@
           </div>
         </transition-group>
       </div>
-      <div class="filters__wrapper filters-wrapper">
+      <div
+        class="filters__wrapper filters-wrapper"
+        ref="filtersWrapper"
+      >
         <FilterItem
           class="filters-wrapper__item"
           v-for="filterItem in filterListWithUrl"
@@ -65,7 +68,7 @@
     </div>
     <div
       class="filters__btn"
-      @click="isFilterOpen = !isFilterOpen"
+      @click="changeFilterIsOpen"
     >
       <span v-if="isFilterOpen">Закрити</span>
       <span v-else>Фільтр</span>
@@ -74,21 +77,19 @@
       <div
         class="filters__background"
         v-if="isFilterOpen"
-        @click="isFilterOpen = !isFilterOpen"
+        @click="changeFilterIsOpen"
       ></div>
     </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
 import FilterItem from "./FilterItem.vue";
 export default {
   components: { IconBtn, FilterItem },
   name: "FilterList",
-  data: () => ({
-    isFilterOpen: false,
-  }),
   props: {
     filterList: {
       type: Array,
@@ -103,12 +104,30 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    this.$refs.filtersWrapper.addEventListener("scroll", this.setScrollTop);
+    this.$refs.filtersWrapper.scrollTo(0, this.scrollTopValue);
+  },
+  beforeDestroy() {
+    this.$refs.filtersWrapper.removeEventListener("scroll", this.setScrollTop);
+  },
   methods: {
+    setScrollTop() {
+      this.updateScrollTop(this.$refs.filtersWrapper.scrollTop);
+    },
     updateCocktails(payload) {
       this.$emit("updateCocktails", payload);
     },
+    ...mapActions("filter", {
+      changeFilterIsOpen: "changeMainIsOpen",
+      updateScrollTop: "updateScrollTop",
+    }),
   },
   computed: {
+    ...mapGetters("filter", {
+      isFilterOpen: "getMainIsOpen",
+      scrollTopValue: "getScrollTop",
+    }),
     filterListWithUrl() {
       let arr = [...this.filterList];
       arr.forEach((filter) => {

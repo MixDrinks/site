@@ -8,7 +8,7 @@
       <div
         class="filter-header__toggler"
         :class="{
-          'filter-header__toggler--close': isCloseFilter.includes(
+          'filter-header__toggler--close': filtersIsOpenList.includes(
             filterItem.id
           ),
         }"
@@ -17,7 +17,7 @@
     <transition name="max-height">
       <div
         class="filter__wrapper"
-        v-if="!isCloseFilter.includes(filterItem.id)"
+        v-if="!filtersIsOpenList.includes(filterItem.id)"
       >
         <div
           class="filter__search filter-search"
@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import { types } from "~~/utils/selectionType";
 export default {
   name: "FilterItem",
@@ -109,18 +110,20 @@ export default {
     searchValue: "",
   }),
   methods: {
-    toggleList(id) {
-      if (this.isCloseFilter.includes(id)) {
-        this.isCloseFilter = this.isCloseFilter.filter((el) => el != id);
-      } else {
-        this.isCloseFilter.push(id);
-      }
-    },
+    // toggleList(id) {
+    //   this.updateFiltersIsOpenList(id);
+    // },
     updateCocktails(payload) {
       this.$emit("updateCocktails", payload);
     },
+    ...mapActions("filter", {
+      toggleList: "updateFiltersIsOpenList",
+    }),
   },
   computed: {
+    ...mapGetters("filter", {
+      filtersIsOpenList: "getFiltersIsOpenList",
+    }),
     types() {
       return types;
     },
