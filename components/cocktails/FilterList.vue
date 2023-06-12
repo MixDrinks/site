@@ -67,7 +67,7 @@
       class="filters__btn"
       @click="isFilterOpen = !isFilterOpen"
     >
-      <span v-if="isFilterOpen">Закрити</span>
+      <span v-if="isFilterOpen">Застосувати</span>
       <span v-else>Фільтр</span>
     </div>
     <transition name="opacity">
