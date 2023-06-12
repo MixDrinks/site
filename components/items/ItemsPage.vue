@@ -1,6 +1,11 @@
 <template>
   <div class="items">
-    <h1 class="items__title" itemprop="name">{{ items.name }}</h1>
+    <h1
+      class="items__title"
+      itemprop="name"
+    >
+      {{ items.name }}
+    </h1>
     <div class="items__main items-main">
       <picture class="items-main__picture">
         <source
@@ -31,13 +36,13 @@
       <CocktailsList :cocktails="cocktailsFull.cocktails" />
     </div>
     <Pagination
-        v-if="cocktailsFull.totalCount > 24"
-        class="items__pagination"
-        :totalItems="cocktailsFull.totalCount"
-        :limit="24"
-        :itemsCount="cocktailsFull.cocktails.length"
-        @updateCocktails="updateCocktails"
-      />
+      v-if="cocktailsFull.totalCount > 24"
+      class="items__pagination"
+      :totalItems="cocktailsFull.totalCount"
+      :limit="24"
+      :itemsCount="cocktailsFull.cocktails.length"
+      @updateCocktails="updateCocktails"
+    />
   </div>
 </template>
 
@@ -50,7 +55,7 @@ export default {
   props: {
     items: {
       type: Object,
-      require: true,
+      required: true,
     },
     cocktailsFull: {
       type: Object,
@@ -66,5 +71,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/items-page'
+@import "./styles/items-page";
 </style>

@@ -66,11 +66,11 @@ export default {
   props: {
     ratingCount: {
       type: Number,
-      require: true,
+      required: true,
     },
     ratingValue: {
       type: [Number, null],
-      require: true,
+      required: true,
     },
   },
   methods: {
@@ -127,5 +127,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/rating'
+@import "./styles/rating";
 </style>

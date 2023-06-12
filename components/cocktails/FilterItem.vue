@@ -8,7 +8,7 @@
       <div
         class="filter-header__toggler"
         :class="{
-          'filter-header__toggler--close': isCloseFilter.includes(
+          'filter-header__toggler--close': filtersIsOpenList.includes(
             filterItem.id
           ),
         }"
@@ -17,7 +17,7 @@
     <transition name="max-height">
       <div
         class="filter__wrapper"
-        v-if="!isCloseFilter.includes(filterItem.id)"
+        v-if="!filtersIsOpenList.includes(filterItem.id)"
       >
         <div
           class="filter__search filter-search"
@@ -38,38 +38,53 @@
         </div>
         <div class="filter__list filter-list">
           <div
-            v-for="filterItem in listSearch"
-            :key="filterItem.id"
+            v-for="listItem in listSearch"
+            :key="listItem.id"
           >
             <NuxtLink
-              :title="filterItem.name"
+              :title="listItem.name"
               rel="tag"
-              v-if="!!filterItem.cocktailCount"
+              v-if="!!listItem.cocktailCount"
               class="filter-list__item filter-list-item"
-              :class="{ 'filter-list-item--active': filterItem.active }"
-              :to="filterItem.url + query"
+              :class="{ 'filter-list-item--active': listItem.active }"
+              :to="listItem.url + query"
             >
-              <div class="filter-list-item__checkbox"></div>
-              <div class="filter-list-item__name">
-                {{ filterItem.name }}
-              </div>
-              <div
+              <span
+                class="filter-list-item__radio"
+                v-if="filterItem.selectionType === types.single"
+              ></span>
+              <span
+                class="filter-list-item__checkbox"
+                v-else
+              ></span>
+              <span class="filter-list-item__name">
+                {{ listItem.selectionType }}
+                {{ listItem.name }}
+              </span>
+              <span
                 class="filter-list-item__count"
-                v-if="!filterItem.active"
+                v-if="!listItem.active"
               >
-                {{ filterItem.cocktailCount }}
-              </div>
+                {{ listItem.cocktailCount }}
+              </span>
             </NuxtLink>
             <div
               v-else
               class="filter-list__item filter-list-item filter-list-item--lock"
             >
-              <div class="filter-list-item__checkbox"></div>
+              <span
+                class="filter-list-item__radio"
+                v-if="filterItem.selectionType === types.single"
+              ></span>
+              <span
+                class="filter-list-item__checkbox"
+                v-else
+              ></span>
               <div class="filter-list-item__name">
-                {{ filterItem.name }}
+                {{ listItem.name }}
               </div>
               <div class="filter-list-item__count">
-                {{ filterItem.cocktailCount }}
+                {{ listItem.cocktailCount }}
               </div>
             </div>
           </div>
@@ -86,6 +101,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import { types } from "~~/utils/selectionType";
 export default {
   name: "FilterItem",
   data: () => ({
@@ -93,18 +110,23 @@ export default {
     searchValue: "",
   }),
   methods: {
-    toggleList(id) {
-      if (this.isCloseFilter.includes(id)) {
-        this.isCloseFilter = this.isCloseFilter.filter((el) => el != id);
-      } else {
-        this.isCloseFilter.push(id);
-      }
-    },
+    // toggleList(id) {
+    //   this.updateFiltersIsOpenList(id);
+    // },
     updateCocktails(payload) {
       this.$emit("updateCocktails", payload);
     },
+    ...mapActions("filter", {
+      toggleList: "updateFiltersIsOpenList",
+    }),
   },
   computed: {
+    ...mapGetters("filter", {
+      filtersIsOpenList: "getFiltersIsOpenList",
+    }),
+    types() {
+      return types;
+    },
     filterItemSort() {
       let arr = [...this.filterItem.items];
       return arr.sort((a, b) => (a.cocktailCount > b.cocktailCount ? -1 : 1));
@@ -135,7 +157,7 @@ export default {
   props: {
     filterItem: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
 };

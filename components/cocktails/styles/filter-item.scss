@@ -161,7 +161,8 @@
 
   &:not(#{$self}--active):hover,
   &:not(#{$self}--active):focus {
-    #{$self}__checkbox {
+    #{$self}__checkbox,
+    #{$self}__radio {
       background-color: rgba($colorMain, 0.2);
     }
 
@@ -195,18 +196,57 @@
         background-position: center;
       }
     }
+    #{$self}__radio {
+      &::after {
+        background-color: $colorMain;
+      }
+    }
+
+    &:hover {
+      #{$self}__radio {
+        &::after {
+          background-color: rgba($colorMain, 0.5);
+        }
+      }
+    }
   }
 
-  &__checkbox {
+  &__checkbox,
+  &__radio {
     width: 20px;
     height: 20px;
     margin-right: 10px;
 
     border: 1px solid $colorMain;
-    border-radius: 2px;
 
     background-color: transparent;
     transition: border $defaultAnimTime, background-color $defaultAnimTime;
+  }
+
+  &__checkbox {
+    border-radius: 2px;
+  }
+
+  &__radio {
+    border-radius: 10px;
+    
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+
+      background-color: transparent;
+
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      transition: background-color $defaultAnimTime;
+    }
   }
 
   &__name {

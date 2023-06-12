@@ -2,7 +2,10 @@
   <div class="cocktails">
     <div class="cocktails__header cocktails-header">
       <h1 class="cocktails-header__title">Коктейлі</h1>
-      <Sorting class="cocktails-header__sorting" @updateCocktails="updateCocktails" />
+      <Sorting
+        class="cocktails-header__sorting"
+        @updateCocktails="updateCocktails"
+      />
     </div>
     <div class="cocktails__body cocktails-body">
       <FilterList
@@ -12,7 +15,10 @@
         :totalCount="cocktailsFull.totalCount"
         :futureCounts="cocktailsFull.futureCounts"
       />
-      <CocktailsList class="cocktails-body__list" :cocktails="cocktailsFull.cocktails" />
+      <CocktailsList
+        class="cocktails-body__list"
+        :cocktails="cocktailsFull.cocktails"
+      />
     </div>
     <Pagination
       v-if="cocktailsFull.totalCount > 24"
@@ -36,7 +42,7 @@ export default {
   props: {
     allFilters: {
       type: Array,
-      require: true,
+      required: true,
     },
     cocktailsFull: {
       type: Object,
@@ -52,5 +58,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktails-page'
+@import "./styles/cocktails-page";
 </style>
