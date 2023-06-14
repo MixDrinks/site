@@ -18,7 +18,7 @@
             v-show="activeFilter.length"
             direction="top"
             type="short"
-            icon="/img/icons/croos.svg"
+            icon="/img/icons/trash.svg"
             :isLink="true"
             :href="`${queryWithoutFilter}`"
             @click="updateCocktails"

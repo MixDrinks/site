@@ -139,9 +139,11 @@
   display: flex;
   flex-wrap: wrap;
 
-  padding: $halfPadding 0;
-
   @include defaultWrapperScroll;
+
+  @media (min-width: 1023px) {
+    padding: $halfPadding 0;
+  }
 }
 
 .filters-tag-cloud-list-item {

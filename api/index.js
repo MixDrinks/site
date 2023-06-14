@@ -14,8 +14,8 @@ export const api = $axios.create({
 export const getCocktails = (queryParams) => {
   return api.get(`/v2/filter${queryParams}`);
 };
-export const getCocktail = (id) => {
-  return api.get(`/v2/cocktails/full?id=${id}`);
+export const getCocktail = (slug) => {
+  return api.get(`/v2/cocktail/${slug}`);
 };
 export const getCocktailsShort = () => {
   return api.get(`/cocktails/all`);
@@ -29,6 +29,6 @@ export const cocktailsVisit = (id) => {
 export const updateRating = (id, value) => {
   return api.post(`/v2/cocktails/score?id=${id}`, { value: value });
 };
-export const getItems = (id) => {
-  return api.get(`/v2/items/full${id}`);
+export const getItems = (slug) => {
+  return api.get(`/v3/${slug}`);
 };

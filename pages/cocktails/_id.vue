@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import CocktailPage from '~/components/cocktails/CocktailPage.vue'
+import CocktailPage from "~/components/cocktails/CocktailPage.vue";
 import { getCocktail, cocktailsVisit } from "~~/api";
 export default {
   components: {
-    CocktailPage
+    CocktailPage,
   },
   async asyncData({ route, error }) {
     const cocktail = await getCocktail(route.params.id).catch(() => {
@@ -57,7 +57,7 @@ export default {
     };
   },
   mounted() {
-    cocktailsVisit(this.$nuxt.$route.params.id);
+    cocktailsVisit(this.cocktail.id);
   },
 };
 </script>

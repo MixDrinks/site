@@ -18,6 +18,7 @@
         </div>
         <Rating
           class="cocktail-header-user-info__rating"
+          :id="cocktail.id"
           :ratingCount="cocktail.ratingCount"
           :ratingValue="cocktail.rating"
         />
@@ -30,7 +31,7 @@
         :key="tag.id"
       >
         <NuxtLink
-          :to="`/?tags=${tag.id}`"
+          :to="`/${tag.url}`"
           class="cocktail-tags-item__link cocktail-tags-item-link"
         >
           <span class="cocktail-tags-item-link__label">{{ tag.name }}</span>
@@ -78,14 +79,12 @@
         </ol>
       </div>
       <CocktailComponents
-        data-cy="goods"
         class="cocktail-body__goods"
         :title="`Склад коктейлю ${cocktail.name}`"
         :components="cocktail.goods"
         withCounter
       />
       <CocktailComponents
-        data-cy="tools"
         class="cocktail-body__tools"
         :title="`Потрібні штучки для приготування ${cocktail.name}`"
         :components="cocktail.tools"

@@ -66,10 +66,14 @@ export default {
   props: {
     ratingCount: {
       type: Number,
-      required: true,
+      default: 0,
     },
     ratingValue: {
-      type: [Number, null],
+      type: Number,
+      default: 0,
+    },
+    id: {
+      type: Number,
       required: true,
     },
   },
@@ -93,7 +97,7 @@ export default {
   },
   computed: {
     curentPage() {
-      return this.$nuxt.$route.params.id;
+      return this.id;
     },
     stars() {
       let arr = [];

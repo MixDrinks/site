@@ -9,29 +9,29 @@
 </template>
 
 <script>
-import ItemsPage from '~~/components/items/ItemsPage.vue'
+import ItemsPage from "~~/components/items/ItemsPage.vue";
 import { getItems, getCocktails } from "~~/api";
 export default {
   components: {
-    ItemsPage
+    ItemsPage,
   },
   async asyncData({ route, error, query }) {
-    let queryParams = "?";
-    if (query && !query.page) {
-      queryParams = "?page=0";
+    let page = "";
+    if (!!!Object.keys(query).length) {
+      page = "?page=0";
+    } else if (!!Object.keys(query).length && !!!query.page) {
+      page = "&page=0";
     }
-    for (let [key, value] of Object.entries(query)) {
-      queryParams = `${queryParams}&${key}=${value}`;
-    }
-    queryParams = `${queryParams}&tools=${route.params.id}`;
 
-    const itemsPromise = getItems(`?id=${route.params.id}`).catch(() => {
+    const itemsPromise = getItems(route.path).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const cocktailsFullPromise = getCocktails(queryParams).catch(() => {
+    const cocktailsFullPromise = getCocktails(
+      `/tools=${route.params.id}${page}`
+    ).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
@@ -118,5 +118,4 @@ export default {
 .wrapper {
   @include defaultWrapper;
 }
-
 </style>
