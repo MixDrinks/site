@@ -4,7 +4,7 @@ describe("Home screen tests", () => {
   const interceptSorting = (sortingParam) => {
     cy.intercept({
       method: "GET",
-      url: `/v2/filter?${sortingParam}*`,
+      url: `/v2/filter?${sortingParam}&page=0`,
     }).as("sortingApplied");
   };
 
