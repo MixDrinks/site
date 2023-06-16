@@ -4,7 +4,7 @@ describe("Home screen tests", () => {
   const interceptSorting = (sortingParam) => {
     cy.intercept({
       method: "GET",
-      url: `/v2/filter?${sortingParam}&page=0`,
+      url: `/v2/filter?${sortingParam}*`,
     }).as("sortingApplied");
   };
   const interceptFiltering = (filterParam) => {
@@ -17,7 +17,7 @@ describe("Home screen tests", () => {
     cy.visit("/");
   });
 
-  it("items should be reordered after sorting applying", () => {
+  it.only("items should be reordered after sorting applying", () => {
     interceptSorting("sort=biggest-rate");
 
     cy.get(homePage.vertical.selector.sorting.byRate).click();
