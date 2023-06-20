@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "org.mixdrinks.app",
+    "sha256_cert_fingerprints":
+    ["12:58:1F:D7:AF:F3:73:CC:0E:2D:84:13:B2:06:FD:57:02:37:CA:22:6F:04:21:C6:8F:49:BD:03:13:CA:B5:7E"]
+  }
+}]
