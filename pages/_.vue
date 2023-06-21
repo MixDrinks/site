@@ -78,6 +78,10 @@ export default {
   computed: {
     canonical() {
       return process.env.baseUrl + this.$nuxt.$route.path;
+      
+    },
+    description() {
+      return this.cocktailsFull.descriptions ? this.cocktailsFull.descriptions : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
     },
     indexPage() {
       if (Object.entries(this.$nuxt.$route.query).length === 0) {
@@ -95,8 +99,7 @@ export default {
         {
           hid: "description",
           name: "description",
-          content:
-            "Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі",
+          content: this.description,
         },
         {
           hid: "og:title",
@@ -106,8 +109,7 @@ export default {
         {
           hid: "og:description",
           property: "og:description",
-          content:
-            "Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі",
+          content: this.description,
         },
         {
           hid: "og:url",

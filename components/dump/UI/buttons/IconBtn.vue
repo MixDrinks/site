@@ -4,7 +4,7 @@
     :class="[{ 'btn--lock': lock }, `btn--${direction}`, `btn--${type}`]"
     @click.native="click()"
     :to="href"
-    v-if="isLink"
+    v-if="!!href"
   >
     <span
       class="btn__icon"
@@ -30,13 +30,9 @@
 export default {
   name: "IconBtn",
   props: {
-    isLink: {
-      type: Boolean,
-      default: false,
-    },
     href: {
       type: String,
-      default: "/",
+      default: "",
     },
     lock: {
       type: Boolean,

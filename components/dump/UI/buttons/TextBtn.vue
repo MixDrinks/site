@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink class="btn" @click.native="click()" :to="href" v-if="isLink">
+  <NuxtLink class="btn" @click.native="click()" :to="href" v-if="!!href">
     <slot />
   </NuxtLink>
   <button class="btn" v-else @click="click()">
@@ -11,13 +11,9 @@
 export default {
   name: "TextBtn",
   props: {
-    isLink: {
-      type: Boolean,
-      default: false,
-    },
     href: {
       type: String,
-      default: "/",
+      default: "",
     },
   },
   methods: {

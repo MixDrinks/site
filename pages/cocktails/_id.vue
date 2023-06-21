@@ -17,6 +17,7 @@ export default {
         message: "This page could not be found",
       });
     });
+
     return {
       cocktail: cocktail.data,
     };
