@@ -16,6 +16,11 @@ module.exports = {
     port: 8080,
   },
 
+  serverMiddleware: [
+    { path: '/apple-app-site-association', handler: '@/middleware/apple.js' },
+    { path: '/.well-known/apple-app-site-association', handler: '@/middleware/apple.js' },
+  ],
+
   head: {
     htmlAttrs: {
       lang: "uk",
