@@ -5,19 +5,19 @@
 </template>
 
 <script>
-import CocktailPage from '~/components/cocktails/CocktailPage.vue'
-import { getCocktail, cocktailsVisit } from "~~/api";
+import CocktailPage from "~/components/cocktails/CocktailPage";
 export default {
   components: {
-    CocktailPage
+    CocktailPage,
   },
-  async asyncData({ route, error }) {
-    const cocktail = await getCocktail(route.params.id).catch(() => {
+  async asyncData({ route, error, $axios }) {
+    const cocktail = await $axios.get(`/v2/cocktail/${route.params.id}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
+
     return {
       cocktail: cocktail.data,
     };
@@ -57,7 +57,7 @@ export default {
     };
   },
   mounted() {
-    cocktailsVisit(this.$nuxt.$route.params.id);
+    this.$axios.post(`/v2/cocktails/visit?id=${this.cocktail.id}`)
   },
 };
 </script>

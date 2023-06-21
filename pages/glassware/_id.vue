@@ -1,6 +1,6 @@
 <template>
   <main class="wrapper">
-    <ItemsPage 
+    <ItemsPage
       :cocktailsFull="cocktailsFull"
       :items="items"
       @updateCocktails="updateCocktails"
@@ -9,29 +9,27 @@
 </template>
 
 <script>
-import ItemsPage from '~~/components/items/ItemsPage.vue'
-import { getItems, getCocktails } from "~~/api";
+import ItemsPage from "~~/components/items/ItemsPage";
 export default {
   components: {
-    ItemsPage
+    ItemsPage,
   },
-  async asyncData({ route, error, query }) {
-    let queryParams = "?";
-    if (query && !query.page) {
-      queryParams = "?page=0";
+  async asyncData({ route, error, query, $axios }) {
+    let page = "";
+    if (!!!Object.keys(query).length) {
+      page = "?page=0";
+    } else if (!!Object.keys(query).length && !!!query.page) {
+      page = "&page=0";
+    } else {
+      page = `?page=${query.page}`
     }
-    for (let [key, value] of Object.entries(query)) {
-      queryParams = `${queryParams}&${key}=${value}`;
-    }
-    queryParams = `${queryParams}&glassware=${route.params.id}`;
-
-    const itemsPromise = getItems(`?id=${route.params.id}`).catch(() => {
+    const itemsPromise = $axios.get(`/v3/${route.path}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const cocktailsFullPromise = getCocktails(queryParams).catch(() => {
+    const cocktailsFullPromise = $axios.get(`/v2/filter/glassware=${route.params.id}${page}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
@@ -50,15 +48,16 @@ export default {
     async updateCocktails(payload) {
       // this.startLoading()
       let items = [...this.cocktailsFull.cocktails];
-      let queryParams = "?";
-      if (this.$nuxt.$route.query && !this.$nuxt.$route.query.page) {
-        queryParams = "?page=0";
+
+      let page = "";
+      if (!!!Object.keys(this.$nuxt.$route.query).length) {
+        page = "?page=0";
+      } else if (!!Object.keys(this.$nuxt.$route.query).length && !!!this.$nuxt.$route.query.page) {
+        page = "&page=0";
+      } else {
+        page = `?page=${this.$nuxt.$route.query.page}`
       }
-      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-        queryParams = `${queryParams}&${key}=${value}`;
-      }
-      queryParams = `${queryParams}&glassware=${this.$nuxt.$route.params.id}`;
-      const cocktails = await getCocktails(queryParams);
+      const cocktails = await this.$axios.get(`/v2/filter/glassware=${this.$nuxt.$route.params.id}${page}`);
       this.cocktailsFull = { ...cocktails.data };
       if (payload?.loadMore) {
         this.cocktailsFull.cocktails = [

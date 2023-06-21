@@ -4,7 +4,7 @@
     appear
   >
     <NuxtLink
-      :to="`/cocktails/${cocktail.id}`"
+      :to="`/cocktails/${cocktail.slug}`"
       class="cart"
     >
       <div

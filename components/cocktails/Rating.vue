@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import { updateRating } from "~~/api";
 export default {
   name: "Rating",
   data: () => ({
@@ -66,16 +65,20 @@ export default {
   props: {
     ratingCount: {
       type: Number,
-      required: true,
+      default: 0,
     },
     ratingValue: {
-      type: [Number, null],
+      type: Number,
+      default: 0,
+    },
+    id: {
+      type: Number,
       required: true,
     },
   },
   methods: {
     setRating(value) {
-      updateRating(this.curentPage, value);
+      this.$axios.post(`/v2/cocktails/score?id=${this.curentPage}`, { value: value })
       localStorage.setItem("ratinglist", [...this.ratinglist, this.curentPage]);
       if (this.curentRatingValue) {
         this.curentRatingValue = Number(
@@ -93,7 +96,7 @@ export default {
   },
   computed: {
     curentPage() {
-      return this.$nuxt.$route.params.id;
+      return this.id;
     },
     stars() {
       let arr = [];
@@ -121,7 +124,7 @@ export default {
     }
     if (localStorage.getItem("ratinglist"))
       this.ratinglist = localStorage.getItem("ratinglist").split(",");
-    this.isRatingBeenSet = this.ratinglist.includes(this.curentPage);
+    this.isRatingBeenSet = this.ratinglist.includes(this.curentPage.toString());
   },
 };
 </script>

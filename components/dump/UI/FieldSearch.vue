@@ -5,6 +5,7 @@
       :class="{ 'search-header--filled': inputValue }"
     >
       <div class="search-header__label">Пошук коктейля</div>
+
       <input
         ref="searchInput"
         class="search-header__input"
@@ -26,7 +27,7 @@
             :key="listItem.id"
           >
             <NuxtLink
-              :to="`/cocktails/${listItem.id}`"
+              :to="`/cocktails/${listItem.slug}`"
               class="search-result-list-item__link"
               @click.native="removeSearch"
             >
@@ -48,7 +49,6 @@
 </template>
 
 <script>
-import { getCocktailsShort } from "~~/api";
 export default {
   name: "FieldSearch",
   data: () => ({
@@ -58,7 +58,7 @@ export default {
   }),
 
   async fetch() {
-    this.listSearch = await getCocktailsShort().then((res) => res.data);
+    this.listSearch = await this.$axios.get(`/cocktails/all`).then((res) => res.data);
   },
 
   methods: {

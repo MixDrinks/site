@@ -8,8 +8,7 @@
   transition: color $defaultAnimTime, background-color $defaultAnimTime,
     box-shadow $defaultAnimTime;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: $colorHover;
     color: $colorWhite;
     box-shadow: -5px -5px 40px rgba($colorHover, 0.1);
