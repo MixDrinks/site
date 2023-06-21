@@ -9,28 +9,27 @@
 </template>
 
 <script>
-import ItemsPage from "~~/components/items/ItemsPage.vue";
-import { getItems, getCocktails } from "~~/api";
+import ItemsPage from "~~/components/items/ItemsPage";
 export default {
   components: {
     ItemsPage,
   },
-  async asyncData({ route, error, query }) {
+  async asyncData({ route, error, query, $axios }) {
     let page = "";
     if (!!!Object.keys(query).length) {
       page = "?page=0";
     } else if (!!Object.keys(query).length && !!!query.page) {
       page = "&page=0";
+    } else {
+      page = `?page=${query.page}`
     }
-    const itemsPromise = getItems(route.path).catch(() => {
+    const itemsPromise = $axios.get(`/v3/${route.path}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const cocktailsFullPromise = getCocktails(
-      `/goods=${route.params.id}${page}`
-    ).catch(() => {
+    const cocktailsFullPromise = $axios.get(`/v2/filter/goods=${route.params.id}${page}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
@@ -49,15 +48,16 @@ export default {
     async updateCocktails(payload) {
       // this.startLoading()
       let items = [...this.cocktailsFull.cocktails];
-      let queryParams = "?";
-      if (this.$nuxt.$route.query && !this.$nuxt.$route.query.page) {
-        queryParams = "?page=0";
+      
+      let page = "";
+      if (!!!Object.keys(this.$nuxt.$route.query).length) {
+        page = "?page=0";
+      } else if (!!Object.keys(this.$nuxt.$route.query).length && !!!this.$nuxt.$route.query.page) {
+        page = "&page=0";
+      } else {
+        page = `?page=${this.$nuxt.$route.query.page}`
       }
-      for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-        queryParams = `${queryParams}&${key}=${value}`;
-      }
-      queryParams = `${queryParams}&goods=${this.$nuxt.$route.params.id}`;
-      const cocktails = await getCocktails(queryParams);
+      const cocktails = await this.$axios.get(`/v2/filter/goods=${this.$nuxt.$route.params.id}${page}`);
       this.cocktailsFull = { ...cocktails.data };
       if (payload?.loadMore) {
         this.cocktailsFull.cocktails = [

@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import { getCocktailsShort } from "~~/api";
 export default {
   name: "FieldSearch",
   data: () => ({
@@ -59,7 +58,7 @@ export default {
   }),
 
   async fetch() {
-    this.listSearch = await getCocktailsShort().then((res) => res.data);
+    this.listSearch = await this.$axios.get(`/cocktails/all`).then((res) => res.data);
   },
 
   methods: {

@@ -94,9 +94,9 @@
 </template>
 
 <script>
-import Rating from "~~/components/cocktails/Rating.vue";
-import IconBtn from "~/components/dump/UI/buttons/IconBtn.vue";
-import CocktailComponents from "~~/components/cocktails/CocktailComponents.vue";
+import Rating from "~~/components/cocktails/Rating";
+import IconBtn from "~/components/dump/UI/buttons/IconBtn";
+import CocktailComponents from "~~/components/cocktails/CocktailComponents";
 
 export default {
   name: "CocktailPage",

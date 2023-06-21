@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import CocktailsList from "~~/components/dump/CocktailsList.vue";
-import FilterList from "~~/components/cocktails/FilterList.vue";
-import Pagination from "~~/components/dump/Pagination.vue";
-import Sorting from "~~/components/cocktails/Sorting.vue";
+import CocktailsList from "~~/components/dump/CocktailsList";
+import FilterList from "~~/components/cocktails/FilterList";
+import Pagination from "~~/components/dump/Pagination";
+import Sorting from "~~/components/cocktails/Sorting";
 export default {
   components: { FilterList, Pagination, CocktailsList, Sorting },
   name: "CocktailsPage",

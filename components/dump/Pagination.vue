@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import IconBtn from "~~/components/dump/UI/buttons/IconBtn.vue";
-import TextBtn from "~~/components/dump/UI/buttons/TextBtn.vue";
+import IconBtn from "~~/components/dump/UI/buttons/IconBtn";
+import TextBtn from "~~/components/dump/UI/buttons/TextBtn";
 export default {
   components: { IconBtn, TextBtn },
   name: "Pagination",

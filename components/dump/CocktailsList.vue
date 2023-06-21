@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CocktailsCart from "~~/components/dump/CocktailsCart.vue";
+import CocktailsCart from "~~/components/dump/CocktailsCart";
 export default {
   name: "CocktailsList",
   components: { CocktailsCart },

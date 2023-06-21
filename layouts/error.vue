@@ -2,7 +2,7 @@
   <Error404 :error="error" />
 </template>
 <script>
-import Error404 from '~~/components/error/404.vue'
+import Error404 from '~~/components/error/404'
 export default {
   components: {
     Error404

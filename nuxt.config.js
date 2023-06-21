@@ -64,13 +64,14 @@ module.exports = {
   },
   loading: { color: "#fc6d1d" },
 
-  css: ["~~assets/css/index.css"],
-
-  plugins: [],
+  css: ["~~/assets/css/index.css"],
 
   components: true,
 
   modules: ["@nuxtjs/axios", "@nuxtjs/style-resources", "@nuxtjs/sitemap"],
+
+  plugins: ["~~/plugins/axios"],
+  
   styleResources: {
     scss: [
       "~~/assets/scss/variables.scss",

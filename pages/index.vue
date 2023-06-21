@@ -9,29 +9,26 @@
 </template>
 
 <script>
-import CocktailsPage from "~~/components/cocktails/CocktailsPage.vue";
-import { getCocktails, getAllFilters } from "~~/api";
+import CocktailsPage from "~~/components/cocktails/CocktailsPage";
 export default {
   scrollToTop: false,
   components: {
     CocktailsPage,
   },
-  async asyncData({ query, error, route }) {
+  async asyncData({ query, error, route, $axios }) {
     let page = "";
     if (!!!Object.keys(query).length) {
       page = "?page=0";
     } else if (!!Object.keys(query).length && !!!query.page) {
       page = "&page=0";
     }
-    const cocktailsFullPromise = getCocktails(
-      route.fullPath.slice(1) + page
-    ).catch(() => {
+    const cocktailsFullPromise = $axios.get(`/v2/filter${route.fullPath.slice(1) + page}`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
       });
     });
-    const allFiltersPromise = getAllFilters().catch(() => {
+    const allFiltersPromise = $axios.get(`/v2/filters`).catch(() => {
       return error({
         statusCode: 404,
         message: "This page could not be found",
@@ -65,9 +62,7 @@ export default {
         page = "&page=0";
       }
       let items = [...this.cocktailsFull.cocktails];
-      const cocktails = await getCocktails(
-        this.$nuxt.$route.fullPath.slice(1) + page
-      );
+      const cocktails = await this.$axios.get(`/v2/filter${this.$nuxt.$route.fullPath.slice(1) + page}`);
       this.cocktailsFull = { ...cocktails.data };
       if (payload?.loadMore) {
         this.cocktailsFull.cocktails = [

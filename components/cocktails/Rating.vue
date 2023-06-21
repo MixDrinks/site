@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import { updateRating } from "~~/api";
 export default {
   name: "Rating",
   data: () => ({
@@ -79,7 +78,7 @@ export default {
   },
   methods: {
     setRating(value) {
-      updateRating(this.curentPage, value);
+      this.$axios.post(`/v2/cocktails/score?id=${this.curentPage}`, { value: value })
       localStorage.setItem("ratinglist", [...this.ratinglist, this.curentPage]);
       if (this.curentRatingValue) {
         this.curentRatingValue = Number(
@@ -125,7 +124,7 @@ export default {
     }
     if (localStorage.getItem("ratinglist"))
       this.ratinglist = localStorage.getItem("ratinglist").split(",");
-    this.isRatingBeenSet = this.ratinglist.includes(this.curentPage);
+    this.isRatingBeenSet = this.ratinglist.includes(this.curentPage.toString());
   },
 };
 </script>

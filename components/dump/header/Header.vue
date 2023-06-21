@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Logo from "~~/components/dump/Logo.vue";
-import FieldSearch from "~~/components/dump/UI/FieldSearch.vue";
+import Logo from "~~/components/dump/Logo";
+import FieldSearch from "~~/components/dump/UI/FieldSearch";
 export default {
   components: { Logo, FieldSearch },
   name: "Header",
