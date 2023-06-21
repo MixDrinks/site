@@ -1,0 +1,45 @@
+// SCSS
+.login-form {
+  width: 300px; // can adjust to your need
+  max-width: 100%;
+  padding: $halfShortMargin;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #ffffff;
+  border-radius: 4px;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+}
+
+.input-field {
+  margin-bottom: $halfShortMargin;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+}
+
+.submit-button {
+  background-color: $colorHover;
+  border: none;
+  color: $colorWhite;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}

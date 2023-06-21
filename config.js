@@ -1,7 +1,7 @@
 export const MasterKeys = {
   dev: {
     baseUrl: "http://localhost:8080",
-    api: "https://whale-app-iz3av.ondigitalocean.app",
+    api: "http://localhost:8080",
     imagesUrl: "https://image.mixdrinks.org",
   },
   prod: {
