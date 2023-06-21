@@ -2,9 +2,8 @@
   <div class="pagination">
     <TextBtn
       class="pagination__load-more"
-      v-if="!!nextPage"
-      :isLink="!!nextPage"
-      :href="nextPage.link"
+      v-show="!!nextPage"
+      :href="!!nextPage ? nextPage.link : '/'"
       @click="updateCocktails({ loadMore: true })"
       rel="nofollow"
     >
@@ -21,7 +20,6 @@
           <TextBtn
             class="pagination-controls-list-item__link"
             v-if="page.type === 'link'"
-            :isLink="!!page.link"
             :href="page.link"
           >
             {{ page.title }}
@@ -37,7 +35,6 @@
           direction="top"
           icon="/img/icons/arrow.svg"
           :lock="!!!prevPage"
-          :isLink="!!prevPage"
           :href="!!prevPage ? prevPage.link : '/'"
           @click.native="updateCocktails"
           rel="prev"
@@ -49,7 +46,6 @@
           direction="bottom"
           icon="/img/icons/arrow.svg"
           :lock="!!!nextPage"
-          :isLink="!!nextPage"
           :href="!!nextPage ? nextPage.link : '/'"
           @click.native="updateCocktails"
           rel="next"
