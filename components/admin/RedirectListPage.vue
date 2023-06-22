@@ -1,34 +1,29 @@
 <template>
   <div>
     <h1>Redirect page</h1>
+    <div id="app">
+      <div class="grid-container">
+        <div class="grid-item" v-for="item in redirectList" :key="item.to">
+          <p>{{ item.to }} - {{ item.from }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import * as $store from "~/store/auth";
 
 export default {
-  async asyncData({error, $axios}) {
-    const {username, password} = $store.state.auth
-    await $axios.get('/admin-api/redirects', {
-      auth: {
-        username: username,
-        password: password
-      }
-    })
-        .then((response) => {
-          console.log(response.data)
-          const items = response.data
-          return { items }
-        })
-        .catch((error) => {
-          console.log(error)
-          return { items: [] }
-        });
-  }
+  name: "RedirectListPage",
+  props: {
+    redirectList: {
+      type: Array,
+      required: true,
+    },
+  },
 }
 </script>
 
 <style scoped lang="scss">
-
+@import "./styles/redirect";
 </style>
