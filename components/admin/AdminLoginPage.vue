@@ -1,32 +1,32 @@
 <template>
-  <div class="login-form">
-    <form @submit.prevent="login">
-      <div class="input-field">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required>
-      </div>
-      <div class="input-field">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required>
-      </div>
-      <div class="submit-button">
-        <button type="submit">Login</button>
-      </div>
+  <div class="login">
+    <form @submit.prevent="login" class="login__form login-form">
+      <label class="input login-form__input">
+        <span class="input__label">Username:</span>
+        <input class="input__field" type="text" v-model="username" required>
+      </label>
+
+      <label class="input login-form__input">
+        <span class="input__label">Password:</span>
+        <input class="input__field" type="text" v-model="password" required>
+      </label>
+
+      <button class="submit login-form__submit" type="submit">Login</button>
     </form>
   </div>
 </template>
 <script>
 
 export default {
-  data() {
+  data: () => {
     return {
       username: '',
       password: '',
     }
   },
   methods: {
-    async login() {
-      await this.$axios.$get('admin-api/admin', {
+    login() {
+      this.$axios.$get('admin-api/admin', {
         auth: {
           username: this.username,
           password: this.password

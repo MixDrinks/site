@@ -1,12 +1,12 @@
 <template>
   <main class="wrapper">
-    <AdminLoginPage></AdminLoginPage>
+    <AdminLoginPage/>
   </main>
 </template>
 
 <script>
 
-import AdminLoginPage from "~/components/admin/AdminLoginPage.vue";
+import AdminLoginPage from '~/components/admin/AdminLoginPage'
 
 export default {
   components: {
