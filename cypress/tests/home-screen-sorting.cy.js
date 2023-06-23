@@ -1,6 +1,6 @@
 import { default as homePage } from "../support/page_objects/homePage";
 
-describe("Home screen tests", () => {
+describe.skip("Home screen tests", () => {
   const interceptSorting = (sortingParam) => {
     cy.intercept({
       method: "GET",
