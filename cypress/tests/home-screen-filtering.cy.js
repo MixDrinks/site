@@ -23,8 +23,6 @@ describe("Home screen tests", () => {
     cy.get(homePage.vertical.selector.filters.lowalcohol).click()
     // checking that proper tag is shown
     cy.get(homePage.vertical.selector.filters.lowalcoholTag).should('be.visible')
-    // applying the low alcohol filter again because when it clicked programatically the request is not sent
-    cy.get(homePage.vertical.selector.filters.lowalcohol).click()
 
     cy.wait("@sortingApplied").its('response.body').then( (body) => {
       const cocktails = body.cocktails
