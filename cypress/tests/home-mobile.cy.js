@@ -12,7 +12,7 @@ describe("Home screen elements on the different screen resolutions", () => {
     it("can view the cocktails list and open the detailed cocktail screen", () => {
       cy.intercept({
           method: "GET",
-          url: "/v2/cocktails/full*",
+          url: "/v2/cocktail/*",
         }).as("cocktail");
       cy.request({
         method: 'GET',
@@ -41,11 +41,11 @@ describe("Home screen elements on the different screen resolutions", () => {
             const itemText = listItem.text()
             expect(itemText).to.equal(receipt[listItem.index()])
           })
-          cy.get(cocktailPage.vertical.selector.component).find('[data-cy="ingredient"]').each(listItem => {
+          cy.get(cocktailPage.vertical.selector.component).each(listItem => {
             const itemText = listItem.text()
             expect(itemText).contains(goods[listItem.index()].name)
           })
-          cy.get(cocktailPage.vertical.selector.tools).find('[data-cy="ingredient"]').each(listItem => {
+          cy.get(cocktailPage.vertical.selector.tools).each(listItem => {
             const itemText = listItem.text()
             expect(itemText).contains(tools[listItem.index()].name)
           })
