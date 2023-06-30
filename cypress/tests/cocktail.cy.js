@@ -9,10 +9,14 @@ describe("A cocktail's screen tests", () => {
       method: "GET",
       url: "/v2/cocktail/*",
     }).as("cocktail");
-    cy.get(".cocktails-body__list")
-      .find(".list__item")
-      .eq(0)
-      .click()
+
+    cy.get('[data-cy="cocktailCard"]')
+      .should('be.visible')
+      .should('have.length.gt', 3)
+      .then((cocktails) => {
+        const cocktailsArray = cocktails.toArray()
+        cy.wrap(Cypress._.sample(cocktailsArray)).click()
+      })
 
     cy.wait('@cocktail').then(({ response: {body: cocktail}}) => {
       cy.get(cocktailPage.title).should('contain', cocktail.name)
