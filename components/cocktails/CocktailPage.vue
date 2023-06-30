@@ -82,12 +82,14 @@
         class="cocktail-body__goods"
         :title="`Склад коктейлю ${cocktail.name}`"
         :components="cocktail.goods"
+        cyAttribute="goods"
         withCounter
       />
       <CocktailComponents
         class="cocktail-body__tools"
         :title="`Потрібні штучки для приготування ${cocktail.name}`"
         :components="cocktail.tools"
+        cyAttribute="tools"
       />
     </div>
   </div>
