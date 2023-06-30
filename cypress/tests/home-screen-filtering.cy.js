@@ -15,23 +15,22 @@ describe("Home screen tests", () => {
     interceptFiltering("alcohol-volume=slaboalkoholni")
 
     let firstItemName
-    cy.get(homePage.vertical.selector.cocktailCard).find(".cart__name").first().invoke('text').then((itemTitle) => {
+    cy.get(homePage.cocktailCard).find(".cart__name").first().invoke('text').then((itemTitle) => {
       firstItemName = itemTitle
     })
 
     // applying the low alcohol filter
-    cy.get(homePage.vertical.selector.filters.lowalcohol).click()
+    cy.get(homePage.filters.lowalcohol).click()
     // checking that proper tag is shown
-    cy.get(homePage.vertical.selector.filters.lowalcoholTag).should('be.visible')
+    cy.get(homePage.filters.lowalcoholTag).should('be.visible')
 
-    cy.wait("@sortingApplied").its('response.body').then( (body) => {
-      const cocktails = body.cocktails
-      cy.get(homePage.vertical.selector.cocktailCard).each(item => {
+    cy.wait("@sortingApplied").then(({ response: {body: {cocktails: cocktails}}}) => {
+      cy.get(homePage.cocktailCard).each(item => {
         const itemText = item.text().trim()
         expect(itemText).to.contain(cocktails[item.index()].name)
       })
       // checking that the first element name is changed after applying filters
-      cy.get(homePage.vertical.selector.cocktailCard).find(".cart__name").first().should('not.contain', firstItemName)
+      cy.get(homePage.cocktailCard).find(".cart__name").first().should('not.contain', firstItemName)
     });
   });
 });

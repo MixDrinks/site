@@ -14,26 +14,20 @@ describe("A cocktail's screen tests", () => {
       .eq(0)
       .click()
 
-    cy.wait('@cocktail').then( cocktail => {
-      const details = cocktail.response.body;
-      const receipt = details.receipt
-      const goods = details.goods
-      const tools = details.tools
-
-      cy.get(cocktailPage.vertical.selector.title).should('contain', details.name)
-      cy.get(cocktailPage.vertical.selector.recipeItem).each(listItem => {
+    cy.wait('@cocktail').then(({ response: {body: cocktail}}) => {
+      cy.get(cocktailPage.title).should('contain', cocktail.name)
+      cy.get(cocktailPage.recipeItem).each(listItem => {
         const itemText = listItem.text()
-        expect(itemText).to.equal(receipt[listItem.index()])
+        expect(itemText).to.equal(cocktail.receipt[listItem.index()])
       })
-      cy.get(cocktailPage.vertical.selector.component).each(listItem => {
+      cy.get(cocktailPage.component).each(listItem => {
         const itemText = listItem.text()
-        expect(itemText).contains(goods[listItem.index()].name)
+        expect(itemText).contains(cocktail.goods[listItem.index()].name)
       })
-      cy.get(cocktailPage.vertical.selector.tools).each(listItem => {
+      cy.get(cocktailPage.tools).each(listItem => {
         const itemText = listItem.text()
-        expect(itemText).contains(tools[listItem.index()].name)
+        expect(itemText).contains(cocktail.tools[listItem.index()].name)
       })
     })
-
   })
 });
