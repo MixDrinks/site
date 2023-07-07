@@ -28,7 +28,10 @@ describe("Home screen elements on the different screen resolutions", () => {
           const itemText = item.text().trim()
           expect(itemText).to.contain(cocktails[item.index()].name)
         })
-        cy.get(homePage.cocktailCard).eq(5).click()
+        cy.get(homePage.cocktailCard).then((cocktails) => {
+          const cocktailsArray = cocktails.toArray()
+          cy.wrap(Cypress._.sample(cocktailsArray)).click()
+        })
 
         cy.wait('@cocktail').then(({ response: {body: cocktail}}) => {
 
