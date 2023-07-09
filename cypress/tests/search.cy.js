@@ -7,7 +7,7 @@ describe("search cocktail tests", () => {
 
     it('search from home screen', () => {
         let searchSuggestion;
-        // cy.get(homePage.search).type('м')
+        cy.get(homePage.search).type('м')
         cy.get(homePage.searchSuggestions).first().then((searchSug) => {
             searchSuggestion = searchSug.text().trim()
             console.log(searchSuggestion)
