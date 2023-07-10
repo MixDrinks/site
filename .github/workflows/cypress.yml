@@ -22,6 +22,6 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
-          GITHUB_REF_NAME: true
+          GITHUB_HEAD_REF: ${{github.head_ref}}
+          GITHUB_REF: ${{github.ref}}
           
