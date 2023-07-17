@@ -1,6 +1,6 @@
 import { default as homePage } from "../support/page_objects/homePage";
 
-describe.skip("Home screen tests", () => {
+describe("Home screen tests", () => {
   const interceptSorting = (sortingParam) => {
     cy.intercept({
       method: "GET",
@@ -17,6 +17,7 @@ describe.skip("Home screen tests", () => {
     cy.get(homePage.sorting.byRate).click();
     cy.get(homePage.sorting.byRate).click();
     cy.wait("@sortingApplied").then(({ response: {body: {cocktails: cocktails}}}) => {
+      cy.wait(1000)
         cy.get(homePage.cocktailCard).each((item) => {
           const itemText = item.text().trim();
           expect(itemText).to.contain(cocktails[item.index()].name);
