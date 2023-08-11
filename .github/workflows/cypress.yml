@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: '14'
       - name: Run Tests
+        id: run_tests
         uses: cypress-io/github-action@v5
         with:
           build: npm run build
@@ -24,4 +25,27 @@ jobs:
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
-          
+      - name: send telegram message after tests run failure
+        if: ${{ failure()}}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            🏮🏮🏮 *Cypress Tests FAILED* 🏮🏮🏮
+            *Branch:* ${{ github.ref }}
+            *Repository:* ${{ github.repository }}
+            *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
+      - name: send telegram message after tests run success
+        if: ${{ success()}}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            ✅ *Cypress Tests PASSED* 🎉🎉🎉
+            *Branch:* ${{ github.ref }}
+            *Repository:* ${{ github.repository }}
+            *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
