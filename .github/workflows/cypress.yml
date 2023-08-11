@@ -31,13 +31,14 @@ jobs:
     needs: [cypress-run]
     steps:
       - name: send telegram message after tests run
+        if: failure()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            *"Cypres Tests for MixDrinks web results"*
-            Branch: ${{ github.ref }}
-            Repository: ${{ github.repository }}
-            Results: https://cloud.cypress.io/projects/oxq4yv/runs
+            *Cypres Tests for MixDrinks web results*
+            *Branch:* ${{ github.ref }}
+            *Repository:* ${{ github.repository }}
+            *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
