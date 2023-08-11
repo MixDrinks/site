@@ -26,14 +26,14 @@ jobs:
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
       - name: send telegram message after tests run failure
-        #if: ${{ failure()}}
+        if: ${{ failure()}}
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            🔴🔴🔴 *Cypres Tests for MixDrinks FAILED*
+            🏮🏮🏮 *Cypres Tests for MixDrinks FAILED* 🏮🏮🏮
             *Branch:* ${{ github.ref }}
             *Repository:* ${{ github.repository }}
             *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
@@ -45,7 +45,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            🎉🎉🎉*Cypres Tests for MixDrinks Run successfully*
+            ✅ *Cypres Tests for MixDrinks Run successfully* 🎉🎉🎉
             *Branch:* ${{ github.ref }}
             *Repository:* ${{ github.repository }}
             *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
