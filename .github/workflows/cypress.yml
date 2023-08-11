@@ -26,6 +26,7 @@ jobs:
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
   telegram-post-message:
+    if: ${{ always() }}
     runs-on: ubuntu-22.04
     needs: [cypress-run]
     steps:
