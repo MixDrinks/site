@@ -24,10 +24,15 @@ jobs:
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
-upload:
-  stage: deploy
-  image: alpine:latest
-  script:
-    - 'apk --no-cache add curl'
-    - 'curl -X POST -H "Content-Type: application/json" -d "{\"chat_id\": \"-954881081\", \"text\": \"CI: new version was uploaded, see: https://preview.startup.com\"}" https://api.telegram.org/bot6497644433:AAE3bv9htiZeIClzS8Bpya3Ok_5n7QiuWi4/sendMessage '
-           
+      - name: send telegram message after tests run
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
