@@ -26,10 +26,10 @@ jobs:
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
   telegram-post-message:
-    if: ${{ failure() && jobs.cypress-run.steps.run_tests.conclusion == 'failure' }}
     runs-on: ubuntu-22.04
     steps:
       - name: send telegram message after tests run
+        if: failure() && steps.run_tests.outcome != 'success'
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
