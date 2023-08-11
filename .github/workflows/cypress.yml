@@ -27,6 +27,7 @@ jobs:
           GITHUB_REF: ${{github.ref}}
   telegram-post-message:
     runs-on: ubuntu-22.04
+    needs: [cypress-run]
     steps:
       - name: send telegram message after tests run
         if: failure() && steps.run_tests.outcome != 'success'
