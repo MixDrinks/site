@@ -45,7 +45,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            :white_check_mark: *Cypres Tests for MixDrinks Run successfully :white_check_mark:*
+            :white_check_mark: *Cypres Tests for MixDrinks Run successfully `:white_check_mark:`*
             *Branch:* ${{ github.ref }}
             *Repository:* ${{ github.repository }}
             *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
