@@ -26,13 +26,14 @@ jobs:
           GITHUB_REF: ${{github.ref}}
       - name: send telegram message after tests run
         uses: appleboy/telegram-action@master
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-            
-            Repository: ${{ github.repository }}
-            
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            *Cypres Tests results*
+            Application: MixDrinks          
+            Branch: *${{ github.ref }}*
+            Repository: *${{ github.repository }}*
+            Owner: *${{ github.repository_owner }}*
+            Results: https://cloud.cypress.io/organizations/dfa8a8f7-f5ab-49af-aad0-a5d3b64f89c9/projects
