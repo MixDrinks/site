@@ -26,9 +26,9 @@ jobs:
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
   telegram-post-message:
-    if: ${{ always() }}
     runs-on: ubuntu-22.04
     needs: [cypress-run]
+    if: needs.cypress-run.result == 'failure'
     steps:
       - name: send telegram message after tests run
         if: failure()
@@ -38,7 +38,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            *Cypres Tests for MixDrinks web results*
+            *@tanya_e Cypres Tests for MixDrinks web FAILED*
             *Branch:* ${{ github.ref }}
             *Repository:* ${{ github.repository }}
             *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
