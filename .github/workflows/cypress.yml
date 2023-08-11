@@ -26,7 +26,6 @@ jobs:
           GITHUB_REF: ${{github.ref}}
       - name: send telegram message after tests run
         uses: appleboy/telegram-action@master
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
