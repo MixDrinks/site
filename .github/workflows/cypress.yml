@@ -33,7 +33,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            :x: *Cypres Tests for MixDrinks FAILED*
+            :x: *@tanya\_e Cypres Tests for MixDrinks FAILED*
             *Branch:* ${{ github.ref }}
             *Repository:* ${{ github.repository }}
             *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
@@ -45,7 +45,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            :white_check_mark: *Cypres Tests for MixDrinks Run successfully*
+            :white\_check\_mark: *Cypres Tests for MixDrinks Run successfully*
             *Branch:* ${{ github.ref }}
             *Repository:* ${{ github.repository }}
             *Results:* https://cloud.cypress.io/projects/oxq4yv/runs
