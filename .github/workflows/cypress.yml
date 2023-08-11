@@ -31,7 +31,6 @@ jobs:
     if: needs.cypress-run.result == 'failure'
     steps:
       - name: send telegram message after tests run
-        if: failure()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
