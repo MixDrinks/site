@@ -19,7 +19,7 @@ describe("A cocktail's screen tests", () => {
       })
 
     cy.wait('@cocktail').then(({ response: {body: cocktail}}) => {
-      cy.get(cocktailPage.title).should('not.contain', cocktail.name)
+      cy.get(cocktailPage.title).should('contain', cocktail.name)
       cy.get(cocktailPage.recipeItem).each(listItem => {
         const itemText = listItem.text()
         expect(itemText).to.equal(cocktail.receipt[listItem.index()])
