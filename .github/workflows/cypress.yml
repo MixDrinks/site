@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: '14'
       - name: Run Tests
+        id: run_tests
         uses: cypress-io/github-action@v5
         with:
           build: npm run build
@@ -24,16 +25,17 @@ jobs:
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
           GITHUB_HEAD_REF: ${{github.head_ref}}
           GITHUB_REF: ${{github.ref}}
-    telegram-post-message:
-      runs-on: ubuntu-22.04
-       steps:
-        - name: send telegram message after tests run
-            uses: appleboy/telegram-action@master
-            with:
-              to: ${{ secrets.TELEGRAM_CHAT_ID }}
-              token: ${{ secrets.TELEGRAM_TOKEN }}
-              message: |
-                *"Cypres Tests for MixDrinks web results"*
-                Branch: ${{ github.ref }}
-                Repository: ${{ github.repository }}
-                Results: https://cloud.cypress.io/projects/oxq4yv/runs
+  telegram-post-message:
+    if: ${{ failure() && cypress-run.steps.run_tests.conclusion == 'failure' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: send telegram message after tests run
+          uses: appleboy/telegram-action@master
+          with:
+            to: ${{ secrets.TELEGRAM_CHAT_ID }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            message: |
+              *"Cypres Tests for MixDrinks web results"*
+              Branch: ${{ github.ref }}
+              Repository: ${{ github.repository }}
+              Results: https://cloud.cypress.io/projects/oxq4yv/runs
