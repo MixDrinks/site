@@ -18,7 +18,7 @@
     "cypress:e2e": "start-test dev http-get://localhost:8080 cy:e2e"
   },
   "engines": {
-    "node": "14.16.0"
+    "node": "18.18.2"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
