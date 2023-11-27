@@ -7,6 +7,6 @@ export const MasterKeys = {
   prod: {
     baseUrl: "https://mixdrinks.org",
     api: "https://api.mixdrinks.org",
-    imagesUrl: "https://image.mixdrinks.org",
+    imagesUrl: "https://kanapaimage.ams3.digitaloceanspaces.com",
   },
 };
