@@ -32,7 +32,7 @@
     "serve": "^13.0.2"
   },
   "devDependencies": {
-    "css-loader": "^5.0.0",
+    "css-loader": "^6.0.0",
     "cypress": "^12.8.1",
     "cypress-multi-reporters": "^1.6.3",
     "junit-merge": "^2.0.0",
