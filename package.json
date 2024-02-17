@@ -25,7 +25,7 @@
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/style-resources": "1.2.1",
     "cross-env": "^7.0.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.15.8",
     "nvm": "^0.0.4",
     "sass-loader": "^10.1.1",
