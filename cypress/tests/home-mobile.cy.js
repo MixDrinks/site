@@ -16,7 +16,7 @@ describe("Home screen elements on the different screen resolutions", () => {
         }).as("cocktail");
       cy.request({
         method: 'GET',
-        url: 'https://whale-app-iz3av.ondigitalocean.app/v2/filter?page=0',
+        url: 'https://api.mixdrinks.org/v2/filter?page=0',
         headers: {
           'Content-Type': 'application/json'
         }
