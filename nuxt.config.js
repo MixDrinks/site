@@ -73,10 +73,19 @@ module.exports = {
 
   components: true,
 
-  modules: ["@nuxtjs/axios", "@nuxtjs/style-resources", "@nuxtjs/sitemap"],
+  modules: [
+    "@nuxtjs/axios",
+    "@nuxtjs/style-resources",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/google-analytics"
+  ],
+
+  googleAnalytics: {
+    id: "G-8DWKDM4NCR"
+  },
 
   plugins: ["~~/plugins/axios"],
-  
+
   styleResources: {
     scss: [
       "~~/assets/scss/variables.scss",
