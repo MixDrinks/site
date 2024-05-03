@@ -5,20 +5,17 @@ on:
     branches:
       - '*'
 
-env:
-  BRANCH_NAME: ${ ${{ github.ref }} ##*/ }
-
 jobs:
   branch_build:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract branch name
-        run: echo "Branch name is $BRANCH_NAME"
-        env:
-          GITHUB_REF: ${{ github.ref }}
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Extract branch name
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+        env:
+          GITHUB_REF: ${{ github.ref }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -33,4 +30,4 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/mixdrinks-web:${{env.BRANCH_NAME}}
+            ${{ secrets.DOCKERHUB_USERNAME }}/mixdrinks-web:${{ env.BRANCH_NAME }}
