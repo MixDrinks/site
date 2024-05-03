@@ -5,12 +5,15 @@ on:
     branches:
       - '*'
 
+env:
+  BRANCH_NAME: ${{ github.ref##*/ }}
+
 jobs:
   branch_build:
     runs-on: ubuntu-latest
     steps:
       - name: Extract branch name
-        run: echo "The branch name is ${GITHUB_REF##*/}"
+        run: echo "Branch name is $BRANCH_NAME"
         env:
           GITHUB_REF: ${{ github.ref }}
       - uses: actions/checkout@v4
@@ -30,4 +33,4 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/mixdrinks-web:${${{ github.ref }}##*/}
+            ${{ secrets.DOCKERHUB_USERNAME }}/mixdrinks-web:${{env.BRANCH_NAME}}
