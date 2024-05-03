@@ -1,4 +1,4 @@
-name: Prod deploy
+name: Branch build
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/mixdrinks-web:${{ github.ref }
+            ${{ secrets.DOCKERHUB_USERNAME }}/mixdrinks-web:${{ github.ref }}
