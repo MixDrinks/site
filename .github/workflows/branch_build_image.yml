@@ -9,8 +9,10 @@ jobs:
   prod_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Print the branch name
-        run: echo ${{ github.base_ref }}
+      - name: Extract branch name
+        run: echo "The branch name is ${GITHUB_REF##*/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
