@@ -14,6 +14,24 @@ export default {
     Footer,
     Header
   },
+  head() {
+    return {
+      script: [
+        {
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-8DWKDM4NCR',
+          async: true
+        },
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8DWKDM4NCR');
+          `
+        }
+      ]
+    };
+  }
 };
 </script>
 
