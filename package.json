@@ -35,7 +35,7 @@
         "postcss-loader": "^4.1.0",
         "postcss-url": "^10.1.1",
         "sass": "^1.76.0",
-        "sass-loader": "^10.5.2",
+        "sass-loader": "^14.0.0",
         "cypress": "^12.8.1",
         "cypress-multi-reporters": "^1.6.3",
         "junit-merge": "^2.0.0",
