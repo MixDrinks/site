@@ -76,8 +76,13 @@ module.exports = {
   modules: [
     "@nuxtjs/axios",
     "@nuxtjs/style-resources",
-    "@nuxtjs/sitemap"
+    "@nuxtjs/sitemap",
+    "@nuxtjs/google-analytics"
   ],
+
+  googleAnalytics: {
+    id: "G-8DWKDM4NCR"
+  },
 
   plugins: ["~~/plugins/axios"],
 
