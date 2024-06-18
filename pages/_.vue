@@ -1,130 +1,134 @@
 <template>
-  <main class="wrapper">
-    <CocktailsPage
-      :cocktailsFull="cocktailsFull"
-      :allFilters="allFilters"
-      @updateCocktails="updateCocktails"
-    />
-  </main>
+    <main class="wrapper">
+        <CocktailsPage
+            :cocktailsFull="cocktailsFull"
+            :allFilters="allFilters"
+            @updateCocktails="updateCocktails"
+        />
+    </main>
 </template>
 
 <script>
-import CocktailsPage from "~~/components/cocktails/CocktailsPage";
+import CocktailsPage from '~~/components/cocktails/CocktailsPage'
 export default {
-  scrollToTop: false,
-  components: {
-    CocktailsPage,
-  },
-  async asyncData({ query, error, route, $axios }) {
-    let page = "";
-    if (!!!Object.keys(query).length) {
-      page = "?page=0";
-    } else if (!!Object.keys(query).length && !!!query.page) {
-      page = "&page=0";
-    }
-    const cocktailsFullPromise = $axios.get(`/v2/filter${route.fullPath + page}`).catch(
-      () => {
-        return error({
-          statusCode: 404,
-          message: "This page could not be found",
-        });
-      }
-    );
-    const allFiltersPromise = $axios.get(`/v2/filters`).catch(() => {
-      return error({
-        statusCode: 404,
-        message: "This page could not be found",
-      });
-    });
-    const [cocktailsFull, allFilters] = await Promise.all([
-      cocktailsFullPromise,
-      allFiltersPromise,
-    ]);
-    return {
-      cocktailsFull: cocktailsFull.data,
-      allFilters: allFilters.data,
-    };
-  },
-  beforeMount() {
-    window.addEventListener("popstate", this.updateCocktails, false);
-  },
-  beforeDestroy() {
-    window.removeEventListener("popstate", this.updateCocktails, false);
-  },
-  methods: {
-    async updateCocktails(payload) {
-      // this.startLoading()
-      let page = "";
-      if (!!!Object.keys(this.$nuxt.$route.query).length) {
-        page = "?page=0";
-      } else if (
-        !!Object.keys(this.$nuxt.$route.query).length &&
-        !!!this.$nuxt.$route.query.page
-      ) {
-        page = "&page=0";
-      }
-      let items = [...this.cocktailsFull.cocktails];
-      const cocktails = await this.$axios(`/v2/filter${this.$nuxt.$route.fullPath + page}`);
-      this.cocktailsFull = { ...cocktails.data };
-      if (payload?.loadMore) {
-        this.cocktailsFull.cocktails = [
-          ...items,
-          ...this.cocktailsFull.cocktails,
-        ];
-      }
-      // this.endLoading()
+    scrollToTop: false,
+    components: {
+        CocktailsPage,
     },
-  },
-  computed: {
-    canonical() {
-      return process.env.baseUrl + this.$nuxt.$route.path;
-      
+    async asyncData({ query, error, route, $axios }) {
+        let page = ''
+        if (!!!Object.keys(query).length) {
+            page = '?page=0'
+        } else if (!!Object.keys(query).length && !!!query.page) {
+            page = '&page=0'
+        }
+        const cocktailsFullPromise = $axios
+            .get(`/v2/filter${route.fullPath + page}`)
+            .catch(() => {
+                return error({
+                    statusCode: 404,
+                    message: 'This page could not be found',
+                })
+            })
+        const allFiltersPromise = $axios.get(`/v2/filters`).catch(() => {
+            return error({
+                statusCode: 404,
+                message: 'This page could not be found',
+            })
+        })
+        const [cocktailsFull, allFilters] = await Promise.all([
+            cocktailsFullPromise,
+            allFiltersPromise,
+        ])
+        return {
+            cocktailsFull: cocktailsFull.data,
+            allFilters: allFilters.data,
+        }
     },
-    description() {
-      return this.cocktailsFull.descriptions ? this.cocktailsFull.descriptions : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
+    beforeMount() {
+        window.addEventListener('popstate', this.updateCocktails, false)
     },
-    indexPage() {
-      if (Object.entries(this.$nuxt.$route.query).length === 0) {
-        return "index, follow";
-      } else {
-        return "noindex, nofollow";
-      }
+    beforeDestroy() {
+        window.removeEventListener('popstate', this.updateCocktails, false)
     },
-  },
-  head() {
-    return {
-      title: "Колекція коктейлів 🍹 та рецептів до них в домашніх умовах",
-      link: [{ rel: "canonical", href: this.canonical }],
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.description,
+    methods: {
+        async updateCocktails(payload) {
+            // this.startLoading()
+            let page = ''
+            if (!!!Object.keys(this.$nuxt.$route.query).length) {
+                page = '?page=0'
+            } else if (
+                !!Object.keys(this.$nuxt.$route.query).length &&
+                !!!this.$nuxt.$route.query.page
+            ) {
+                page = '&page=0'
+            }
+            let items = [...this.cocktailsFull.cocktails]
+            const cocktails = await this.$axios(
+                `/v2/filter${this.$nuxt.$route.fullPath + page}`
+            )
+            this.cocktailsFull = { ...cocktails.data }
+            if (payload?.loadMore) {
+                this.cocktailsFull.cocktails = [
+                    ...items,
+                    ...this.cocktailsFull.cocktails,
+                ]
+            }
+            // this.endLoading()
         },
-        {
-          hid: "og:title",
-          name: "og:title",
-          content: "Колекція коктейлів 🍹 та рецептів до них в домашніх умовах",
+    },
+    computed: {
+        canonical() {
+            return process.env.baseUrl + this.$nuxt.$route.path
         },
-        {
-          hid: "og:description",
-          property: "og:description",
-          content: this.description,
+        description() {
+            return this.cocktailsFull.descriptions
+                ? this.cocktailsFull.descriptions
+                : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
         },
-        {
-          hid: "og:url",
-          property: "og:url",
-          content: `${this.canonical}`,
+        indexPage() {
+            if (Object.entries(this.$nuxt.$route.query).length === 0) {
+                return 'index, follow'
+            } else {
+                return 'noindex, nofollow'
+            }
         },
-        { name: "robots", content: this.indexPage },
-      ],
-    };
-  },
-};
+    },
+    head() {
+        return {
+            title: 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
+            link: [{ rel: 'canonical', href: this.canonical }],
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: this.description,
+                },
+                {
+                    hid: 'og:title',
+                    name: 'og:title',
+                    content:
+                        'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
+                },
+                {
+                    hid: 'og:description',
+                    property: 'og:description',
+                    content: this.description,
+                },
+                {
+                    hid: 'og:url',
+                    property: 'og:url',
+                    content: `${this.canonical}`,
+                },
+                { name: 'robots', content: this.indexPage },
+            ],
+        }
+    },
+}
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
-  @include defaultWrapper;
+    @include defaultWrapper;
 }
 </style>

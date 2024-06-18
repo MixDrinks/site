@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import CocktailsCart from "~~/components/dump/CocktailsCart";
+import CocktailsCart from '~~/components/dump/CocktailsCart';
 export default {
-  name: "CocktailsList",
+  name: 'CocktailsList',
   components: { CocktailsCart },
   props: {
     cocktails: {
@@ -26,5 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./styles/cocktails-list";
+@import './styles/cocktails-list';
 </style>
