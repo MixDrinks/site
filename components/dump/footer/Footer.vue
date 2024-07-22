@@ -23,12 +23,12 @@
                     >
                         Форма зворотного зв'язку
                     </a>
-                    <NuxtLink
+                    <!-- <NuxtLink
                         class="footer-content-communication-item__link"
                         to="/blog"
                     >
                         Блог
-                    </NuxtLink>
+                    </NuxtLink> -->
                 </div>
             </div>
             <div class="footer-content__about footer-content-about">
