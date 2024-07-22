@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CocktailPage from '~/components/cocktails/CocktailPage'
+import CocktailPage from '~~/components/cocktails/CocktailPage'
 export default {
     components: {
         CocktailPage,

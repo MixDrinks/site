@@ -45,9 +45,7 @@
                             rel="tag"
                             v-if="!!listItem.cocktailCount"
                             class="filter-list__item filter-list-item"
-                            :class="{
-                                'filter-list-item--active': listItem.active,
-                            }"
+                            :class="getLinkClasses(listItem)"
                             :to="listItem.url + query"
                         >
                             <span
@@ -120,6 +118,9 @@ export default {
         ...mapActions('filter', {
             toggleList: 'updateFiltersIsOpenList',
         }),
+        getLinkClasses(item) {
+            if (item.active) return 'filter-list-item--active'
+        },
     },
     computed: {
         ...mapGetters('filter', {

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import IconBtn from '~/components/dump/UI/buttons/IconBtn'
+import IconBtn from '~~/components/dump/UI/buttons/IconBtn'
 
 export default {
     name: 'CocktailComponents',

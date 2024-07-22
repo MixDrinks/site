@@ -11,9 +11,7 @@
             >
                 <NuxtLink
                     class="sorting-list-item__link"
-                    :class="{
-                        'sorting-list-item__link--active': sortItem.active,
-                    }"
+                    :class="getLinkClasses(sortItem)"
                     :to="sortItem.link"
                 >
                     {{ sortItem.name }}
@@ -30,6 +28,10 @@ export default {
     methods: {
         updateCocktails(payload) {
             this.$emit('updateCocktails', payload)
+        },
+
+        getLinkClasses(item) {
+            if (item.active) return 'sorting-list-item__link--active'
         },
     },
     computed: {

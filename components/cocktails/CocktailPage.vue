@@ -101,7 +101,7 @@
 
 <script>
 import Rating from '~~/components/cocktails/Rating'
-import IconBtn from '~/components/dump/UI/buttons/IconBtn'
+import IconBtn from '~~/components/dump/UI/buttons/IconBtn'
 import CocktailComponents from '~~/components/cocktails/CocktailComponents'
 
 export default {
