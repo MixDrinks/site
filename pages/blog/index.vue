@@ -1,56 +1,45 @@
 <template>
     <main class="wrapper">
-        <ItemsPage
-            :cocktailsFull="cocktailsFull"
-            :items="items"
-            @updateCocktails="updateCocktails"
-        />
+        <BlogPage :postFull="postFull" @updateCocktails="updateCocktails" />
     </main>
 </template>
 
 <script>
-import ItemsPage from '~~/components/items/ItemsPage'
+import BlogPage from '~~/components/cocktails/BlogPage'
 export default {
+    scrollToTop: false,
     components: {
-        ItemsPage,
+        BlogPage,
     },
-    async asyncData({ route, error, query, $axios }) {
+    async asyncData({ query, error, route, $axios }) {
         let page = ''
         if (!!!Object.keys(query).length) {
             page = '?page=0'
         } else if (!!Object.keys(query).length && !!!query.page) {
             page = '&page=0'
-        } else {
-            page = `?page=${query.page}`
         }
-        const itemsPromise = $axios.get(`/v3/${route.path}`).catch(() => {
-            return error({
-                statusCode: 404,
-                message: 'This page could not be found',
-            })
-        })
-        const cocktailsFullPromise = $axios
-            .get(`/v2/filter/glassware=${route.params.id}${page}`)
+        const postFullPromise = $axios
+            .get(`/api/blog/post-list${page}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
                     message: 'This page could not be found',
                 })
             })
-        const [cocktailsFull, items] = await Promise.all([
-            cocktailsFullPromise,
-            itemsPromise,
-        ])
+        const [postFull] = await Promise.all([postFullPromise])
         return {
-            cocktailsFull: cocktailsFull.data,
-            items: items.data,
+            postFull: postFull.data,
         }
+    },
+    beforeMount() {
+        window.addEventListener('popstate', this.updateCocktails, false)
+    },
+    beforeDestroy() {
+        window.removeEventListener('popstate', this.updateCocktails, false)
     },
     methods: {
         async updateCocktails(payload) {
             // this.startLoading()
-            let items = [...this.cocktailsFull.cocktails]
-
             let page = ''
             if (!!!Object.keys(this.$nuxt.$route.query).length) {
                 page = '?page=0'
@@ -59,18 +48,12 @@ export default {
                 !!!this.$nuxt.$route.query.page
             ) {
                 page = '&page=0'
-            } else {
-                page = `?page=${this.$nuxt.$route.query.page}`
             }
-            const cocktails = await this.$axios.get(
-                `/v2/filter/glassware=${this.$nuxt.$route.params.id}${page}`
-            )
-            this.cocktailsFull = { ...cocktails.data }
+            let items = [...this.postFull.posts]
+            const post = await this.$axios.get(`/api/blog/post-list${page}`)
+            this.postFull = { ...posts.data }
             if (payload?.loadMore) {
-                this.cocktailsFull.cocktails = [
-                    ...items,
-                    ...this.cocktailsFull.cocktails,
-                ]
+                this.postFull.posts = [...items, ...this.postFull.posts]
             }
             // this.endLoading()
         },
@@ -89,23 +72,26 @@ export default {
     },
     head() {
         return {
-            title: `Дізнайся в яких коктейлях 🍸 використовується ${this.items.name}`,
+            title: 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
             link: [{ rel: 'canonical', href: this.canonical }],
             meta: [
                 {
                     hid: 'description',
                     name: 'description',
-                    content: `${this.items.name} використовується в представлених коктейлях 🍸 наведені рецепти та фото`,
+                    content:
+                        'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі',
                 },
                 {
                     hid: 'og:title',
                     name: 'og:title',
-                    content: `Дізнайся в яких коктейлях 🍸 використовується ${this.items.name}`,
+                    content:
+                        'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
                 },
                 {
                     hid: 'og:description',
                     property: 'og:description',
-                    content: `${this.items.name} використовується в представлених коктейлях 🍸 наведені рецепти та фото`,
+                    content:
+                        'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі',
                 },
                 {
                     hid: 'og:url',

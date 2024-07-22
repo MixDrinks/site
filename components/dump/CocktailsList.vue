@@ -1,30 +1,30 @@
 <template>
-  <div class="list">
-    <div
-      class="list__item list-item"
-      v-for="cocktail in cocktails"
-      :key="cocktail.id"
-      data-cy="cocktailCard"
-    >
-      <CocktailsCart :cocktail="cocktail" />
+    <div class="list">
+        <div
+            class="list__item list-item"
+            v-for="cocktail in cocktails"
+            :key="cocktail.id"
+            data-cy="cocktailCard"
+        >
+            <CocktailsCart :cocktail="cocktail" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import CocktailsCart from "~~/components/dump/CocktailsCart";
+import CocktailsCart from '~~/components/dump/CocktailsCart'
 export default {
-  name: "CocktailsList",
-  components: { CocktailsCart },
-  props: {
-    cocktails: {
-      type: Array,
-      required: true,
+    name: 'CocktailsList',
+    components: { CocktailsCart },
+    props: {
+        cocktails: {
+            type: Array,
+            required: true,
+        },
     },
-  },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "./styles/cocktails-list";
+@import './styles/cocktails-list';
 </style>
