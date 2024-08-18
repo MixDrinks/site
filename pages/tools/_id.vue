@@ -24,7 +24,9 @@ export default {
             page = `?page=${query.page}`
         }
 
-        const itemsPromise = $axios.get(`/v3/${route.path}`).catch(() => {
+        const itemsPromise = $axios
+          .get(`https://newapi.mixdrinks.org/api${route.path}`, {withCredentials: false})
+          .catch(() => {
             return error({
                 statusCode: 404,
                 message: 'This page could not be found',
