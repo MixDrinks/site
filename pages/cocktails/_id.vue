@@ -12,7 +12,7 @@ export default {
     },
     async asyncData({ route, error, $axios }) {
         const cocktail = await $axios
-            .get(`https://newapi.mixdrinks.org/api/cocktail/${route.params.id}`)
+            .get(`https://newapi.mixdrinks.org/api/cocktail/${route.params.id}`, {withCredentials: false})
             .catch(() => {
                 return error({
                     statusCode: 404,
