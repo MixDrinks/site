@@ -55,11 +55,11 @@ export default {
                     content: `${this.canonical}`,
                 },
                 { name: 'robots', content: 'index, follow' },
-            ],
+            ]
         }
     },
     mounted() {
-        this.$axios.post(`/v2/cocktails/visit?id=${this.cocktail.id}`)
+      this.$axios.post(`https://newapi.mixdrinks.org/api/cocktail/${this.cocktail.slug}/visit`, {withCredentials: true})
     },
 }
 </script>
