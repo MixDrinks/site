@@ -75,12 +75,19 @@ export default {
             type: Number,
             required: true,
         },
+        slug: {
+            type: String,
+            required: true,
+        },
     },
     methods: {
         setRating(value) {
-            this.$axios.post(`/v2/cocktails/score?id=${this.curentPage}`, {
-                value: value,
-            })
+            this.$axios.post(
+                `https://newapi.mixdrinks.org/api/cocktail/${this.slug}/score`,
+                {
+                    value: value,
+                }
+            )
             localStorage.setItem('ratinglist', [
                 ...this.ratinglist,
                 this.curentPage,

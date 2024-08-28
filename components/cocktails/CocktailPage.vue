@@ -18,6 +18,7 @@
                 </div>
                 <Rating
                     class="cocktail-header-user-info__rating"
+                    :slug="cocktail.slug"
                     :id="cocktail.id"
                     :ratingCount="cocktail.ratingCount"
                     :ratingValue="cocktail.rating"
