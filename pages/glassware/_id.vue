@@ -33,7 +33,7 @@ export default {
             })
         })
         const cocktailsFullPromise = $axios
-            .get(`/v2/filter/glassware=${route.params.id}${page}`)
+            .get(`https://newapi.mixdrinks.org/api/filter/glassware=${route.params.id}${page}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
