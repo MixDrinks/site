@@ -33,7 +33,7 @@ export default {
             })
         })
         const cocktailsFullPromise = $axios
-            .get(`/v2/filter/tools=${route.params.id}${page}`)
+            .get(`https://newapi.mixdrinks.org/api/filter/tools=${route.params.id}${page}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
@@ -66,7 +66,7 @@ export default {
                 page = `?page=${this.$nuxt.$route.query.page}`
             }
             const cocktails = await this.$axios.get(
-                `/v2/filter/tools=${this.$nuxt.$route.params.id}${page}`
+                `https://newapi.mixdrinks.org/api/filter/tools=${this.$nuxt.$route.params.id}${page}`
             )
             this.cocktailsFull = { ...cocktails.data }
             if (payload?.loadMore) {

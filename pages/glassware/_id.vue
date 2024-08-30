@@ -66,7 +66,7 @@ export default {
                 page = `?page=${this.$nuxt.$route.query.page}`
             }
             const cocktails = await this.$axios.get(
-                `/v2/filter/glassware=${this.$nuxt.$route.params.id}${page}`
+                `https://newapi.mixdrinks.org/api/filter/glassware=${this.$nuxt.$route.params.id}${page}`
             )
             this.cocktailsFull = { ...cocktails.data }
             if (payload?.loadMore) {
