@@ -24,7 +24,7 @@ export default {
         }
         const params = route.fullPath.slice(1) + page
         const cocktailsFullPromise = $axios
-            .get(`/v2/filter${params}`)
+            .get(`https://newapi.mixdrinks.org/api/filter/${params}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
@@ -66,7 +66,9 @@ export default {
             }
             let items = [...this.cocktailsFull.cocktails]
             const params = this.$nuxt.$route.fullPath.slice(1) + page
-            const cocktails = await this.$axios.get(`/v2/filter${params}`)
+            const cocktails = await this.$axios.get(
+                `https://newapi.mixdrinks.org/api/filter/${params}`
+            )
             this.cocktailsFull = { ...cocktails.data }
             if (payload?.loadMore) {
                 this.cocktailsFull.cocktails = [
