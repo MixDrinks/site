@@ -148,6 +148,18 @@
     }
   }
 
+  &__ads {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    @media (min-width: 1023px) {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
   &__goods {
     width: 100%;
     margin-bottom: $halfShortMargin;

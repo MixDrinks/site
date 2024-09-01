@@ -52,12 +52,23 @@
     width: 100%;
 
     border: 0;
-    padding: 20px 0 12px;
+    padding: 20px 40px 12px 0;
     box-shadow: inset 0px -2px 0px $colorWhite;
 
     @include fontSize18B;
 
     color: $colorWhite;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    background: url("/img/icons/search.svg");
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
   }
 }
 

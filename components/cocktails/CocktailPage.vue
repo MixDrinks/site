@@ -83,6 +83,24 @@
                     </li>
                 </ol>
             </div>
+            <div class="cocktail-body__ads">
+                <script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866"
+                    crossorigin="anonymous"
+                ></script>
+                <ins
+                    class="adsbygoogle"
+                    style="display: block"
+                    data-ad-format="fluid"
+                    data-ad-layout-key="-gh-4+1q-51+45"
+                    data-ad-client="ca-pub-9033785625371866"
+                    data-ad-slot="2682031593"
+                ></ins>
+                <script>
+                    ;(adsbygoogle = window.adsbygoogle || []).push({})
+                </script>
+            </div>
             <CocktailComponents
                 class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"

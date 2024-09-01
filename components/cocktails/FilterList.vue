@@ -130,6 +130,7 @@ export default {
                     const curentItem = this.futureCounts[filter.id].find(
                         (el) => el.id === item.id
                     )
+
                     item.url = `/${curentItem.query}`
                     item.cocktailCount = curentItem.count
                     item.active = curentItem.isActive

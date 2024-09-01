@@ -1,5 +1,4 @@
 .logo {
-  font-family: cursive;
   @include fontSize24B;
   color: $colorWhite;
 
@@ -13,5 +12,9 @@
     padding-top: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
+  }
+
+  &--highlight {
+    opacity: 0.6;
   }
 }

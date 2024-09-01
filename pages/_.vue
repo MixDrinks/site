@@ -22,8 +22,9 @@ export default {
         } else if (!!Object.keys(query).length && !!!query.page) {
             page = '&page=0'
         }
+        const params = route.fullPath.slice(1) + page
         const cocktailsFullPromise = $axios
-            .get(`/v2/filter${route.fullPath + page}`)
+            .get(`/v2/filter${params}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
@@ -64,9 +65,8 @@ export default {
                 page = '&page=0'
             }
             let items = [...this.cocktailsFull.cocktails]
-            const cocktails = await this.$axios(
-                `/v2/filter${this.$nuxt.$route.fullPath + page}`
-            )
+            const params = this.$nuxt.$route.fullPath.slice(1) + page
+            const cocktails = await this.$axios.get(`/v2/filter${params}`)
             this.cocktailsFull = { ...cocktails.data }
             if (payload?.loadMore) {
                 this.cocktailsFull.cocktails = [
