@@ -1,5 +1,6 @@
 .cocktail {
   &__tags {
+    @include scrollNone;
     margin-bottom: $halfShortMargin;
     margin-right: -40px;
     margin-left: -40px;
@@ -29,7 +30,6 @@
 }
 
 .cocktail-header-title {
-
   &__label {
     @include fontSize32B;
 

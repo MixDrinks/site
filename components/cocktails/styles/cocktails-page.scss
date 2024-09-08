@@ -31,11 +31,12 @@
   }
   
   &__title {
-    @include fontSize48B;
+    @include fontSize24B;
     margin-bottom: $halfShortMargin;
 
     @media (min-width: 1023px) {
       margin-bottom: unset;
+      @include fontSize48B;
     }
   }
 }
