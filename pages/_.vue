@@ -84,12 +84,17 @@ export default {
             return process.env.baseUrl + this.$nuxt.$route.path
         },
         description() {
-            return this.cocktailsFull.descriptions
-                ? this.cocktailsFull.descriptions
+            return this.cocktailsFull.description
+                ? `${this.cocktailsFull.description} 🍸 з фото та рецептами, оберий який подобаєтья тобі`
                 : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
         },
+        title() {
+            return this.cocktailsFull.description
+                ? `${this.cocktailsFull.description} 🍹 та рецепти до них в домашніх умовах`
+                : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
+        },
         indexPage() {
-            if (Object.entries(this.$nuxt.$route.query).length === 0) {
+            if (this.cocktailsFull.isAddToIndex) {
                 return 'index, follow'
             } else {
                 return 'noindex, nofollow'
@@ -98,7 +103,7 @@ export default {
     },
     head() {
         return {
-            title: 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
+            title: this.title,
             link: [{ rel: 'canonical', href: this.canonical }],
             meta: [
                 {
@@ -109,8 +114,7 @@ export default {
                 {
                     hid: 'og:title',
                     name: 'og:title',
-                    content:
-                        'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
+                    content: this.title,
                 },
                 {
                     hid: 'og:description',

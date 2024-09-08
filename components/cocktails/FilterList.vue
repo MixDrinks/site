@@ -43,8 +43,10 @@
                         :data-cy="`filterTag ${filterItem.id}`"
                     >
                         <NuxtLink
+                            :title="filterItem.name"
                             class="filters-tag-cloud-list-item__link"
                             :to="filterItem.url"
+                            :rel="getRel(filterItem.isAddToIndex)"
                         >
                             {{ filterItem.name }}
                         </NuxtLink>
@@ -117,6 +119,9 @@ export default {
             changeFilterIsOpen: 'changeMainIsOpen',
             updateScrollTop: 'updateScrollTop',
         }),
+        getRel(value) {
+            return value ? 'tag' : 'nofollow'
+        },
     },
     computed: {
         ...mapGetters('filter', {
@@ -134,6 +139,7 @@ export default {
                     item.url = `/${curentItem.query}`
                     item.cocktailCount = curentItem.count
                     item.active = curentItem.isActive
+                    item.isAddToIndex = curentItem.isAddToIndex
                 })
             })
             return arr

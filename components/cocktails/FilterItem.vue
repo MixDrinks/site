@@ -42,7 +42,7 @@
                     <div v-for="listItem in listSearch" :key="listItem.id">
                         <NuxtLink
                             :title="listItem.name"
-                            rel="tag"
+                            :rel="getRel(listItem.isAddToIndex)"
                             v-if="!!listItem.cocktailCount"
                             class="filter-list__item filter-list-item"
                             :class="getLinkClasses(listItem)"
@@ -120,6 +120,9 @@ export default {
         }),
         getLinkClasses(item) {
             if (item.active) return 'filter-list-item--active'
+        },
+        getRel(value) {
+            return value ? 'tag' : 'nofollow'
         },
     },
     computed: {

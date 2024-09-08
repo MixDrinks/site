@@ -1,7 +1,9 @@
 <template>
     <div class="cocktails">
         <div class="cocktails__header cocktails-header">
-            <h1 class="cocktails-header__title">Коктейлі</h1>
+            <h1 class="cocktails-header__title">
+                {{ title }}
+            </h1>
             <Sorting
                 class="cocktails-header__sorting"
                 @updateCocktails="updateCocktails"
@@ -80,6 +82,11 @@ export default {
         },
     },
     computed: {
+        title() {
+            return this.cocktailsFull.description
+                ? this.cocktailsFull.description
+                : 'Коктейлі'
+        },
         checkLength() {
             return this.cocktailsFull.cocktails.length > 12
         },

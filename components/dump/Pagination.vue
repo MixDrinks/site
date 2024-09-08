@@ -21,6 +21,7 @@
                         class="pagination-controls-list-item__link"
                         v-if="page.type === 'link'"
                         :href="page.link"
+                        rel="nofollow"
                     >
                         {{ page.title }}
                     </TextBtn>
