@@ -24,19 +24,21 @@ export default {
         }
         const params = route.fullPath.slice(1) + page
         const cocktailsFullPromise = $axios
-            .get(`https://newapi.mixdrinks.org/api/filter/${params}`)
+            .get(`/filter/${params}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
                     message: 'This page could not be found',
                 })
             })
-        const allFiltersPromise = $axios.get(`/v2/filters`).catch(() => {
-            return error({
-                statusCode: 404,
-                message: 'This page could not be found',
+        const allFiltersPromise = $axios
+            .get(`https://api.mixdrinks.org/v2/filters`)
+            .catch(() => {
+                return error({
+                    statusCode: 404,
+                    message: 'This page could not be found',
+                })
             })
-        })
         const [cocktailsFull, allFilters] = await Promise.all([
             cocktailsFullPromise,
             allFiltersPromise,
@@ -66,9 +68,7 @@ export default {
             }
             let items = [...this.cocktailsFull.cocktails]
             const params = this.$nuxt.$route.fullPath.slice(1) + page
-            const cocktails = await this.$axios.get(
-                `https://newapi.mixdrinks.org/api/filter/${params}`
-            )
+            const cocktails = await this.$axios.get(`/filter/${params}`)
             this.cocktailsFull = { ...cocktails.data }
             if (payload?.loadMore) {
                 this.cocktailsFull.cocktails = [

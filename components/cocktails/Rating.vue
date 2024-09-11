@@ -82,12 +82,9 @@ export default {
     },
     methods: {
         setRating(value) {
-            this.$axios.post(
-                `https://newapi.mixdrinks.org/api/cocktail/${this.slug}/score`,
-                {
-                    value: value,
-                }
-            )
+            this.$axios.post(`/cocktail/${this.slug}/score`, {
+                value: value,
+            })
             localStorage.setItem('ratinglist', [
                 ...this.ratinglist,
                 this.curentPage,

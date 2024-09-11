@@ -12,7 +12,7 @@ export default {
     },
     async asyncData({ route, error, $axios }) {
         const cocktail = await $axios
-            .get(`https://newapi.mixdrinks.org/api/cocktail/${route.params.id}`, {withCredentials: false})
+            .get(`/cocktail/${route.params.id}`, { withCredentials: false })
             .catch(() => {
                 return error({
                     statusCode: 404,
@@ -55,11 +55,13 @@ export default {
                     content: `${this.canonical}`,
                 },
                 { name: 'robots', content: 'index, follow' },
-            ]
+            ],
         }
     },
     mounted() {
-      this.$axios.post(`https://newapi.mixdrinks.org/api/cocktail/${this.cocktail.slug}/visit`, {withCredentials: true})
+        this.$axios.post(`/cocktail/${this.cocktail.slug}/visit`, {
+            withCredentials: true,
+        })
     },
 }
 </script>
