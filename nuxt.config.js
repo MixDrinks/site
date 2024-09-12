@@ -101,7 +101,7 @@ module.exports = {
       hostname: MasterKeys[isDev].baseUrl,
       routes: async () => {
         const { data } = await axios.get(
-          "https://api.mixdrinks.org/sitemap.xml"
+          "https://newapi.mixdrinks.org/api/sitemap"
         );
         return data;
       },

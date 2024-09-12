@@ -31,14 +31,12 @@ export default {
                     message: 'This page could not be found',
                 })
             })
-        const allFiltersPromise = $axios
-            .get(`https://api.mixdrinks.org/v2/filters`)
-            .catch(() => {
-                return error({
-                    statusCode: 404,
-                    message: 'This page could not be found',
-                })
+        const allFiltersPromise = $axios.get(`/filters`).catch(() => {
+            return error({
+                statusCode: 404,
+                message: 'This page could not be found',
             })
+        })
         const [cocktailsFull, allFilters] = await Promise.all([
             cocktailsFullPromise,
             allFiltersPromise,
