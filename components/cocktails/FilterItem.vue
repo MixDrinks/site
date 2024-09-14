@@ -15,10 +15,7 @@
             ></div>
         </div>
         <transition name="max-height">
-            <div
-                class="filter__wrapper"
-                v-if="!filtersIsOpenList.includes(filterItem.id)"
-            >
+            <div class="filter__wrapper" v-show="filterIsShow">
                 <div
                     class="filter__search filter-search"
                     v-if="filterItem.items.length > 6"
@@ -105,7 +102,6 @@ import { types } from '~~/utils/selectionType'
 export default {
     name: 'FilterItem',
     data: () => ({
-        isCloseFilter: [],
         searchValue: '',
     }),
     methods: {
@@ -128,6 +124,7 @@ export default {
     computed: {
         ...mapGetters('filter', {
             filtersIsOpenList: 'getFiltersIsOpenList',
+            filtersListIsSet: 'getFiltersListIsSet',
         }),
         types() {
             return types
@@ -146,6 +143,13 @@ export default {
                 }
             }
             return query
+        },
+        filterIsShow() {
+            if (this.filtersListIsSet) {
+                return !this.filtersIsOpenList.includes(this.filterItem.id)
+            } else {
+                return this.filterItem.isOpen
+            }
         },
         listSearch() {
             if (!!this.searchValue) {

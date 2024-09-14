@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import CocktailsList from '~~/components/dump/CocktailsList'
 import FilterList from '~~/components/cocktails/FilterList'
 import Pagination from '~~/components/dump/Pagination'
@@ -80,6 +81,9 @@ export default {
         updateCocktails(payload) {
             this.$emit('updateCocktails', payload)
         },
+        ...mapActions('filter', {
+            setOpenList: 'setFiltersIsOpenList',
+        }),
     },
     computed: {
         title() {
@@ -100,6 +104,9 @@ export default {
                 ? this.cocktailsFull.cocktails.slice(12)
                 : []
         },
+    },
+    beforeMount() {
+        this.setOpenList(this.allFilters)
     },
 }
 </script>

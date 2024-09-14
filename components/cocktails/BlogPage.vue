@@ -21,7 +21,7 @@
 import Pagination from '~~/components/dump/Pagination.vue'
 export default {
     components: { Pagination },
-    name: 'CocktailsPage',
+    name: 'BlogPage',
     props: {
         postFull: {
             type: Object,
