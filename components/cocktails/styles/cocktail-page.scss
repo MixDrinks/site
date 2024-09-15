@@ -175,10 +175,18 @@
       margin-bottom: $shortMargin;
     }
   }
+
+  &__article {
+    width: 100%;
+    margin-bottom: $halfShortMargin;
+
+    @media (min-width: 1023px) {
+      margin-bottom: $shortMargin;
+    }
+  }
 }
 
 .cocktail-body-recipe {
-
   &__title {
     margin-bottom: $halfShortMargin;
 
@@ -189,7 +197,6 @@
 }
 
 .cocktail-body-recipe-title {
-
   &__label {
     color: $colorBlack;
     @include fontSize24B;
@@ -239,5 +246,26 @@
 
   &__label {
     @include fontSize18M;
+  }
+}
+
+.cocktail-body-article {
+  &__title { 
+    color: $colorBlack;
+    @include fontSize24B;
+
+    margin-bottom: $halfShortMargin;
+
+    @media (min-width: 1023px) {
+      margin-bottom: $halfShortMargin;
+    }
+  }
+  &__chapters {
+  }
+}
+.cocktail-body-article-chapters {
+  &__text {
+    margin-bottom: $halfShortMargin;
+    @include fontSize16;
   }
 }

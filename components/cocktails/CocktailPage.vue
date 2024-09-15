@@ -114,6 +114,27 @@
                 :components="cocktail.tools"
                 cyAttribute="tools"
             />
+            <div
+                v-if="cocktail.article"
+                class="cocktail-body__article cocktail-body-article"
+            >
+                <h2 class="cocktail-body-article__title">
+                    Коктейль {{ cocktail.name }}: історія, рецепт та
+                    популярність
+                </h2>
+                <div
+                    v-if="cocktail.article.chapters"
+                    class="cocktail-body-article__chapters cocktail-body-article-chapters"
+                >
+                    <p
+                        v-for="(text, textIndex) in cocktail.article.chapters"
+                        :key="`cocktail-body-article-chapters__text-${textIndex}`"
+                        class="cocktail-body-article-chapters__text"
+                    >
+                        {{ text }}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
