@@ -60,29 +60,8 @@
   }
 
   &__btn {
-    pointer-events: all;
-    @include fontSize18B;
-    color: $colorWhite;
-    text-align: center;
-
-    padding: $halfPadding 10vw;
-
-    background-color: $colorMain;
-
     position: relative;
     z-index: 3;
-
-    transition: background-color $defaultAnimTime;
-
-    border-top: 1px solid $colorWhite;
-
-    &:hover {
-      background-color: $colorHover;
-    }
-
-    @media (min-width: 1023px) {
-      display: none;
-    }
   }
 
   &__background {
@@ -97,6 +76,35 @@
     @media (min-width: 1023px) {
       display: none;
     }
+  }
+}
+.filters-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  padding: $halfPadding 10vw;
+  background-color: $colorMain;
+  border-top: 1px solid $colorWhite;
+
+  @media (min-width: 1023px) {
+    display: none;
+  }
+
+  &__text {
+    @include fontSize18B;
+    color: $colorWhite;
+  }
+
+  &__count {
+    display: inline-block;
+    padding: 3px 8px 4px;
+    border-radius: 20px;
+    margin-left: 10px;
+    @include fontSize18B;
+    line-height: 1;
+    background-color: $colorWhite;
+    color: $colorMain;
   }
 }
 

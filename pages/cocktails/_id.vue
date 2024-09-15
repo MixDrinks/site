@@ -54,6 +54,11 @@ export default {
                     property: 'og:url',
                     content: `${this.canonical}`,
                 },
+                {
+                    hid: 'og:image',
+                    property: 'og:image',
+                    content: `${this.cocktail.meta.ogImage}`,
+                },
                 { name: 'robots', content: 'index, follow' },
             ],
         }

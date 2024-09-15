@@ -63,9 +63,16 @@
                 />
             </div>
         </div>
-        <div class="filters__btn" @click="changeFilterIsOpen">
-            <span v-if="isFilterOpen">Застосувати</span>
-            <span v-else>Фільтр</span>
+        <div class="filters__btn filters-btn" @click="changeFilterIsOpen">
+            <template v-if="isFilterOpen">
+                <span class="filters-btn__text">Застосувати</span>
+            </template>
+            <template v-else>
+                <span class="filters-btn__text">Фільтр</span>
+                <span v-if="activeFilter.length" class="filters-btn__count">
+                    {{ activeFilter.length }}
+                </span>
+            </template>
         </div>
         <transition name="opacity">
             <div

@@ -115,6 +115,11 @@ export default {
                     property: 'og:url',
                     content: `${this.canonical}`,
                 },
+                {
+                    hid: 'og:image',
+                    property: 'og:image',
+                    content: `${this.items.meta.ogImage}`,
+                },
                 { name: 'robots', content: this.indexPage },
             ],
         }
