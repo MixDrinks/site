@@ -158,25 +158,10 @@
     }
   }
 
-  &__goods {
-    width: 100%;
-    margin-bottom: $halfShortMargin;
-
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
-    }
-  }
-
-  &__tools {
-    width: 100%;
-    margin-bottom: $halfShortMargin;
-
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
-    }
-  }
-
-  &__article {
+  &__goods,
+  &__tools,
+  &__article,
+  &__recomendation  {
     width: 100%;
     margin-bottom: $halfShortMargin;
 

@@ -60,10 +60,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import CocktailsList from '~~/components/dump/CocktailsList'
-import FilterList from '~~/components/cocktails/FilterList'
-import Pagination from '~~/components/dump/Pagination'
-import Sorting from '~~/components/cocktails/Sorting'
+import CocktailsList from '../dump/CocktailsList.vue'
+import FilterList from './FilterList.vue'
+import Pagination from '../dump/Pagination.vue'
+import Sorting from './Sorting.vue'
 export default {
     components: { FilterList, Pagination, CocktailsList, Sorting },
     name: 'CocktailsPage',

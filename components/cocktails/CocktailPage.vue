@@ -1,6 +1,10 @@
 <template>
     <div class="cocktail">
-        <div class="cocktail__header cocktail-header">
+        <div
+            itemscope
+            itemtype="http://schema.org/Product"
+            class="cocktail__header cocktail-header"
+        >
             <h1
                 class="cocktail-header-title cocktail-header__title"
                 itemprop="name"
@@ -72,14 +76,20 @@
                     itemprop="recipeInstructions"
                 >
                     <li
+                        itemprop="step"
+                        itemscope
+                        itemtype="https://schema.org/HowToStep"
                         class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
                         data-cy="recipe_step"
                         v-for="recipeItem in cocktail.receipt"
                         :key="recipeItem"
                     >
-                        <span class="cocktail-body-recipe-list-item__label">{{
-                            recipeItem
-                        }}</span>
+                        <span
+                            itemprop="text"
+                            class="cocktail-body-recipe-list-item__label"
+                        >
+                            {{ recipeItem }}
+                        </span>
                     </li>
                 </ol>
             </div>
@@ -114,6 +124,11 @@
                 :components="cocktail.tools"
                 cyAttribute="tools"
             />
+            <CocktailRecomendation
+                v-if="cocktail.recomendationCocktails"
+                class="cocktail-body__recomendation"
+                :cocktails="cocktail.recomendationCocktails"
+            />
             <div
                 v-if="cocktail.article"
                 class="cocktail-body__article cocktail-body-article"
@@ -140,13 +155,14 @@
 </template>
 
 <script>
-import Rating from '~~/components/cocktails/Rating'
-import IconBtn from '~~/components/dump/UI/buttons/IconBtn'
-import CocktailComponents from '~~/components/cocktails/CocktailComponents'
+import Rating from './Rating.vue'
+import IconBtn from '../dump/UI/buttons/IconBtn.vue'
+import CocktailComponents from './CocktailComponents.vue'
+import CocktailRecomendation from './CocktailRecomendation.vue'
 
 export default {
     name: 'CocktailPage',
-    components: { IconBtn, Rating, CocktailComponents },
+    components: { IconBtn, Rating, CocktailComponents, CocktailRecomendation },
     props: {
         cocktail: {
             type: Object,
