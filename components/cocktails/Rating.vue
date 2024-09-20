@@ -1,10 +1,5 @@
 <template>
-    <div
-        class="rating"
-        itemprop="aggregateRating"
-        itemscope
-        itemtype="http://schema.org/AggregateRating"
-    >
+    <div class="rating">
         <div
             class="rating__wrapper rating-wrapper"
             @mouseleave="hoverItem = null"
@@ -30,18 +25,31 @@
                 </div>
             </div>
             <div
-                v-show="curentRatingValue"
-                class="rating-wrapper__value"
-                itemprop="ratingValue"
+                class="rating-wrapper__aggregate"
+                itemprop="aggregateRating"
+                itemscope
+                itemtype="http://schema.org/AggregateRating"
             >
-                {{ curentRatingValue }}
-            </div>
-            <div
-                v-show="curentRatingValue"
-                class="rating-wrapper__count"
-                itemprop="reviewCount"
-            >
-                {{ curentRatingCount }}
+                <span
+                    v-show="curentRatingValue"
+                    class="rating-wrapper__value"
+                    itemprop="ratingValue"
+                >
+                    {{ curentRatingValue }}
+                </span>
+                <span
+                    v-show="curentRatingValue"
+                    class="rating-wrapper__count"
+                    itemprop="reviewCount"
+                >
+                    {{ curentRatingCount }}
+                </span>
+                <span class="rating-wrapper__hidden" itemprop="bestRating"
+                    >5</span
+                >
+                <span class="rating-wrapper__hidden" itemprop="author"
+                    >mixdrinks</span
+                >
             </div>
         </div>
         <div class="rating__text" v-if="isRatingBeenSet">

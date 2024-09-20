@@ -78,6 +78,7 @@
     }
   }
 }
+
 .filters-btn {
   display: flex;
   align-items: center;
@@ -97,8 +98,12 @@
   }
 
   &__count {
-    display: inline-block;
-    padding: 3px 8px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 5px;
+    min-height: 25px;
+    min-width: 25px;
     border-radius: 20px;
     margin-left: 10px;
     @include fontSize18B;

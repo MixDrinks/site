@@ -1,87 +1,97 @@
 .rating {
-  &__wrapper {
-    &--lock {
-      pointer-events: none;
+    &__wrapper {
+        &--lock {
+            pointer-events: none;
+        }
     }
-  }
 
-  &__text {
-    @include fontSize14;
-    color: $colorBlack;
-  }
+    &__text {
+        @include fontSize14;
+        color: $colorBlack;
+    }
 }
 
 .rating-wrapper {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  &__stars {
-    margin-right: 12px;
-  }
+    &__stars {
+        margin-right: 12px;
+    }
 
-  &__value {
-    color: $colorMain;
-    @include fontSize16M;
-  }
+    &__value {
+        color: $colorMain;
+        @include fontSize16M;
+    }
 
-  &__count {
-    @include defaultCount;
-  }
+    &__count {
+        @include defaultCount;
+    }
+
+    &__aggregate {
+        display: flex;
+        align-items: center;
+    }
+
+    &__hidden {
+        position: absolute;
+        left: -99999px;
+    }
 }
 
 .rating-wrapper-stars {
-  $starItem: '.rating-wrapper-stars-item';
+    $starItem: '.rating-wrapper-stars-item';
 
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 
-  &__item {
-    width: 16px;
-    margin: 0 2px;
-    height: 16px;
-    position: relative;
-  }
-
-  &:not(:hover) {
-    #{$starItem}__start--full {
-      background-color: $colorRating;
+    &__item {
+        width: 16px;
+        margin: 0 2px;
+        height: 16px;
+        position: relative;
     }
-  }
+
+    &:not(:hover) {
+        #{$starItem}__start--full {
+            background-color: $colorRating;
+        }
+    }
 }
 
 .rating-wrapper-stars-item {
-  $self: &;
+    $self: &;
 
-  &--hover {
-    #{$self}__start--gray {
-      cursor: pointer;
-      background-color: rgba($colorRating, 0.8);
-      z-index: 3;
-    }
-  }
-
-  &__start {
-
-    &--full,
-    &--gray {
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      position: absolute;
-      mask-size: cover;
-      mask-image: url("/img/icons/star.svg");
-
-      transition: background-color $defaultAnimTime;
+    &--hover {
+        #{$self}__start--gray {
+            cursor: pointer;
+            background-color: rgba($colorRating, 0.8);
+            z-index: 3;
+        }
     }
 
-    &--full {
-      z-index: 2;
-    }
+    &__start {
 
-    &--gray {
-      z-index: 1;
-      background-color: rgba($colorBlack, 0.3);
+        &--full,
+        &--gray {
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            mask-size: cover;
+            mask-image: url("/img/icons/star.svg");
+
+            transition: background-color $defaultAnimTime;
+        }
+
+        &--full {
+            z-index: 2;
+        }
+
+        &--gray {
+            z-index: 1;
+            background-color: rgba($colorBlack, 0.3);
+        }
     }
-  }
 }
