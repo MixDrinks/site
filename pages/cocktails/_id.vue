@@ -38,7 +38,7 @@ export default {
             return this.cocktail.receipt
         },
         schemaRecipe() {
-            return JSON.stringify({
+            return {
                 '@context': 'https://schema.org',
                 '@type': 'Recipe',
                 name: this.cocktail.name,
@@ -54,7 +54,7 @@ export default {
                     ratingCount: this.cocktail.ratingCount,
                     bestRating: 5,
                 },
-            })
+            }
         },
     },
     head() {
@@ -92,7 +92,7 @@ export default {
             script: [
                 {
                     type: 'application/ld+json',
-                    innerHTML: this.schemaRecipe,
+                    json: this.schemaRecipe,
                 },
             ],
         }
