@@ -130,7 +130,7 @@ export default {
             return arr
         },
     },
-    beforeMount() {
+    mounted() {
         if (localStorage.getItem('ratinglist')) {
             this.ratinglist = [...localStorage.getItem('ratinglist').split(',')]
             this.isSet = this.ratinglist.includes(this.curentPage.toString())

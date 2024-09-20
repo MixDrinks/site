@@ -37,6 +37,11 @@ export default {
         recipeInstructions() {
             return this.cocktail.receipt
         },
+        ratingValue() {
+            return this.cocktail.rating
+                ? Number(this.cocktail.rating.toFixed(1))
+                : 0
+        },
         schemaRecipe() {
             return {
                 '@context': 'https://schema.org',
@@ -50,7 +55,7 @@ export default {
                 recipeCategory: 'Коктейлі',
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: Number(this.cocktail.rating.toFixed(1)),
+                    ratingValue: this.ratingValue,
                     ratingCount: this.cocktail.ratingCount,
                     bestRating: 5,
                 },
