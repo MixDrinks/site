@@ -28,6 +28,34 @@ export default {
         canonical() {
             return process.env.baseUrl + this.$nuxt.$route.path
         },
+        description() {
+            return `Як приготувати коктейль ${this.cocktail.name} 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
+        },
+        recipeIngredient() {
+            return this.cocktail.goods.map((good) => good.name)
+        },
+        recipeInstructions() {
+            return this.cocktail.receipt
+        },
+        schemaRecipe() {
+            return JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Recipe',
+                name: this.cocktail.name,
+                author: 'mixdrinks',
+                description: this.description,
+                image: this.cocktail.meta.ogImage,
+                recipeIngredient: this.recipeIngredient,
+                recipeInstructions: this.recipeInstructions,
+                recipeCategory: 'Коктейлі',
+                aggregateRating: {
+                    '@type': 'AggregateRating',
+                    ratingValue: this.cocktail.rating,
+                    ratingCount: this.cocktail.ratingCount,
+                    bestRating: 5,
+                },
+            })
+        },
     },
     head() {
         return {
@@ -37,7 +65,7 @@ export default {
                 {
                     hid: 'description',
                     name: 'description',
-                    content: `Як приготувати коктейль ${this.cocktail.name} 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`,
+                    content: this.description,
                 },
                 {
                     hid: 'og:title',
@@ -47,7 +75,7 @@ export default {
                 {
                     hid: 'og:description',
                     property: 'og:description',
-                    content: `Як приготувати коктейль ${this.cocktail.name} 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`,
+                    content: this.description,
                 },
                 {
                     hid: 'og:url',
@@ -60,6 +88,12 @@ export default {
                     content: `${this.cocktail.meta.ogImage}`,
                 },
                 { name: 'robots', content: 'index, follow' },
+            ],
+            script: [
+                {
+                    type: 'application/ld+json',
+                    innerHTML: this.schemaRecipe,
+                },
             ],
         }
     },

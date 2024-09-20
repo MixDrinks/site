@@ -1,11 +1,9 @@
 <template>
     <div
         class="rating"
-        :itemprop="!!curentRatingValue ? 'aggregateRating' : false"
-        :itemscope="!!curentRatingValue ? '' : false"
-        :itemtype="
-            !!curentRatingValue ? 'http://schema.org/AggregateRating' : false
-        "
+        itemprop="aggregateRating"
+        itemscope
+        itemtype="http://schema.org/AggregateRating"
     >
         <div
             class="rating__wrapper rating-wrapper"
@@ -32,16 +30,16 @@
                 </div>
             </div>
             <div
+                v-show="curentRatingValue"
                 class="rating-wrapper__value"
                 itemprop="ratingValue"
-                v-if="!!curentRatingValue"
             >
                 {{ curentRatingValue }}
             </div>
             <div
+                v-show="curentRatingValue"
                 class="rating-wrapper__count"
                 itemprop="reviewCount"
-                v-if="!!curentRatingCount"
             >
                 {{ curentRatingCount }}
             </div>
