@@ -50,7 +50,7 @@ export default {
                 recipeCategory: 'Коктейлі',
                 aggregateRating: {
                     '@type': 'AggregateRating',
-                    ratingValue: this.cocktail.rating,
+                    ratingValue: Number(this.cocktail.rating.toFixed(1)),
                     ratingCount: this.cocktail.ratingCount,
                     bestRating: 5,
                 },
