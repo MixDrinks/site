@@ -1,15 +1,12 @@
 <template>
     <div class="filters">
-        <div
-            class="filters__main"
-            :class="{ 'filters__main--hidden': !isFilterOpen }"
-        >
+        <div class="filters__main" :class="mainClasees">
             <div class="filters__header filters-header">
                 <div class="filters-header__title filters-header-title">
                     Фільтри
-                    <span class="filters-header-title__count">{{
-                        totalCount
-                    }}</span>
+                    <span class="filters-header-title__count">
+                        {{ totalCount }}
+                    </span>
                 </div>
                 <transition name="fate-in" appear>
                     <IconBtn
@@ -18,14 +15,13 @@
                         direction="top"
                         type="short"
                         icon="/img/icons/trash.svg"
-                        :href="`${queryWithoutFilter}`"
+                        :href="`${clearFilterUrl}`"
                         @click="updatePage"
                     >
                         Відмінити всі фільтри
                     </IconBtn>
                 </transition>
             </div>
-
             <div
                 class="filters__tag-cloud filters-tag-cloud"
                 @click="updatePage"
@@ -45,7 +41,7 @@
                         <NuxtLink
                             :title="filterItem.name"
                             class="filters-tag-cloud-list-item__link"
-                            :to="filterItem.url"
+                            :to="`/${filterItem.url}`"
                             :rel="getRel(filterItem.isAddToIndex)"
                         >
                             {{ filterItem.name }}
@@ -53,7 +49,7 @@
                     </div>
                 </transition-group>
             </div>
-            <div class="filters__wrapper filters-wrapper" ref="filtersWrapper">
+            <div class="filters__wrapper filters-wrapper">
                 <FilterItem
                     class="filters-wrapper__item"
                     v-for="filterItem in filterListWithUrl"
@@ -86,8 +82,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import IconBtn from '~~/components/dump/UI/buttons/IconBtn'
-import FilterItem from './FilterItem'
+import IconBtn from '../dump/UI/buttons/IconBtn.vue'
+import FilterItem from './FilterItem.vue'
 export default {
     components: { IconBtn, FilterItem },
     name: 'FilterList',
@@ -105,26 +101,12 @@ export default {
             required: true,
         },
     },
-    mounted() {
-        this.$refs.filtersWrapper.addEventListener('scroll', this.setScrollTop)
-        this.$refs.filtersWrapper.scrollTo(0, this.scrollTopValue)
-    },
-    beforeDestroy() {
-        this.$refs.filtersWrapper.removeEventListener(
-            'scroll',
-            this.setScrollTop
-        )
-    },
     methods: {
-        setScrollTop() {
-            this.updateScrollTop(this.$refs.filtersWrapper.scrollTop)
-        },
         updatePage(payload) {
             this.$emit('updatePage', payload)
         },
         ...mapActions('filter', {
             changeFilterIsOpen: 'changeMainIsOpen',
-            updateScrollTop: 'updateScrollTop',
         }),
         getRel(value) {
             return value ? 'tag' : 'nofollow'
@@ -133,62 +115,44 @@ export default {
     computed: {
         ...mapGetters('filter', {
             isFilterOpen: 'getMainIsOpen',
-            scrollTopValue: 'getScrollTop',
         }),
         filterListWithUrl() {
-            return this.filterList.map((filterItem) => {
-                const newList = this.futureCounts[filterItem.id]
-                return {
-                    ...filterItem,
-                    items: filterItem.items.map((item) => {
-                        const newValue = newList.find((el) => el.id === item.id)
-                        const value = newValue
-                            ? {
-                                  ...item,
-                                  url: newValue.query,
-                                  cocktailCount: newValue.count,
-                                  active: newValue.isActive,
-                              }
-                            : { ...item }
-                        return value
-                    }),
-                }
-            })
-
-            // let arr = [...this.filterList]
-            // arr.forEach((filter) => {
-            //     filter.items.forEach((item) => {
-            //         const curentItem = this.futureCounts[filter.id].find(
-            //             (el) => el.id === item.id
-            //         )
-
-            //         item.url = `/${curentItem.query}`
-            //         item.cocktailCount = curentItem.count
-            //         item.active = curentItem.isActive
-            //         item.isAddToIndex = curentItem.isAddToIndex
-            //     })
-            // })
-            // return arr
-        },
-        arrFilterNames() {
-            let arr = []
-            this.filterList.forEach((el) => {
-                arr.push(el.queryName)
-            })
-            return arr
-        },
-        queryWithoutFilter() {
-            let temp = ''
-            for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-                if (key != 'page' && !this.arrFilterNames.includes(key)) {
-                    temp = temp + `&${key}=${value}`
-                }
+            let futureFilters = {}
+            for (let filter in this.futureCounts) {
+                futureFilters[filter] = {}
+                this.futureCounts[filter].forEach((filterItem) => {
+                    futureFilters[filter][filterItem.id] = filterItem
+                })
             }
-            return `/?${temp}`
+            return this.filterList.map((filterItem) => ({
+                ...filterItem,
+                items: filterItem.items.map((item) => {
+                    const newValue = futureFilters[filterItem.id][item.id]
+                    const value = newValue
+                        ? {
+                              ...item,
+                              url: newValue.query,
+                              count: newValue.count,
+                              isActive: newValue.isActive,
+                              isAddToIndex: newValue.isAddToIndex,
+                          }
+                        : { ...item }
+                    return value
+                }),
+            }))
+        },
+        clearFilterUrl() {
+            if (this.$nuxt.$route.query.sort) {
+                return `/?sort=${this.$nuxt.$route.query.sort}`
+            }
+            return '/'
         },
         activeFilter() {
             const arr = this.filterListWithUrl.map((el) => el.items).flat()
-            return arr.filter((item) => item.active)
+            return arr.filter((item) => item.isActive)
+        },
+        mainClasees() {
+            return { 'filters__main--hidden': !this.isFilterOpen }
         },
     },
 }

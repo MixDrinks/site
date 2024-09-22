@@ -2,7 +2,6 @@ export const state = () => ({
   mainIsOpen: false,
   filtersIsOpenList: [],
   listIsSet: false,
-  scrollTop: 0,
 });
 
 export const mutations = {
@@ -19,14 +18,11 @@ export const mutations = {
     }
   },
   SET_FILTER_IS_OPEN_LIST(state, list) {
-    if(!state.listIsSet) {
+    if (!state.listIsSet) {
       state.filtersIsOpenList = list.filter((listItem) => !listItem.isOpen).map(listItem => listItem.id)
     }
     state.listIsSet = true
-    
-  },
-  UPDATE_SCROLL_TOP(state, value) {
-    state.scrollTop = value;
+
   },
 };
 
@@ -37,9 +33,6 @@ export const actions = {
   updateFiltersIsOpenList(ctx, id) {
     ctx.commit("UPDATE_FILTER_IS_OPEN_LIST", id);
   },
-  updateScrollTop(ctx, value) {
-    ctx.commit("UPDATE_SCROLL_TOP", value);
-  },
   setFiltersIsOpenList(ctx, list) {
     ctx.commit("SET_FILTER_IS_OPEN_LIST", list);
   }
@@ -47,6 +40,5 @@ export const actions = {
 export const getters = {
   getMainIsOpen: (state) => state.mainIsOpen,
   getFiltersIsOpenList: (state) => state.filtersIsOpenList,
-  getScrollTop: (state) => state.scrollTop,
   getFiltersListIsSet: (state) => state.listIsSet
 };

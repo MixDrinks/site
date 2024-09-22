@@ -3,19 +3,16 @@
         <div
             class="rating__wrapper rating-wrapper"
             @mouseleave="hoverItemIndex = null"
-            :class="{ 'rating__wrapper--lock': isSet }"
+            :class="wrapperClasses"
         >
             <div class="rating-wrapper__stars rating-wrapper-stars">
                 <div
                     class="rating-wrapper-stars__item rating-wrapper-stars-item"
-                    v-for="star in stars"
-                    :key="star.id"
-                    @mouseover="hoverItemIndex = star.id"
-                    :class="{
-                        'rating-wrapper-stars-item--hover':
-                            star.id <= hoverItemIndex,
-                    }"
-                    @click="setRating(star.id)"
+                    v-for="(star, starIndex) in stars"
+                    :key="`rating-wrapper-stars__item-${starIndex}`"
+                    @mouseover="hoverItemIndex = starIndex"
+                    :class="getStarItemClasses(starIndex)"
+                    @click="setRating(starIndex)"
                 >
                     <div class="rating-wrapper-stars-item__start--gray"></div>
                     <div
@@ -79,14 +76,19 @@ export default {
     methods: {
         setRating(value) {
             this.$axios.post(`/cocktail/${this.slug}/score`, {
-                value: value,
+                value: value + 1,
             })
-            localStorage.setItem('ratinglist', [
-                ...this.ratinglist,
-                this.curentPage,
-            ])
-            this.value = value
+            localStorage.setItem('ratinglist', [...this.ratinglist, this.id])
+            this.value = value + 1
             this.isSet = true
+        },
+        getStarItemClasses(value) {
+            if (this.hoverItemIndex !== null) {
+                return {
+                    'rating-wrapper-stars-item--hover':
+                        value <= this.hoverItemIndex,
+                }
+            }
         },
     },
     computed: {
@@ -108,17 +110,14 @@ export default {
             }
             return this.ratingCount
         },
-        curentPage() {
-            return this.id
-        },
         stars() {
             let arr = []
-            for (let index = 1; index <= 5; index++) {
+            for (let index = 0; index < 5; index++) {
                 let width
-                if (index < this.actualRatingValue) {
+                if (index + 1 < this.actualRatingValue) {
                     width = 1
                 } else if (1 - (index - this.actualRatingValue) > 0) {
-                    width = 1 - (index - this.actualRatingValue)
+                    width = 0 - (index - this.actualRatingValue)
                 } else {
                     width = 0
                 }
@@ -129,11 +128,14 @@ export default {
             }
             return arr
         },
+        wrapperClasses() {
+            return { 'rating__wrapper--lock': this.isSet }
+        },
     },
     mounted() {
         if (localStorage.getItem('ratinglist')) {
             this.ratinglist = [...localStorage.getItem('ratinglist').split(',')]
-            this.isSet = this.ratinglist.includes(this.curentPage.toString())
+            this.isSet = this.ratinglist.includes(this.id.toString())
         }
     },
 }

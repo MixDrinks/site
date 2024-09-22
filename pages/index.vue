@@ -11,7 +11,7 @@
 <script>
 import CocktailsPage from '~~/components/cocktails/CocktailsPage'
 export default {
-    scrollToTop: false,
+    scrollToTop: true,
     components: {
         CocktailsPage,
     },

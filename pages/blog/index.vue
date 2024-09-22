@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BlogPage from '~~/components/cocktails/BlogPage.vue'
+import BlogPage from '~~/components/blog/BlogPage.vue'
 export default {
     scrollToTop: false,
     components: {

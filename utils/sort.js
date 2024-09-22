@@ -1,4 +1,4 @@
-export const sort = [
+export const sortList = [
   {
     value: "most-popular",
     name: "Популярні",

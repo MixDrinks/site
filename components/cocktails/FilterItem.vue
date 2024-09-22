@@ -40,10 +40,10 @@
                         <NuxtLink
                             :title="listItem.name"
                             :rel="getRel(listItem.isAddToIndex)"
-                            v-if="!!listItem.cocktailCount"
+                            v-if="!!listItem.count"
                             class="filter-list__item filter-list-item"
                             :class="getLinkClasses(listItem)"
-                            :to="listItem.url + query"
+                            :to="`/${listItem.url + query}`"
                         >
                             <span
                                 class="filter-list-item__radio"
@@ -59,9 +59,9 @@
                             </span>
                             <span
                                 class="filter-list-item__count"
-                                v-if="!listItem.active"
+                                v-if="!listItem.isActive"
                             >
-                                {{ listItem.cocktailCount }}
+                                {{ listItem.count }}
                             </span>
                         </NuxtLink>
                         <div
@@ -80,7 +80,7 @@
                                 {{ listItem.name }}
                             </div>
                             <div class="filter-list-item__count">
-                                {{ listItem.cocktailCount }}
+                                {{ listItem.count }}
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ export default {
             toggleList: 'updateFiltersIsOpenList',
         }),
         getLinkClasses(item) {
-            if (item.active) return 'filter-list-item--active'
+            if (item.isActive) return 'filter-list-item--active'
         },
         getRel(value) {
             return value ? 'tag' : 'nofollow'
@@ -131,9 +131,7 @@ export default {
         },
         filterItemSort() {
             let arr = [...this.filterItem.items]
-            return arr.sort((a, b) =>
-                a.cocktailCount > b.cocktailCount ? -1 : 1
-            )
+            return arr.sort((a, b) => (a.count > b.count ? -1 : 1))
         },
         query() {
             let query = '?'
