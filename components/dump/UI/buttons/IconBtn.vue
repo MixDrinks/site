@@ -1,10 +1,10 @@
 <template>
     <NuxtLink
-        class="btn"
-        :class="[{ 'btn--lock': lock }, `btn--${direction}`, `btn--${type}`]"
+        :class="btnClasses"
         @click.native="click()"
         :to="href"
         v-if="!!href"
+        class="btn"
     >
         <span
             class="btn__icon"
@@ -12,12 +12,7 @@
         ></span>
         <slot />
     </NuxtLink>
-    <button
-        class="btn"
-        :class="[{ 'btn--lock': lock }, `btn--${direction}`, type]"
-        v-else
-        @click="click()"
-    >
+    <button :class="btnClasses" v-else @click="click()" class="btn">
         <span
             class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
@@ -54,6 +49,15 @@ export default {
     methods: {
         click() {
             this.$emit('click')
+        },
+    },
+    computed: {
+        btnClasses() {
+            return [
+                { 'btn--lock': this.lock },
+                `btn--${this.direction}`,
+                `btn--${this.type}`,
+            ]
         },
     },
 }

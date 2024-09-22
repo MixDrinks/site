@@ -11,7 +11,9 @@
                 :lock="counter === 1"
                 icon="/img/icons/minus.svg"
                 @click="dec()"
-            />
+            >
+                Декримент
+            </IconBtn>
 
             <div class="сomponents-counter__value">
                 {{ counter }}
@@ -20,7 +22,9 @@
                 class="сomponents-counter__btn сomponents-counter__btn--inc"
                 icon="/img/icons/plus.svg"
                 @click="inc()"
-            />
+            >
+                Інкримент
+            </IconBtn>
         </div>
         <ul class="сomponents__list сomponents-list">
             <li
@@ -66,7 +70,7 @@
 </template>
 
 <script>
-import IconBtn from '~~/components/dump/UI/buttons/IconBtn'
+import IconBtn from '../dump/UI/buttons/IconBtn.vue'
 
 export default {
     name: 'CocktailComponents',

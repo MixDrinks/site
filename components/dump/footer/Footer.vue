@@ -7,7 +7,7 @@
                 <div
                     class="footer-content-communication__item footer-content-communication-item"
                 >
-                    <h4
+                    <p
                         class="footer-content-communication-item__title footer-content-communication-item-title"
                     >
                         <span
@@ -15,7 +15,7 @@
                         >
                             Зворотній зв'язок
                         </span>
-                    </h4>
+                    </p>
                     <a
                         class="footer-content-communication-item__link"
                         href="https://docs.google.com/forms/d/e/1FAIpQLSdW4lCa0JMcIQ3gqDdGve-GxOQuqD3zbRpkKSQzkOyzzr0W2A/viewform"
@@ -35,13 +35,13 @@
                 <div
                     class="footer-content-about__item footer-content-about-item"
                 >
-                    <h4
+                    <p
                         class="footer-content-about-item__title footer-content-about-item-title"
                     >
                         <span class="footer-content-about-item-title__label">
                             Про проєкт
                         </span>
-                    </h4>
+                    </p>
                     <a
                         class="footer-content-about-item__link"
                         href="https://github.com/MixDrinks"
@@ -63,13 +63,13 @@
                 <div
                     class="footer-content-about__item footer-content-about-item"
                 >
-                    <h4
+                    <p
                         class="footer-content-about-item__title footer-content-about-item-title"
                     >
                         <span class="footer-content-about-item-title__label">
                             Розробники
                         </span>
-                    </h4>
+                    </p>
                     <a
                         class="footer-content-about-item__link"
                         href="https://bento.me/vovastelmashchuk"
