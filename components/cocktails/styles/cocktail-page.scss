@@ -1,256 +1,258 @@
 .cocktail {
-  &__tags {
-    @include scrollNone;
-    margin-bottom: $halfShortMargin;
-    margin-right: -40px;
-    margin-left: -40px;
+    &__tags {
+        @include scrollNone;
+        margin-bottom: $halfShortMargin;
+        margin-right: -40px;
+        margin-left: -40px;
 
-    @media (min-width: 1023px) {
-      margin-top: $shortMargin;
-      margin-bottom: $shortMargin;
-      margin-right: unset;
-      margin-left: unset;
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+            margin-bottom: $shortMargin;
+            margin-right: unset;
+            margin-left: unset;
+        }
     }
-  }
 }
 
 .cocktail-header {
-  @media (min-width: 1023px) {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__title {
-    margin-bottom: $halfShortMargin;
-
     @media (min-width: 1023px) {
-      margin-bottom: unset;
+        display: flex;
+        justify-content: space-between;
     }
-  }
+
+    &__title {
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: unset;
+        }
+    }
 }
 
 .cocktail-header-title {
-  &__label {
-    @include fontSize32B;
+    &__label {
+        @include fontSize32B;
 
-    @media (min-width: 1023px) {
-      @include fontSize48;
+        @media (min-width: 1023px) {
+            @include fontSize48;
+        }
     }
-  }
 }
 
 .cocktail-header-user-info {
-  @media (min-width: 1023px) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__views {
-    margin-bottom: $halfShortMargin;
-    @include fontSize16M;
-    letter-spacing: -.02em;
-
     @media (min-width: 1023px) {
-      @include fontSize18;
-      margin-right: $halfShortMargin;
-      margin-bottom: unset;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-  }
 
-  &__rating {
-    margin-bottom: $halfShortMargin;
+    &__views {
+        margin-bottom: $halfShortMargin;
+        @include fontSize16M;
+        letter-spacing: -.02em;
 
-    @media (min-width: 1023px) {
-      margin-bottom: unset;
+        @media (min-width: 1023px) {
+            @include fontSize18;
+            margin-right: $halfShortMargin;
+            margin-bottom: unset;
+        }
     }
-  }
+
+    &__rating {
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: unset;
+        }
+    }
 }
 
 .cocktail-tags {
-  display: flex;
-  overflow: auto;
+    display: flex;
+    overflow: auto;
 
-  padding-left: 40px;
-  padding-right: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
 
-  @media (min-width: 1023px) {
-    padding-left: unset;
-    padding-right: unset;
+    @media (min-width: 1023px) {
+        padding-left: unset;
+        padding-right: unset;
 
-    overflow: inherit
-  }
-
-  &__item {
-    &:not(:last-child) {
-      margin-right: 10px;
+        overflow: inherit
     }
-  }
+
+    &__item {
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
 }
 
 .cocktail-tags-item-link {
-  display: block;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background-color: $colorMain;
-  transition: background-color .4s;
+    display: block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: $colorMain;
+    transition: background-color .4s;
 
-  &:hover {
-    background-color: $colorHover;
-  }
+    &:hover {
+        background-color: $colorHover;
+    }
 
-  &::first-letter {
-    text-transform: uppercase;
-  }
+    &::first-letter {
+        text-transform: uppercase;
+    }
 
-  &__label {
-    font-style: italic;
-    @include fontSize16M;
-    color: $colorWhite;
-    white-space: nowrap;
-  }
+    &__label {
+        font-style: italic;
+        @include fontSize16M;
+        color: $colorWhite;
+        white-space: nowrap;
+    }
 }
 
 .cocktail-body {
-  @media (min-width: 1023px) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  &__img {
-    width: 100%;
-    max-height: 500px;
-    display: block;
-    margin-bottom: $halfShortMargin;
-    margin-left: auto;
-    margin-right: auto;
-    object-fit: contain;
-
-    @media (max-width: 1024px) {
-      height: auto;
-    }
-
     @media (min-width: 1023px) {
-      width: 500px;
-
-      margin-bottom: unset;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
-  }
 
-  &__recipe {
-    width: 100%;
-    margin-bottom: $halfShortMargin;
+    &__img {
+        width: 100%;
+        max-height: 500px;
+        display: block;
+        margin-bottom: $halfShortMargin;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: contain;
 
-    @media (min-width: 1023px) {
-      max-width: calc(100% - 600px);
-      margin-bottom: $shortMargin;
+        @media (max-width: 1024px) {
+            height: auto;
+        }
+
+        @media (min-width: 1023px) {
+            width: 500px;
+
+            margin-bottom: unset;
+        }
     }
-  }
 
-  &__ads {
-    width: 100%;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    @media (min-width: 1023px) {
-      margin-top: 20px;
-      margin-bottom: 20px;
+    &__recipe {
+        width: 100%;
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            max-width: calc(100% - 600px);
+            margin-bottom: $shortMargin;
+        }
     }
-  }
 
-  &__goods,
-  &__tools,
-  &__article,
-  &__recomendation  {
-    width: 100%;
-    margin-bottom: $halfShortMargin;
+    &__ads {
+        max-width: 100%;
+        width: 1200px;
+        margin: 8px auto;
 
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        @media (min-width: 1023px) {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
     }
-  }
+
+    &__goods,
+    &__tools,
+    &__article,
+    &__recomendation {
+        width: 100%;
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: $shortMargin;
+        }
+    }
 }
 
 .cocktail-body-recipe {
-  &__title {
-    margin-bottom: $halfShortMargin;
+    &__title {
+        margin-bottom: $halfShortMargin;
 
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        @media (min-width: 1023px) {
+            margin-bottom: $shortMargin;
+        }
     }
-  }
 }
 
 .cocktail-body-recipe-title {
-  &__label {
-    color: $colorBlack;
-    @include fontSize24B;
-  }
+    &__label {
+        color: $colorBlack;
+        @include fontSize24B;
+    }
 }
 
 .cocktail-body-recipe-list {
-  list-style: none;
+    list-style: none;
 
-  &__item {
-    &:not(:last-child) {
-      margin-bottom: $halfShortMargin;
+    &__item {
+        &:not(:last-child) {
+            margin-bottom: $halfShortMargin;
+        }
     }
-  }
 }
 
 .cocktail-body-recipe-list-item {
-  display: flex;
-  align-items: center;
-  counter-increment: counter;
-
-  &:not(:last-child) {
-    padding-bottom: $halfShortMargin;
-    border-bottom: 1px solid $colorMain;
-  }
-
-  &::before {
-    @include fontSize18B;
-    color: $colorWhite;
-    width: 34px;
-    height: 34px;
-    margin-right: 16px;
-    border-radius: 4px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: $colorMain;
-    content: counter(counter);
-    flex-shrink: 0;
+    counter-increment: counter;
 
-    @media (min-width: 1023px) {
-      width: 40px;
-      height: 40px;
-      margin-right: $halfShortMargin;
+    &:not(:last-child) {
+        padding-bottom: $halfShortMargin;
+        border-bottom: 1px solid $colorMain;
     }
-  }
 
-  &__label {
-    @include fontSize18M;
-  }
+    &::before {
+        @include fontSize18B;
+        color: $colorWhite;
+        width: 34px;
+        height: 34px;
+        margin-right: 16px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $colorMain;
+        content: counter(counter);
+        flex-shrink: 0;
+
+        @media (min-width: 1023px) {
+            width: 40px;
+            height: 40px;
+            margin-right: $halfShortMargin;
+        }
+    }
+
+    &__label {
+        @include fontSize18M;
+    }
 }
 
 .cocktail-body-article {
-  &__title { 
-    color: $colorBlack;
-    @include fontSize24B;
+    &__title {
+        color: $colorBlack;
+        @include fontSize24B;
 
-    margin-bottom: $halfShortMargin;
+        margin-bottom: $halfShortMargin;
 
-    @media (min-width: 1023px) {
-      margin-bottom: $halfShortMargin;
+        @media (min-width: 1023px) {
+            margin-bottom: $halfShortMargin;
+        }
     }
-  }
-  &__chapters {
-  }
+
+    &__chapters {}
 }
+
 .cocktail-body-article-chapters {
-  &__text {
-    margin-bottom: $halfShortMargin;
-    @include fontSize16;
-  }
+    &__text {
+        margin-bottom: $halfShortMargin;
+        @include fontSize16;
+    }
 }
