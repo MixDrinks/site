@@ -11,6 +11,11 @@ export default {
     components: {
         AdminLoginPage,
     },
+    head() {
+        return {
+            meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+        }
+    },
 }
 </script>
 

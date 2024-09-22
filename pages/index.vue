@@ -3,7 +3,7 @@
         <CocktailsPage
             :cocktailsFull="cocktailsFull"
             :allFilters="allFilters"
-            @updateCocktails="updateCocktails"
+            @updatePage="updatePage"
         />
     </main>
 </template>
@@ -47,13 +47,13 @@ export default {
         }
     },
     beforeMount() {
-        window.addEventListener('popstate', this.updateCocktails, false)
+        window.addEventListener('popstate', this.updatePage, false)
     },
     beforeDestroy() {
-        window.removeEventListener('popstate', this.updateCocktails, false)
+        window.removeEventListener('popstate', this.updatePage, false)
     },
     methods: {
-        async updateCocktails(payload) {
+        async updatePage(payload) {
             // this.startLoading()
             let page = ''
             if (!!!Object.keys(this.$nuxt.$route.query).length) {

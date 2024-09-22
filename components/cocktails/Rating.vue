@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div
-                v-show="actualRatingValue"
+                v-if="actualRatingValue"
                 class="rating-wrapper__aggregate"
                 itemprop="aggregateRating"
                 itemscope

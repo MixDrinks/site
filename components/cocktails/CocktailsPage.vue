@@ -6,13 +6,13 @@
             </h1>
             <Sorting
                 class="cocktails-header__sorting"
-                @updateCocktails="updateCocktails"
+                @updatePage="updatePage"
             />
         </div>
         <div class="cocktails__body cocktails-body">
             <FilterList
                 class="cocktails-body__filter"
-                @updateCocktails="updateCocktails"
+                @updatePage="updatePage"
                 :filterList="allFilters"
                 :totalCount="cocktailsFull.totalCount"
                 :futureCounts="cocktailsFull.futureCounts"
@@ -53,7 +53,7 @@
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
             :itemsCount="cocktailsFull.cocktails.length"
-            @updateCocktails="updateCocktails"
+            @updatePage="updatePage"
         />
     </div>
 </template>
@@ -78,8 +78,8 @@ export default {
         },
     },
     methods: {
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
         ...mapActions('filter', {
             setOpenList: 'setFiltersIsOpenList',

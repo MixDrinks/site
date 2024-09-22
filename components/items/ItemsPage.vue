@@ -38,7 +38,7 @@
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
             :itemsCount="cocktailsFull.cocktails.length"
-            @updateCocktails="updateCocktails"
+            @updatePage="updatePage"
         />
     </div>
 </template>
@@ -60,8 +60,8 @@ export default {
         },
     },
     methods: {
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
     },
 }

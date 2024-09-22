@@ -108,8 +108,8 @@ export default {
         // toggleList(id) {
         //   this.updateFiltersIsOpenList(id);
         // },
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
         ...mapActions('filter', {
             toggleList: 'updateFiltersIsOpenList',

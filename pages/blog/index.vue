@@ -1,17 +1,17 @@
 <template>
     <main class="wrapper">
-        <BlogPage :postFull="postFull" @updateCocktails="updateCocktails" />
+        <BlogPage :postsData="postFull" @updatePage="updatePage" />
     </main>
 </template>
 
 <script>
-import BlogPage from '~~/components/cocktails/BlogPage'
+import BlogPage from '~~/components/cocktails/BlogPage.vue'
 export default {
     scrollToTop: false,
     components: {
         BlogPage,
     },
-    async asyncData({ query, error, route, $axios }) {
+    async asyncData({ query, error, $axios }) {
         let page = ''
         if (!!!Object.keys(query).length) {
             page = '?page=0'
@@ -19,7 +19,7 @@ export default {
             page = '&page=0'
         }
         const postFullPromise = $axios
-            .get(`/api/blog/post-list${page}`)
+            .get(`/blog/post-list${page}`)
             .catch(() => {
                 return error({
                     statusCode: 404,
@@ -32,13 +32,13 @@ export default {
         }
     },
     beforeMount() {
-        window.addEventListener('popstate', this.updateCocktails, false)
+        window.addEventListener('popstate', this.updatePage, false)
     },
     beforeDestroy() {
-        window.removeEventListener('popstate', this.updateCocktails, false)
+        window.removeEventListener('popstate', this.updatePage, false)
     },
     methods: {
-        async updateCocktails(payload) {
+        async updatePage(payload) {
             // this.startLoading()
             let page = ''
             if (!!!Object.keys(this.$nuxt.$route.query).length) {
@@ -50,7 +50,7 @@ export default {
                 page = '&page=0'
             }
             let items = [...this.postFull.posts]
-            const post = await this.$axios.get(`/api/blog/post-list${page}`)
+            const post = await this.$axios.get(`/blog/post-list${page}`)
             this.postFull = { ...posts.data }
             if (payload?.loadMore) {
                 this.postFull.posts = [...items, ...this.postFull.posts]
@@ -72,33 +72,30 @@ export default {
     },
     head() {
         return {
-            title: 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
+            title: 'Блог',
             link: [{ rel: 'canonical', href: this.canonical }],
             meta: [
                 {
                     hid: 'description',
                     name: 'description',
-                    content:
-                        'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі',
+                    content: 'Блог',
                 },
                 {
                     hid: 'og:title',
                     name: 'og:title',
-                    content:
-                        'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
+                    content: 'Блог',
                 },
                 {
                     hid: 'og:description',
                     property: 'og:description',
-                    content:
-                        'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі',
+                    content: 'Блог',
                 },
                 {
                     hid: 'og:url',
                     property: 'og:url',
                     content: `${this.canonical}`,
                 },
-                { name: 'robots', content: this.indexPage },
+                { name: 'robots', content: 'noindex, nofollow' },
             ],
         }
     },

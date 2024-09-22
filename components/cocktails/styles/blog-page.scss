@@ -1,0 +1,118 @@
+.blog {
+    &__header {
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: $shortMargin;
+        }
+    }
+
+    &__body {
+        margin-top: $halfShortMargin;
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+            margin-bottom: $shortMargin;
+        }
+    }
+
+    &__pagination {
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+        }
+    }
+}
+
+.header {
+    &__title {}
+}
+
+.body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: -10px;
+
+    &__post {
+        height: 200px;
+        margin: 10px;
+        width: calc(100% - 20px);
+        z-index: 1;
+
+        @media (min-width: 767px) {
+            width: calc(50% - 20px);
+        }
+
+        @media (min-width: 1440px) {
+            width: calc(25% - 20px);
+        }
+    }
+}
+
+.post {
+    $self: &;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 10px;
+    position: relative;
+    padding: 20px 30px;
+    overflow: hidden;
+
+    transition: transform $defaultAnimTime,
+        box-shadow $defaultAnimTime;
+
+    &:hover {
+        #{$self}__name {
+            color: $colorHover;
+        }
+
+        transform: translateY(-4px);
+        box-shadow: 1px 4px rgba($colorHover, 0.3),
+        -5px -5px 40px rgba($colorHover, 0.1);
+
+        @media (min-width: 1023px) {
+            transform: translateY(-5px);
+            box-shadow: 1px 5px rgba($colorHover, 0.3),
+                -5px -5px 20px rgba($colorHover, 0.6);
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        background-color: $colorMain;
+        opacity: 0.6;
+        mix-blend-mode: color-burn;
+    }
+
+    &__img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -2;
+        width: 100%;
+        object-fit: cover;
+        max-width: unset
+    }
+
+    &__title {
+        @include fontSize18M;
+        color: $colorWhite;
+
+        &::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            content: '';
+        }
+    }
+}

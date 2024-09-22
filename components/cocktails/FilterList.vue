@@ -19,7 +19,7 @@
                         type="short"
                         icon="/img/icons/trash.svg"
                         :href="`${queryWithoutFilter}`"
-                        @click="updateCocktails"
+                        @click="updatePage"
                     >
                         Відмінити всі фільтри
                     </IconBtn>
@@ -28,7 +28,7 @@
 
             <div
                 class="filters__tag-cloud filters-tag-cloud"
-                @click="updateCocktails"
+                @click="updatePage"
             >
                 <transition-group
                     class="filters-tag-cloud__list filters-tag-cloud-list"
@@ -59,7 +59,7 @@
                     v-for="filterItem in filterListWithUrl"
                     :key="filterItem.id"
                     :filterItem="filterItem"
-                    @updateCocktails="updateCocktails"
+                    @updatePage="updatePage"
                 />
             </div>
         </div>
@@ -119,8 +119,8 @@ export default {
         setScrollTop() {
             this.updateScrollTop(this.$refs.filtersWrapper.scrollTop)
         },
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
         ...mapActions('filter', {
             changeFilterIsOpen: 'changeMainIsOpen',
@@ -136,20 +136,39 @@ export default {
             scrollTopValue: 'getScrollTop',
         }),
         filterListWithUrl() {
-            let arr = [...this.filterList]
-            arr.forEach((filter) => {
-                filter.items.forEach((item) => {
-                    const curentItem = this.futureCounts[filter.id].find(
-                        (el) => el.id === item.id
-                    )
-
-                    item.url = `/${curentItem.query}`
-                    item.cocktailCount = curentItem.count
-                    item.active = curentItem.isActive
-                    item.isAddToIndex = curentItem.isAddToIndex
-                })
+            return this.filterList.map((filterItem) => {
+                const newList = this.futureCounts[filterItem.id]
+                return {
+                    ...filterItem,
+                    items: filterItem.items.map((item) => {
+                        const newValue = newList.find((el) => el.id === item.id)
+                        const value = newValue
+                            ? {
+                                  ...item,
+                                  url: newValue.query,
+                                  cocktailCount: newValue.count,
+                                  active: newValue.isActive,
+                              }
+                            : { ...item }
+                        return value
+                    }),
+                }
             })
-            return arr
+
+            // let arr = [...this.filterList]
+            // arr.forEach((filter) => {
+            //     filter.items.forEach((item) => {
+            //         const curentItem = this.futureCounts[filter.id].find(
+            //             (el) => el.id === item.id
+            //         )
+
+            //         item.url = `/${curentItem.query}`
+            //         item.cocktailCount = curentItem.count
+            //         item.active = curentItem.isActive
+            //         item.isAddToIndex = curentItem.isAddToIndex
+            //     })
+            // })
+            // return arr
         },
         arrFilterNames() {
             let arr = []

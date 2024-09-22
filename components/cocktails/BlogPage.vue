@@ -1,18 +1,35 @@
 <template>
-    <div class="cocktails">
-        <div class="cocktails__header cocktails-header">
-            <h1 class="cocktails-header__title">Блог</h1>
+    <div class="blog">
+        <div class="blog__header header">
+            <h1 class="header__title">Блог</h1>
         </div>
-        <div class="cocktails__body cocktails-body">
-            {{ postFull }}
+        <div class="blog__body body">
+            <div
+                v-for="(post, postIndex) in postsData.posts"
+                :key="`body__post-${postIndex}`"
+                class="body__post post"
+            >
+                <img
+                    :alt="post.title"
+                    src="https://mixdrinks-cdn.vovastelmashchuk.site/cocktails/561/560/561.webp"
+                    class="post__img"
+                    width="410"
+                    height="200"
+                    loading="lazy"
+                    title=""
+                />
+                <NuxtLink :to="`/blog/${post.slug}`" class="post__title">
+                    {{ post.title }}
+                </NuxtLink>
+            </div>
         </div>
         <Pagination
-            v-if="postFull.postCount > 24"
-            class="cocktails__pagination"
-            :totalItems="postFull.postCount"
+            v-if="postsData.postCount > 24"
+            class="blog__pagination"
+            :totalItems="postsData.postCount"
             :limit="24"
-            :itemsCount="postFull.posts.length"
-            @updateCocktails="updateCocktails"
+            :itemsCount="postsData.posts.length"
+            @updatePage="updatePage"
         />
     </div>
 </template>
@@ -23,19 +40,19 @@ export default {
     components: { Pagination },
     name: 'BlogPage',
     props: {
-        postFull: {
+        postsData: {
             type: Object,
             required: true,
         },
     },
     methods: {
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktails-page';
+@import './styles/blog-page';
 </style>

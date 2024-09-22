@@ -4,7 +4,7 @@
             class="pagination__load-more"
             v-show="!!nextPage"
             :href="!!nextPage ? nextPage.link : '/'"
-            @click="updateCocktails({ loadMore: true })"
+            @click="updatePage({ loadMore: true })"
             rel="nofollow"
         >
             Показати ще {{ limit }}
@@ -15,7 +15,7 @@
                     class="pagination-controls-list__item pagination-controls-list-item"
                     v-for="page in pagination"
                     :key="page.id"
-                    @click="updateCocktails"
+                    @click="updatePage"
                 >
                     <TextBtn
                         class="pagination-controls-list-item__link"
@@ -41,7 +41,7 @@
                     icon="/img/icons/arrow.svg"
                     :lock="!!!prevPage"
                     :href="!!prevPage ? prevPage.link : '/'"
-                    @click.native="updateCocktails"
+                    @click.native="updatePage"
                     rel="prev"
                 >
                     Попередня сторінка
@@ -52,7 +52,7 @@
                     icon="/img/icons/arrow.svg"
                     :lock="!!!nextPage"
                     :href="!!nextPage ? nextPage.link : '/'"
-                    @click.native="updateCocktails"
+                    @click.native="updatePage"
                     rel="next"
                 >
                     Наступна сторінка
@@ -83,8 +83,8 @@ export default {
         },
     },
     methods: {
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
     },
     computed: {

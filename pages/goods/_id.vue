@@ -3,7 +3,7 @@
         <ItemsPage
             :cocktailsFull="cocktailsFull"
             :items="items"
-            @updateCocktails="updateCocktails"
+            @updatePage="updatePage"
         />
     </main>
 </template>
@@ -49,7 +49,7 @@ export default {
         }
     },
     methods: {
-        async updateCocktails(payload) {
+        async updatePage(payload) {
             // this.startLoading()
             let items = [...this.cocktailsFull.cocktails]
 

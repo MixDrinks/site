@@ -4,7 +4,7 @@
         <ul class="sorting__list sorting-list">
             <li
                 class="sorting-list__item sorting-list-item"
-                @click="updateCocktails()"
+                @click="updatePage()"
                 v-for="sortItem in sortWithUrl"
                 :data-cy="`sorting ${sortItem.id}`"
                 :key="sortItem.id"
@@ -26,8 +26,8 @@ import { sort } from '~~/utils/sort'
 export default {
     name: 'Sorting',
     methods: {
-        updateCocktails(payload) {
-            this.$emit('updateCocktails', payload)
+        updatePage(payload) {
+            this.$emit('updatePage', payload)
         },
 
         getLinkClasses(item) {

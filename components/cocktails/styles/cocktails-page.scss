@@ -1,60 +1,62 @@
 .cocktails {
-  &__header {
-    margin-bottom: $halfShortMargin;
+    &__header {
+        margin-bottom: $halfShortMargin;
 
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        @media (min-width: 1023px) {
+            margin-bottom: $shortMargin;
+        }
     }
-  }
 
-  &__body {
-    margin-top: $halfShortMargin;
-    margin-bottom: $halfShortMargin;
-    @media (min-width: 1023px) {
-      margin-top: $shortMargin;
-      margin-bottom: $shortMargin;
-    }
-  }
+    &__body {
+        margin-top: $halfShortMargin;
+        margin-bottom: $halfShortMargin;
 
-  &__pagination {
-    @media (min-width: 1023px) {
-      margin-top: $shortMargin;
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+            margin-bottom: $shortMargin;
+        }
     }
-  }
+
+    &__pagination {
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+        }
+    }
 }
 
 .cocktails-header {
-  @media (min-width: 1023px) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  &__title {
-    @include fontSize24B;
-    margin-bottom: $halfShortMargin;
-
     @media (min-width: 1023px) {
-      margin-bottom: unset;
-      @include fontSize48B;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-  }
+
+    &__title {
+        @include fontSize24B;
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: unset;
+            @include fontSize48B;
+        }
+    }
 }
 
 .cocktails-body {
-  @media (min-width: 1023px) {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    align-items: start;
-  }
-
-  &__ads {
-    width: 100%;
-    margin-top: 8px;
-    margin-bottom: 8px;
     @media (min-width: 1023px) {
-      margin-top: 20px;
-      margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        align-items: start;
     }
-  }
+
+    &__ads {
+        width: 100%;
+        margin-top: 8px;
+        margin-bottom: 8px;
+
+        @media (min-width: 1023px) {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
 }

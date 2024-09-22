@@ -37,10 +37,17 @@ export default {
         recipeInstructions() {
             return this.cocktail.receipt
         },
-        ratingValue() {
-            return this.cocktail.rating
-                ? Number(this.cocktail.rating.toFixed(1))
-                : 0
+        rating() {
+            if (this.cocktail.rating) {
+                return {
+                    aggregateRating: {
+                        '@type': 'AggregateRating',
+                        ratingValue: this.cocktail.rating,
+                        ratingCount: this.cocktail.ratingCount,
+                        bestRating: 5,
+                    },
+                }
+            }
         },
         schemaRecipe() {
             return {
@@ -53,12 +60,7 @@ export default {
                 recipeIngredient: this.recipeIngredient,
                 recipeInstructions: this.recipeInstructions,
                 recipeCategory: 'Коктейлі',
-                aggregateRating: {
-                    '@type': 'AggregateRating',
-                    ratingValue: this.ratingValue,
-                    ratingCount: this.cocktail.ratingCount,
-                    bestRating: 5,
-                },
+                ...this.rating,
             }
         },
     },
