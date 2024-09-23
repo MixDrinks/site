@@ -36,6 +36,11 @@
       top: 0%;
       transform: translateY(0);
     }
+
+    #{$self}__input {
+
+      color: $colorWhite;
+    }
   }
 
   &__label {
@@ -50,14 +55,12 @@
 
   &__input {
     width: 100%;
-
+    color: transparent;
     border: 0;
     padding: 20px 40px 12px 0;
     box-shadow: inset 0px -2px 0px $colorWhite;
 
     @include fontSize18B;
-
-    color: $colorWhite;
   }
 
   &::before {
@@ -100,7 +103,7 @@
 
     color: $colorMain;
   }
-  
+
   &__link {
     position: relative;
 
@@ -135,7 +138,7 @@
 }
 
 .max-height-leave-active {
-  animation: max-height $defaultAnimTime reverse;
+  animation: max-height .1s reverse;
   overflow: hidden;
 }
 
