@@ -76,7 +76,6 @@
                         itemscope
                         itemtype="https://schema.org/HowToStep"
                         class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
-                        data-cy="recipe_step"
                         v-for="recipeItem in cocktail.receipt"
                         :key="recipeItem"
                     >
@@ -111,14 +110,12 @@
                 class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"
                 :components="cocktail.goods"
-                cyAttribute="goods"
                 withCounter
             />
             <CocktailComponents
                 class="cocktail-body__tools"
                 :title="`Потрібні штучки для приготування ${cocktail.name}`"
                 :components="cocktail.tools"
-                cyAttribute="tools"
             />
             <CocktailRecomendation
                 v-if="cocktail.recomendationCocktails"

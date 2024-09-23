@@ -21,20 +21,6 @@ Run command
 npm run start
 ```
 
-To run Cypress tests in the headless mode and get report run
-```shell
-npm run cy:e2e
-```
-
-To run Cypress autotests locally:
-```shell
-npm run cy:open
-```
-
-Command for launching server and then running tests and generating report:
-```shell
-npm run cypress:e2e
-```
 Tech stack
 - VueJs
 - NuxtJs

@@ -4,7 +4,6 @@
             class="list__item list-item"
             v-for="(cocktail, cocktailIndex) in cocktails"
             :key="`list__item--${cocktailIndex}`"
-            data-cy="cocktailCard"
         >
             <CocktailsCart :isLoadingLazy="!isFirstList" :cocktail="cocktail" />
         </div>

@@ -1,137 +1,159 @@
 @mixin defaultWrapper {
-  padding-left: 40px;
-  padding-right: 40px;
-  width: 100%;
-  overflow: hidden;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 100%;
+    overflow: hidden;
 
-  @media (min-width: 1023px) {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1900px;
-    padding-left: Min(100vw / 19, 100px);
-    padding-right: Min(100vw / 19, 100px);
-  }
+    @media (min-width: 1023px) {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1900px;
+        padding-left: Min(100vw / 19, 100px);
+        padding-right: Min(100vw / 19, 100px);
+    }
 }
+
 @mixin defaultBtn {
-  padding: 4px;
+    padding: 4px;
 
-  min-width: 40px;
-  min-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
 
-  border-radius: 4px;
+    border-radius: 4px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  @media (min-width: 1023px) {
-    padding: 8px;
+    @media (min-width: 1023px) {
+        padding: 8px;
 
-    min-width: 48px;
-    min-height: 48px;
-  
-    border-radius: 8px;
-  } 
+        min-width: 48px;
+        min-height: 48px;
+
+        border-radius: 8px;
+    }
 }
+
 @mixin fullPseudoElement {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
+
 @mixin scrollNone {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
 }
+
 @mixin defaultCount {
-  color: $colorWhite;
-  padding: 2px 5px 3px;
-  @include fontSize14;
-  line-height: 1;
-  margin-left: 10px;
-  @media(min-width: 1023px) {
-    padding-left: 6px;
-    padding-right: 6px;
-    @include fontSize16M;
+    color: $colorWhite;
+    padding: 2px 5px 3px;
+    @include fontSize14;
     line-height: 1;
-  }
+    margin-left: 10px;
 
-  background-color: $colorMain;
+    @media(min-width: 1023px) {
+        padding-left: 6px;
+        padding-right: 6px;
+        @include fontSize16M;
+        line-height: 1;
+    }
 
-  border-radius: 20px;
-}
-@mixin defaultWrapperScroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba($colorMain, 0.8) rgba($colorMain, 0.2);
-  &::-webkit-scrollbar {
-    width: 2px;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: rgba($colorMain, 0.2);
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba($colorMain, 0.8);
-  }
-  &::-webkit-scrollbar-thumb:hover {
     background-color: $colorMain;
-  }
-}
-@mixin fontSize14 {
-  font-size: 14px;
-  line-height: 20px;
-}
-@mixin fontSize16 {
-  font-size: 16px;
-  line-height: 24px;
-}
-@mixin fontSize16M {
-  @include fontSize16;
-  font-weight: 600;
-}
-@mixin fontSize18 {
-  font-size: 18px;
-  line-height: 26px;
-}
-@mixin fontSize18M {
-  @include fontSize18;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-@mixin fontSize18B {
-  @include fontSize18;
-  font-weight: bold;
-  letter-spacing: -0.02em;
-}
-@mixin fontSize24 {
-  font-size: 24px;
-  line-height: 32px;
-}
-@mixin fontSize24B {
-  @include fontSize24;
-  font-weight: bold;
-  letter-spacing: -0.02em;
-}
-@mixin fontSize32 {
-  font-size: 32px;
-  line-height: 40px;
-}
-@mixin fontSize32B {
-  @include fontSize32;
-  font-weight: bold;
-  letter-spacing: -0.02em;
-}
-@mixin fontSize48 {
-  font-size: 48px;
-  line-height: 56px;
-}
-@mixin fontSize48B {
-  @include fontSize48;
-  font-weight: bold;
-  letter-spacing: -0.02em;
+
+    border-radius: 20px;
 }
 
+@mixin defaultWrapperScroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba($colorMain, 0.8) rgba($colorMain, 0.2);
+
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba($colorMain, 0.2);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba($colorMain, 0.8);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $colorMain;
+    }
+}
+
+@mixin fontSize14 {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+@mixin fontSize16 {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+@mixin fontSize16M {
+    @include fontSize16;
+    font-weight: 600;
+}
+
+@mixin fontSize18 {
+    font-size: 18px;
+    line-height: 26px;
+}
+
+@mixin fontSize18M {
+    @include fontSize18;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+@mixin fontSize18B {
+    @include fontSize18;
+    font-weight: bold;
+    letter-spacing: -0.02em;
+}
+
+@mixin fontSize24 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+@mixin fontSize24B {
+    @include fontSize24;
+    font-weight: bold;
+    letter-spacing: -0.02em;
+}
+
+@mixin fontSize32 {
+    font-size: 32px;
+    line-height: 40px;
+}
+
+@mixin fontSize32B {
+    @include fontSize32;
+    font-weight: bold;
+    letter-spacing: -0.02em;
+}
+
+@mixin fontSize48 {
+    font-size: 48px;
+    line-height: 56px;
+}
+
+@mixin fontSize48B {
+    @include fontSize48;
+    font-weight: bold;
+    letter-spacing: -0.02em;
+}

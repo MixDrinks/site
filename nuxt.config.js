@@ -5,7 +5,6 @@ module.exports = {
     env: {
         baseUrl: MasterKeys[isDev].baseUrl,
         api: MasterKeys[isDev].api,
-        imagesUrl: MasterKeys[isDev].imagesUrl,
     },
     ssr: true,
     mode: "universal",
@@ -85,13 +84,8 @@ module.exports = {
     modules: [
         "@nuxtjs/axios",
         "@nuxtjs/style-resources",
-        "@nuxtjs/sitemap",
-        "@nuxtjs/google-analytics"
+        "@nuxtjs/sitemap"
     ],
-
-    googleAnalytics: {
-        id: "G-8DWKDM4NCR"
-    },
 
     plugins: ["~~/plugins/axios"],
 

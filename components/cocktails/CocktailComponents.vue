@@ -28,7 +28,6 @@
         </div>
         <ul class="сomponents__list сomponents-list">
             <li
-                :data-cy="cyAttribute"
                 class="сomponents-list__item сomponents-list-item"
                 v-for="item in components"
                 :key="item.url"
@@ -94,10 +93,6 @@ export default {
             required: true,
         },
         title: {
-            type: String,
-            required: true,
-        },
-        cyAttribute: {
             type: String,
             required: true,
         },
