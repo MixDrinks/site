@@ -33,7 +33,6 @@
                 class="cocktail__img"
                 width="298"
                 height="298"
-                loading="lazy"
                 :alt="`Зображення коктейля ${values.name}`"
                 title=""
             />

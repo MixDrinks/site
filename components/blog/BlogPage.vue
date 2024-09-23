@@ -15,7 +15,6 @@
                     class="post__img"
                     width="410"
                     height="200"
-                    loading="lazy"
                     title=""
                 />
                 <NuxtLink :to="`/blog/${post.slug}`" class="post__title">

@@ -54,17 +54,18 @@ export default {
     }),
 
     methods: {
-        setFocus() {
-            this.inputValue = ''
-            this.focusInput = true
-        },
-        removeFocus() {
-            this.focusInput = false
-        },
         async setListSearch() {
             this.listSearch = await this.$axios
                 .get(`/cocktails/all`)
                 .then((res) => res.data)
+        },
+        setFocus() {
+            this.inputValue = ''
+            this.focusInput = true
+            if (!!!this.listSearch.length) this.setListSearch()
+        },
+        removeFocus() {
+            this.focusInput = false
         },
     },
     computed: {
@@ -81,9 +82,6 @@ export default {
         searchClasses() {
             return { 'search-header--filled': this.focusInput }
         },
-    },
-    mounted() {
-        this.setListSearch()
     },
 }
 </script>

@@ -16,7 +16,6 @@
                     class="items-main__img"
                     width="500"
                     height="500"
-                    loading="lazy"
                     :alt="`Зображення ${items.name}`"
                     title=""
                 />

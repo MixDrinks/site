@@ -5,7 +5,6 @@
         class="post__img"
         width="410"
         height="200"
-        loading="lazy"
         title=""
     />
 </template>

@@ -55,7 +55,6 @@
                     class="cocktail-body__img"
                     width="500"
                     height="500"
-                    loading="lazy"
                     :alt="`Зображення коктейля ${cocktail.name}`"
                     title=""
                 />

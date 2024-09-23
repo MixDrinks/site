@@ -20,6 +20,7 @@
             <div class="cocktails-body__wrapper">
                 <CocktailsList
                     class="cocktails-body__list"
+                    isFirstList
                     :cocktails="cocktailsFirst"
                 />
                 <div class="cocktails-body__ads">

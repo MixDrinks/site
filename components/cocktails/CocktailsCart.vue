@@ -34,7 +34,7 @@
                     class="cart__img"
                     width="298"
                     height="298"
-                    loading="lazy"
+                    :loading="loading"
                     :alt="`Зображення коктейля ${cocktail.name}`"
                     title=""
                 />
@@ -50,9 +50,18 @@
 export default {
     name: 'CocktailsCart',
     props: {
+        isLoadingLazy: {
+            type: Boolean,
+            default: true,
+        },
         cocktail: {
             type: Object,
             required: true,
+        },
+    },
+    computed: {
+        loading() {
+            return this.isLoadingLazy ? 'lazy' : false
         },
     },
 }
