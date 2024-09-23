@@ -38,7 +38,7 @@
                     5
                 </span>
                 <span class="rating-wrapper__hidden" itemprop="author">
-                    mixdrinks
+                    MixDrinks
                 </span>
             </div>
         </div>

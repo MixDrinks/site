@@ -49,17 +49,29 @@ export default {
                 }
             }
         },
+        author() {
+            return {
+                '@type': 'Organization',
+                name: 'MixDrinks',
+            }
+        },
+        keywords() {
+            return this.cocktail.tags.map((tag) => tag.name)
+        },
         schemaRecipe() {
             return {
                 '@context': 'https://schema.org',
                 '@type': 'Recipe',
                 name: this.cocktail.name,
-                author: 'mixdrinks',
+                author: this.author,
                 description: this.description,
                 image: this.cocktail.meta.ogImage,
                 recipeIngredient: this.recipeIngredient,
                 recipeInstructions: this.recipeInstructions,
+                keywords: this.keywords,
                 recipeCategory: 'Коктейлі',
+                prepTime: 'PT10M',
+                cookTime: 'PT10M',
                 ...this.rating,
             }
         },

@@ -1,8 +1,8 @@
 <template>
     <div class="cocktail">
         <div
-            itemscope
-            itemtype="http://schema.org/Product"
+            :itemscope="!!cocktail.rating"
+            :itemtype="!!cocktail.rating ? `http://schema.org/Product` : false"
             class="cocktail__header cocktail-header"
         >
             <h1

@@ -14,6 +14,48 @@ export default {
         Footer,
         Header,
     },
+    computed: {
+        schemaOrganization() {
+            return {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                name: 'MixDrinks',
+                url: 'https://mixdrinks.org/',
+                logo: 'https://makeup.com.ua/favicon/apple-touch-icon-180x180.png',
+                sameAs: ['https://github.com/MixDrinks'],
+                contactPoint: [
+                    {
+                        '@type': 'ContactPoint',
+                        email: 'golovashchenkom@ukr.net',
+                        contactType: 'customer reviews',
+                    },
+                ],
+            }
+        },
+        schemaWebSite() {
+            return {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'MixDrinks',
+                alternateName: 'mixdrinks',
+                url: 'https://mixdrinks.org/',
+            }
+        },
+    },
+    head() {
+        return {
+            script: [
+                {
+                    type: 'application/ld+json',
+                    json: this.schemaOrganization,
+                },
+                {
+                    type: 'application/ld+json',
+                    json: this.schemaWebSite,
+                },
+            ],
+        }
+    },
 }
 </script>
 
