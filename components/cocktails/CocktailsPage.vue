@@ -60,7 +60,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import CocktailsList from '../dump/CocktailsList.vue'
+import CocktailsList from './CocktailsList.vue'
 import FilterList from './FilterList.vue'
 import Pagination from '../dump/Pagination.vue'
 import Sorting from './Sorting.vue'

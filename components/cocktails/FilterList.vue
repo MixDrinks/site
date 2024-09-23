@@ -82,7 +82,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import IconBtn from '../dump/UI/buttons/IconBtn.vue'
+import IconBtn from './../UI/IconBtn.vue'
 import FilterItem from './FilterItem.vue'
 export default {
     components: { IconBtn, FilterItem },

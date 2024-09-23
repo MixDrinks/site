@@ -5,11 +5,8 @@
             :itemtype="!!cocktail.rating ? `http://schema.org/Product` : false"
             class="cocktail__header cocktail-header"
         >
-            <h1
-                class="cocktail-header-title cocktail-header__title"
-                itemprop="name"
-            >
-                <span class="cocktail-header-title__label">
+            <h1 class="cocktail-header-title cocktail-header__title">
+                <span itemprop="name" class="cocktail-header-title__label">
                     {{ cocktail.name }}
                 </span>
             </h1>
@@ -156,7 +153,7 @@
 
 <script>
 import Rating from './Rating.vue'
-import IconBtn from '../dump/UI/buttons/IconBtn.vue'
+import IconBtn from './../UI/IconBtn.vue'
 import CocktailComponents from './CocktailComponents.vue'
 import CocktailRecomendation from './CocktailRecomendation.vue'
 

@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import CocktailsList from '~~/components/dump/CocktailsList'
-import Pagination from '~~/components/dump/Pagination'
+import CocktailsList from '../cocktails/CocktailsList.vue'
+import Pagination from '../dump/Pagination.vue'
 export default {
     components: { Pagination, CocktailsList },
     name: 'ItemsPage',

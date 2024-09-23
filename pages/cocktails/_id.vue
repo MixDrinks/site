@@ -44,6 +44,7 @@ export default {
                         '@type': 'AggregateRating',
                         ratingValue: this.cocktail.rating,
                         ratingCount: this.cocktail.ratingCount,
+                        worstRating: 1,
                         bestRating: 5,
                     },
                 }

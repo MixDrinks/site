@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import IconBtn from '../dump/UI/buttons/IconBtn.vue'
+import IconBtn from './../UI/IconBtn.vue'
 
 export default {
     name: 'CocktailComponents',

@@ -9,7 +9,7 @@
 
 <script>
 import Logo from '~~/components/dump/Logo'
-import FieldSearch from '~~/components/dump/UI/FieldSearch'
+import FieldSearch from './../UI/FieldSearch.vue'
 export default {
     components: { Logo, FieldSearch },
     name: 'Header',

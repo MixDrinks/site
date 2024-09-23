@@ -34,6 +34,9 @@
                 <span class="rating-wrapper__count" itemprop="reviewCount">
                     {{ actualReviewCount }}
                 </span>
+                <span class="rating-wrapper__hidden" itemprop="worstRating">
+                    1
+                </span>
                 <span class="rating-wrapper__hidden" itemprop="bestRating">
                     5
                 </span>
