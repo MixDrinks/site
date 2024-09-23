@@ -17,9 +17,9 @@ export default {
     async asyncData({ route, error, query, $axios }) {
         let page = ''
         if (!!!Object.keys(query).length) {
-            page = '?page=0'
+            page = ''
         } else if (!!Object.keys(query).length && !!!query.page) {
-            page = '&page=0'
+            page = ''
         } else {
             page = `?page=${query.page}`
         }
@@ -49,6 +49,12 @@ export default {
             items: items.data,
         }
     },
+    beforeMount() {
+        window.addEventListener('popstate', this.updatePage, false)
+    },
+    beforeDestroy() {
+        window.removeEventListener('popstate', this.updatePage, false)
+    },
     methods: {
         async updatePage(payload) {
             // this.startLoading()
@@ -56,12 +62,12 @@ export default {
 
             let page = ''
             if (!!!Object.keys(this.$nuxt.$route.query).length) {
-                page = '?page=0'
+                page = ''
             } else if (
                 !!Object.keys(this.$nuxt.$route.query).length &&
                 !!!this.$nuxt.$route.query.page
             ) {
-                page = '&page=0'
+                page = ''
             } else {
                 page = `?page=${this.$nuxt.$route.query.page}`
             }

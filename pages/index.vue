@@ -18,9 +18,9 @@ export default {
     async asyncData({ query, error, route, $axios }) {
         let page = ''
         if (!!!Object.keys(query).length) {
-            page = '?page=0'
+            page = ''
         } else if (!!Object.keys(query).length && !!!query.page) {
-            page = '&page=0'
+            page = ''
         }
         const params = route.fullPath.slice(1) + page
         const cocktailsFullPromise = $axios
@@ -57,12 +57,12 @@ export default {
             // this.startLoading()
             let page = ''
             if (!!!Object.keys(this.$nuxt.$route.query).length) {
-                page = '?page=0'
+                page = ''
             } else if (
                 !!Object.keys(this.$nuxt.$route.query).length &&
                 !!!this.$nuxt.$route.query.page
             ) {
-                page = '&page=0'
+                page = ''
             }
             let items = [...this.cocktailsFull.cocktails]
             const params = this.$nuxt.$route.fullPath.slice(1) + page
