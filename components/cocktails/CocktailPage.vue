@@ -53,8 +53,8 @@
                 />
                 <img
                     class="cocktail-body__img"
-                    width="500"
-                    height="500"
+                    width="332"
+                    height="208"
                     :alt="`Зображення коктейля ${cocktail.name}`"
                     title=""
                 />

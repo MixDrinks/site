@@ -42,8 +42,8 @@
                         />
                         <img
                             class="cart__img"
-                            width="160"
-                            height="160"
+                            width="120"
+                            height="120"
                             loading="lazy"
                             :alt="`Зображення коктейля ${cocktail.name}`"
                             title=""

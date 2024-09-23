@@ -120,7 +120,6 @@
 
     &__img {
         width: 100%;
-        max-height: 500px;
         display: block;
         margin-bottom: $halfShortMargin;
         margin-left: auto;
@@ -129,11 +128,12 @@
 
         @media (max-width: 1024px) {
             height: auto;
+            max-height: 300px;
         }
 
         @media (min-width: 1023px) {
             width: 500px;
-
+            height: 500px;
             margin-bottom: unset;
         }
     }

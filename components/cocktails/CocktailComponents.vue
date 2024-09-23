@@ -47,8 +47,8 @@
                         />
                         <img
                             class="сomponents-list-item-link__img"
-                            width="142"
-                            height="142"
+                            width="100"
+                            height="100"
                             loading="lazy"
                             :alt="`Зображення ${item.name}`"
                             title=""
