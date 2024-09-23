@@ -1,4 +1,4 @@
 export const types = {
-  single: "SINGLE",
-  multiple: "MULTIPLE",
+    single: "SINGLE",
+    multiple: "MULTIPLE",
 };
