@@ -4,15 +4,11 @@
             <h1 class="cocktails-header__title">
                 {{ title }}
             </h1>
-            <Sorting
-                class="cocktails-header__sorting"
-                @updatePage="updatePage"
-            />
+            <Sorting class="cocktails-header__sorting" />
         </div>
         <div class="cocktails__body cocktails-body">
             <FilterList
                 class="cocktails-body__filter"
-                @updatePage="updatePage"
                 :filterList="allFilters"
                 :totalCount="cocktailsFull.totalCount"
                 :futureCounts="cocktailsFull.futureCounts"
@@ -24,11 +20,6 @@
                     :cocktails="cocktailsFirst"
                 />
                 <div class="cocktails-body__ads">
-                    <script
-                        async
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866"
-                        crossorigin="anonymous"
-                    ></script>
                     <ins
                         class="adsbygoogle"
                         style="display: block"
@@ -37,9 +28,6 @@
                         data-ad-client="ca-pub-9033785625371866"
                         data-ad-slot="2682031593"
                     ></ins>
-                    <script>
-                        ;(adsbygoogle = window.adsbygoogle || []).push({})
-                    </script>
                 </div>
                 <CocktailsList
                     v-if="checkLength"
@@ -53,21 +41,23 @@
             class="cocktails__pagination"
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
-            :itemsCount="cocktailsFull.cocktails.length"
-            @updatePage="updatePage"
+            @loadMore="loadMore"
         />
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import CocktailsList from './CocktailsList.vue'
 import FilterList from './FilterList.vue'
 import Pagination from '../dump/Pagination.vue'
 import Sorting from './Sorting.vue'
-export default {
-    components: { FilterList, Pagination, CocktailsList, Sorting },
+import { onBeforeMount, defineComponent, computed, toRefs, unref } from 'vue'
+import { store } from '~~/store/filter'
+import { useHead, useRoute } from 'nuxt/app'
+export default defineComponent({
     name: 'CocktailsPage',
+    components: { FilterList, Pagination, CocktailsList, Sorting },
+
     props: {
         allFilters: {
             type: Array,
@@ -78,38 +68,107 @@ export default {
             required: true,
         },
     },
-    methods: {
-        updatePage(payload) {
-            this.$emit('updatePage', payload)
-        },
-        ...mapActions('filter', {
-            setOpenList: 'setFiltersIsOpenList',
-        }),
-    },
-    computed: {
-        title() {
-            return this.cocktailsFull.description
-                ? this.cocktailsFull.description
+    setup(props, { emit }) {
+        const route = useRoute()
+        const { allFilters, cocktailsFull } = toRefs(props)
+        const title = computed(() => {
+            return unref(cocktailsFull).description
+                ? unref(cocktailsFull).description
                 : 'Коктейлі'
-        },
-        checkLength() {
-            return this.cocktailsFull.cocktails.length > 12
-        },
-        cocktailsFirst() {
-            return this.checkLength
-                ? this.cocktailsFull.cocktails.slice(0, 12)
-                : this.cocktailsFull.cocktails
-        },
-        cocktailsSecond() {
-            return this.checkLength
-                ? this.cocktailsFull.cocktails.slice(12)
+        })
+        const checkLength = computed(() => {
+            return unref(cocktailsFull).cocktails.length > 12
+        })
+        const cocktailsFirst = computed(() => {
+            return unref(checkLength)
+                ? unref(cocktailsFull).cocktails.slice(0, 12)
+                : unref(cocktailsFull).cocktails
+        })
+        const cocktailsSecond = computed(() => {
+            return unref(checkLength)
+                ? unref(cocktailsFull).cocktails.slice(12)
                 : []
-        },
+        })
+        const setOpenList = () =>
+            store.actions.setFiltersIsOpenList(unref(allFilters))
+
+        onBeforeMount(() => {
+            setOpenList()
+        })
+
+        const canonical = computed(() => route.path)
+
+        const indexPage = computed(() =>
+            unref(cocktailsFull).isAddToIndex
+                ? 'index, follow'
+                : 'noindex, nofollow'
+        )
+        const description = computed(() => {
+            return unref(cocktailsFull).description
+                ? `${
+                      unref(cocktailsFull).description
+                  } 🍸 з фото та рецептами, оберий який подобаєтья тобі`
+                : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
+        })
+        const metaTitle = computed(() => {
+            return unref(cocktailsFull).description
+                ? `${
+                      unref(cocktailsFull).description
+                  } 🍹 та рецепти до них в домашніх умовах`
+                : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
+        })
+
+        useHead({
+            title: unref(metaTitle),
+            link: [{ rel: 'canonical', href: unref(canonical) }],
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: unref(description),
+                },
+                {
+                    hid: 'og:title',
+                    name: 'og:title',
+                    content: unref(metaTitle),
+                },
+                {
+                    hid: 'og:description',
+                    property: 'og:description',
+                    content: unref(description),
+                },
+                {
+                    hid: 'og:url',
+                    property: 'og:url',
+                    content: `${unref(canonical)}`,
+                },
+                { name: 'robots', content: unref(indexPage) },
+            ],
+            script: [
+                {
+                    async: true,
+                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
+                    crossorigin: 'anonymous',
+                },
+                {
+                    InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
+                },
+            ],
+        })
+
+        const loadMore = (newQuery) => {
+            emit('loadMore', newQuery)
+        }
+
+        return {
+            cocktailsFirst,
+            cocktailsSecond,
+            checkLength,
+            title,
+            loadMore,
+        }
     },
-    beforeMount() {
-        this.setOpenList(this.allFilters)
-    },
-}
+})
 </script>
 
 <style lang="scss" scoped>

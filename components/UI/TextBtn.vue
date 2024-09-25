@@ -1,8 +1,8 @@
 <template>
-    <NuxtLink class="btn" @click.native="click()" :to="href" v-if="!!href">
+    <NuxtLink class="btn" :to="href" v-if="!!href">
         <slot />
     </NuxtLink>
-    <button class="btn" v-else @click="click()">
+    <button class="btn" v-else>
         <slot />
     </button>
 </template>
@@ -14,11 +14,6 @@ export default {
         href: {
             type: String,
             default: '',
-        },
-    },
-    methods: {
-        click() {
-            this.$emit('click')
         },
     },
 }

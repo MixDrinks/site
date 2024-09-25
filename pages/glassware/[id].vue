@@ -1,42 +1,45 @@
 <template>
     <main class="wrapper">
-        <CocktailsPage
+        <ItemsPage
             :cocktailsFull="data.cocktailsFull"
-            :allFilters="data.allFilters"
+            :items="data.items"
             @loadMore="loadMore"
         />
     </main>
 </template>
 
 <script>
-import { defineComponent, unref, watch, ref } from 'vue'
+import { defineComponent, unref, ref, watch } from 'vue'
 import { useAsyncData, useRoute } from 'nuxt/app'
 
-import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
+import ItemsPage from '~~/components/items/ItemsPage.vue'
 
 export default defineComponent({
-    name: 'MainPage',
+    name: 'GlasswarePage',
     components: {
-        CocktailsPage,
+        ItemsPage,
     },
     async setup() {
         const route = useRoute()
+        const baseUrl = `https://newapi.mixdrinks.org/api/filter/glassware=${route.params.id}`
         const isLoadMore = ref(false)
 
         const getFilterRequestPath = (newQuery) => {
             if (newQuery) {
-                return `https://newapi.mixdrinks.org/api/filter${route.path}${newQuery}`
+                return `${baseUrl}${newQuery}`
             }
-            return `https://newapi.mixdrinks.org/api/filter${route.fullPath}`
+            const pageQuery = route.query.page
+                ? `?page=${route.query.page}`
+                : ''
+            return baseUrl + pageQuery
         }
-
         const { data, error, execute, pending, refresh, status } =
-            await useAsyncData('main-page', async () => {
-                const [cocktailsFull, allFilters] = await Promise.all([
+            await useAsyncData('filter-page', async () => {
+                const [cocktailsFull, items] = await Promise.all([
                     $fetch(getFilterRequestPath()),
-                    $fetch('https://newapi.mixdrinks.org/api/filters'),
+                    $fetch(`https://newapi.mixdrinks.org/api${route.path}`),
                 ])
-                return { cocktailsFull, allFilters }
+                return { cocktailsFull, items }
             })
 
         async function getNewCoctails(newQuery) {

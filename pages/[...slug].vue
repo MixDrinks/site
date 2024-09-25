@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import { defineComponent, unref, watch, ref } from 'vue'
+import { computed, defineComponent, unref, watch, ref } from 'vue'
 import { useAsyncData, useRoute } from 'nuxt/app'
 
 import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
 
 export default defineComponent({
-    name: 'MainPage',
+    name: 'FilterPage',
     components: {
         CocktailsPage,
     },
@@ -29,9 +29,8 @@ export default defineComponent({
             }
             return `https://newapi.mixdrinks.org/api/filter${route.fullPath}`
         }
-
         const { data, error, execute, pending, refresh, status } =
-            await useAsyncData('main-page', async () => {
+            await useAsyncData('filter-page', async () => {
                 const [cocktailsFull, allFilters] = await Promise.all([
                     $fetch(getFilterRequestPath()),
                     $fetch('https://newapi.mixdrinks.org/api/filters'),

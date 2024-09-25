@@ -1,18 +1,12 @@
 <template>
-    <NuxtLink
-        :class="btnClasses"
-        @click.native="click()"
-        :to="href"
-        v-if="!!href"
-        class="btn"
-    >
+    <NuxtLink :class="btnClasses" :to="href" v-if="!!href" class="btn">
         <span
             class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
         ></span>
         <slot />
     </NuxtLink>
-    <button :class="btnClasses" v-else @click="click()" class="btn">
+    <button :class="btnClasses" v-else class="btn">
         <span
             class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
@@ -44,11 +38,6 @@ export default {
         type: {
             type: String,
             default: 'big',
-        },
-    },
-    methods: {
-        click() {
-            this.$emit('click')
         },
     },
     computed: {

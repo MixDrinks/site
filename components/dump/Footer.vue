@@ -56,9 +56,12 @@
                     >
                         Документація проєкту
                     </a>
-                    <a class="footer-content-about-item__link" href="/privacy">
-                        Політика конфіденційності
-                    </a>
+                    <NuxtLink
+                        class="footer-content-about-item__link"
+                        to="/privacy"
+                    >
+                        Політика конфіденційності</NuxtLink
+                    >
                 </div>
                 <div
                     class="footer-content-about__item footer-content-about-item"

@@ -45,45 +45,54 @@
 </template>
 
 <script>
-export default {
-    name: 'FieldSearch',
-    data: () => ({
-        inputValue: '',
-        listSearch: [],
-        focusInput: false,
-    }),
+import { computed, defineComponent, ref, unref } from 'vue'
 
-    methods: {
-        async setListSearch() {
-            this.listSearch = await this.$axios
-                .get(`/cocktails/all`)
-                .then((res) => res.data)
-        },
-        setFocus() {
-            this.inputValue = ''
-            this.focusInput = true
-            if (!!!this.listSearch.length) this.setListSearch()
-        },
-        removeFocus() {
-            this.focusInput = false
-        },
-    },
-    computed: {
-        filteredList() {
-            if (!!this.inputValue) {
-                return this.listSearch.filter((listItem) => {
+export default defineComponent({
+    name: 'FieldSearch',
+
+    setup() {
+        const inputValue = ref('')
+        const listSearch = ref([])
+        const focusInput = ref(false)
+
+        const removeFocus = () => (focusInput.value = false)
+
+        async function setListSearch() {
+            listSearch.value = await $fetch(
+                `https://newapi.mixdrinks.org/api/cocktails/all`
+            )
+        }
+
+        const setFocus = () => {
+            inputValue.value = ''
+            focusInput.value = true
+            if (!!!unref(listSearch).length) setListSearch()
+        }
+
+        const searchClasses = computed(() => ({
+            'search-header--filled': unref(focusInput),
+        }))
+        const filteredList = computed(() => {
+            if (!!unref(inputValue)) {
+                return unref(listSearch).filter((listItem) => {
                     return listItem.name
                         .toLowerCase()
-                        .includes(this.inputValue.toLowerCase())
+                        .includes(unref(inputValue).toLowerCase())
                 })
             }
             return []
-        },
-        searchClasses() {
-            return { 'search-header--filled': this.focusInput }
-        },
+        })
+        return {
+            inputValue,
+            listSearch,
+            focusInput,
+            removeFocus,
+            setFocus,
+            searchClasses,
+            filteredList,
+        }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

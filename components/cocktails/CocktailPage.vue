@@ -89,11 +89,6 @@
                 </ol>
             </div>
             <div class="cocktail-body__ads">
-                <script
-                    async
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866"
-                    crossorigin="anonymous"
-                ></script>
                 <ins
                     class="adsbygoogle"
                     style="display: block"
@@ -102,9 +97,6 @@
                     data-ad-client="ca-pub-9033785625371866"
                     data-ad-slot="2682031593"
                 ></ins>
-                <script>
-                    ;(adsbygoogle = window.adsbygoogle || []).push({})
-                </script>
             </div>
             <CocktailComponents
                 class="cocktail-body__goods"
@@ -152,8 +144,10 @@ import Rating from './Rating.vue'
 import IconBtn from './../UI/IconBtn.vue'
 import CocktailComponents from './CocktailComponents.vue'
 import CocktailRecomendation from './CocktailRecomendation.vue'
+import { computed, onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
+import { useHead, useRoute } from 'nuxt/app'
 
-export default {
+export default defineComponent({
     name: 'CocktailPage',
     components: { IconBtn, Rating, CocktailComponents, CocktailRecomendation },
     props: {
@@ -162,7 +156,115 @@ export default {
             required: true,
         },
     },
-}
+    setup(props) {
+        const route = useRoute()
+        const { cocktail } = toRefs(props)
+        async function updateVisit() {
+            return await $fetch(
+                `https://newapi.mixdrinks.org/api/cocktail/${
+                    unref(cocktail).slug
+                }/visit`,
+                {
+                    method: 'POST',
+                }
+            )
+        }
+
+        onBeforeUnmount(() => {
+            updateVisit()
+        })
+        const author = {
+            '@type': 'Organization',
+            name: 'MixDrinks',
+        }
+        const canonical = route.fullPath
+        const title = `Коктейль ${
+            unref(cocktail).name
+        } 🍹 приготування в домашніх умовах за рецептом`
+        const description = `Як приготувати коктейль ${
+            unref(cocktail).name
+        } 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
+        const recipeIngredient = unref(cocktail).goods.map((good) => good.name)
+        const rating = computed(() => {
+            if (unref(cocktail).rating) {
+                return {
+                    aggregateRating: {
+                        '@type': 'AggregateRating',
+                        ratingValue: unref(cocktail).rating,
+                        ratingCount: unref(cocktail).ratingCount,
+                        worstRating: 1,
+                        bestRating: 5,
+                    },
+                }
+            }
+        })
+        const ogImage = unref(cocktail).meta.ogImage
+        const keywords = unref(cocktail).tags.map((tag) => tag.name)
+        const schemaRecipe = computed(() => {
+            return {
+                '@context': 'https://schema.org',
+                '@type': 'Recipe',
+                name: unref(cocktail).name,
+                author: author,
+                description: description,
+                image: ogImage,
+                recipeIngredient: recipeIngredient,
+                recipeInstructions: unref(cocktail).receipt,
+                keywords: keywords,
+                recipeCategory: 'Коктейлі',
+                prepTime: 'PT10M',
+                cookTime: 'PT10M',
+                ...unref(rating),
+            }
+        })
+        useHead({
+            title: title,
+            link: [{ rel: 'canonical', href: canonical }],
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: description,
+                },
+                {
+                    hid: 'og:title',
+                    name: 'og:title',
+                    content: title,
+                },
+                {
+                    hid: 'og:description',
+                    property: 'og:description',
+                    content: description,
+                },
+                {
+                    hid: 'og:url',
+                    property: 'og:url',
+                    content: canonical,
+                },
+                {
+                    hid: 'og:image',
+                    property: 'og:image',
+                    content: ogImage,
+                },
+                { name: 'robots', content: 'index, follow' },
+            ],
+            script: [
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(unref(schemaRecipe)),
+                },
+                {
+                    async: true,
+                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
+                    crossorigin: 'anonymous',
+                },
+                {
+                    InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
+                },
+            ],
+        })
+    },
+})
 </script>
 
 <style lang="scss" scoped>

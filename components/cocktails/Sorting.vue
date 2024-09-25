@@ -4,7 +4,6 @@
         <ul class="sorting__list sorting-list">
             <li
                 class="sorting-list__item sorting-list-item"
-                @click="updatePage()"
                 v-for="sortItem in sortWithUrl"
                 :key="`sorting-list__item-${sortItem.id}`"
             >
@@ -21,31 +20,38 @@
 </template>
 
 <script>
+import { useRoute } from 'nuxt/app'
+import { computed, defineComponent } from 'vue'
 import { sortList } from '~~/utils/sort'
-export default {
+
+export default defineComponent({
     name: 'Sorting',
-    methods: {
-        updatePage(payload) {
-            this.$emit('updatePage', payload)
-        },
-        getLinkClasses(value) {
-            return { 'sorting-list-item__link--active': value }
-        },
-    },
-    computed: {
-        sortWithUrl() {
-            const sortValue = this.$nuxt.$route.query.sort
+
+    setup() {
+        const route = useRoute()
+
+        const sortWithUrl = computed(() => {
+            const sortValue = route.query.sort
             return sortList.map((sortItem) => ({
                 ...sortItem,
                 url:
                     sortValue === sortItem.value
-                        ? ``
+                        ? `${route.path}`
                         : `?sort=${sortItem.value}`,
                 isActive: sortValue === sortItem.value,
             }))
-        },
+        })
+
+        const getLinkClasses = (value) => ({
+            'sorting-list-item__link--active': value,
+        })
+
+        return {
+            getLinkClasses,
+            sortWithUrl,
+        }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

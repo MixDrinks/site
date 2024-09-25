@@ -50,14 +50,11 @@
 </template>
 
 <script>
-export default {
+import { ref, toRefs, unref, defineComponent, computed, onMounted } from 'vue'
+
+export default defineComponent({
     name: 'Rating',
-    data: () => ({
-        hoverItemIndex: null,
-        ratinglist: [],
-        value: null,
-        isSet: false,
-    }),
+
     props: {
         ratingCount: {
             type: Number,
@@ -76,72 +73,110 @@ export default {
             required: true,
         },
     },
-    methods: {
-        setRating(value) {
-            this.$axios.post(`/cocktail/${this.slug}/score`, {
-                value: value + 1,
-            })
-            localStorage.setItem('ratinglist', [...this.ratinglist, this.id])
-            this.value = value + 1
-            this.isSet = true
-        },
-        getStarItemClasses(value) {
-            if (this.hoverItemIndex !== null) {
+
+    setup(props) {
+        const { ratingCount, ratingValue, id, slug } = toRefs(props)
+        const hoverItemIndex = ref(null)
+        const ratinglist = ref([])
+        const value = ref(null)
+        const isSet = ref(false)
+
+        async function updateRating(starIndex) {
+            return await $fetch(
+                `https://newapi.mixdrinks.org/api/cocktail/${unref(
+                    slug
+                )}/score`,
+                {
+                    method: 'POST',
+                    body: {
+                        value: starIndex + 1,
+                    },
+                }
+            )
+        }
+
+        const setRating = (starIndex) => {
+            localStorage.setItem('ratinglist', [
+                ...unref(ratinglist),
+                unref(id),
+            ])
+            value.value = starIndex + 1
+            isSet.value = true
+            updateRating(starIndex)
+        }
+
+        const getStarItemClasses = (value) => {
+            if (unref(hoverItemIndex) !== null) {
                 return {
                     'rating-wrapper-stars-item--hover':
-                        value <= this.hoverItemIndex,
+                        value <= unref(hoverItemIndex),
                 }
             }
-        },
-    },
-    computed: {
-        actualRatingValue() {
-            const ratingValue = this.ratingValue ? this.ratingValue : 0
-            if (this.isSet && this.value) {
+        }
+
+        const actualRatingValue = computed(() => {
+            const newRatingValue = unref(ratingValue) ? unref(ratingValue) : 0
+            if (unref(isSet) && unref(value)) {
                 return Number(
                     (
-                        (ratingValue * this.ratingCount + this.value) /
-                        (this.ratingCount + 1)
+                        (newRatingValue * unref(ratingCount) + unref(value)) /
+                        (unref(ratingCount) + 1)
                     ).toFixed(1)
                 )
             }
-            return Number(ratingValue.toFixed(1))
-        },
-        actualReviewCount() {
-            if (this.isSet && this.value) {
-                return this.ratingCount + 1
+            return Number(newRatingValue.toFixed(1))
+        })
+        const actualReviewCount = computed(() => {
+            if (unref(isSet) && unref(value)) {
+                return unref(ratingCount) + 1
             }
-            return this.ratingCount
-        },
-        stars() {
+            return unref(ratingCount)
+        })
+        const stars = computed(() => {
             let arr = []
-            for (let index = 0; index < 5; index++) {
+            for (let index = 1; index <= 5; index++) {
                 let width
-                if (index + 1 < this.actualRatingValue) {
-                    width = 1
-                } else if (1 - (index - this.actualRatingValue) > 0) {
-                    width = 0 - (index - this.actualRatingValue)
+                if (index < unref(actualRatingValue)) {
+                    width = 100
+                } else if (1 - (index - unref(actualRatingValue)) > 0) {
+                    width = (1 - (index - unref(actualRatingValue))) * 100
                 } else {
                     width = 0
                 }
                 arr.push({
                     id: index,
-                    width: width.toFixed(2) * 100 + '%',
+                    width: width.toFixed(2) + '%',
                 })
             }
             return arr
-        },
-        wrapperClasses() {
-            return { 'rating__wrapper--lock': this.isSet }
-        },
-    },
-    mounted() {
-        if (localStorage.getItem('ratinglist')) {
-            this.ratinglist = [...localStorage.getItem('ratinglist').split(',')]
-            this.isSet = this.ratinglist.includes(this.id.toString())
+        })
+        const wrapperClasses = computed(() => ({
+            'rating__wrapper--lock': unref(isSet),
+        }))
+
+        onMounted(() => {
+            if (localStorage.getItem('ratinglist')) {
+                ratinglist.value = [
+                    ...localStorage.getItem('ratinglist').split(','),
+                ]
+                isSet.value = unref(ratinglist).includes(unref(id).toString())
+            }
+        })
+
+        return {
+            hoverItemIndex,
+            ratinglist,
+            value,
+            isSet,
+            getStarItemClasses,
+            wrapperClasses,
+            actualReviewCount,
+            actualRatingValue,
+            stars,
+            setRating,
         }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

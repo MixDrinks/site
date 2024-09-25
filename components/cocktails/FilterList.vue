@@ -16,22 +16,19 @@
                         type="short"
                         icon="/img/icons/trash.svg"
                         :href="`${clearFilterUrl}`"
-                        @click="updatePage"
                     >
                         Відмінити всі фільтри
                     </IconBtn>
                 </transition>
             </div>
-            <div
-                class="filters__tag-cloud filters-tag-cloud"
-                @click="updatePage"
-            >
-                <transition-group
-                    class="filters-tag-cloud__list filters-tag-cloud-list"
-                    name="fate-in"
-                    mode="page"
-                    appear
-                >
+            <div class="filters__tag-cloud filters-tag-cloud">
+                <div class="filters-tag-cloud__list filters-tag-cloud-list">
+                    <!-- <transition-group
+                        class="filters-tag-cloud__list filters-tag-cloud-list"
+                        name="fate-in"
+                        mode="page"
+                        appear
+                    > -->
                     <div
                         class="filters-tag-cloud-list__item filters-tag-cloud-list-item"
                         v-for="filterItem in activeFilter"
@@ -46,7 +43,8 @@
                             {{ filterItem.name }}
                         </NuxtLink>
                     </div>
-                </transition-group>
+                    <!-- </transition-group> -->
+                </div>
             </div>
             <div class="filters__wrapper filters-wrapper">
                 <FilterItem
@@ -54,7 +52,6 @@
                     v-for="filterItem in filterListWithUrl"
                     :key="filterItem.id"
                     :filterItem="filterItem"
-                    @updatePage="updatePage"
                 />
             </div>
         </div>
@@ -80,12 +77,16 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { computed, defineComponent, toRefs, unref } from 'vue'
+import { useRoute } from 'nuxt/app'
 import IconBtn from './../UI/IconBtn.vue'
 import FilterItem from './FilterItem.vue'
-export default {
+import { store } from '~~/store/filter'
+
+export default defineComponent({
     components: { IconBtn, FilterItem },
     name: 'FilterList',
+
     props: {
         filterList: {
             type: Array,
@@ -100,30 +101,36 @@ export default {
             required: true,
         },
     },
-    methods: {
-        updatePage(payload) {
-            this.$emit('updatePage', payload)
-        },
-        ...mapActions('filter', {
-            changeFilterIsOpen: 'changeMainIsOpen',
-        }),
-        getRel(value) {
-            return value ? 'tag' : 'nofollow'
-        },
-    },
-    computed: {
-        ...mapGetters('filter', {
-            isFilterOpen: 'getMainIsOpen',
-        }),
-        filterListWithUrl() {
+
+    setup(props) {
+        const route = useRoute()
+        const { filterList, futureCounts } = toRefs(props)
+        const { isFilterOpen } = toRefs(store.getters)
+
+        const clearFilterUrl = computed(() => {
+            if (route.query.sort) {
+                return `/?sort=${route.query.sort}`
+            }
+            return '/'
+        })
+        const activeFilter = computed(() => {
+            const arr = unref(filterListWithUrl)
+                .map((el) => el.items)
+                .flat()
+            return arr.filter((item) => item.isActive)
+        })
+        const mainClasees = computed(() => {
+            return { 'filters__main--hidden': !unref(isFilterOpen) }
+        })
+        const filterListWithUrl = computed(() => {
             let futureFilters = {}
-            for (let filter in this.futureCounts) {
+            for (let filter in unref(futureCounts)) {
                 futureFilters[filter] = {}
-                this.futureCounts[filter].forEach((filterItem) => {
+                unref(futureCounts)[filter].forEach((filterItem) => {
                     futureFilters[filter][filterItem.id] = filterItem
                 })
             }
-            return this.filterList.map((filterItem) => ({
+            return unref(filterList).map((filterItem) => ({
                 ...filterItem,
                 items: filterItem.items.map((item) => {
                     const newValue = futureFilters[filterItem.id][item.id]
@@ -139,22 +146,25 @@ export default {
                     return value
                 }),
             }))
-        },
-        clearFilterUrl() {
-            if (this.$nuxt.$route.query.sort) {
-                return `/?sort=${this.$nuxt.$route.query.sort}`
-            }
-            return '/'
-        },
-        activeFilter() {
-            const arr = this.filterListWithUrl.map((el) => el.items).flat()
-            return arr.filter((item) => item.isActive)
-        },
-        mainClasees() {
-            return { 'filters__main--hidden': !this.isFilterOpen }
-        },
+        })
+
+        const getRel = (value) => (value ? 'tag' : 'nofollow')
+        const changeFilterIsOpen = () => {
+            store.actions.changeMainIsOpen()
+        }
+
+        return {
+            getRel,
+            activeFilter,
+            mainClasees,
+            clearFilterUrl,
+            filterListWithUrl,
+            isFilterOpen,
+            changeFilterIsOpen,
+            store,
+        }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

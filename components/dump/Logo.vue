@@ -8,14 +8,21 @@
 </template>
 
 <script>
-export default {
+import { computed } from 'vue'
+import { useRoute } from 'nuxt/app'
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'Logo',
-    computed: {
-        isHomePage() {
-            return this.$route.fullPath === '/'
-        },
+
+    setup() {
+        const route = useRoute()
+        const isHomePage = computed(() => route.fullPath === '/')
+        return {
+            isHomePage,
+            route,
+        }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

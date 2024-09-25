@@ -1,7 +1,9 @@
 <template>
     <div class="main">
         <Header />
-        <Nuxt class="main__wrapper" />
+        <div class="main__wrapper">
+            <slot />
+        </div>
         <Footer />
     </div>
 </template>
@@ -9,54 +11,53 @@
 <script>
 import Footer from '~~/components/dump/Footer.vue'
 import Header from '~~/components/dump/Header.vue'
-export default {
+
+import { defineComponent } from 'vue'
+import { useHead } from 'nuxt/app'
+
+export default defineComponent({
     components: {
         Footer,
         Header,
     },
-    computed: {
-        schemaOrganization() {
-            return {
-                '@context': 'https://schema.org',
-                '@type': 'Organization',
-                name: 'MixDrinks',
-                url: 'https://mixdrinks.org/',
-                logo: 'https://makeup.com.ua/favicon/apple-touch-icon-180x180.png',
-                sameAs: ['https://github.com/MixDrinks'],
-                contactPoint: [
-                    {
-                        '@type': 'ContactPoint',
-                        email: 'golovashchenkom@ukr.net',
-                        contactType: 'customer reviews',
-                    },
-                ],
-            }
-        },
-        schemaWebSite() {
-            return {
-                '@context': 'https://schema.org',
-                '@type': 'WebSite',
-                name: 'MixDrinks',
-                alternateName: 'mixdrinks',
-                url: 'https://mixdrinks.org/',
-            }
-        },
-    },
-    head() {
-        return {
-            script: [
+
+    setup() {
+        const schemaOrganization = {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'MixDrinks',
+            url: 'https://mixdrinks.org/',
+            logo: 'https://makeup.com.ua/favicon/apple-touch-icon-180x180.png',
+            sameAs: ['https://github.com/MixDrinks'],
+            contactPoint: [
                 {
-                    type: 'application/ld+json',
-                    json: this.schemaOrganization,
-                },
-                {
-                    type: 'application/ld+json',
-                    json: this.schemaWebSite,
+                    '@type': 'ContactPoint',
+                    email: 'golovashchenkom@ukr.net',
+                    contactType: 'customer reviews',
                 },
             ],
         }
+        const schemaWebSite = {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'MixDrinks',
+            alternateName: 'mixdrinks',
+            url: 'https://mixdrinks.org/',
+        }
+        useHead({
+            script: [
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(schemaOrganization),
+                },
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(schemaWebSite),
+                },
+            ],
+        })
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

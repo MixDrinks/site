@@ -1,44 +1,39 @@
-export const state = () => ({
-  mainIsOpen: false,
-  filtersIsOpenList: [],
-  listIsSet: false,
-});
+import { computed, reactive, readonly } from "vue";
 
-export const mutations = {
-  CHANGE_MAIN_IS_OPEN(state) {
+const state = reactive({
+    mainIsOpen: false,
+    filtersIsOpenList: [],
+    listIsSet: false,
+})
+
+function changeMainIsOpen() {
     state.mainIsOpen = !state.mainIsOpen;
-  },
-  UPDATE_FILTER_IS_OPEN_LIST(state, id) {
+}
+function updateFiltersIsOpenList(id) {
     if (state.filtersIsOpenList.includes(id)) {
-      state.filtersIsOpenList = state.filtersIsOpenList.filter(
-        (el) => el != id
-      );
+        state.filtersIsOpenList = [...state.filtersIsOpenList.filter(
+            (el) => el !== id
+        )];
     } else {
-      state.filtersIsOpenList.push(id);
+        state.filtersIsOpenList.push(id);
     }
-  },
-  SET_FILTER_IS_OPEN_LIST(state, list) {
+}
+function setFiltersIsOpenList(list) {
     if (!state.listIsSet) {
-      state.filtersIsOpenList = list.filter((listItem) => !listItem.isOpen).map(listItem => listItem.id)
+        state.filtersIsOpenList = [...list.filter((listItem) => !listItem.isOpen).map(listItem => listItem.id)]
     }
     state.listIsSet = true
+}
 
-  },
-};
-
-export const actions = {
-  changeMainIsOpen(ctx) {
-    ctx.commit("CHANGE_MAIN_IS_OPEN");
-  },
-  updateFiltersIsOpenList(ctx, id) {
-    ctx.commit("UPDATE_FILTER_IS_OPEN_LIST", id);
-  },
-  setFiltersIsOpenList(ctx, list) {
-    ctx.commit("SET_FILTER_IS_OPEN_LIST", list);
-  }
-};
-export const getters = {
-  getMainIsOpen: (state) => state.mainIsOpen,
-  getFiltersIsOpenList: (state) => state.filtersIsOpenList,
-  getFiltersListIsSet: (state) => state.listIsSet
-};
+export const store = readonly({
+    getters: {
+        isFilterOpen: computed(() => state.mainIsOpen),
+        filtersIsOpenList: computed(() => state.filtersIsOpenList),
+        filtersListIsSet: computed(() => state.listIsSet),
+    },
+    actions: {
+        changeMainIsOpen,
+        updateFiltersIsOpenList,
+        setFiltersIsOpenList,
+    }
+})

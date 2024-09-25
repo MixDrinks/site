@@ -2,33 +2,27 @@
     "name": "mixdrinks",
     "version": "1.0.0",
     "private": false,
+    "type": "module",
     "scripts": {
-        "dev": "npm install && cross-env NODE_ENV=dev nuxt dev",
-        "build": "cross-env NODE_ENV=prod nuxt build",
-        "start": "cross-env NODE_ENV=prod nuxt start",
-        "export": "cross-env NODE_ENV=prod nuxt export",
-        "serve": "cross-env NODE_ENV=prod nuxt serve",
-        "buildstart": "cross-env NODE_ENV=prod nuxt build && nuxt start"
+        "dev": "npm install && cross-env NODE_ENV=development nuxt dev",
+        "build": "cross-env NODE_ENV=production nuxt build",
+        "start": "cross-env NODE_ENV=production nuxt start",
+        "export": "cross-env NODE_ENV=production nuxt export",
+        "serve": "cross-env NODE_ENV=production nuxt serve",
+        "buildstart": "cross-env NODE_ENV=production nuxt build && nuxt start"
     },
     "engines": {
-        "node": "16.20.2"
+        "node": "20.17.0"
     },
     "dependencies": {
-        "@nuxtjs/axios": "^5.13.6",
-        "@nuxtjs/sitemap": "^2.4.0",
-        "@nuxtjs/style-resources": "1.2.1",
-        "cross-env": "^7.0.3",
-        "nuxt": "^2.15.8",
-        "serve": "^13.0.2"
+        "@nuxt/devtools": "latest",
+        "nuxt": "3.13.2",
+        "vue": "3.5.8"
     },
     "devDependencies": {
-        "css-loader": "^5.0.0",
-        "postcss": "^8.4.14",
-        "postcss-import": "^13.0.0",
-        "postcss-loader": "^4.1.0",
-        "postcss-url": "^10.1.1",
-        "prettier": "3.3.2",
+        "cross-env": "^7.0.3",
+        "nuxt-simple-sitemap": "^4.4.1",
         "sass": "1.77.6",
-        "sass-loader": "^10.5.2"
+        "sass-loader": "^16.0.2"
     }
 }

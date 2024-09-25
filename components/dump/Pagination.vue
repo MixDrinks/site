@@ -4,7 +4,7 @@
             class="pagination__load-more"
             v-show="!!nextPage"
             :href="!!nextPage ? nextPage.link : '/'"
-            @click="updatePage({ loadMore: true })"
+            @click="loadMore"
             rel="nofollow"
         >
             Показати ще {{ limit }}
@@ -13,9 +13,8 @@
             <ul class="pagination-controls__list pagination-controls-list">
                 <li
                     class="pagination-controls-list__item pagination-controls-list-item"
-                    v-for="page in pagination"
-                    :key="page.id"
-                    @click="updatePage"
+                    v-for="(page, pageIndex) in pagination"
+                    :key="`pagination-controls-list__item--${pageIndex}`"
                 >
                     <TextBtn
                         class="pagination-controls-list-item__link"
@@ -41,7 +40,6 @@
                     icon="/img/icons/arrow.svg"
                     :lock="!!!prevPage"
                     :href="!!prevPage ? prevPage.link : '/'"
-                    @click.native="updatePage"
                     rel="prev"
                 >
                     Попередня сторінка
@@ -52,7 +50,6 @@
                     icon="/img/icons/arrow.svg"
                     :lock="!!!nextPage"
                     :href="!!nextPage ? nextPage.link : '/'"
-                    @click.native="updatePage"
                     rel="next"
                 >
                     Наступна сторінка
@@ -63,11 +60,15 @@
 </template>
 
 <script>
+import { computed, defineComponent, toRefs, unref } from 'vue'
+import { useRoute } from 'vue-router'
+
 import IconBtn from './../UI/IconBtn.vue'
 import TextBtn from './../UI/TextBtn.vue'
-export default {
-    components: { IconBtn, TextBtn },
+export default defineComponent({
     name: 'Pagination',
+    components: { IconBtn, TextBtn },
+
     props: {
         totalItems: {
             type: Number,
@@ -77,131 +78,103 @@ export default {
             type: Number,
             required: true,
         },
-        itemsCount: {
-            type: Number,
-            required: true,
-        },
     },
-    methods: {
-        updatePage(payload) {
-            this.$emit('updatePage', payload)
-        },
-    },
-    computed: {
-        currentPage() {
-            if (this.$nuxt.$route.query && this.$nuxt.$route.query.page) {
-                return +this.$nuxt.$route.query.page
-            } else {
-                return 0
-            }
-        },
-        query() {
-            let temp = ''
-            for (let [key, value] of Object.entries(this.$nuxt.$route.query)) {
-                if (key != 'page') {
-                    temp = temp + `&${key}=${value}`
-                }
-            }
-            return temp
-        },
-        allPageArr() {
-            let allPageArr = []
-            const pageCount = Math.ceil(this.totalItems / this.limit)
-            for (let index = 0; index < pageCount; index++) {
-                let link =
-                    index === 0
-                        ? `?${this.query}`
-                        : `?page=${index}${this.query}`
-                allPageArr.push({
-                    title: index + 1,
-                    type: `link`,
-                    id: index,
-                    link: link,
-                })
-            }
-            return allPageArr
-        },
-        pagination() {
-            let pagination = []
-            let prevPagesArr = []
-            let nextPagesArr = []
-            const differencePaginationIndex = 2
-            const currentPage = this.currentPage
-            const allPageArr = this.allPageArr
-            const dotsObj = {
-                title: '...',
-                type: 'dots',
-            }
-            const currentPageObj = {
-                title: currentPage + 1,
-                type: 'current',
-                id: currentPage,
+    setup(props, { emit }) {
+        const route = useRoute()
+        const differencePaginationIndex = 2
+        const dotsObj = {
+            title: '...',
+            type: 'dots',
+        }
+        const { totalItems, limit } = toRefs(props)
+
+        const getPage = (pageIndex) => {
+            if (!pageIndex) {
+                return unref(query) ? unref(query) : route.path
             }
 
-            if (currentPage > differencePaginationIndex) {
-                prevPagesArr.push(allPageArr[0])
-                prevPagesArr.push({
-                    ...dotsObj,
-                    id: currentPage - 2,
-                })
-                prevPagesArr.push(allPageArr[currentPage - 1])
-            } else {
-                for (let index = 0; index < currentPage; index++) {
-                    let link =
-                        index === 0
-                            ? `?${this.query}`
-                            : `?page=${index}${this.query}`
-                    prevPagesArr.push({
-                        title: index + 1,
-                        type: `link`,
-                        id: index,
-                        link: link,
-                    })
-                }
+            return `${unref(query) ? unref(query) + '&' : '?'}page=${pageIndex}`
+        }
+        const query = computed(() => {
+            if (route.query.sort) {
+                return `?sort=${route.query.sort}`
             }
+        })
+        const currentPage = computed(() => {
+            if (route.query.page) {
+                return Number(route.query.page)
+            }
+            return 0
+        })
+        const pageCount = computed(() =>
+            Math.ceil(unref(totalItems) / unref(limit))
+        )
+        const prevPage = computed(() => {
+            if (unref(currentPage) != 0) {
+                return unref(allPageArr)[unref(currentPage) - 1]
+            }
+        })
+        const nextPage = computed(() => {
+            if (unref(currentPage) != unref(allPageArr).length) {
+                return unref(allPageArr)[unref(currentPage) + 1]
+            }
+        })
+        const allPageArr = computed(() => {
+            let arr = []
+            for (let index = 0; index < unref(pageCount); index++) {
+                arr.push({
+                    title: index + 1,
+                    link: getPage(index),
+                    type: 'link',
+                })
+            }
+            return arr
+        })
+        const currentPageObj = computed(() => ({
+            ...unref(allPageArr)[unref(currentPage)],
+            type: 'current',
+        }))
+        const prevPagesArr = computed(() => {
+            if (unref(currentPage) > differencePaginationIndex) {
+                return [unref(allPageArr)[0], dotsObj, unref(prevPage)]
+            }
+            return unref(allPageArr).slice(0, unref(currentPage))
+        })
+        const nextPagesArr = computed(() => {
             if (
-                allPageArr.length - currentPage >
+                unref(pageCount) - unref(currentPage) >
                 differencePaginationIndex + 1
             ) {
-                nextPagesArr.push(allPageArr[currentPage + 1])
-                nextPagesArr.push({
-                    ...dotsObj,
-                    id: currentPage + 2,
-                })
-                nextPagesArr.push(allPageArr[allPageArr.length - 1])
-            } else {
-                for (
-                    let index = currentPage + 1;
-                    index < allPageArr.length;
-                    index++
-                ) {
-                    nextPagesArr.push({
-                        title: index + 1,
-                        type: `link`,
-                        id: index,
-                        link: `?page=${index}${this.query}`,
-                    })
-                }
+                return [
+                    unref(nextPage),
+                    dotsObj,
+                    unref(allPageArr)[unref(pageCount) - 1],
+                ]
             }
-            pagination = [...prevPagesArr, currentPageObj, ...nextPagesArr]
-            return pagination
-        },
-        prevPage() {
-            if (this.currentPage != 0) {
-                return this.allPageArr[this.currentPage - 1]
-            } else {
-                return false
-            }
-        },
-        nextPage() {
-            if (this.currentPage != this.allPageArr.length) {
-                return this.allPageArr[this.currentPage + 1]
-            } else {
-                return false
-            }
-        },
+            return unref(allPageArr).slice(unref(currentPage) + 1)
+        })
+        const pagination = computed(() => {
+            return [
+                ...unref(prevPagesArr),
+                unref(currentPageObj),
+                ...unref(nextPagesArr),
+            ]
+        })
+
+        const loadMore = () => {
+            emit('loadMore', unref(nextPage).link)
+        }
+
+        return {
+            currentPage,
+            allPageArr,
+            prevPage,
+            nextPage,
+            pagination,
+            loadMore,
+        }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

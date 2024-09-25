@@ -8,9 +8,11 @@
 </template>
 
 <script>
-import Logo from '~~/components/dump/Logo'
+import { defineComponent } from 'vue'
+
+import Logo from './Logo.vue'
 import FieldSearch from './../UI/FieldSearch.vue'
-export default {
+export default defineComponent({
     components: { Logo, FieldSearch },
     name: 'Header',
     data: () => ({
@@ -18,7 +20,7 @@ export default {
         isMenuShow: true,
         headerHeight: null,
     }),
-}
+})
 </script>
 
 <style lang="scss" scoped>

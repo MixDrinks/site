@@ -1,12 +1,10 @@
 export const MasterKeys = {
-  dev: {
+  development: {
     baseUrl: "http://localhost:8080",
-    api: "https://newapi.mixdrinks.org/api",
+    devtools: true,
   },
-  prod: {
+  production: {
     baseUrl: "https://mixdrinks.org",
-    api: "https://newapi.mixdrinks.org/api",
+    devtools: false,
   },
 };
-
-// old: 'https://api.mixdrinks.org'
