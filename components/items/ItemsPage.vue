@@ -46,7 +46,8 @@
 import { toRefs, defineComponent, unref } from 'vue'
 import CocktailsList from '../cocktails/CocktailsList.vue'
 import Pagination from '../dump/Pagination.vue'
-import { useHead, useRoute } from 'nuxt/app'
+import { head } from '~~/utils/head'
+
 export default defineComponent({
     name: 'ItemsPage',
     components: { Pagination, CocktailsList },
@@ -62,59 +63,20 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const route = useRoute()
-        const { items } = toRefs(props)
+        const { items, cocktailsFull } = toRefs(props)
         const loadMore = (newQuery) => {
             emit('loadMore', newQuery)
         }
 
-        const canonical = route.path
+        const headTitle = `Дізнайся в яких коктейлях 🍸 використовується ${unref(items).name}`
 
-        const indexPage = route.query.page
-            ? 'noindex, nofollow'
-            : 'index, follow'
+        const headDescription = `${unref(items).name} використовується в представлених коктейлях 🍸 наведені рецепти та фото`
 
-        const title = `Дізнайся в яких коктейлях 🍸 використовується ${
-            unref(items).name
-        }`
-
-        const description = `${
-            unref(items).name
-        } використовується в представлених коктейлях 🍸 наведені рецепти та фото`
-
-        const ogImage = unref(items).meta.ogImage
-
-        useHead({
-            title: title,
-            link: [{ rel: 'canonical', canonical }],
-            meta: [
-                {
-                    hid: 'description',
-                    name: 'description',
-                    content: description,
-                },
-                {
-                    hid: 'og:title',
-                    name: 'og:title',
-                    content: title,
-                },
-                {
-                    hid: 'og:description',
-                    property: 'og:description',
-                    content: description,
-                },
-                {
-                    hid: 'og:url',
-                    property: 'og:url',
-                    content: canonical,
-                },
-                {
-                    hid: 'og:image',
-                    property: 'og:image',
-                    content: ogImage,
-                },
-                { name: 'robots', content: indexPage },
-            ],
+        head({
+            title: headTitle,
+            description: headDescription,
+            indexPage: unref(cocktailsFull).isAddToIndex,
+            image: unref(items).meta.ogImage
         })
 
         return {

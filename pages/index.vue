@@ -10,7 +10,7 @@
 
 <script>
 import { defineComponent, unref, watch, ref } from 'vue'
-import { useAsyncData, useRoute } from 'nuxt/app'
+import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 
 import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
 
@@ -20,6 +20,7 @@ export default defineComponent({
         CocktailsPage,
     },
     async setup() {
+        const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
         const isLoadMore = ref(false)
 
@@ -33,14 +34,14 @@ export default defineComponent({
         const { data, error, execute, pending, refresh, status } =
             await useAsyncData('main-page', async () => {
                 const [cocktailsFull, allFilters] = await Promise.all([
-                    $fetch(getFilterRequestPath()),
+                    $fetchWIXUP(getFilterRequestPath()),
                     $fetch('https://newapi.mixdrinks.org/api/filters'),
                 ])
                 return { cocktailsFull, allFilters }
             })
 
         async function getNewCoctails(newQuery) {
-            return await $fetch(getFilterRequestPath(newQuery))
+            return await $fetchWIXUP(getFilterRequestPath(newQuery))
         }
         const loadMore = (newQuery) => {
             isLoadMore.value = true

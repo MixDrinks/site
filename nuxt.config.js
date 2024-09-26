@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { MasterKeys } from "./config";
+import { MasterKeys } from './config';
+import { schemaOrganization, schemaWebSite } from './utils/schema'
 
 const isDev = process.env.NODE_ENV;
 
@@ -8,9 +9,6 @@ export default defineNuxtConfig({
     imports: {
         autoImport: false
     },
-    env: {
-        baseUrl: MasterKeys[isDev].baseUrl,
-    },
     ssr: true,
 
     app: {
@@ -18,17 +16,16 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: "uk",
             },
-            title: process.env.npm_package_name || "",
+            title: 'MixDrinks',
             meta: [
                 { charset: "utf-8" },
                 { name: "viewport", content: "width=device-width, initial-scale=1" },
-                // { name: "robots", content: "noindex, nofollow" },
                 { name: "msapplication-TileColor", content: "#603cba" },
                 { name: "theme-color", content: "#ffffff" },
                 {
                     hid: "description",
                     name: "description",
-                    content: process.env.npm_package_description || "",
+                    content: "Рецепти коктейлів на сайті MixDrinks",
                 },
             ],
             link: [
@@ -55,6 +52,10 @@ export default defineNuxtConfig({
                     href: "/favicon/safari-pinned-tab.svg",
                     color: "#5bbad5",
                 },
+                {
+                    rel: "preconnect",
+                    href: MasterKeys[isDev].cdn,
+                },
             ],
             script: [
                 {
@@ -63,6 +64,14 @@ export default defineNuxtConfig({
                 },
                 {
                     src: '/scripts/googleAnalytics.js',
+                },
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(schemaOrganization),
+                },
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(schemaWebSite),
                 },
             ],
         },

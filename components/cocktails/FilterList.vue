@@ -5,7 +5,7 @@
                 <div class="filters-header__title filters-header-title">
                     Фільтри
                     <span class="filters-header-title__count">
-                        {{ totalCount }}
+                        {{ allCocktailsNumber }}
                     </span>
                 </div>
                 <transition name="fate-in" appear>
@@ -16,6 +16,7 @@
                         type="short"
                         icon="/img/icons/trash.svg"
                         :href="`${clearFilterUrl}`"
+                        @click="changeFilterIsOpen"
                     >
                         Відмінити всі фільтри
                     </IconBtn>
@@ -92,7 +93,7 @@ export default defineComponent({
             type: Array,
             required: true,
         },
-        totalCount: {
+        allCocktailsNumber: {
             type: Number,
             default: 0,
         },

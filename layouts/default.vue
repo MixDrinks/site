@@ -13,49 +13,11 @@ import Footer from '~~/components/dump/Footer.vue'
 import Header from '~~/components/dump/Header.vue'
 
 import { defineComponent } from 'vue'
-import { useHead } from 'nuxt/app'
 
 export default defineComponent({
     components: {
         Footer,
         Header,
-    },
-
-    setup() {
-        const schemaOrganization = {
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'MixDrinks',
-            url: 'https://mixdrinks.org/',
-            logo: 'https://mixdrinks.org/favicon/apple-touch-icon-180x180.png',
-            sameAs: ['https://github.com/MixDrinks'],
-            contactPoint: [
-                {
-                    '@type': 'ContactPoint',
-                    email: 'golovashchenkom@ukr.net',
-                    contactType: 'customer reviews',
-                },
-            ],
-        }
-        const schemaWebSite = {
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'MixDrinks',
-            alternateName: 'mixdrinks',
-            url: 'https://mixdrinks.org/',
-        }
-        useHead({
-            script: [
-                {
-                    type: 'application/ld+json',
-                    children: JSON.stringify(schemaOrganization),
-                },
-                {
-                    type: 'application/ld+json',
-                    children: JSON.stringify(schemaWebSite),
-                },
-            ],
-        })
     },
 })
 </script>

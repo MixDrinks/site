@@ -2,7 +2,7 @@
     <div class="cocktails">
         <div class="cocktails__header cocktails-header">
             <h1 class="cocktails-header__title">
-                {{ title }}
+                {{ pageTitle }}
             </h1>
             <Sorting class="cocktails-header__sorting" />
         </div>
@@ -10,7 +10,7 @@
             <FilterList
                 class="cocktails-body__filter"
                 :filterList="allFilters"
-                :totalCount="cocktailsFull.totalCount"
+                :allCocktailsNumber="cocktailsFull.totalCount"
                 :futureCounts="cocktailsFull.futureCounts"
             />
             <div class="cocktails-body__wrapper">
@@ -53,7 +53,7 @@ import Pagination from '../dump/Pagination.vue'
 import Sorting from './Sorting.vue'
 import { onBeforeMount, defineComponent, computed, toRefs, unref } from 'vue'
 import { store } from '~~/store/filter'
-import { useHead, useRoute } from 'nuxt/app'
+import { head } from '~~/utils/head'
 export default defineComponent({
     name: 'CocktailsPage',
     components: { FilterList, Pagination, CocktailsList, Sorting },
@@ -69,26 +69,17 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const route = useRoute()
         const { allFilters, cocktailsFull } = toRefs(props)
-        const title = computed(() => {
-            return unref(cocktailsFull).description
-                ? unref(cocktailsFull).description
-                : 'Коктейлі'
-        })
-        const checkLength = computed(() => {
-            return unref(cocktailsFull).cocktails.length > 12
-        })
-        const cocktailsFirst = computed(() => {
-            return unref(checkLength)
+        
+        const checkLength = computed(() => unref(cocktailsFull).cocktails.length > 12)
+        const cocktailsFirst = computed(() => unref(checkLength)
                 ? unref(cocktailsFull).cocktails.slice(0, 12)
-                : unref(cocktailsFull).cocktails
-        })
-        const cocktailsSecond = computed(() => {
-            return unref(checkLength)
+                : unref(cocktailsFull).cocktails)
+        const cocktailsSecond = computed(() => unref(checkLength)
                 ? unref(cocktailsFull).cocktails.slice(12)
-                : []
-        })
+                : [])
+
+
         const setOpenList = () =>
             store.actions.setFiltersIsOpenList(unref(allFilters))
 
@@ -96,64 +87,34 @@ export default defineComponent({
             setOpenList()
         })
 
-        const canonical = computed(() => route.path)
+        const pageTitle = computed(() => unref(cocktailsFull).description
+                ? unref(cocktailsFull).description
+                : 'Коктейлі')
 
-        const indexPage = computed(() =>
-            unref(cocktailsFull).isAddToIndex
-                ? 'index, follow'
-                : 'noindex, nofollow'
-        )
-        const description = computed(() => {
-            return unref(cocktailsFull).description
-                ? `${
-                      unref(cocktailsFull).description
-                  } 🍸 з фото та рецептами, оберий який подобаєтья тобі`
-                : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
-        })
-        const metaTitle = computed(() => {
-            return unref(cocktailsFull).description
-                ? `${
-                      unref(cocktailsFull).description
-                  } 🍹 та рецепти до них в домашніх умовах`
-                : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
-        })
+        const scripts = [
+            {
+                async: true,
+                src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
+                crossorigin: 'anonymous',
+            },
+            {
+                InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
+            },
+        ]
 
-        useHead({
-            title: unref(metaTitle),
-            link: [{ rel: 'canonical', href: unref(canonical) }],
-            meta: [
-                {
-                    hid: 'description',
-                    name: 'description',
-                    content: unref(description),
-                },
-                {
-                    hid: 'og:title',
-                    name: 'og:title',
-                    content: unref(metaTitle),
-                },
-                {
-                    hid: 'og:description',
-                    property: 'og:description',
-                    content: unref(description),
-                },
-                {
-                    hid: 'og:url',
-                    property: 'og:url',
-                    content: `${unref(canonical)}`,
-                },
-                { name: 'robots', content: unref(indexPage) },
-            ],
-            script: [
-                {
-                    async: true,
-                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                    crossorigin: 'anonymous',
-                },
-                {
-                    InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
-                },
-            ],
+        const headTitle = unref(cocktailsFull).description
+            ? `${unref(cocktailsFull).description} 🍹 та рецепти до них в домашніх умовах`
+            : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
+
+        const headDescription = unref(cocktailsFull).description
+            ? `${unref(cocktailsFull).description} 🍸 з фото та рецептами, оберий який подобаєтья тобі`
+            : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
+
+        head({
+            title: headTitle,
+            description: headDescription,
+            indexPage: unref(cocktailsFull).isAddToIndex,
+            scripts: scripts
         })
 
         const loadMore = (newQuery) => {
@@ -164,7 +125,7 @@ export default defineComponent({
             cocktailsFirst,
             cocktailsSecond,
             checkLength,
-            title,
+            pageTitle,
             loadMore,
         }
     },

@@ -144,8 +144,9 @@ import Rating from './Rating.vue'
 import IconBtn from './../UI/IconBtn.vue'
 import CocktailComponents from './CocktailComponents.vue'
 import CocktailRecomendation from './CocktailRecomendation.vue'
-import { computed, onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
-import { useHead, useRoute } from 'nuxt/app'
+import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
+import { head } from '~~/utils/head'
+import { schemaRecipe } from '~~/utils/schemaRecipe'
 
 export default defineComponent({
     name: 'CocktailPage',
@@ -157,7 +158,6 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const route = useRoute()
         const { cocktail } = toRefs(props)
         async function updateVisit() {
             return await $fetch(
@@ -173,95 +173,31 @@ export default defineComponent({
         onBeforeUnmount(() => {
             updateVisit()
         })
-        const author = {
-            '@type': 'Organization',
-            name: 'MixDrinks',
-        }
-        const canonical = route.fullPath
-        const title = `Коктейль ${
-            unref(cocktail).name
-        } 🍹 приготування в домашніх умовах за рецептом`
-        const description = `Як приготувати коктейль ${
-            unref(cocktail).name
-        } 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
-        const recipeIngredient = unref(cocktail).goods.map((good) => good.name)
-        const rating = computed(() => {
-            if (unref(cocktail).rating) {
-                return {
-                    aggregateRating: {
-                        '@type': 'AggregateRating',
-                        ratingValue: unref(cocktail).rating,
-                        ratingCount: unref(cocktail).ratingCount,
-                        worstRating: 1,
-                        bestRating: 5,
-                    },
-                }
-            }
-        })
-        const ogImage = unref(cocktail).meta.ogImage
-        const keywords = unref(cocktail).tags.map((tag) => tag.name)
-        const schemaRecipe = computed(() => {
-            return {
-                '@context': 'https://schema.org',
-                '@type': 'Recipe',
-                name: unref(cocktail).name,
-                author: author,
-                description: description,
-                image: ogImage,
-                recipeIngredient: recipeIngredient,
-                recipeInstructions: unref(cocktail).receipt,
-                keywords: keywords,
-                recipeCategory: 'Коктейлі',
-                prepTime: 'PT10M',
-                cookTime: 'PT10M',
-                ...unref(rating),
-            }
-        })
-        useHead({
-            title: title,
-            link: [{ rel: 'canonical', href: canonical }],
-            meta: [
-                {
-                    hid: 'description',
-                    name: 'description',
-                    content: description,
-                },
-                {
-                    hid: 'og:title',
-                    name: 'og:title',
-                    content: title,
-                },
-                {
-                    hid: 'og:description',
-                    property: 'og:description',
-                    content: description,
-                },
-                {
-                    hid: 'og:url',
-                    property: 'og:url',
-                    content: canonical,
-                },
-                {
-                    hid: 'og:image',
-                    property: 'og:image',
-                    content: ogImage,
-                },
-                { name: 'robots', content: 'index, follow' },
-            ],
-            script: [
-                {
-                    type: 'application/ld+json',
-                    children: JSON.stringify(unref(schemaRecipe)),
-                },
-                {
-                    async: true,
-                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                    crossorigin: 'anonymous',
-                },
-                {
-                    InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
-                },
-            ],
+
+        const headTitle = `Коктейль ${unref(cocktail).name} 🍹 приготування в домашніх умовах за рецептом`
+        const headDescription = `Як приготувати коктейль ${unref(cocktail).name} 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
+
+        const scripts = [
+            {
+                type: 'application/ld+json',
+                children: schemaRecipe(unref(cocktail), headDescription),
+            },
+            {
+                async: true,
+                src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
+                crossorigin: 'anonymous',
+            },
+            {
+                InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
+            },
+        ]
+
+        head({
+            title: headTitle,
+            description: headDescription,
+            indexPage: true,
+            scripts: scripts,
+            image: unref(cocktail).meta.ogImage
         })
     },
 })
