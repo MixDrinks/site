@@ -70,15 +70,18 @@ export default defineComponent({
     },
     setup(props, { emit }) {
         const { allFilters, cocktailsFull } = toRefs(props)
-        
-        const checkLength = computed(() => unref(cocktailsFull).cocktails.length > 12)
-        const cocktailsFirst = computed(() => unref(checkLength)
-                ? unref(cocktailsFull).cocktails.slice(0, 12)
-                : unref(cocktailsFull).cocktails)
-        const cocktailsSecond = computed(() => unref(checkLength)
-                ? unref(cocktailsFull).cocktails.slice(12)
-                : [])
 
+        const checkLength = computed(
+            () => unref(cocktailsFull).cocktails.length > 12
+        )
+        const cocktailsFirst = computed(() =>
+            unref(checkLength)
+                ? unref(cocktailsFull).cocktails.slice(0, 12)
+                : unref(cocktailsFull).cocktails
+        )
+        const cocktailsSecond = computed(() =>
+            unref(checkLength) ? unref(cocktailsFull).cocktails.slice(12) : []
+        )
 
         const setOpenList = () =>
             store.actions.setFiltersIsOpenList(unref(allFilters))
@@ -87,9 +90,11 @@ export default defineComponent({
             setOpenList()
         })
 
-        const pageTitle = computed(() => unref(cocktailsFull).description
+        const pageTitle = computed(() =>
+            unref(cocktailsFull).description
                 ? unref(cocktailsFull).description
-                : 'Коктейлі')
+                : 'Коктейлі'
+        )
 
         const scripts = [
             {
@@ -98,23 +103,27 @@ export default defineComponent({
                 crossorigin: 'anonymous',
             },
             {
-                InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
+                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
             },
         ]
 
         const headTitle = unref(cocktailsFull).description
-            ? `${unref(cocktailsFull).description} 🍹 та рецепти до них в домашніх умовах`
+            ? `${
+                  unref(cocktailsFull).description
+              } 🍹 та рецепти до них в домашніх умовах`
             : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
 
         const headDescription = unref(cocktailsFull).description
-            ? `${unref(cocktailsFull).description} 🍸 з фото та рецептами, оберий який подобаєтья тобі`
+            ? `${
+                  unref(cocktailsFull).description
+              } 🍸 з фото та рецептами, оберий який подобаєтья тобі`
             : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
 
         head({
             title: headTitle,
             description: headDescription,
             indexPage: unref(cocktailsFull).isAddToIndex,
-            scripts: scripts
+            scripts: scripts,
         })
 
         const loadMore = (newQuery) => {

@@ -174,8 +174,12 @@ export default defineComponent({
             updateVisit()
         })
 
-        const headTitle = `Коктейль ${unref(cocktail).name} 🍹 приготування в домашніх умовах за рецептом`
-        const headDescription = `Як приготувати коктейль ${unref(cocktail).name} 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
+        const headTitle = `Коктейль ${
+            unref(cocktail).name
+        } 🍹 приготування в домашніх умовах за рецептом`
+        const headDescription = `Як приготувати коктейль ${
+            unref(cocktail).name
+        } 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
 
         const scripts = [
             {
@@ -188,7 +192,7 @@ export default defineComponent({
                 crossorigin: 'anonymous',
             },
             {
-                InnerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
+                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
             },
         ]
 
@@ -197,7 +201,7 @@ export default defineComponent({
             description: headDescription,
             indexPage: true,
             scripts: scripts,
-            image: unref(cocktail).meta.ogImage
+            image: unref(cocktail).meta.ogImage,
         })
     },
 })
