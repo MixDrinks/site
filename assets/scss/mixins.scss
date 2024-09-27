@@ -147,6 +147,12 @@
     letter-spacing: -0.02em;
 }
 
+@mixin fontSize32BL {
+    @include fontSize32;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
 @mixin fontSize48 {
     font-size: 48px;
     line-height: 56px;
@@ -156,4 +162,10 @@
     @include fontSize48;
     font-weight: bold;
     letter-spacing: -0.02em;
+}
+
+@mixin fontSize48BL {
+    @include fontSize48;
+    font-weight: 900;
+    letter-spacing: 1px;
 }

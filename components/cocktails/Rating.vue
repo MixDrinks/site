@@ -44,6 +44,7 @@
                     MixDrinks
                 </span>
             </div>
+            <span v-else class="rating-wrapper__spacer"> </span>
         </div>
         <div class="rating__text" v-if="isSet">Дякуємо, що оцінили</div>
     </div>
@@ -106,7 +107,7 @@ export default defineComponent({
         }
 
         const getStarItemClasses = (value) => {
-            if (unref(hoverItemIndex) !== null) {
+            if (unref(hoverItemIndex) !== null && !unref(isSet)) {
                 return {
                     'rating-wrapper-stars-item--hover':
                         value <= unref(hoverItemIndex),

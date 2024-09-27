@@ -1,6 +1,6 @@
 <template>
     <div class="items">
-        <h1 class="items__title" itemprop="name">
+        <h1 :data-info="items.name" class="items__title" itemprop="name">
             {{ items.name }}
         </h1>
         <div class="items__main items-main">
@@ -29,7 +29,10 @@
             <h2 class="items-cocktails__title">
                 Коктейлі з використанням {{ items.name }}
             </h2>
-            <CocktailsList :cocktails="cocktailsFull.cocktails" />
+            <CocktailsList
+                modificator="items"
+                :cocktails="cocktailsFull.cocktails"
+            />
         </div>
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
@@ -68,15 +71,19 @@ export default defineComponent({
             emit('loadMore', newQuery)
         }
 
-        const headTitle = `Дізнайся в яких коктейлях 🍸 використовується ${unref(items).name}`
+        const headTitle = `Дізнайся в яких коктейлях 🍸 використовується ${
+            unref(items).name
+        }`
 
-        const headDescription = `${unref(items).name} використовується в представлених коктейлях 🍸 наведені рецепти та фото`
+        const headDescription = `${
+            unref(items).name
+        } використовується в представлених коктейлях 🍸 наведені рецепти та фото`
 
         head({
             title: headTitle,
             description: headDescription,
             indexPage: unref(cocktailsFull).isAddToIndex,
-            image: unref(items).meta.ogImage
+            image: unref(items).meta.ogImage,
         })
 
         return {

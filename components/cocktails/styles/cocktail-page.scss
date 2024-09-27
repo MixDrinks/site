@@ -21,7 +21,7 @@
     }
 
     &__title {
-        margin-bottom: $halfShortMargin;
+        margin-bottom: 6px;
 
         @media (min-width: 1023px) {
             margin-bottom: unset;
@@ -47,7 +47,7 @@
     }
 
     &__views {
-        margin-bottom: $halfShortMargin;
+        margin-bottom: 6px;
         @include fontSize16M;
         letter-spacing: -.02em;
 
@@ -59,7 +59,7 @@
     }
 
     &__rating {
-        margin-bottom: $halfShortMargin;
+        margin-bottom: 28px;
 
         @media (min-width: 1023px) {
             margin-bottom: unset;

@@ -1,35 +1,46 @@
 @keyframes fade-in {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
 
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes opacity {
-  0% {
-    opacity: 0;
-  }
+    0% {
+        opacity: 0;
+    }
 
-  100% {
-    opacity: 1;
-  }
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes max-height {
-  0% {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-  }
+    0% {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
 
-  100% {
-    max-height: 60vh;
-    opacity: 1;
-    overflow: hidden;
-  }
+    100% {
+        max-height: 60vh;
+        opacity: 1;
+        overflow: hidden;
+    }
+}
+
+
+@keyframes blik {
+    0% {
+        transform: translateX(-200%);
+    }
+
+    100% {
+        transform: translateX(200%);
+    }
 }

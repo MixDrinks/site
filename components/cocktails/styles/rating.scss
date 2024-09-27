@@ -1,11 +1,18 @@
 .rating {
+    position: relative;
+
     &__wrapper {
+        min-height: 24px;
+
         &--lock {
             pointer-events: none;
         }
     }
 
     &__text {
+        position: absolute;
+        top: 100%;
+        left: 0;
         @include fontSize14;
         color: $colorBlack;
     }
@@ -16,7 +23,7 @@
     align-items: center;
 
     &__stars {
-        margin-right: 12px;
+        margin-right: 10px;
     }
 
     &__value {
@@ -31,6 +38,12 @@
     &__aggregate {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        min-width: 40px;
+    }
+
+    &__spacer {
+        min-width: 40px;
     }
 
     &__hidden {
@@ -52,9 +65,11 @@
         position: relative;
     }
 
-    &:not(:hover) {
-        #{$starItem}__start--full {
-            background-color: $colorRating;
+    @media (hover: hover) {
+        &:hover {
+            #{$starItem}__start--full {
+                background-color: rgba($colorRating, 0);
+            }
         }
     }
 }
@@ -65,8 +80,7 @@
     &--hover {
         #{$self}__start--gray {
             cursor: pointer;
-            background-color: rgba($colorRating, 0.8);
-            z-index: 3;
+            background-color: rgba($colorRating, 0.7);
         }
     }
 
@@ -86,11 +100,11 @@
         }
 
         &--full {
-            z-index: 2;
+            background-color: $colorRating;
+            pointer-events: none;
         }
 
         &--gray {
-            z-index: 1;
             background-color: rgba($colorBlack, 0.3);
         }
     }
