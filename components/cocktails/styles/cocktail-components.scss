@@ -55,7 +55,7 @@
     }
 }
 
-.components-list {
+.list {
     display: flex;
     overflow: auto;
     padding-left: 40px;
@@ -92,22 +92,37 @@
         padding-left: unset;
         padding-right: unset;
     }
-}
 
-.components-list-item {
-    position: relative;
-    padding: 4px;
-    flex-shrink: 0;
-
-    @media (min-width: 1023px) {
-        padding: 10px;
-    }
-
-    &__link {
+    &__item {
         max-width: 110px;
+        margin: 4px;
 
         @media (min-width: 1023px) {
             max-width: 150px;
+            margin: 10px;
+        }
+    }
+}
+
+
+.list-item {
+    $self: &;
+    position: relative;
+    flex-shrink: 0;
+    display: block;
+    height: 100%;
+    padding: 4px 4px 12px;
+    border-radius: 8px;
+    transition: transform .4s, box-shadow .4s;
+
+    @media (hover: hover) {
+        &:hover {
+            transform: translateY(-10px);
+            box-shadow: 1px 10px rgba($colorHover, 0.3), -5px -5px 40px rgba($colorHover, 0.1);
+
+            #{$self}__label {
+                color: $colorHover;
+            }
         }
     }
 
@@ -128,33 +143,20 @@
 
     &::after {
         content: '';
-        right: 0;
+        right: -4px;
+
+        @media (min-width: 1023px) {
+            right: -10px;
+        }
     }
 
     &:first-child {
         &::before {
             content: '';
-            left: 0;
-        }
-    }
-}
+            left: -4px;
 
-.components-list-item-link {
-    $self: &;
-
-    display: block;
-    height: 100%;
-    padding: 4px 4px 12px;
-    border-radius: 8px;
-    transition: transform .4s, box-shadow .4s;
-
-    @media (min-width: 1023px) {
-        &:hover {
-            transform: translateY(-10px);
-            box-shadow: 1px 10px rgba($colorHover, 0.3), -5px -5px 40px rgba($colorHover, 0.1);
-
-            #{$self}__label {
-                color: $colorHover;
+            @media (min-width: 1023px) {
+                left: -10px;
             }
         }
     }
@@ -176,10 +178,16 @@
     }
 
     &__label {
+        display: block;
         color: $colorMain;
         @include fontSize14;
         text-align: center;
         margin-top: 12px;
         transition: color .4s;
+
+        &::after {
+            z-index: 1;
+            @include fullPseudoElement;
+        }
     }
 }

@@ -21,42 +21,37 @@
                 Інкримент
             </IconBtn>
         </div>
-        <ul class="components__list components-list">
+        <ul class="components__list list">
             <li
-                class="components-list__item components-list-item"
+                class="list__item list-item"
                 v-for="(item, itemIndex) in components"
-                :key="`components-list__item--${itemIndex}`"
+                :key="`list__item--${itemIndex}`"
             >
-                <NuxtLink
-                    class="components-list-item__link components-list-item-link"
-                    :to="`/${item.url}`"
-                >
-                    <picture class="components-list-item-link__picture">
-                        <source
-                            v-for="img in item.images"
-                            :key="img.id"
-                            :srcset="img.srcset"
-                            :media="img.media"
-                            :type="img.type"
-                        />
-                        <img
-                            class="components-list-item-link__img"
-                            width="100"
-                            height="100"
-                            loading="lazy"
-                            :alt="`Зображення ${item.name}`"
-                            title=""
-                        />
-                    </picture>
-                    <div class="components-list-item-link__label">
-                        {{ item.name }}
-                        <template v-if="item.amount">
-                            <br />
-                            <strong>
-                                {{ getAmount(item.amount) }} {{ item.unit }}.
-                            </strong>
-                        </template>
-                    </div>
+                <picture class="list-item__picture">
+                    <source
+                        v-for="img in item.images"
+                        :key="img.id"
+                        :srcset="img.srcset"
+                        :media="img.media"
+                        :type="img.type"
+                    />
+                    <img
+                        class="list-item__img"
+                        width="100"
+                        height="100"
+                        loading="lazy"
+                        :alt="`Зображення ${item.name}`"
+                        :title="item.name"
+                    />
+                </picture>
+                <NuxtLink :to="`/${item.url}`" class="list-item__label">
+                    {{ item.name }}
+                    <template v-if="item.amount">
+                        <br />
+                        <strong>
+                            {{ getAmount(item.amount) }} {{ item.unit }}.
+                        </strong>
+                    </template>
                 </NuxtLink>
             </li>
         </ul>

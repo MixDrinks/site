@@ -8,53 +8,51 @@
             <li
                 v-for="(cocktail, cocktailIndex) in cocktails"
                 :key="`list__item-${cocktailIndex}`"
-                class="list__item item"
+                class="list__item cart"
             >
-                <NuxtLink
-                    :to="`/cocktails/${cocktail.slug}`"
-                    class="item__cart cart"
+                <div
+                    class="cart__header cart-header"
+                    v-if="!!cocktail.rating || !!cocktail.visitCount"
                 >
                     <div
-                        class="cart__info cart-info"
-                        v-if="!!cocktail.rating || !!cocktail.visitCount"
+                        class="cart-header__rating cart-header-rating"
+                        v-if="!!cocktail.rating"
                     >
-                        <div
-                            class="cart-info__rating cart-info-rating"
-                            v-if="!!cocktail.rating"
-                        >
-                            <div class="cart-info-rating__label">
-                                {{ Number(cocktail.rating.toFixed(1)) }}
-                            </div>
-                        </div>
-                        <div
-                            class="cart-info__visit-count cart-info-visit-count"
-                            v-if="!!cocktail.visitCount"
-                        >
-                            <div class="cart-info-visit-count__label">
-                                {{ cocktail.visitCount }}
-                            </div>
+                        <div class="cart-header-rating__label">
+                            {{ Number(cocktail.rating.toFixed(1)) }}
                         </div>
                     </div>
-                    <picture class="cart__picture">
-                        <source
-                            v-for="img in cocktail.images"
-                            :key="img.id"
-                            :srcset="img.srcset"
-                            :media="img.media"
-                            :type="img.type"
-                        />
-                        <img
-                            class="cart__img"
-                            width="120"
-                            height="120"
-                            loading="lazy"
-                            :alt="`Зображення коктейля ${cocktail.name}`"
-                            title=""
-                        />
-                    </picture>
-                    <div class="cart__name">
-                        {{ cocktail.name }}
+                    <div
+                        class="cart-header__visit-count cart-header-visit-count"
+                        v-if="!!cocktail.visitCount"
+                    >
+                        <div class="cart-header-visit-count__label">
+                            {{ cocktail.visitCount }}
+                        </div>
                     </div>
+                </div>
+                <picture class="cart__picture">
+                    <source
+                        v-for="img in cocktail.images"
+                        :key="img.id"
+                        :srcset="img.srcset"
+                        :media="img.media"
+                        :type="img.type"
+                    />
+                    <img
+                        class="cart__img"
+                        width="120"
+                        height="120"
+                        loading="lazy"
+                        :alt="`Зображення коктейля ${cocktail.name}`"
+                        :title="cocktail.name"
+                    />
+                </picture>
+                <NuxtLink
+                    :to="`/cocktails/${cocktail.slug}`"
+                    class="cart__name"
+                >
+                    {{ cocktail.name }}
                 </NuxtLink>
             </li>
         </ul>
@@ -63,8 +61,9 @@
 
 <script>
 import TitleH2 from '../global/TitleH2.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
     name: 'CocktailRecomendation',
 
     components: { TitleH2 },
@@ -75,7 +74,7 @@ export default {
             required: true,
         },
     },
-}
+})
 </script>
 <style lang="scss" scoped>
 @import './styles/cocktail-recomendation';
