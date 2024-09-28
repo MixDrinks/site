@@ -28,17 +28,12 @@
         </div>
         <ul class="cocktail__tags cocktail-tags">
             <li
-                class="cocktail-tags__item cocktail-tags-item"
-                v-for="tag in cocktail.tags"
-                :key="tag.id"
+                class="cocktail-tags__item"
+                v-for="(tag, tagIndex) in cocktail.tags"
+                :key="`cocktail-tags__item-${tagIndex}`"
             >
-                <NuxtLink
-                    :to="`/${tag.url}`"
-                    class="cocktail-tags-item__link cocktail-tags-item-link"
-                >
-                    <span class="cocktail-tags-item-link__label">{{
-                        tag.name
-                    }}</span>
+                <NuxtLink :to="`/${tag.url}`" class="cocktail-tags-link">
+                    {{ tag.name }}
                 </NuxtLink>
             </li>
         </ul>
@@ -60,13 +55,10 @@
                 />
             </picture>
             <div class="cocktail-body__recipe cocktail-body-recipe">
-                <h2
-                    class="cocktail-body-recipe__title cocktail-body-recipe-title"
-                >
-                    <span class="cocktail-body-recipe-title__label">
-                        Рецепт коктейлю {{ cocktail.name }}
-                    </span>
-                </h2>
+                <TitleH2
+                    class="cocktail-body-recipe__title"
+                    :text="`Рецепт коктейлю ${cocktail.name}`"
+                ></TitleH2>
                 <ol
                     class="cocktail-body-recipe__list cocktail-body-recipe-list"
                     itemprop="recipeInstructions"
@@ -118,10 +110,11 @@
                 v-if="cocktail.article"
                 class="cocktail-body__article cocktail-body-article"
             >
-                <h2 class="cocktail-body-article__title">
-                    Коктейль {{ cocktail.name }}: історія, рецепт та
-                    популярність
-                </h2>
+                <TitleH2
+                    class="cocktail-body-article__title"
+                    :text="`Коктейль ${cocktail.name}: історія, рецепт та
+                    популярність`"
+                ></TitleH2>
                 <div
                     v-if="cocktail.article.chapters"
                     class="cocktail-body-article__chapters cocktail-body-article-chapters"
@@ -147,10 +140,17 @@ import CocktailRecomendation from './CocktailRecomendation.vue'
 import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
+import TitleH2 from '../global/TitleH2.vue'
 
 export default defineComponent({
     name: 'CocktailPage',
-    components: { IconBtn, Rating, CocktailComponents, CocktailRecomendation },
+    components: {
+        IconBtn,
+        Rating,
+        CocktailComponents,
+        CocktailRecomendation,
+        TitleH2,
+    },
     props: {
         cocktail: {
             type: Object,

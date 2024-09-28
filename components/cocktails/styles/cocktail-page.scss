@@ -6,7 +6,7 @@
         margin-left: -40px;
 
         @media (min-width: 1023px) {
-            margin-top: $shortMargin;
+            margin-top: $halfShortMargin;
             margin-bottom: $shortMargin;
             margin-right: unset;
             margin-left: unset;
@@ -82,32 +82,55 @@
     }
 
     &__item {
+        position: relative;
+
         &:not(:last-child) {
             margin-right: 10px;
+
+            &::after {
+                content: '';
+                position: absolute;
+                right: -6px;
+                pointer-events: none;
+                width: 2px;
+                height: 40px;
+                background-color: rgba(154, 209, 116, 0.5);
+                top: 50%;
+                transform: translateY(-50%) rotate(10deg);
+
+                @media (min-width: 1023px) {
+                    display: none;
+                }
+            }
         }
     }
 }
 
-.cocktail-tags-item-link {
+.cocktail-tags-link {
     display: block;
-    padding: 3px 8px;
-    border-radius: 4px;
+    padding: 4px 8px;
+    border-radius: 20px;
     background-color: $colorMain;
     transition: background-color .4s;
+    font-style: italic;
+    color: $colorWhite;
+    white-space: nowrap;
+    @include fontSize14M;
 
-    &:hover {
-        background-color: $colorHover;
+    @media (min-width: 1023px) {
+        padding: 3px 8px;
+        border-radius: 4px;
+        @include fontSize16M;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: $colorHover;
+        }
     }
 
     &::first-letter {
         text-transform: uppercase;
-    }
-
-    &__label {
-        font-style: italic;
-        @include fontSize16M;
-        color: $colorWhite;
-        white-space: nowrap;
     }
 }
 
@@ -116,6 +139,28 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    &__picture {
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: '';
+            bottom: -20px;
+            right: -10px;
+            width: 40px;
+            height: 160px;
+            border-bottom: 2px solid #9ad174;
+            border-right: 2px solid #9ad174;
+
+            @media (min-width: 1023px) {
+                width: 60px;
+                height: 200px;
+                border-width: 4px;
+            }
+        }
     }
 
     &__img {
@@ -182,13 +227,6 @@
     }
 }
 
-.cocktail-body-recipe-title {
-    &__label {
-        color: $colorBlack;
-        @include fontSize24B;
-    }
-}
-
 .cocktail-body-recipe-list {
     list-style: none;
 
@@ -237,9 +275,6 @@
 
 .cocktail-body-article {
     &__title {
-        color: $colorBlack;
-        @include fontSize24B;
-
         margin-bottom: $halfShortMargin;
 
         @media (min-width: 1023px) {

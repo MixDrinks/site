@@ -13,15 +13,6 @@
             margin-bottom: $shortMargin;
             @include fontSize48BL;
         }
-
-        &::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            content: attr(data-info);
-        }
     }
 
     &__main {
@@ -141,30 +132,10 @@
     }
 
     &__title {
-        @include fontSize24B;
         margin-bottom: $halfShortMargin;
-        text-shadow: 4px 3px 10px rgba(43, 71, 24, 0.3);
-        position: relative;
 
         @media (min-width: 1023px) {
             margin-bottom: $shortMargin;
-            text-shadow: 4px 3px 20px rgba(43, 71, 24, 0.4);
-        }
-
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0;
-            width: 160px;
-            height: 2px;
-            background-color: #9ad174;
-            pointer-events: none;
-
-            @media (min-width: 1023px) {
-                height: 4px;
-            }
         }
     }
 
@@ -180,31 +151,10 @@
 
 .items-cocktails {
     &__title {
-        color: $colorBlack;
-        @include fontSize24B;
         margin-bottom: $halfShortMargin;
-        text-shadow: 4px 3px 10px rgba(43, 71, 24, 0.3);
-        position: relative;
 
         @media (min-width: 1023px) {
             margin-bottom: $shortMargin;
-            text-shadow: 4px 3px 20px rgba(43, 71, 24, 0.4);
-        }
-
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0;
-            width: 160px;
-            height: 2px;
-            background-color: #9ad174;
-            pointer-events: none;
-
-            @media (min-width: 1023px) {
-                height: 4px;
-            }
         }
     }
 }

@@ -1,6 +1,9 @@
 <template>
     <div class="recomendation">
-        <h2 class="recomendation__title">Рекомендуємо спробувати</h2>
+        <TitleH2
+            class="recomendation__title"
+            text="Рекомендуємо спробувати"
+        ></TitleH2>
         <ul class="recomendation__list list">
             <li
                 v-for="(cocktail, cocktailIndex) in cocktails"
@@ -59,8 +62,12 @@
 </template>
 
 <script>
+import TitleH2 from '../global/TitleH2.vue'
+
 export default {
     name: 'CocktailRecomendation',
+
+    components: { TitleH2 },
 
     props: {
         cocktails: {

@@ -1,8 +1,6 @@
 <template>
     <div class="components">
-        <h2 class="components__title">
-            {{ title }}
-        </h2>
+        <TitleH2 class="components__title" :text="title"></TitleH2>
         <div class="components__counter components-counter" v-if="withCounter">
             <IconBtn
                 class="components-counter__btn"
@@ -67,11 +65,12 @@
 
 <script>
 import { computed, defineComponent, ref, unref } from 'vue'
+import TitleH2 from '../global/TitleH2.vue'
 import IconBtn from './../UI/IconBtn.vue'
 
 export default defineComponent({
     name: 'CocktailComponents',
-    components: { IconBtn },
+    components: { IconBtn, TitleH2 },
 
     props: {
         components: {

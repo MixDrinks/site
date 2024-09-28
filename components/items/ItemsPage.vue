@@ -1,6 +1,6 @@
 <template>
     <div class="items">
-        <h1 :data-info="items.name" class="items__title" itemprop="name">
+        <h1 class="items__title" itemprop="name">
             {{ items.name }}
         </h1>
         <div class="items__main items-main">
@@ -21,14 +21,18 @@
                 />
             </picture>
             <div class="items-main__about items-main-about">
-                <h2 class="items-main-about__title">Опис {{ items.name }}</h2>
+                <TitleH2
+                    class="items-main-about__title"
+                    :text="`Опис ${items.name}`"
+                ></TitleH2>
                 <p class="items-main-about__text">{{ items.about }}</p>
             </div>
         </div>
         <div class="items__cocktails items-cocktails">
-            <h2 class="items-cocktails__title">
-                Коктейлі з використанням {{ items.name }}
-            </h2>
+            <TitleH2
+                class="items-cocktails__title"
+                :text="`Коктейлі з використанням ${items.name}`"
+            ></TitleH2>
             <CocktailsList
                 modificator="items"
                 :cocktails="cocktailsFull.cocktails"
@@ -48,12 +52,13 @@
 <script>
 import { toRefs, defineComponent, unref } from 'vue'
 import CocktailsList from '../global/CocktailsList.vue'
+import TitleH2 from '../global/TitleH2.vue'
 import Pagination from '../dump/Pagination.vue'
 import { head } from '~~/utils/head'
 
 export default defineComponent({
     name: 'ItemsPage',
-    components: { Pagination, CocktailsList },
+    components: { Pagination, CocktailsList, TitleH2 },
 
     props: {
         items: {
