@@ -119,6 +119,7 @@
 .components-list-item {
     position: relative;
     padding: 4px;
+    flex-shrink: 0;
 
     @media (min-width: 1023px) {
         padding: 10px;
