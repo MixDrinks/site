@@ -1,0 +1,98 @@
+.list {
+    @media (min-width: 1023px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    @media (min-width: 1199px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1599px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    &--items {
+        @media (min-width: 767px) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (min-width: 1023px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (min-width: 1199px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (min-width: 1599px) {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+}
+
+.item {
+    position: relative;
+
+    @media (min-width: 1023px) {
+        padding-bottom: 30px;
+    }
+
+    @media (max-width: 1024px) {
+        &:not(:last-child) {
+            padding-bottom: 8px;
+        }
+    }
+
+    &--items {
+        position: relative;
+
+        &::after {
+            @media (min-width: 1023px) {
+                content: '';
+                position: absolute;
+                width: 1px;
+                height: 200px;
+                background-color: rgba(154, 209, 116, 0.5);
+                right: -10px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        &:nth-child(3n) {
+            &::after {
+                @media (min-width: 1023px) {
+                    display: none;
+                }
+
+                @media (min-width: 1199px) {
+                    display: block;
+                }
+            }
+        }
+
+        &:nth-child(4n) {
+            &::after {
+                @media (min-width: 1199px) {
+                    display: none;
+                }
+
+                @media (min-width: 1599px) {
+                    display: block;
+                }
+            }
+        }
+
+        &:nth-child(6n) {
+            &::after {
+                @media (min-width: 1599px) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -54,16 +54,19 @@
 }
 
 @mixin defaultCount {
+    text-align: center;
     color: $colorWhite;
     padding: 2px 5px 3px;
     @include fontSize14;
     line-height: 1;
     margin-left: 10px;
+    min-width: 19px;
 
     @media(min-width: 1023px) {
         padding-left: 6px;
         padding-right: 6px;
         @include fontSize16M;
+        min-width: 21px;
         line-height: 1;
     }
 
@@ -96,6 +99,11 @@
 @mixin fontSize14 {
     font-size: 14px;
     line-height: 20px;
+}
+
+@mixin fontSize14M {
+    @include fontSize14;
+    font-weight: 600;
 }
 
 @mixin fontSize16 {
@@ -147,6 +155,12 @@
     letter-spacing: -0.02em;
 }
 
+@mixin fontSize32BL {
+    @include fontSize32;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
 @mixin fontSize48 {
     font-size: 48px;
     line-height: 56px;
@@ -156,4 +170,10 @@
     @include fontSize48;
     font-weight: bold;
     letter-spacing: -0.02em;
+}
+
+@mixin fontSize48BL {
+    @include fontSize48;
+    font-weight: 900;
+    letter-spacing: 1px;
 }

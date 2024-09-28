@@ -1,23 +1,22 @@
 <template>
-    <!-- <transition name="fate-in" appear> -->
-    <NuxtLink :to="`/cocktails/${cocktail.slug}`" class="cart">
+    <div class="cart">
         <div
-            class="cart__info cart-info"
+            class="cart__header cart-header"
             v-if="!!cocktail.rating || !!cocktail.visitCount"
         >
             <div
-                class="cart-info__rating cart-info-rating"
+                class="cart-header__rating cart-header-rating"
                 v-if="!!cocktail.rating"
             >
-                <div class="cart-info-rating__label">
+                <div class="cart-header-rating__label">
                     {{ Number(cocktail.rating.toFixed(1)) }}
                 </div>
             </div>
             <div
-                class="cart-info__visit-count cart-info-visit-count"
+                class="cart-header__visit-count cart-header-visit-count"
                 v-if="!!cocktail.visitCount"
             >
-                <div class="cart-info-visit-count__label">
+                <div class="cart-header-visit-count__label">
                     {{ cocktail.visitCount }}
                 </div>
             </div>
@@ -36,19 +35,21 @@
                 height="100"
                 :loading="loading"
                 :alt="`Зображення коктейля ${cocktail.name}`"
-                title=""
+                :title="cocktail.name"
             />
         </picture>
-        <div class="cart__name">
+        <NuxtLink :to="`/cocktails/${cocktail.slug}`" class="cart__name">
             {{ cocktail.name }}
-        </div>
-    </NuxtLink>
-    <!-- </transition> -->
+        </NuxtLink>
+    </div>
 </template>
 
 <script>
-export default {
+import { computed, defineComponent, toRefs, unref } from 'vue'
+
+export default defineComponent({
     name: 'CocktailsCart',
+
     props: {
         isLoadingLazy: {
             type: Boolean,
@@ -59,14 +60,17 @@ export default {
             required: true,
         },
     },
-    computed: {
-        loading() {
-            return this.isLoadingLazy ? 'lazy' : false
-        },
+    setup(props) {
+        const { isLoadingLazy, cocktail } = toRefs(props)
+        const loading = computed(() => (unref(isLoadingLazy) ? 'lazy' : false))
+
+        return {
+            loading,
+        }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktails-cart';
+@import './styles/cocktails-cart.scss';
 </style>

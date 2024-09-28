@@ -1,90 +1,160 @@
 .items {
-  &__title {
-    @include fontSize48B;
-    margin-bottom: $halfShortMargin;
+    &__title {
+        @include fontSize32BL;
+        margin-bottom: $halfShortMargin;
+        position: relative;
+        z-index: 1;
+        font-style: italic;
+        text-transform: uppercase;
+        text-shadow: 3px 4px 20px rgba(154, 209, 116, 0.4);
 
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        @media (min-width: 1023px) {
+            text-align: center;
+            margin-bottom: $shortMargin;
+            @include fontSize48BL;
+        }
     }
-  }
 
-  &__main {
-    margin-bottom: $halfShortMargin;
+    &__main {
+        margin-bottom: $halfShortMargin;
 
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        @media (min-width: 1023px) {
+            max-width: 100%;
+            width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: $shortMargin;
+        }
     }
-  }
 
-  &__pagination {
-    margin-top: $halfShortMargin;
+    &__pagination {
+        margin-top: $halfShortMargin;
 
-    @media (min-width: 1023px) {
-      margin-top: $shortMargin;
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+        }
     }
-  }
 }
 
 .items-main {
-  @media (min-width: 1023px) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+    position: relative;
 
-  &__img {
-    width: 100%;
-    max-height: 500px;
-    display: block;
-    margin-bottom: $halfShortMargin;
-    margin-left: auto;
-    margin-right: auto;
-    object-fit: contain;
+    @media (min-width: 1023px) {
+        padding-bottom: 40px;
+    }
 
-    @media (max-width: 1024px) {
-      height: auto;
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &::before {
+        top: -10px;
+        left: -10px;
+        border-left: 2px solid #9ad174;
+        border-top: 2px solid #9ad174;
+        width: 70px;
+        height: 150px;
+
+        @media (min-width: 1023px) {
+            left: initial;
+            top: 0;
+            right: 0;
+            width: 240px;
+            height: 70px;
+            border-left: 0;
+            border-top: 4px solid #9ad174;
+            border-right: 4px solid #9ad174;
+        }
+    }
+
+    &::after {
+        bottom: -10px;
+        right: -10px;
+        width: 150px;
+        height: 100px;
+
+        border-right: 2px solid #9ad174;
+        border-bottom: 2px solid #9ad174;
+
+        @media (min-width: 1023px) {
+            bottom: 0;
+            left: 0;
+            right: initial;
+            width: 240px;
+            height: 70px;
+            border-right: 0;
+            border-bottom: 4px solid #9ad174;
+            border-left: 4px solid #9ad174;
+        }
     }
 
     @media (min-width: 1023px) {
-      width: 500px;
-
-      margin-bottom: unset;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
-  }
 
-  &__about {
-    width: 100%;
+    &__img {
+        width: 100%;
+        max-height: 400px;
+        display: block;
+        margin-bottom: $halfShortMargin;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: contain;
 
-    @media (min-width: 1023px) {
-      max-width: calc(100% - 600px);
+        @media (max-width: 1024px) {
+            height: auto;
+        }
+
+        @media (min-width: 1023px) {
+            width: 400px;
+
+            margin-bottom: unset;
+        }
     }
-  }
+
+    &__about {
+        width: 100%;
+
+        @media (min-width: 1023px) {
+            max-width: calc(100% - 500px);
+        }
+    }
 }
 
 .items-main-about {
-  &__title {
-    color: $colorBlack;
-    @include fontSize24B;
-    margin-bottom: $halfShortMargin;
-
     @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        padding: 20px;
     }
-  }
 
-  &__text {
-    @include fontSize18M;
-  }
+    &__title {
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: $shortMargin;
+        }
+    }
+
+    &__text {
+        @include fontSize18M;
+        text-shadow: 2px 3px 5px rgba(43, 71, 24, 0.3);
+
+        @media (min-width: 1023px) {
+            text-shadow: 2px 3px 10px rgba(43, 71, 24, 0.4);
+        }
+    }
 }
 
 .items-cocktails {
-  &__title {
-    @include fontSize24B;
-    color: $colorBlack;
-    margin-bottom: $halfShortMargin;
+    &__title {
+        margin-bottom: $halfShortMargin;
 
-    @media (min-width: 1023px) {
-      margin-bottom: $shortMargin;
+        @media (min-width: 1023px) {
+            margin-bottom: $shortMargin;
+        }
     }
-  }
 }
