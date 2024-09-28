@@ -16,7 +16,6 @@
     },
     "dependencies": {
         "@nuxt/devtools": "latest",
-        "@nuxt/nitro": "^0.10.0",
         "nuxt": "3.13.2",
         "vue": "3.5.8",
         "mongodb": "6.8"
