@@ -88,8 +88,8 @@
         }
 
         &:nth-child(6n) {
-            @media (min-width: 1599px) {
-                &::after {
+            &::after {
+                @media (min-width: 1599px) {
                     display: none;
                 }
             }

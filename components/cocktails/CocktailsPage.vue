@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import CocktailsList from './CocktailsList.vue'
+import CocktailsList from './../global/CocktailsList.vue'
 import FilterList from './FilterList.vue'
 import Pagination from '../dump/Pagination.vue'
 import Sorting from './Sorting.vue'

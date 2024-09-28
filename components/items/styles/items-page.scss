@@ -136,13 +136,11 @@
 }
 
 .items-main-about {
-
     @media (min-width: 1023px) {
         padding: 20px;
     }
 
     &__title {
-        color: $colorBlack;
         @include fontSize24B;
         margin-bottom: $halfShortMargin;
         text-shadow: 4px 3px 10px rgba(43, 71, 24, 0.3);

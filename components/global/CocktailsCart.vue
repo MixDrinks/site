@@ -68,5 +68,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/cocktails-cart';
+@import './styles/cocktails-cart.scss';
 </style>

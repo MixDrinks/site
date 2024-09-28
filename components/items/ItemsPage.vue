@@ -47,7 +47,7 @@
 
 <script>
 import { toRefs, defineComponent, unref } from 'vue'
-import CocktailsList from '../cocktails/CocktailsList.vue'
+import CocktailsList from '../global/CocktailsList.vue'
 import Pagination from '../dump/Pagination.vue'
 import { head } from '~~/utils/head'
 
