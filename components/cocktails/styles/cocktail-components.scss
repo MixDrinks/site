@@ -1,4 +1,10 @@
-.сomponents {
+.components {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 1023px) {
+        align-items: center;
+    }
 
     &__title {
         margin-bottom: $halfShortMargin;
@@ -13,25 +19,17 @@
     }
 
     &__list {
+        width: calc(100% + 80px);
         margin-right: -40px;
         margin-left: -40px;
 
         @media (min-width: 1023px) {
-            margin-bottom: $shortMargin;
-            margin-right: unset;
-            margin-left: unset;
+            width: initial;
         }
     }
 }
 
-.сomponents-title {
-    &__label {
-        color: $colorBlack;
-        @include fontSize24B;
-    }
-}
-
-.сomponents-counter {
+.components-counter {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -40,7 +38,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-basis: 40px;
+        width: 40px;
         height: 40px;
         border-radius: 4px;
         border: 1px solid $colorMain;
@@ -48,54 +46,117 @@
         margin-left: $halfShortMargin;
         margin-right: $halfShortMargin;
         @include fontSize18B;
+
+        @media (min-width: 1023px) {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
     }
 }
 
-.сomponents-list {
+.list {
     display: flex;
     overflow: auto;
     padding-left: 40px;
     padding-right: 40px;
 
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        bottom: 0;
+        left: 40px;
+        border-bottom: 2px solid #9ad174;
+        width: 70px;
+
+        @media (min-width: 1023px) {
+            left: unset;
+            bottom: -10px;
+            right: -20px;
+            width: 240px;
+            height: 70px;
+            border-bottom: 4px solid #9ad174;
+            border-right: 4px solid #9ad174;
+        }
+    }
+
     @include scrollNone;
 
     @media (min-width: 1023px) {
-        margin: -4px;
+        justify-content: center;
         flex-wrap: wrap;
         overflow: inherit;
         padding-left: unset;
         padding-right: unset;
     }
-}
 
-.сomponents-list-item {
-    padding: 4px;
-
-    &__link {
+    &__item {
         max-width: 110px;
+        margin: 4px;
 
         @media (min-width: 1023px) {
             max-width: 150px;
+            margin: 10px;
         }
     }
 }
 
-.сomponents-list-item-link {
-    $self: &;
 
+.list-item {
+    $self: &;
+    position: relative;
+    flex-shrink: 0;
     display: block;
     height: 100%;
     padding: 4px 4px 12px;
     border-radius: 8px;
     transition: transform .4s, box-shadow .4s;
 
-    @media (min-width: 1023px) {
+    @media (hover: hover) {
         &:hover {
             transform: translateY(-10px);
             box-shadow: 1px 10px rgba($colorHover, 0.3), -5px -5px 40px rgba($colorHover, 0.1);
 
             #{$self}__label {
                 color: $colorHover;
+            }
+        }
+    }
+
+    &::after,
+    &::before {
+        pointer-events: none;
+        position: absolute;
+        width: 1px;
+        height: 120px;
+        background-color: rgba(154, 209, 116, 0.5);
+        top: 50%;
+        transform: translateY(-50%);
+
+        @media (min-width: 1023px) {
+            height: 120px;
+        }
+    }
+
+    &::after {
+        content: '';
+        right: -4px;
+
+        @media (min-width: 1023px) {
+            right: -10px;
+        }
+    }
+
+    &:first-child {
+        &::before {
+            content: '';
+            left: -4px;
+
+            @media (min-width: 1023px) {
+                left: -10px;
             }
         }
     }
@@ -117,10 +178,16 @@
     }
 
     &__label {
+        display: block;
         color: $colorMain;
         @include fontSize14;
         text-align: center;
         margin-top: 12px;
         transition: color .4s;
+
+        &::after {
+            z-index: 1;
+            @include fullPseudoElement;
+        }
     }
 }

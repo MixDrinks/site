@@ -13,6 +13,8 @@ import { defineComponent, unref, ref, watch } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 
 import ItemsPage from '~~/components/items/ItemsPage.vue'
+import { getItems, getCoctails } from '~~/api/pages'
+import { query } from '~~/utils/querySTR'
 
 export default defineComponent({
     name: 'GlasswarePage',
@@ -22,40 +24,30 @@ export default defineComponent({
     async setup() {
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
-        const baseUrl = `https://newapi.mixdrinks.org/api/filter/glassware=${route.params.id}`
         const isLoadMore = ref(false)
 
-        const getFilterRequestPath = (newQuery) => {
-            if (newQuery) {
-                return `${baseUrl}${newQuery}`
-            }
-            const pageQuery = route.query.page
-                ? `?page=${route.query.page}`
-                : ''
-            return baseUrl + pageQuery
-        }
+        const getPath = (isNextPage) =>
+            `glassware=${route.params.id}${query(route, isNextPage)}`
 
-        const { data, error, execute, pending, refresh, status } =
-            await useAsyncData('filter-page', async () => {
+        const { data, refresh } = await useAsyncData(
+            'glassware-page',
+            async () => {
                 const [cocktailsFull, items] = await Promise.all([
-                    $fetchWIXUP(getFilterRequestPath()),
-                    $fetch(`https://newapi.mixdrinks.org/api${route.path}`),
+                    getCoctails(getPath(), $fetchWIXUP),
+                    getItems(route.path),
                 ])
                 return { cocktailsFull, items }
-            })
+            }
+        )
 
-        async function getNewCoctails(newQuery) {
-            return await $fetchWIXUP(getFilterRequestPath(newQuery))
-        }
-        const loadMore = (newQuery) => {
+        async function loadMore() {
             isLoadMore.value = true
-            getNewCoctails(newQuery).then((value) => {
-                data.value.cocktailsFull.cocktails = [
-                    ...unref(data).cocktailsFull.cocktails,
-                    ...value.cocktails,
-                ]
-                isLoadMore.value = false
-            })
+            const { cocktails } = await getCoctails(getPath(true), $fetchWIXUP)
+            data.value.cocktailsFull.cocktails = [
+                ...unref(data).cocktailsFull.cocktails,
+                ...cocktails,
+            ]
+            isLoadMore.value = false
         }
         watch(route, () => {
             if (!unref(isLoadMore)) {
