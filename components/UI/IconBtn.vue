@@ -1,15 +1,15 @@
 <template>
     <NuxtLink v-if="!!href" :class="btnClasses" :to="href" class="btn">
         <span
-            class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
+            class="btn__icon"
         />
         <slot />
     </NuxtLink>
     <button v-else :class="btnClasses" class="btn">
         <span
-            class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
+            class="btn__icon"
         />
         <slot />
     </button>

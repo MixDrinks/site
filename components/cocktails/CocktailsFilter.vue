@@ -1,8 +1,8 @@
 <template>
     <div class="filter">
-        <div class="filter__header filter-header" @click="toggleList">
+        <div @click="toggleList" class="filter__header filter-header">
             <div class="filter-header__title">{{ filterItem.name }}</div>
-            <div class="filter-header__toggler" :class="togglerClasses" />
+            <div :class="togglerClasses" class="filter-header__toggler" />
         </div>
         <transition name="max-height">
             <div v-show="filterIsShow" class="filter__wrapper">
@@ -11,10 +11,10 @@
                     class="filter__search filter-search"
                 >
                     <label
-                        class="filter-search__input filter-search-input"
                         :class="{
                             'filter-search-input--filled': !!searchValue
                         }"
+                        class="filter-search__input filter-search-input"
                     >
                         <div class="filter-search-input__label">Пошук</div>
                         <input
@@ -31,9 +31,9 @@
                             v-if="!!listItem.count"
                             :title="listItem.name"
                             :rel="getRel(listItem.isAddToIndex)"
-                            class="filter-list__item filter-list-item"
                             :class="getLinkClasses(listItem.isActive)"
                             :to="`/${listItem.url + query}`"
+                            class="filter-list__item filter-list-item"
                         >
                             <span
                                 v-if="

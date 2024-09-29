@@ -2,10 +2,10 @@
     <div class="pagination">
         <TextBtn
             v-show="!!nextPage"
-            class="pagination__load-more"
-            :href="!!nextPage ? nextPage.link : '/'"
-            rel="nofollow"
             @click="loadMore"
+            :href="!!nextPage ? nextPage.link : '/'"
+            class="pagination__load-more"
+            rel="nofollow"
         >
             Показати ще {{ limit }}
         </TextBtn>
@@ -18,16 +18,16 @@
                 >
                     <TextBtn
                         v-if="page.type === 'link'"
-                        class="pagination-controls-list-item__link"
                         :href="page.link"
+                        class="pagination-controls-list-item__link"
                         rel="nofollow"
                     >
                         {{ page.title }}
                     </TextBtn>
                     <span
                         v-else
-                        class="pagination-controls-list-item__link"
                         :class="`pagination-controls-list-item__link--${page.type}`"
+                        class="pagination-controls-list-item__link"
                     >
                         {{ page.title }}
                     </span>
@@ -35,21 +35,21 @@
             </ul>
             <div class="pagination-controls__btns pagination-controls-btns">
                 <IconBtn
+                    :lock="!!!prevPage"
+                    :href="!!prevPage ? prevPage.link : '/'"
                     class="pagination-controls-btns__item pagination-controls-btns__item--prev"
                     direction="top"
                     icon="/img/icons/arrow.svg"
-                    :lock="!!!prevPage"
-                    :href="!!prevPage ? prevPage.link : '/'"
                     rel="prev"
                 >
                     Попередня сторінка
                 </IconBtn>
                 <IconBtn
+                    :lock="!!!nextPage"
+                    :href="!!nextPage ? nextPage.link : '/'"
                     class="pagination-controls-btns__item pagination-controls-btns__item--next"
                     direction="bottom"
                     icon="/img/icons/arrow.svg"
-                    :lock="!!!nextPage"
-                    :href="!!nextPage ? nextPage.link : '/'"
                     rel="next"
                 >
                     Наступна сторінка

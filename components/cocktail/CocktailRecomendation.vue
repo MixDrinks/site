@@ -34,12 +34,12 @@
                             :type="img.type"
                         />
                         <img
+                            :alt="`Зображення коктейля ${cocktail.name}`"
+                            :title="cocktail.name"
                             class="cart__img"
                             width="120"
                             height="120"
                             loading="lazy"
-                            :alt="`Зображення коктейля ${cocktail.name}`"
-                            :title="cocktail.name"
                         />
                     </picture>
                     <NuxtLink

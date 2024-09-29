@@ -8,16 +8,16 @@
         </div>
         <div class="cocktails__body cocktails-body">
             <CocktailsFilters
-                class="cocktails-body__filter"
                 :filterList="allFilters"
                 :allCocktailsNumber="cocktailsFull.totalCount"
                 :futureCounts="cocktailsFull.futureCounts"
+                class="cocktails-body__filter"
             />
             <div class="cocktails-body__wrapper">
                 <CocktailsList
-                    class="cocktails-body__list"
-                    isFirstList
                     :cocktails="cocktailsFirst"
+                    isFirstList
+                    class="cocktails-body__list"
                 />
                 <div class="cocktails-body__ads">
                     <ins
@@ -31,17 +31,17 @@
                 </div>
                 <CocktailsList
                     v-if="checkLength"
-                    class="cocktails-body__list"
                     :cocktails="cocktailsSecond"
+                    class="cocktails-body__list"
                 />
             </div>
         </div>
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
-            class="cocktails__pagination"
+            @load-more="loadMore"
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
-            @load-more="loadMore"
+            class="cocktails__pagination"
         />
     </div>
 </template>

@@ -13,38 +13,38 @@
                     :type="img.type"
                 />
                 <img
+                    :alt="`Зображення ${items.name}`"
                     class="items-main__img"
                     width="500"
                     height="500"
-                    :alt="`Зображення ${items.name}`"
                     title=""
                 />
             </picture>
             <div class="items-main__about items-main-about">
                 <TitleH2
-                    class="items-main-about__title"
                     :text="`Опис ${items.name}`"
+                    class="items-main-about__title"
                 />
                 <p class="items-main-about__text">{{ items.about }}</p>
             </div>
         </div>
         <div class="items__cocktails items-cocktails">
             <TitleH2
-                class="items-cocktails__title"
                 :text="`Коктейлі з використанням ${items.name}`"
+                class="items-cocktails__title"
             />
             <CocktailsList
-                modificator="items"
                 :cocktails="cocktailsFull.cocktails"
+                modificator="items"
             />
         </div>
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
-            class="items__pagination"
+            @load-more="loadMore"
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
             :itemsCount="cocktailsFull.cocktails.length"
-            @load-more="loadMore"
+            class="items__pagination"
         />
     </div>
 </template>

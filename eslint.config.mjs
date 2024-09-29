@@ -11,6 +11,28 @@ export default createConfigForNuxt({}).override('nuxt/vue/rules', {
                 }
             }
         ],
-        'vue/attribute-hyphenation': ['error', 'never']
+        'vue/attribute-hyphenation': ['error', 'never'],
+        'vue/attributes-order': [
+            'error',
+            {
+                order: [
+                    'DEFINITION',
+                    'CONDITIONALS',
+                    'LIST_RENDERING',
+                    'UNIQUE',
+                    'RENDER_MODIFIERS',
+                    'GLOBAL',
+                    'SLOT',
+                    'EVENTS',
+                    'TWO_WAY_BINDING',
+                    'OTHER_DIRECTIVES',
+                    'CONTENT',
+                    'ATTR_DYNAMIC',
+                    'ATTR_SHORTHAND_BOOL',
+                    'ATTR_STATIC'
+                ],
+                alphabetical: false
+            }
+        ]
     }
 })

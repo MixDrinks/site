@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink v-if="!!href" class="btn" :to="href">
+    <NuxtLink v-if="!!href" :to="href" class="btn">
         <slot />
     </NuxtLink>
     <button v-else class="btn">

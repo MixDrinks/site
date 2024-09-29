@@ -5,11 +5,11 @@
 
             <input
                 ref="searchInput"
+                @focus="setFocus()"
+                @blur="removeFocus()"
                 v-model="inputValue"
                 class="search-header__input"
                 type="text"
-                @focus="setFocus()"
-                @blur="removeFocus()"
             />
         </label>
         <transition name="max-height">

@@ -1,31 +1,31 @@
 <template>
     <div class="rating">
         <div
-            class="rating__wrapper rating-wrapper"
-            :class="wrapperClasses"
             @mouseleave="hoverItemIndex = null"
+            :class="wrapperClasses"
+            class="rating__wrapper rating-wrapper"
         >
             <div class="rating-wrapper__stars rating-wrapper-stars">
                 <div
                     v-for="(star, starIndex) in stars"
                     :key="`rating-wrapper-stars__item-${starIndex}`"
-                    class="rating-wrapper-stars__item rating-wrapper-stars-item"
-                    :class="getStarItemClasses(starIndex)"
                     @mouseover="hoverItemIndex = starIndex"
                     @click="setRating(starIndex)"
+                    :class="getStarItemClasses(starIndex)"
+                    class="rating-wrapper-stars__item rating-wrapper-stars-item"
                 >
                     <div class="rating-wrapper-stars-item__start--gray" />
                     <div
-                        class="rating-wrapper-stars-item__start--full"
                         :style="'width:' + star.width"
+                        class="rating-wrapper-stars-item__start--full"
                     />
                 </div>
             </div>
             <div
                 v-if="actualRatingValue"
+                itemscope
                 class="rating-wrapper__aggregate"
                 itemprop="aggregateRating"
-                itemscope
                 itemtype="http://schema.org/AggregateRating"
             >
                 <span class="rating-wrapper__value" itemprop="ratingValue">

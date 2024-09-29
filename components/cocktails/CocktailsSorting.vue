@@ -8,9 +8,9 @@
                 class="sorting-list__item sorting-list-item"
             >
                 <NuxtLink
-                    class="sorting-list-item__link"
                     :class="getLinkClasses(sortItem.isActive)"
                     :to="sortItem.url"
+                    class="sorting-list-item__link"
                 >
                     {{ sortItem.name }}
                 </NuxtLink>

@@ -1,9 +1,9 @@
 <template>
     <main class="wrapper">
         <CocktailsPage
+            @load-more="loadMore"
             :cocktailsFull="data.cocktailsFull"
             :allFilters="data.allFilters"
-            @load-more="loadMore"
         />
     </main>
 </template>

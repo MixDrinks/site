@@ -24,11 +24,11 @@
         </div>
         <Pagination
             v-if="postsData.postCount > 24"
-            class="blog__pagination"
+            @update-page="updatePage"
             :totalItems="postsData.postCount"
             :limit="24"
             :itemsCount="postsData.posts.length"
-            @update-page="updatePage"
+            class="blog__pagination"
         />
     </div>
 </template>

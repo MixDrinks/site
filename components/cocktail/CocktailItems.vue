@@ -1,12 +1,12 @@
 <template>
     <div class="items">
-        <TitleH2 class="items__title" :text="title" />
+        <TitleH2 :text="title" class="items__title" />
         <div v-if="withCounter" class="items__counter counter">
             <IconBtn
-                class="counter__btn"
-                :lock="isDecLock"
-                icon="/img/icons/minus.svg"
                 @click="dec"
+                :lock="isDecLock"
+                class="counter__btn"
+                icon="/img/icons/minus.svg"
             >
                 Декримент
             </IconBtn>
@@ -14,9 +14,9 @@
                 {{ counter }}
             </div>
             <IconBtn
+                @click="inc"
                 class="counter__btn"
                 icon="/img/icons/plus.svg"
-                @click="inc"
             >
                 Інкримент
             </IconBtn>
@@ -37,12 +37,12 @@
                             :type="img.type"
                         />
                         <img
+                            :alt="`Зображення ${item.name}`"
+                            :title="item.name"
                             class="cart__img"
                             width="100"
                             height="100"
                             loading="lazy"
-                            :alt="`Зображення ${item.name}`"
-                            :title="item.name"
                         />
                     </picture>
                     <NuxtLink

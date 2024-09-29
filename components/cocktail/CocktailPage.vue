@@ -19,10 +19,10 @@
                 </div>
                 <CocktailRating
                     :id="cocktail.id"
-                    class="cocktail-header-user-info__rating"
                     :slug="cocktail.slug"
                     :ratingCount="cocktail.ratingCount"
                     :ratingValue="cocktail.rating"
+                    class="cocktail-header-user-info__rating"
                 />
             </div>
         </div>
@@ -47,17 +47,17 @@
                     :type="img.type"
                 />
                 <img
+                    :alt="`Зображення коктейля ${cocktail.name}`"
+                    :title="cocktail.name"
                     class="cocktail-body__img"
                     width="332"
                     height="208"
-                    :alt="`Зображення коктейля ${cocktail.name}`"
-                    title=""
                 />
             </picture>
             <div class="cocktail-body__recipe cocktail-body-recipe">
                 <TitleH2
-                    class="cocktail-body-recipe__title"
                     :text="`Рецепт коктейлю ${cocktail.name}`"
+                    class="cocktail-body-recipe__title"
                 />
                 <ol
                     class="cocktail-body-recipe__list cocktail-body-recipe-list"
@@ -66,8 +66,8 @@
                     <li
                         v-for="recipeItem in cocktail.receipt"
                         :key="recipeItem"
-                        itemprop="step"
                         itemscope
+                        itemprop="step"
                         itemtype="https://schema.org/HowToStep"
                         class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
                     >
@@ -92,22 +92,22 @@
             </div>
             <Separator />
             <CocktailItems
-                class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"
                 :items="cocktail.goods"
                 withCounter
+                class="cocktail-body__goods"
             />
             <Separator />
             <CocktailItems
-                class="cocktail-body__tools"
                 :title="`Потрібні штучки для приготування ${cocktail.name}`"
                 :items="cocktail.tools"
+                class="cocktail-body__tools"
             />
             <Separator />
             <CocktailRecomendation
                 v-if="cocktail.recomendationCocktails"
-                class="cocktail-body__recomendation"
                 :cocktails="cocktail.recomendationCocktails"
+                class="cocktail-body__recomendation"
             />
             <Separator />
             <div
@@ -115,9 +115,9 @@
                 class="cocktail-body__article cocktail-body-article"
             >
                 <TitleH2
-                    class="cocktail-body-article__title"
                     :text="`Коктейль ${cocktail.name}: історія, рецепт та
                     популярність`"
+                    class="cocktail-body-article__title"
                 />
                 <div
                     v-if="cocktail.article.chapters"

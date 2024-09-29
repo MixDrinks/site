@@ -30,10 +30,10 @@
                 :type="img.type"
             />
             <img
+                :alt="`Зображення коктейля ${values.name}`"
                 class="cocktail__img"
                 width="298"
                 height="298"
-                :alt="`Зображення коктейля ${values.name}`"
                 title=""
             />
         </picture>

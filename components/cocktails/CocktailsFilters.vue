@@ -1,6 +1,6 @@
 <template>
     <div class="filters">
-        <div class="filters__main" :class="mainClasees">
+        <div :class="mainClasees" class="filters__main">
             <div class="filters__header filters-header">
                 <div class="filters-header__title filters-header-title">
                     Фільтри
@@ -8,15 +8,15 @@
                         {{ allCocktailsNumber }}
                     </span>
                 </div>
-                <transition name="fate-in" appear>
+                <transition appear name="fate-in">
                     <IconBtn
                         v-show="activeFilter.length"
+                        @click="changeFilterIsOpen"
+                        :href="`${clearFilterUrl}`"
                         class="filters-header__close"
                         direction="top"
                         type="short"
                         icon="/img/icons/trash.svg"
-                        :href="`${clearFilterUrl}`"
-                        @click="changeFilterIsOpen"
                     >
                         Відмінити всі фільтри
                     </IconBtn>
@@ -31,9 +31,9 @@
                     >
                         <NuxtLink
                             :title="filterItem.name"
-                            class="filters-tag-cloud-list-item__link"
                             :to="`/${filterItem.url}`"
                             :rel="getRel(filterItem.isAddToIndex)"
+                            class="filters-tag-cloud-list-item__link"
                         >
                             {{ filterItem.name }}
                         </NuxtLink>
@@ -44,12 +44,12 @@
                 <CocktailsFilter
                     v-for="filterItem in filterListWithUrl"
                     :key="filterItem.id"
-                    class="filters-wrapper__item"
                     :filterItem="filterItem"
+                    class="filters-wrapper__item"
                 />
             </div>
         </div>
-        <div class="filters__btn filters-btn" @click="changeFilterIsOpen">
+        <div @click="changeFilterIsOpen" class="filters__btn filters-btn">
             <template v-if="isFilterOpen">
                 <span class="filters-btn__text">Застосувати</span>
             </template>
@@ -63,8 +63,8 @@
         <transition name="opacity">
             <div
                 v-if="isFilterOpen"
-                class="filters__background"
                 @click="changeFilterIsOpen"
+                class="filters__background"
             />
         </transition>
     </div>
