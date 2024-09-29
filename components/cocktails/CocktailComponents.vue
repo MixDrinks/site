@@ -44,15 +44,17 @@
                         :title="item.name"
                     />
                 </picture>
-                <NuxtLink :to="`/${item.url}`" class="list-item__label">
+                <NuxtLink
+                    :to="`/${item.url}`"
+                    class="list-item__label list-item__label--link"
+                >
                     {{ item.name }}
-                    <template v-if="item.amount">
-                        <br />
-                        <strong>
-                            {{ getAmount(item.amount) }} {{ item.unit }}.
-                        </strong>
-                    </template>
                 </NuxtLink>
+                <p v-if="item.amount" class="list-item__label">
+                    <strong>
+                        {{ getAmount(item.amount) }} {{ item.unit }}.
+                    </strong>
+                </p>
             </li>
         </ul>
     </div>

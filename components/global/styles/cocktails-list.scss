@@ -55,11 +55,20 @@
                 content: '';
                 position: absolute;
                 width: 1px;
-                height: 200px;
                 background-color: rgba(154, 209, 116, 0.5);
                 right: -10px;
-                top: 50%;
-                transform: translateY(-50%);
+                top: 8vw;
+                height: 20vw;
+            }
+
+            @media (min-width: 1199px) {
+                top: 6vw;
+                height: 15vw;
+            }
+
+            @media (min-width: 1599px) {
+                top: 5vw;
+                height: 9vw;
             }
         }
 

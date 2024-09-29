@@ -61,28 +61,6 @@
     padding-left: 40px;
     padding-right: 40px;
 
-    position: relative;
-
-    &::before {
-        content: '';
-        position: absolute;
-        pointer-events: none;
-        bottom: 0;
-        left: 40px;
-        border-bottom: 2px solid #9ad174;
-        width: 70px;
-
-        @media (min-width: 1023px) {
-            left: unset;
-            bottom: -10px;
-            right: -20px;
-            width: 240px;
-            height: 70px;
-            border-bottom: 4px solid #9ad174;
-            border-right: 4px solid #9ad174;
-        }
-    }
-
     @include scrollNone;
 
     @media (min-width: 1023px) {
@@ -131,13 +109,13 @@
         pointer-events: none;
         position: absolute;
         width: 1px;
-        height: 120px;
+        height: 90px;
         background-color: rgba(154, 209, 116, 0.5);
-        top: 50%;
-        transform: translateY(-50%);
+        top: 9px;
 
         @media (min-width: 1023px) {
             height: 120px;
+            top: 15px;
         }
     }
 
@@ -170,6 +148,7 @@
         display: block;
         width: 100px;
         height: 100px;
+        margin-bottom: 12px;
 
         @media (min-width: 1023px) {
             width: 142px;
@@ -182,12 +161,13 @@
         color: $colorMain;
         @include fontSize14;
         text-align: center;
-        margin-top: 12px;
         transition: color .4s;
 
-        &::after {
-            z-index: 1;
-            @include fullPseudoElement;
+        &--link {
+            &::after {
+                z-index: 1;
+                @include fullPseudoElement;
+            }
         }
     }
 }

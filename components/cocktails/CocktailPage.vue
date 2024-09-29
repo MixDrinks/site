@@ -90,22 +90,26 @@
                     data-ad-slot="2682031593"
                 ></ins>
             </div>
+            <Separator />
             <CocktailComponents
                 class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"
                 :components="cocktail.goods"
                 withCounter
             />
+            <Separator />
             <CocktailComponents
                 class="cocktail-body__tools"
                 :title="`Потрібні штучки для приготування ${cocktail.name}`"
                 :components="cocktail.tools"
             />
+            <Separator />
             <CocktailRecomendation
                 v-if="cocktail.recomendationCocktails"
                 class="cocktail-body__recomendation"
                 :cocktails="cocktail.recomendationCocktails"
             />
+            <Separator />
             <div
                 v-if="cocktail.article"
                 class="cocktail-body__article cocktail-body-article"
@@ -141,6 +145,7 @@ import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
 import TitleH2 from '../global/TitleH2.vue'
+import Separator from '../global/Separator.vue'
 
 export default defineComponent({
     name: 'CocktailPage',
@@ -150,6 +155,7 @@ export default defineComponent({
         CocktailComponents,
         CocktailRecomendation,
         TitleH2,
+        Separator,
     },
     props: {
         cocktail: {
