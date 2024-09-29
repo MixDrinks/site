@@ -1,15 +1,10 @@
 .cocktail {
     &__tags {
         @include scrollNone;
-        margin-bottom: $halfShortMargin;
-        margin-right: -40px;
-        margin-left: -40px;
+        margin: 28px -40px $halfShortMargin;
 
         @media (min-width: 1023px) {
-            margin-top: $halfShortMargin;
-            margin-bottom: $shortMargin;
-            margin-right: unset;
-            margin-left: unset;
+            margin: $halfShortMargin auto $shortMargin;
         }
     }
 }
@@ -22,24 +17,16 @@
 
     &__title {
         margin-bottom: 6px;
-
-        @media (min-width: 1023px) {
-            margin-bottom: unset;
-        }
-    }
-}
-
-.cocktail-header-title {
-    &__label {
         @include fontSize32B;
 
         @media (min-width: 1023px) {
+            margin-bottom: unset;
             @include fontSize48;
         }
     }
 }
 
-.cocktail-header-user-info {
+.cocktail-header-statistics {
     @media (min-width: 1023px) {
         display: flex;
         align-items: center;
@@ -56,63 +43,6 @@
             margin-right: $halfShortMargin;
             margin-bottom: unset;
         }
-    }
-
-    &__rating {
-        margin-bottom: 28px;
-
-        @media (min-width: 1023px) {
-            margin-bottom: unset;
-        }
-    }
-}
-
-.cocktail-tags {
-    display: flex;
-    overflow: auto;
-
-    padding-left: 40px;
-    padding-right: 40px;
-
-    @media (min-width: 1023px) {
-        padding-left: unset;
-        padding-right: unset;
-
-        overflow: inherit;
-    }
-
-    &__item {
-        &:not(:last-child) {
-            margin-right: 10px;
-        }
-    }
-}
-
-.cocktail-tags-link {
-    display: block;
-    padding: 4px 8px;
-    border-radius: 20px;
-    background-color: $colorMain;
-    transition: background-color 0.4s;
-    font-style: italic;
-    color: $colorWhite;
-    white-space: nowrap;
-    @include fontSize14M;
-
-    @media (min-width: 1023px) {
-        padding: 3px 8px;
-        border-radius: 4px;
-        @include fontSize16M;
-    }
-
-    @media (hover: hover) {
-        &:hover {
-            background-color: $colorHover;
-        }
-    }
-
-    &::first-letter {
-        text-transform: uppercase;
     }
 }
 
@@ -167,97 +97,17 @@
 
     &__goods,
     &__tools,
-    &__article,
-    &__recomendation {
+    &__recomendation,
+    &__article {
         width: 100%;
     }
-}
 
-.cocktail-body-recipe {
-    &__title {
-        text-align: center;
-        margin-bottom: $halfShortMargin;
-
+    &__article {
         @media (min-width: 1023px) {
-            text-align: left;
-            margin-bottom: $shortMargin;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            width: 1000px;
         }
-    }
-}
-
-.cocktail-body-recipe-list {
-    list-style: none;
-
-    &__item {
-        &:not(:last-child) {
-            margin-bottom: 10px;
-
-            @media (min-width: 1023px) {
-                margin-bottom: $halfShortMargin;
-            }
-        }
-    }
-}
-
-.cocktail-body-recipe-list-item {
-    display: flex;
-    align-items: center;
-    counter-increment: counter;
-
-    &:not(:last-child) {
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgb(231, 226, 222);
-
-        @media (min-width: 1023px) {
-            padding-bottom: $halfShortMargin;
-        }
-    }
-
-    &::before {
-        @include fontSize18B;
-        color: $colorWhite;
-        width: 34px;
-        height: 34px;
-        margin-right: 16px;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: $colorMain;
-        content: counter(counter);
-        flex-shrink: 0;
-
-        @media (min-width: 1023px) {
-            width: 40px;
-            height: 40px;
-            margin-right: $halfShortMargin;
-        }
-    }
-
-    &__label {
-        @include fontSize16;
-
-        @media (min-width: 1023px) {
-            @include fontSize18M;
-        }
-    }
-}
-
-.cocktail-body-article {
-    &__title {
-        text-align: center;
-        margin-bottom: $halfShortMargin;
-
-        @media (min-width: 1023px) {
-            margin-bottom: $halfShortMargin;
-        }
-    }
-}
-
-.cocktail-body-article-chapters {
-    &__text {
-        text-align: justify;
-        margin-bottom: $halfShortMargin;
-        @include fontSize16;
     }
 }

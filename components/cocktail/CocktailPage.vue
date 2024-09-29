@@ -3,17 +3,15 @@
         <div
             :itemscope="!!cocktail.rating"
             :itemtype="!!cocktail.rating ? `http://schema.org/Product` : false"
-            class="cocktail__header cocktail-header"
+            class="cocktail-header"
         >
-            <h1 class="cocktail-header-title cocktail-header__title">
-                <span itemprop="name" class="cocktail-header-title__label">
-                    {{ cocktail.name }}
-                </span>
+            <h1 itemprop="name" class="cocktail-header__title">
+                {{ cocktail.name }}
             </h1>
-            <div class="cocktail-header__user-info cocktail-header-user-info">
+            <div class="cocktail-header-statistics">
                 <div
                     v-if="!!cocktail.visitCount"
-                    class="cocktail-header-user-info__views"
+                    class="cocktail-header-statistics__views"
                 >
                     Переглядів <strong>{{ cocktail.visitCount }}</strong>
                 </div>
@@ -22,21 +20,10 @@
                     :slug="cocktail.slug"
                     :ratingCount="cocktail.ratingCount"
                     :ratingValue="cocktail.rating"
-                    class="cocktail-header-user-info__rating"
                 />
             </div>
         </div>
-        <ul class="cocktail__tags cocktail-tags">
-            <li
-                v-for="(tag, tagIndex) in cocktail.tags"
-                :key="`cocktail-tags__item-${tagIndex}`"
-                class="cocktail-tags__item"
-            >
-                <NuxtLink :to="`/${tag.url}`" class="cocktail-tags-link">
-                    {{ tag.name }}
-                </NuxtLink>
-            </li>
-        </ul>
+        <CocktailTags :tags="cocktail.tags" class="cocktail__tags" />
         <div class="cocktail__body cocktail-body">
             <picture class="cocktail-body__picture">
                 <source
@@ -49,37 +36,16 @@
                 <img
                     :alt="`Зображення коктейля ${cocktail.name}`"
                     :title="cocktail.name"
-                    class="cocktail-body__img"
                     width="332"
                     height="208"
+                    class="cocktail-body__img"
                 />
             </picture>
-            <div class="cocktail-body__recipe cocktail-body-recipe">
-                <TitleH2
-                    :text="`Рецепт коктейлю ${cocktail.name}`"
-                    class="cocktail-body-recipe__title"
-                />
-                <ol
-                    class="cocktail-body-recipe__list cocktail-body-recipe-list"
-                    itemprop="recipeInstructions"
-                >
-                    <li
-                        v-for="recipeItem in cocktail.receipt"
-                        :key="recipeItem"
-                        itemscope
-                        itemprop="step"
-                        itemtype="https://schema.org/HowToStep"
-                        class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
-                    >
-                        <span
-                            itemprop="text"
-                            class="cocktail-body-recipe-list-item__label"
-                        >
-                            {{ recipeItem }}
-                        </span>
-                    </li>
-                </ol>
-            </div>
+            <CocktailRecipe
+                :name="cocktail.name"
+                :receipt="cocktail.receipt"
+                class="cocktail-body__recipe"
+            />
             <div class="cocktail-body__ads">
                 <ins
                     class="adsbygoogle"
@@ -110,28 +76,12 @@
                 class="cocktail-body__recomendation"
             />
             <Separator />
-            <div
+            <CocktailArticle
                 v-if="cocktail.article"
-                class="cocktail-body__article cocktail-body-article"
-            >
-                <TitleH2
-                    :text="`Коктейль ${cocktail.name}: історія, рецепт та
-                    популярність`"
-                    class="cocktail-body-article__title"
-                />
-                <div
-                    v-if="cocktail.article.chapters"
-                    class="cocktail-body-article__chapters cocktail-body-article-chapters"
-                >
-                    <p
-                        v-for="(text, textIndex) in cocktail.article.chapters"
-                        :key="`cocktail-body-article-chapters__text-${textIndex}`"
-                        class="cocktail-body-article-chapters__text"
-                    >
-                        {{ text }}
-                    </p>
-                </div>
-            </div>
+                :name="cocktail.name"
+                :chapters="cocktail.article.chapters"
+                class="cocktail-body__article"
+            />
         </div>
     </div>
 </template>
@@ -140,11 +90,14 @@
 import CocktailRating from '../cocktail/CocktailRating.vue'
 import CocktailItems from '../cocktail//CocktailItems.vue'
 import CocktailRecomendation from '../cocktail/CocktailRecomendation.vue'
+import Separator from '../global/Separator.vue'
+import CocktailRecipe from './CocktailRecipe.vue'
+import CocktailArticle from './CocktailArticle.vue'
+
 import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
-import TitleH2 from '../global/TitleH2.vue'
-import Separator from '../global/Separator.vue'
+import CocktailTags from './CocktailTags.vue'
 
 export default defineComponent({
     name: 'CocktailPage',
@@ -152,8 +105,10 @@ export default defineComponent({
         CocktailRating,
         CocktailItems,
         CocktailRecomendation,
-        TitleH2,
-        Separator
+        Separator,
+        CocktailRecipe,
+        CocktailArticle,
+        CocktailTags
     },
     props: {
         cocktail: {
@@ -178,12 +133,8 @@ export default defineComponent({
             updateVisit()
         })
 
-        const headTitle = `Коктейль ${
-            unref(cocktail).name
-        } 🍹 приготування в домашніх умовах за рецептом`
-        const headDescription = `Як приготувати коктейль ${
-            unref(cocktail).name
-        } 🍹 в домашніх умовах, вcі інгрідієнти які вам потрібні та рецепт для коктейля наведені на cторінці!`
+        const headTitle = `Коктейль ${unref(cocktail).name} 🍹 приготування в домашніх умовах за рецептом`
+        const headDescription = `Як приготувати коктейль ${unref(cocktail).name} 🍹 в домашніх умовах, вcі інгрідієнти які вам потрібні та рецепт для коктейля наведені на cторінці!`
 
         const scripts = [
             {

@@ -1,0 +1,48 @@
+.tags {
+    display: flex;
+    overflow: auto;
+
+    padding-left: 40px;
+    padding-right: 40px;
+
+    @media (min-width: 1023px) {
+        padding-left: unset;
+        padding-right: unset;
+
+        overflow: inherit;
+    }
+
+    &__item {
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+}
+
+.tags-link {
+    display: block;
+    padding: 4px 8px;
+    border-radius: 20px;
+    background-color: $colorMain;
+    transition: background-color 0.4s;
+    font-style: italic;
+    color: $colorWhite;
+    white-space: nowrap;
+    @include fontSize14M;
+
+    @media (min-width: 1023px) {
+        padding: 3px 8px;
+        border-radius: 4px;
+        @include fontSize16M;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: $colorHover;
+        }
+    }
+
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}

@@ -28,6 +28,7 @@
                 <p class="items-main-about__text">{{ items.about }}</p>
             </div>
         </div>
+        <Separator />
         <div class="items__cocktails items-cocktails">
             <TitleH2
                 :text="`Коктейлі з використанням ${items.name}`"
@@ -55,10 +56,11 @@ import CocktailsList from '../global/CocktailsList.vue'
 import TitleH2 from '../global/TitleH2.vue'
 import Pagination from '../dump/Pagination.vue'
 import { head } from '~~/utils/head'
+import Separator from '../global/Separator.vue'
 
 export default defineComponent({
     name: 'ItemsPage',
-    components: { Pagination, CocktailsList, TitleH2 },
+    components: { Pagination, CocktailsList, TitleH2, Separator },
 
     props: {
         items: {

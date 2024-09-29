@@ -1,0 +1,18 @@
+.article {
+    &__title {
+        text-align: center;
+        margin-bottom: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-bottom: $halfShortMargin;
+        }
+    }
+}
+
+.article-chapters {
+    &__text {
+        text-align: justify;
+        margin-bottom: $halfShortMargin;
+        @include fontSize16;
+    }
+}
