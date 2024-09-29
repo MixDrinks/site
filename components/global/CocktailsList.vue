@@ -6,10 +6,7 @@
             :class="itemClasses"
             class="list__item item"
         >
-            <CocktailsCart
-                :is-loading-lazy="!isFirstList"
-                :cocktail="cocktail"
-            />
+            <CocktailsCart :isLoadingLazy="!isFirstList" :cocktail="cocktail" />
         </div>
     </div>
 </template>

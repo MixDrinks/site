@@ -21,8 +21,8 @@
                     :id="cocktail.id"
                     class="cocktail-header-user-info__rating"
                     :slug="cocktail.slug"
-                    :rating-count="cocktail.ratingCount"
-                    :rating-value="cocktail.rating"
+                    :ratingCount="cocktail.ratingCount"
+                    :ratingValue="cocktail.rating"
                 />
             </div>
         </div>
@@ -95,7 +95,7 @@
                 class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"
                 :items="cocktail.goods"
-                with-counter
+                withCounter
             />
             <Separator />
             <CocktailItems

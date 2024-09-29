@@ -10,6 +10,7 @@ export default createConfigForNuxt({}).override('nuxt/vue/rules', {
                     void: 'always'
                 }
             }
-        ]
+        ],
+        'vue/attribute-hyphenation': ['error', 'never']
     }
 })

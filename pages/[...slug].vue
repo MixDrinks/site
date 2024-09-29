@@ -1,8 +1,8 @@
 <template>
     <main class="wrapper">
         <CocktailsPage
-            :cocktails-full="data.cocktailsFull"
-            :all-filters="data.allFilters"
+            :cocktailsFull="data.cocktailsFull"
+            :allFilters="data.allFilters"
             @load-more="loadMore"
         />
     </main>

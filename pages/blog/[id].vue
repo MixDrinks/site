@@ -1,6 +1,6 @@
 <template>
     <main class="wrapper">
-        <PostPage :post-data="postData" />
+        <PostPage :postData="postData" />
     </main>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <main class="wrapper">
         <ItemsPage
-            :cocktails-full="data.cocktailsFull"
+            :cocktailsFull="data.cocktailsFull"
             :items="data.items"
             @load-more="loadMore"
         />

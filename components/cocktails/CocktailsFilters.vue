@@ -45,7 +45,7 @@
                     v-for="filterItem in filterListWithUrl"
                     :key="filterItem.id"
                     class="filters-wrapper__item"
-                    :filter-item="filterItem"
+                    :filterItem="filterItem"
                 />
             </div>
         </div>

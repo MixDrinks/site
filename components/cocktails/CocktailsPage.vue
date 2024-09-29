@@ -9,14 +9,14 @@
         <div class="cocktails__body cocktails-body">
             <CocktailsFilters
                 class="cocktails-body__filter"
-                :filter-list="allFilters"
-                :all-cocktails-number="cocktailsFull.totalCount"
-                :future-counts="cocktailsFull.futureCounts"
+                :filterList="allFilters"
+                :allCocktailsNumber="cocktailsFull.totalCount"
+                :futureCounts="cocktailsFull.futureCounts"
             />
             <div class="cocktails-body__wrapper">
                 <CocktailsList
                     class="cocktails-body__list"
-                    is-first-list
+                    isFirstList
                     :cocktails="cocktailsFirst"
                 />
                 <div class="cocktails-body__ads">
@@ -39,7 +39,7 @@
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
             class="cocktails__pagination"
-            :total-items="cocktailsFull.totalCount"
+            :totalItems="cocktailsFull.totalCount"
             :limit="24"
             @load-more="loadMore"
         />

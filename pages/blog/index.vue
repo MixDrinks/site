@@ -1,7 +1,7 @@
 <template>
     <main class="wrapper">
         123
-        <BlogPage :posts-data="postFull" @update-page="updatePage" />
+        <BlogPage :postsData="postFull" @update-page="updatePage" />
     </main>
 </template>
 
