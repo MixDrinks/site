@@ -84,9 +84,7 @@ export default defineComponent({
 
         async function updateRating(starIndex) {
             return await $fetch(
-                `https://newapi.mixdrinks.org/api/cocktail/${unref(
-                    slug
-                )}/score`,
+                `https://newapi.mixdrinks.org/api/cocktail/${unref(slug)}/score`,
                 {
                     method: 'POST',
                     body: {

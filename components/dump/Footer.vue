@@ -60,8 +60,8 @@
                         class="footer-content-about-item__link"
                         to="/privacy"
                     >
-                        Політика конфіденційності</NuxtLink
-                    >
+                        Політика конфіденційності
+                    </NuxtLink>
                 </div>
                 <div
                     class="footer-content-about__item footer-content-about-item"
