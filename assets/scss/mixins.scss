@@ -133,6 +133,18 @@
     letter-spacing: -0.02em;
 }
 
+@mixin fontSize22 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+@mixin fontSize22B {
+    @include fontSize24;
+    font-weight: bold;
+    letter-spacing: -0.02em;
+}
+
+
 @mixin fontSize24 {
     font-size: 24px;
     line-height: 32px;

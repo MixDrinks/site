@@ -1,4 +1,8 @@
 .title {
-    @include fontSize24B;
+    @include fontSize22B;
     text-shadow: 4px 3px 30px rgba(43, 71, 24, 0.3);
+
+    @media (min-width: 1023px) {
+        @include fontSize24B;
+    }
 }

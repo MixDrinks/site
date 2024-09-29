@@ -1,9 +1,9 @@
 .recomendation {
     &__title {
+        text-align: center;
         margin-bottom: $halfShortMargin;
 
         @media (min-width: 1023px) {
-            text-align: center;
             margin-bottom: $shortMargin;
         }
     }

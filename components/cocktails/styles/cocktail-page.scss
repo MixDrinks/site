@@ -193,9 +193,11 @@
 
 .cocktail-body-recipe {
     &__title {
+        text-align: center;
         margin-bottom: $halfShortMargin;
 
         @media (min-width: 1023px) {
+            text-align: left;
             margin-bottom: $shortMargin;
         }
     }
@@ -206,7 +208,11 @@
 
     &__item {
         &:not(:last-child) {
-            margin-bottom: $halfShortMargin;
+            margin-bottom: 10px;
+
+            @media (min-width: 1023px) {
+                margin-bottom: $halfShortMargin;
+            }
         }
     }
 }
@@ -217,8 +223,12 @@
     counter-increment: counter;
 
     &:not(:last-child) {
-        padding-bottom: $halfShortMargin;
-        border-bottom: 1px solid $colorMain;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgb(231, 226, 222);
+
+        @media (min-width: 1023px) {
+            padding-bottom: $halfShortMargin;
+        }
     }
 
     &::before {
@@ -243,12 +253,17 @@
     }
 
     &__label {
-        @include fontSize18M;
+        @include fontSize16;
+
+        @media (min-width: 1023px) {
+            @include fontSize18M;
+        }
     }
 }
 
 .cocktail-body-article {
     &__title {
+        text-align: center;
         margin-bottom: $halfShortMargin;
 
         @media (min-width: 1023px) {
@@ -259,6 +274,7 @@
 
 .cocktail-body-article-chapters {
     &__text {
+        text-align: justify;
         margin-bottom: $halfShortMargin;
         @include fontSize16;
     }
