@@ -82,26 +82,8 @@
     }
 
     &__item {
-        position: relative;
-
         &:not(:last-child) {
             margin-right: 10px;
-
-            &::after {
-                content: '';
-                position: absolute;
-                right: -6px;
-                pointer-events: none;
-                width: 2px;
-                height: 40px;
-                background-color: rgba(154, 209, 116, 0.5);
-                top: 50%;
-                transform: translateY(-50%) rotate(10deg);
-
-                @media (min-width: 1023px) {
-                    display: none;
-                }
-            }
         }
     }
 }

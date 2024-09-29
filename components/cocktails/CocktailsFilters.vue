@@ -24,12 +24,6 @@
             </div>
             <div class="filters__tag-cloud filters-tag-cloud">
                 <div class="filters-tag-cloud__list filters-tag-cloud-list">
-                    <!-- <transition-group
-                        class="filters-tag-cloud__list filters-tag-cloud-list"
-                        name="fate-in"
-                        mode="page"
-                        appear
-                    > -->
                     <div
                         class="filters-tag-cloud-list__item filters-tag-cloud-list-item"
                         v-for="filterItem in activeFilter"
@@ -44,11 +38,10 @@
                             {{ filterItem.name }}
                         </NuxtLink>
                     </div>
-                    <!-- </transition-group> -->
                 </div>
             </div>
             <div class="filters__wrapper filters-wrapper">
-                <FilterItem
+                <CocktailsFilter
                     class="filters-wrapper__item"
                     v-for="filterItem in filterListWithUrl"
                     :key="filterItem.id"
@@ -80,13 +73,13 @@
 <script>
 import { computed, defineComponent, toRefs, unref } from 'vue'
 import { useRoute } from 'nuxt/app'
-import IconBtn from './../UI/IconBtn.vue'
-import FilterItem from './FilterItem.vue'
+import IconBtn from '../UI/IconBtn.vue'
+import CocktailsFilter from './CocktailsFilter.vue'
 import { store } from '~~/store/filter'
 
 export default defineComponent({
-    components: { IconBtn, FilterItem },
-    name: 'FilterList',
+    components: { IconBtn, CocktailsFilter },
+    name: 'CocktailsFilters',
 
     props: {
         filterList: {
@@ -169,5 +162,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './styles/filter-list';
+@import './styles/cocktails-filters';
 </style>

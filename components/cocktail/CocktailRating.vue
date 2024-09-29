@@ -54,7 +54,7 @@
 import { ref, toRefs, unref, defineComponent, computed, onMounted } from 'vue'
 
 export default defineComponent({
-    name: 'Rating',
+    name: 'CocktailRating',
 
     props: {
         ratingCount: {
@@ -181,5 +181,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './styles/rating';
+@import './styles/cocktail-rating';
 </style>

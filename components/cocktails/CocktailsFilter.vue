@@ -99,7 +99,7 @@ import { computed, defineComponent, toRefs, unref, ref } from 'vue'
 import { filterType } from '~~/utils/selectionType'
 
 export default defineComponent({
-    name: 'FilterItem',
+    name: 'CocktailsFilter',
 
     props: {
         filterItem: {
@@ -177,5 +177,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './styles/filter-item';
+@import './styles/cocktails-filter';
 </style>

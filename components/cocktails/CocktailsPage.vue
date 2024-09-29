@@ -4,10 +4,10 @@
             <h1 class="cocktails-header__title">
                 {{ pageTitle }}
             </h1>
-            <Sorting class="cocktails-header__sorting" />
+            <CocktailsSorting class="cocktails-header__sorting" />
         </div>
         <div class="cocktails__body cocktails-body">
-            <FilterList
+            <CocktailsFilters
                 class="cocktails-body__filter"
                 :filterList="allFilters"
                 :allCocktailsNumber="cocktailsFull.totalCount"
@@ -48,15 +48,20 @@
 
 <script>
 import CocktailsList from './../global/CocktailsList.vue'
-import FilterList from './FilterList.vue'
+import CocktailsFilters from './CocktailsFilters.vue'
 import Pagination from '../dump/Pagination.vue'
-import Sorting from './Sorting.vue'
+import CocktailsSorting from './CocktailsSorting.vue'
 import { onBeforeMount, defineComponent, computed, toRefs, unref } from 'vue'
 import { store } from '~~/store/filter'
 import { head } from '~~/utils/head'
 export default defineComponent({
     name: 'CocktailsPage',
-    components: { FilterList, Pagination, CocktailsList, Sorting },
+    components: {
+        CocktailsFilters,
+        Pagination,
+        CocktailsList,
+        CocktailsSorting,
+    },
 
     props: {
         allFilters: {

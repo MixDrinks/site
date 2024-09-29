@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue'
 import { useRoute, useNuxtApp, useAsyncData } from 'nuxt/app'
 
-import CocktailPage from '~~/components/cocktails/CocktailPage.vue'
+import CocktailPage from '~~/components/cocktail/CocktailPage.vue'
 
 export default defineComponent({
     name: 'Cocktail',

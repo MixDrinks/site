@@ -2,7 +2,7 @@
     <header class="header">
         <div class="header__content header-content" ref="header">
             <Logo />
-            <FieldSearch class="header-content__search" />
+            <Search class="header-content__search" />
         </div>
     </header>
 </template>
@@ -11,9 +11,9 @@
 import { defineComponent } from 'vue'
 
 import Logo from './Logo.vue'
-import FieldSearch from './../UI/FieldSearch.vue'
+import Search from '../UI/Search.vue'
 export default defineComponent({
-    components: { Logo, FieldSearch },
+    components: { Logo, Search },
     name: 'Header',
     data: () => ({
         scrollVerticalvalue: null,

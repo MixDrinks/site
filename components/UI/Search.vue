@@ -48,7 +48,7 @@
 import { computed, defineComponent, ref, unref } from 'vue'
 
 export default defineComponent({
-    name: 'FieldSearch',
+    name: 'Search',
 
     setup() {
         const inputValue = ref('')
@@ -96,5 +96,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './styles/field-search';
+@import './styles/search';
 </style>

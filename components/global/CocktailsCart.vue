@@ -8,17 +8,13 @@
                 class="cart-header__rating cart-header-rating"
                 v-if="!!cocktail.rating"
             >
-                <div class="cart-header-rating__label">
-                    {{ Number(cocktail.rating.toFixed(1)) }}
-                </div>
+                {{ getRating(cocktail.rating) }}
             </div>
             <div
                 class="cart-header__visit-count cart-header-visit-count"
                 v-if="!!cocktail.visitCount"
             >
-                <div class="cart-header-visit-count__label">
-                    {{ cocktail.visitCount }}
-                </div>
+                {{ cocktail.visitCount }}
             </div>
         </div>
         <picture class="cart__picture">
@@ -49,7 +45,6 @@ import { computed, defineComponent, toRefs, unref } from 'vue'
 
 export default defineComponent({
     name: 'CocktailsCart',
-
     props: {
         isLoadingLazy: {
             type: Boolean,
@@ -61,11 +56,13 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { isLoadingLazy, cocktail } = toRefs(props)
+        const { isLoadingLazy } = toRefs(props)
         const loading = computed(() => (unref(isLoadingLazy) ? 'lazy' : false))
+        const getRating = (value) => Number(value.toFixed(1))
 
         return {
             loading,
+            getRating,
         }
     },
 })

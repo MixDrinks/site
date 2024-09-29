@@ -17,7 +17,7 @@
                 >
                     Переглядів <strong>{{ cocktail.visitCount }}</strong>
                 </div>
-                <Rating
+                <CocktailRating
                     class="cocktail-header-user-info__rating"
                     :slug="cocktail.slug"
                     :id="cocktail.id"
@@ -91,17 +91,17 @@
                 ></ins>
             </div>
             <Separator />
-            <CocktailComponents
+            <CocktailItems
                 class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"
-                :components="cocktail.goods"
+                :items="cocktail.goods"
                 withCounter
             />
             <Separator />
-            <CocktailComponents
+            <CocktailItems
                 class="cocktail-body__tools"
                 :title="`Потрібні штучки для приготування ${cocktail.name}`"
-                :components="cocktail.tools"
+                :items="cocktail.tools"
             />
             <Separator />
             <CocktailRecomendation
@@ -137,10 +137,9 @@
 </template>
 
 <script>
-import Rating from './Rating.vue'
-import IconBtn from './../UI/IconBtn.vue'
-import CocktailComponents from './CocktailComponents.vue'
-import CocktailRecomendation from './CocktailRecomendation.vue'
+import CocktailRating from '../cocktail/CocktailRating.vue'
+import CocktailItems from '../cocktail//CocktailItems.vue'
+import CocktailRecomendation from '../cocktail/CocktailRecomendation.vue'
 import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
@@ -150,9 +149,8 @@ import Separator from '../global/Separator.vue'
 export default defineComponent({
     name: 'CocktailPage',
     components: {
-        IconBtn,
-        Rating,
-        CocktailComponents,
+        CocktailRating,
+        CocktailItems,
         CocktailRecomendation,
         TitleH2,
         Separator,
@@ -185,7 +183,7 @@ export default defineComponent({
         } 🍹 приготування в домашніх умовах за рецептом`
         const headDescription = `Як приготувати коктейль ${
             unref(cocktail).name
-        } 🍹 в домашніх умовах, всі інгрідієнти які вам потрібні та рецепт для коктейля наведені на сторінці!`
+        } 🍹 в домашніх умовах, вcі інгрідієнти які вам потрібні та рецепт для коктейля наведені на cторінці!`
 
         const scripts = [
             {

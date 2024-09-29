@@ -25,7 +25,7 @@ import { computed, defineComponent } from 'vue'
 import { sortList } from '~~/utils/sort'
 
 export default defineComponent({
-    name: 'Sorting',
+    name: 'CocktailsSorting',
 
     setup() {
         const route = useRoute()
@@ -55,5 +55,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './styles/sorting';
+@import './styles/cocktails-sorting';
 </style>
