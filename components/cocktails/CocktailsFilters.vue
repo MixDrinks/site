@@ -10,8 +10,8 @@
                 </div>
                 <transition name="fate-in" appear>
                     <IconBtn
-                        class="filters-header__close"
                         v-show="activeFilter.length"
+                        class="filters-header__close"
                         direction="top"
                         type="short"
                         icon="/img/icons/trash.svg"
@@ -25,9 +25,9 @@
             <div class="filters__tag-cloud filters-tag-cloud">
                 <div class="filters-tag-cloud__list filters-tag-cloud-list">
                     <div
-                        class="filters-tag-cloud-list__item filters-tag-cloud-list-item"
                         v-for="filterItem in activeFilter"
                         :key="filterItem.name"
+                        class="filters-tag-cloud-list__item filters-tag-cloud-list-item"
                     >
                         <NuxtLink
                             :title="filterItem.name"
@@ -42,10 +42,10 @@
             </div>
             <div class="filters__wrapper filters-wrapper">
                 <CocktailsFilter
-                    class="filters-wrapper__item"
                     v-for="filterItem in filterListWithUrl"
                     :key="filterItem.id"
-                    :filterItem="filterItem"
+                    class="filters-wrapper__item"
+                    :filter-item="filterItem"
                 />
             </div>
         </div>
@@ -62,10 +62,10 @@
         </div>
         <transition name="opacity">
             <div
-                class="filters__background"
                 v-if="isFilterOpen"
+                class="filters__background"
                 @click="changeFilterIsOpen"
-            ></div>
+            />
         </transition>
     </div>
 </template>
@@ -78,22 +78,22 @@ import CocktailsFilter from './CocktailsFilter.vue'
 import { store } from '~~/store/filter'
 
 export default defineComponent({
-    components: { IconBtn, CocktailsFilter },
     name: 'CocktailsFilters',
+    components: { IconBtn, CocktailsFilter },
 
     props: {
         filterList: {
             type: Array,
-            required: true,
+            required: true
         },
         allCocktailsNumber: {
             type: Number,
-            default: 0,
+            default: 0
         },
         futureCounts: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
 
     setup(props) {
@@ -117,8 +117,8 @@ export default defineComponent({
             return { 'filters__main--hidden': !unref(isFilterOpen) }
         })
         const filterListWithUrl = computed(() => {
-            let futureFilters = {}
-            for (let filter in unref(futureCounts)) {
+            const futureFilters = {}
+            for (const filter in unref(futureCounts)) {
                 futureFilters[filter] = {}
                 unref(futureCounts)[filter].forEach((filterItem) => {
                     futureFilters[filter][filterItem.id] = filterItem
@@ -134,11 +134,11 @@ export default defineComponent({
                               url: newValue.query,
                               count: newValue.count,
                               isActive: newValue.isActive,
-                              isAddToIndex: newValue.isAddToIndex,
+                              isAddToIndex: newValue.isAddToIndex
                           }
                         : { ...item }
                     return value
-                }),
+                })
             }))
         })
 
@@ -155,9 +155,9 @@ export default defineComponent({
             filterListWithUrl,
             isFilterOpen,
             changeFilterIsOpen,
-            store,
+            store
         }
-    },
+    }
 })
 </script>
 

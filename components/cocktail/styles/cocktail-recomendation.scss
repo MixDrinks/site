@@ -89,7 +89,8 @@
 
     border-radius: 8px;
 
-    transition: transform $defaultAnimTime,
+    transition:
+        transform $defaultAnimTime,
         box-shadow $defaultAnimTime;
 
     @media (hover: hover) {
@@ -99,8 +100,9 @@
             }
 
             transform: translateY(-4px);
-            box-shadow: 1px 4px rgba($colorHover, 0.3),
-            -5px -5px 40px rgba($colorHover, 0.1);
+            box-shadow:
+                1px 4px rgba($colorHover, 0.3),
+                -5px -5px 40px rgba($colorHover, 0.1);
         }
     }
 
@@ -167,7 +169,7 @@
 
     &::before {
         margin-right: 5px;
-        content: "";
+        content: '';
         width: 16px;
         height: 16px;
         display: inline-block;
@@ -178,13 +180,13 @@
 .cart-header-rating {
     &::before {
         background-color: $colorRating;
-        mask-image: url("/img/icons/star.svg");
+        mask-image: url('/img/icons/star.svg');
     }
 }
 
 .cart-header-visit-count {
     &::before {
         background-color: #2b4718;
-        mask-image: url("/img/icons/eye.svg");
+        mask-image: url('/img/icons/eye.svg');
     }
 }

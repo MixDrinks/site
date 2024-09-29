@@ -6,7 +6,10 @@
             :class="itemClasses"
             class="list__item item"
         >
-            <CocktailsCart :isLoadingLazy="!isFirstList" :cocktail="cocktail" />
+            <CocktailsCart
+                :is-loading-lazy="!isFirstList"
+                :cocktail="cocktail"
+            />
         </div>
     </div>
 </template>
@@ -22,33 +25,33 @@ export default defineComponent({
     props: {
         cocktails: {
             type: Array,
-            required: true,
+            required: true
         },
         isFirstList: {
             type: Boolean,
-            default: false,
+            default: false
         },
         modificator: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
 
     setup(props) {
         const { modificator } = toRefs(props)
 
         const listClasses = computed(() => ({
-            [`list--${unref(modificator)}`]: Boolean(unref(modificator)),
+            [`list--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
         const itemClasses = computed(() => ({
-            [`item--${unref(modificator)}`]: Boolean(unref(modificator)),
+            [`item--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
 
         return {
             itemClasses,
-            listClasses,
+            listClasses
         }
-    },
+    }
 })
 </script>
 

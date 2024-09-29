@@ -5,7 +5,9 @@
 
     background-color: $colorMain;
 
-    transition: color $defaultAnimTime, background-color $defaultAnimTime,
+    transition:
+        color $defaultAnimTime,
+        background-color $defaultAnimTime,
         box-shadow $defaultAnimTime;
 
     &:hover {

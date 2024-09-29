@@ -1,24 +1,24 @@
 <template>
     <div class="main">
-        <Header />
+        <SiteHader />
         <div class="main__wrapper">
             <slot />
         </div>
-        <Footer />
+        <SiteFooter />
     </div>
 </template>
 
 <script>
-import Footer from '~~/components/dump/Footer.vue'
-import Header from '~~/components/dump/Header.vue'
+import SiteFooter from '~~/components/dump/Footer.vue'
+import SiteHader from '~~/components/dump/Header.vue'
 
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     components: {
-        Footer,
-        Header,
-    },
+        SiteFooter,
+        SiteHader
+    }
 })
 </script>
 

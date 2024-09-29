@@ -3,9 +3,9 @@
         <div class="sorting__title">Сортування</div>
         <ul class="sorting__list sorting-list">
             <li
-                class="sorting-list__item sorting-list-item"
                 v-for="sortItem in sortWithUrl"
                 :key="`sorting-list__item-${sortItem.id}`"
+                class="sorting-list__item sorting-list-item"
             >
                 <NuxtLink
                     class="sorting-list-item__link"
@@ -38,19 +38,19 @@ export default defineComponent({
                     sortValue === sortItem.value
                         ? `${route.path}`
                         : `?sort=${sortItem.value}`,
-                isActive: sortValue === sortItem.value,
+                isActive: sortValue === sortItem.value
             }))
         })
 
         const getLinkClasses = (value) => ({
-            'sorting-list-item__link--active': value,
+            'sorting-list-item__link--active': value
         })
 
         return {
             getLinkClasses,
-            sortWithUrl,
+            sortWithUrl
         }
-    },
+    }
 })
 </script>
 

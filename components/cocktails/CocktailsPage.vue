@@ -9,14 +9,14 @@
         <div class="cocktails__body cocktails-body">
             <CocktailsFilters
                 class="cocktails-body__filter"
-                :filterList="allFilters"
-                :allCocktailsNumber="cocktailsFull.totalCount"
-                :futureCounts="cocktailsFull.futureCounts"
+                :filter-list="allFilters"
+                :all-cocktails-number="cocktailsFull.totalCount"
+                :future-counts="cocktailsFull.futureCounts"
             />
             <div class="cocktails-body__wrapper">
                 <CocktailsList
                     class="cocktails-body__list"
-                    isFirstList
+                    is-first-list
                     :cocktails="cocktailsFirst"
                 />
                 <div class="cocktails-body__ads">
@@ -27,7 +27,7 @@
                         data-ad-layout-key="-gh-4+1q-51+45"
                         data-ad-client="ca-pub-9033785625371866"
                         data-ad-slot="2682031593"
-                    ></ins>
+                    />
                 </div>
                 <CocktailsList
                     v-if="checkLength"
@@ -39,9 +39,9 @@
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
             class="cocktails__pagination"
-            :totalItems="cocktailsFull.totalCount"
+            :total-items="cocktailsFull.totalCount"
             :limit="24"
-            @loadMore="loadMore"
+            @load-more="loadMore"
         />
     </div>
 </template>
@@ -60,19 +60,19 @@ export default defineComponent({
         CocktailsFilters,
         Pagination,
         CocktailsList,
-        CocktailsSorting,
+        CocktailsSorting
     },
-
     props: {
         allFilters: {
             type: Array,
-            required: true,
+            required: true
         },
         cocktailsFull: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
+    emits: ['loadMore'],
     setup(props, { emit }) {
         const { allFilters, cocktailsFull } = toRefs(props)
 
@@ -105,11 +105,11 @@ export default defineComponent({
             {
                 async: true,
                 src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                crossorigin: 'anonymous',
+                crossorigin: 'anonymous'
             },
             {
-                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
-            },
+                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
+            }
         ]
 
         const headTitle = unref(cocktailsFull).description
@@ -128,7 +128,7 @@ export default defineComponent({
             title: headTitle,
             description: headDescription,
             indexPage: unref(cocktailsFull).isAddToIndex,
-            scripts: scripts,
+            scripts: scripts
         })
 
         const loadMore = (newQuery) => {
@@ -140,9 +140,9 @@ export default defineComponent({
             cocktailsSecond,
             checkLength,
             pageTitle,
-            loadMore,
+            loadMore
         }
-    },
+    }
 })
 </script>
 

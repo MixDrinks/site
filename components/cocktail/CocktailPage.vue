@@ -12,25 +12,25 @@
             </h1>
             <div class="cocktail-header__user-info cocktail-header-user-info">
                 <div
-                    class="cocktail-header-user-info__views"
                     v-if="!!cocktail.visitCount"
+                    class="cocktail-header-user-info__views"
                 >
                     Переглядів <strong>{{ cocktail.visitCount }}</strong>
                 </div>
                 <CocktailRating
+                    :id="cocktail.id"
                     class="cocktail-header-user-info__rating"
                     :slug="cocktail.slug"
-                    :id="cocktail.id"
-                    :ratingCount="cocktail.ratingCount"
-                    :ratingValue="cocktail.rating"
+                    :rating-count="cocktail.ratingCount"
+                    :rating-value="cocktail.rating"
                 />
             </div>
         </div>
         <ul class="cocktail__tags cocktail-tags">
             <li
-                class="cocktail-tags__item"
                 v-for="(tag, tagIndex) in cocktail.tags"
                 :key="`cocktail-tags__item-${tagIndex}`"
+                class="cocktail-tags__item"
             >
                 <NuxtLink :to="`/${tag.url}`" class="cocktail-tags-link">
                     {{ tag.name }}
@@ -58,18 +58,18 @@
                 <TitleH2
                     class="cocktail-body-recipe__title"
                     :text="`Рецепт коктейлю ${cocktail.name}`"
-                ></TitleH2>
+                />
                 <ol
                     class="cocktail-body-recipe__list cocktail-body-recipe-list"
                     itemprop="recipeInstructions"
                 >
                     <li
+                        v-for="recipeItem in cocktail.receipt"
+                        :key="recipeItem"
                         itemprop="step"
                         itemscope
                         itemtype="https://schema.org/HowToStep"
                         class="cocktail-body-recipe-list__item cocktail-body-recipe-list-item"
-                        v-for="recipeItem in cocktail.receipt"
-                        :key="recipeItem"
                     >
                         <span
                             itemprop="text"
@@ -88,14 +88,14 @@
                     data-ad-layout-key="-gh-4+1q-51+45"
                     data-ad-client="ca-pub-9033785625371866"
                     data-ad-slot="2682031593"
-                ></ins>
+                />
             </div>
             <Separator />
             <CocktailItems
                 class="cocktail-body__goods"
                 :title="`Склад коктейлю ${cocktail.name}`"
                 :items="cocktail.goods"
-                withCounter
+                with-counter
             />
             <Separator />
             <CocktailItems
@@ -118,7 +118,7 @@
                     class="cocktail-body-article__title"
                     :text="`Коктейль ${cocktail.name}: історія, рецепт та
                     популярність`"
-                ></TitleH2>
+                />
                 <div
                     v-if="cocktail.article.chapters"
                     class="cocktail-body-article__chapters cocktail-body-article-chapters"
@@ -153,13 +153,13 @@ export default defineComponent({
         CocktailItems,
         CocktailRecomendation,
         TitleH2,
-        Separator,
+        Separator
     },
     props: {
         cocktail: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
     setup(props) {
         const { cocktail } = toRefs(props)
@@ -169,7 +169,7 @@ export default defineComponent({
                     unref(cocktail).slug
                 }/visit`,
                 {
-                    method: 'POST',
+                    method: 'POST'
                 }
             )
         }
@@ -188,16 +188,16 @@ export default defineComponent({
         const scripts = [
             {
                 type: 'application/ld+json',
-                children: schemaRecipe(unref(cocktail), headDescription),
+                children: schemaRecipe(unref(cocktail), headDescription)
             },
             {
                 async: true,
                 src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                crossorigin: 'anonymous',
+                crossorigin: 'anonymous'
             },
             {
-                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`,
-            },
+                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
+            }
         ]
 
         head({
@@ -205,9 +205,9 @@ export default defineComponent({
             description: headDescription,
             indexPage: true,
             scripts: scripts,
-            image: unref(cocktail).meta.ogImage,
+            image: unref(cocktail).meta.ogImage
         })
-    },
+    }
 })
 </script>
 

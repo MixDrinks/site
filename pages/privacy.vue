@@ -50,12 +50,7 @@
 
 <script>
 export default {
-    name: 'privacy',
-    computed: {
-        canonical() {
-            return process.env.baseUrl + this.$nuxt.$route.path
-        },
-    },
+    name: 'Privacy',
     head() {
         return {
             title: 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
@@ -64,33 +59,37 @@ export default {
                 {
                     hid: 'description',
                     name: 'description',
-                    content: `Політика конфіденційності MixDrinks`,
+                    content: `Політика конфіденційності MixDrinks`
                 },
                 {
                     hid: 'og:title',
                     name: 'og:title',
-                    content: `Політика конфіденційності`,
+                    content: `Політика конфіденційності`
                 },
                 {
                     hid: 'og:description',
                     property: 'og:description',
-                    content: `Політика конфіденційності MixDrinks`,
+                    content: `Політика конфіденційності MixDrinks`
                 },
                 {
                     hid: 'og:url',
                     property: 'og:url',
-                    content: `${this.canonical}`,
+                    content: `${this.canonical}`
                 },
-                { name: 'robots', content: 'noindex, nofollow' },
-            ],
+                { name: 'robots', content: 'noindex, nofollow' }
+            ]
         }
     },
+    computed: {
+        canonical() {
+            return process.env.baseUrl + this.$nuxt.$route.path
+        }
+    }
 }
 </script>
-  
+
 <style lang="scss" scoped>
 .wrapper {
     @include defaultWrapper;
 }
 </style>
-  

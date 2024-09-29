@@ -13,7 +13,7 @@ import CocktailPage from '~~/components/cocktail/CocktailPage.vue'
 export default defineComponent({
     name: 'Cocktail',
     components: {
-        CocktailPage,
+        CocktailPage
     },
     async setup() {
         const { $fetchWIXUP } = useNuxtApp()
@@ -24,9 +24,9 @@ export default defineComponent({
             )
         )
         return {
-            cocktail,
+            cocktail
         }
-    },
+    }
 })
 </script>
 

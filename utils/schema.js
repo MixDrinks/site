@@ -9,14 +9,14 @@ export const schemaOrganization = {
         {
             '@type': 'ContactPoint',
             email: 'golovashchenkom@ukr.net',
-            contactType: 'customer reviews',
-        },
-    ],
+            contactType: 'customer reviews'
+        }
+    ]
 }
 export const schemaWebSite = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'MixDrinks',
     alternateName: 'mixdrinks',
-    url: 'https://mixdrinks.org/',
+    url: 'https://mixdrinks.org/'
 }

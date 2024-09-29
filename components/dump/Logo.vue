@@ -1,16 +1,16 @@
 <template>
-    <div class="logo" v-if="isHomePage">
+    <div v-if="isHomePage" class="logo">
         <span class="logo--highlight">mix</span>drinks
     </div>
-    <NuxtLink class="logo" to="/" v-else>
+    <NuxtLink v-else class="logo" to="/">
         <span class="logo--highlight">mix</span>drinks
     </NuxtLink>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useRoute } from 'nuxt/app'
-import { defineComponent } from 'vue'
+
 export default defineComponent({
     name: 'Logo',
 
@@ -19,9 +19,9 @@ export default defineComponent({
         const isHomePage = computed(() => route.fullPath === '/')
         return {
             isHomePage,
-            route,
+            route
         }
-    },
+    }
 })
 </script>
 

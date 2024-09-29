@@ -8,12 +8,12 @@ export default defineNuxtPlugin((nuxtApp) => {
         options.headers = {
             ...options.headers,
             'x-user-path': route.path,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         }
 
         const response = await $fetch(url, {
             credentials: 'include',
-            ...options,
+            ...options
         })
 
         if (response.redirect) {

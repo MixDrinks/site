@@ -1,9 +1,9 @@
 <template>
     <main class="wrapper">
         <CocktailsPage
-            :cocktailsFull="data.cocktailsFull"
-            :allFilters="data.allFilters"
-            @loadMore="loadMore"
+            :cocktails-full="data.cocktailsFull"
+            :all-filters="data.allFilters"
+            @load-more="loadMore"
         />
     </main>
 </template>
@@ -17,7 +17,7 @@ import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
 export default defineComponent({
     name: 'MainPage',
     components: {
-        CocktailsPage,
+        CocktailsPage
     },
     async setup() {
         const { $fetchWIXUP } = useNuxtApp()
@@ -30,15 +30,24 @@ export default defineComponent({
             }
             return `https://newapi.mixdrinks.org/api/filter${route.fullPath}`
         }
-
-        const { data, error, execute, pending, refresh, status } =
-            await useAsyncData('main-page', async () => {
-                const [cocktailsFull, allFilters] = await Promise.all([
-                    $fetchWIXUP(getFilterRequestPath()),
-                    $fetch('https://newapi.mixdrinks.org/api/filters'),
-                ])
-                return { cocktailsFull, allFilters }
-            })
+        watch(route, () => {
+            if (!unref(isLoadMore)) {
+                refresh()
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: 0,
+                        left: 0
+                    })
+                }, 0)
+            }
+        })
+        const { data, refresh } = await useAsyncData('main-page', async () => {
+            const [cocktailsFull, allFilters] = await Promise.all([
+                $fetchWIXUP(getFilterRequestPath()),
+                $fetch('https://newapi.mixdrinks.org/api/filters')
+            ])
+            return { cocktailsFull, allFilters }
+        })
 
         async function getNewCoctails(newQuery) {
             return await $fetchWIXUP(getFilterRequestPath(newQuery))
@@ -48,28 +57,17 @@ export default defineComponent({
             getNewCoctails(newQuery).then((value) => {
                 data.value.cocktailsFull.cocktails = [
                     ...unref(data).cocktailsFull.cocktails,
-                    ...value.cocktails,
+                    ...value.cocktails
                 ]
                 isLoadMore.value = false
             })
         }
-        watch(route, () => {
-            if (!unref(isLoadMore)) {
-                refresh()
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: 0,
-                        left: 0,
-                    })
-                }, 0)
-            }
-        })
 
         return {
             data,
-            loadMore,
+            loadMore
         }
-    },
+    }
 })
 </script>
 

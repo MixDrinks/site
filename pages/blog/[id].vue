@@ -1,6 +1,6 @@
 <template>
     <main class="wrapper">
-        <!-- <PostPage :postData="postData" /> -->
+        <PostPage :post-data="postData" />
     </main>
 </template>
 
@@ -16,10 +16,10 @@ export default defineComponent({
 
     setup() {
         useHead({
-            meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+            meta: [{ name: 'robots', content: 'noindex, nofollow' }]
         })
         return {}
-    },
+    }
 
     // async asyncData({ route, error, $axios }) {
     //     const post = await $axios

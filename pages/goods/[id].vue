@@ -1,9 +1,9 @@
 <template>
     <main class="wrapper">
         <ItemsPage
-            :cocktailsFull="data.cocktailsFull"
+            :cocktails-full="data.cocktailsFull"
             :items="data.items"
-            @loadMore="loadMore"
+            @load-more="loadMore"
         />
     </main>
 </template>
@@ -19,7 +19,7 @@ import { query } from '~~/utils/querySTR'
 export default defineComponent({
     name: 'GoodsPage',
     components: {
-        ItemsPage,
+        ItemsPage
     },
     async setup() {
         const { $fetchWIXUP } = useNuxtApp()
@@ -29,10 +29,21 @@ export default defineComponent({
         const getPath = (isNextPage) =>
             `goods=${route.params.id}${query(route, isNextPage)}`
 
+        watch(route, () => {
+            if (!unref(isLoadMore)) {
+                refresh()
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: 0,
+                        left: 0
+                    })
+                }, 0)
+            }
+        })
         const { data, refresh } = await useAsyncData('goods-page', async () => {
             const [cocktailsFull, items] = await Promise.all([
                 getCoctails(getPath(), $fetchWIXUP),
-                getItems(route.path),
+                getItems(route.path)
             ])
             return { cocktailsFull, items }
         })
@@ -42,27 +53,16 @@ export default defineComponent({
             const { cocktails } = await getCoctails(getPath(true), $fetchWIXUP)
             data.value.cocktailsFull.cocktails = [
                 ...unref(data).cocktailsFull.cocktails,
-                ...cocktails,
+                ...cocktails
             ]
             isLoadMore.value = false
         }
-        watch(route, () => {
-            if (!unref(isLoadMore)) {
-                refresh()
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: 0,
-                        left: 0,
-                    })
-                }, 0)
-            }
-        })
 
         return {
             data,
-            loadMore,
+            loadMore
         }
-    },
+    }
 })
 </script>
 

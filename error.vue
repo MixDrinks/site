@@ -1,29 +1,29 @@
 <template>
     <div class="main">
-        <Header />
+        <SiteHader />
         <div class="main__wrapper">
             <Error404 :error="error" />
         </div>
-        <Footer />
+        <SiteFooter />
     </div>
 </template>
 <script>
-import Footer from '~~/components/dump/Footer.vue'
-import Header from '~~/components/dump/Header.vue'
+import SiteFooter from '~~/components/dump/Footer.vue'
+import SiteHader from '~~/components/dump/Header.vue'
 import Error404 from '~~/components/error/404'
 export default {
+    name: 'Error',
     components: {
         Error404,
-        Footer,
-        Header,
+        SiteFooter,
+        SiteHader
     },
-    name: 'error',
     props: {
         error: {
             type: Object,
-            default: () => {},
-        },
-    },
+            default: () => {}
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

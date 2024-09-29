@@ -135,7 +135,6 @@
 }
 
 .filters-tag-cloud {
-
     &__list {
         overflow: auto;
 
@@ -177,7 +176,9 @@
         border: 1px solid $colorMain;
         border-radius: 4px;
 
-        transition: color $defaultAnimTime, background-color $defaultAnimTime;
+        transition:
+            color $defaultAnimTime,
+            background-color $defaultAnimTime;
 
         &::first-letter {
             text-transform: uppercase;
@@ -185,7 +186,7 @@
 
         &::after,
         &::before {
-            content: "";
+            content: '';
             position: absolute;
             height: 1px;
             width: 13px;

@@ -5,23 +5,23 @@
 
             <input
                 ref="searchInput"
+                v-model="inputValue"
                 class="search-header__input"
                 type="text"
-                v-model="inputValue"
                 @focus="setFocus()"
                 @blur="removeFocus()"
             />
         </label>
         <transition name="max-height">
             <div
-                class="search__result search-result"
                 v-show="!!inputValue && focusInput"
+                class="search__result search-result"
             >
                 <ul class="search-result__list search-result-list">
                     <li
-                        class="search-result-list__item search-result-list-item"
                         v-for="(listItem, itemIndex) in filteredList"
                         :key="`search-result-list__item-${itemIndex}`"
+                        class="search-result-list__item search-result-list-item"
                     >
                         <NuxtLink
                             :to="`/cocktails/${listItem.slug}`"
@@ -66,14 +66,14 @@ export default defineComponent({
         const setFocus = () => {
             inputValue.value = ''
             focusInput.value = true
-            if (!!!unref(listSearch).length) setListSearch()
+            if (!unref(listSearch).length) setListSearch()
         }
 
         const searchClasses = computed(() => ({
-            'search-header--filled': unref(focusInput),
+            'search-header--filled': unref(focusInput)
         }))
         const filteredList = computed(() => {
-            if (!!unref(inputValue)) {
+            if (unref(inputValue)) {
                 return unref(listSearch).filter((listItem) => {
                     return listItem.name
                         .toLowerCase()
@@ -89,9 +89,9 @@ export default defineComponent({
             removeFocus,
             setFocus,
             searchClasses,
-            filteredList,
+            filteredList
         }
-    },
+    }
 })
 </script>
 

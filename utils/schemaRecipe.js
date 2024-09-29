@@ -1,10 +1,9 @@
 const author = {
     '@type': 'Organization',
-    name: 'MixDrinks',
+    name: 'MixDrinks'
 }
 
 export const schemaRecipe = (cocktail, description) => {
-
     const rating = () => {
         if (cocktail.rating) {
             return {
@@ -13,8 +12,8 @@ export const schemaRecipe = (cocktail, description) => {
                     ratingValue: cocktail.rating,
                     ratingCount: cocktail.ratingCount,
                     worstRating: 1,
-                    bestRating: 5,
-                },
+                    bestRating: 5
+                }
             }
         }
     }
@@ -32,6 +31,6 @@ export const schemaRecipe = (cocktail, description) => {
         recipeCategory: 'Коктейлі',
         prepTime: 'PT10M',
         cookTime: 'PT10M',
-        ...rating,
+        ...rating
     })
 }

@@ -2,57 +2,54 @@
     <div class="filter">
         <div class="filter__header filter-header" @click="toggleList">
             <div class="filter-header__title">{{ filterItem.name }}</div>
-            <div class="filter-header__toggler" :class="togglerClasses"></div>
+            <div class="filter-header__toggler" :class="togglerClasses" />
         </div>
         <transition name="max-height">
-            <div class="filter__wrapper" v-show="filterIsShow">
+            <div v-show="filterIsShow" class="filter__wrapper">
                 <div
-                    class="filter__search filter-search"
                     v-if="filterItem.items.length > 6"
+                    class="filter__search filter-search"
                 >
                     <label
                         class="filter-search__input filter-search-input"
                         :class="{
-                            'filter-search-input--filled': !!searchValue,
+                            'filter-search-input--filled': !!searchValue
                         }"
                     >
                         <div class="filter-search-input__label">Пошук</div>
                         <input
                             ref="searchInput"
+                            v-model="searchValue"
                             class="filter-search-input__value"
                             type="text"
-                            v-model="searchValue"
                         />
                     </label>
                 </div>
                 <div class="filter__list filter-list">
                     <div v-for="listItem in listSearch" :key="listItem.id">
                         <NuxtLink
+                            v-if="!!listItem.count"
                             :title="listItem.name"
                             :rel="getRel(listItem.isAddToIndex)"
-                            v-if="!!listItem.count"
                             class="filter-list__item filter-list-item"
                             :class="getLinkClasses(listItem.isActive)"
                             :to="`/${listItem.url + query}`"
                         >
                             <span
-                                class="filter-list-item__radio"
                                 v-if="
                                     filterItem.selectionType ===
                                     filterType.single
                                 "
-                            ></span>
-                            <span
-                                class="filter-list-item__checkbox"
-                                v-else
-                            ></span>
+                                class="filter-list-item__radio"
+                            />
+                            <span v-else class="filter-list-item__checkbox" />
                             <span class="filter-list-item__name">
                                 {{ listItem.selectionType }}
                                 {{ listItem.name }}
                             </span>
                             <span
-                                class="filter-list-item__count"
                                 v-if="!listItem.isActive"
+                                class="filter-list-item__count"
                             >
                                 {{ listItem.count }}
                             </span>
@@ -62,16 +59,13 @@
                             class="filter-list__item filter-list-item filter-list-item--lock"
                         >
                             <span
-                                class="filter-list-item__radio"
                                 v-if="
                                     filterItem.selectionType ===
                                     filterType.single
                                 "
-                            ></span>
-                            <span
-                                class="filter-list-item__checkbox"
-                                v-else
-                            ></span>
+                                class="filter-list-item__radio"
+                            />
+                            <span v-else class="filter-list-item__checkbox" />
                             <div class="filter-list-item__name">
                                 {{ listItem.name }}
                             </div>
@@ -81,8 +75,8 @@
                         </div>
                     </div>
                     <div
-                        class="filter-list__text"
                         v-if="listSearch.length === 0"
+                        class="filter-list__text"
                     >
                         нічого не знайдено
                     </div>
@@ -104,8 +98,8 @@ export default defineComponent({
     props: {
         filterItem: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
     setup(props) {
         const route = useRoute()
@@ -120,7 +114,7 @@ export default defineComponent({
             return ''
         })
         const filterItemSort = computed(() => {
-            let arr = [...unref(filterItem).items]
+            const arr = [...unref(filterItem).items]
             return arr.sort((a, b) => (a.count > b.count ? -1 : 1))
         })
         const filterIsShow = computed(() => {
@@ -130,7 +124,7 @@ export default defineComponent({
             return unref(filterItem).isOpen
         })
         const listSearch = computed(() => {
-            if (!!unref(searchValue)) {
+            if (unref(searchValue)) {
                 let arr = []
                 arr = unref(filterItemSort).filter((listItem) => {
                     return listItem.name
@@ -146,18 +140,18 @@ export default defineComponent({
                 return {
                     'filter-header__toggler--close': !unref(
                         filtersIsOpenList
-                    ).includes(unref(filterItem).id),
+                    ).includes(unref(filterItem).id)
                 }
             }
             return {
-                'filter-header__toggler--close': unref(filterItem).isOpen,
+                'filter-header__toggler--close': unref(filterItem).isOpen
             }
         })
         const toggleList = () => {
             store.actions.updateFiltersIsOpenList(unref(filterItem).id)
         }
         const getLinkClasses = (value) => ({
-            'filter-list-item--active': value,
+            'filter-list-item--active': value
         })
         const getRel = (value) => (value ? 'tag' : 'nofollow')
 
@@ -170,9 +164,9 @@ export default defineComponent({
             listSearch,
             query,
             togglerClasses,
-            filterType,
+            filterType
         }
-    },
+    }
 })
 </script>
 

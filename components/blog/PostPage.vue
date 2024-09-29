@@ -22,7 +22,7 @@
                 <component
                     :is="types[bodyItem.type]"
                     :values="bodyItem.values"
-                ></component>
+                />
             </div>
         </div>
     </div>
@@ -32,19 +32,19 @@
 import { types } from '~~/utils/postItemType'
 import Pagination from '~~/components/dump/Pagination.vue'
 export default {
-    components: { Pagination },
     name: 'PostPage',
+    components: { Pagination },
     props: {
         postData: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
     computed: {
         types() {
             return types
-        },
-    },
+        }
+    }
 }
 </script>
 

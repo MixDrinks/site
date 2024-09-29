@@ -25,10 +25,10 @@
         <Pagination
             v-if="postsData.postCount > 24"
             class="blog__pagination"
-            :totalItems="postsData.postCount"
+            :total-items="postsData.postCount"
             :limit="24"
-            :itemsCount="postsData.posts.length"
-            @updatePage="updatePage"
+            :items-count="postsData.posts.length"
+            @update-page="updatePage"
         />
     </div>
 </template>
@@ -36,19 +36,19 @@
 <script>
 import Pagination from '~~/components/dump/Pagination.vue'
 export default {
-    components: { Pagination },
     name: 'BlogPage',
+    components: { Pagination },
     props: {
         postsData: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
     methods: {
         updatePage(payload) {
             this.$emit('updatePage', payload)
-        },
-    },
+        }
+    }
 }
 </script>
 

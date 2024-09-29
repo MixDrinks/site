@@ -1,8 +1,8 @@
 <template>
-    <NuxtLink class="btn" :to="href" v-if="!!href">
+    <NuxtLink v-if="!!href" class="btn" :to="href">
         <slot />
     </NuxtLink>
-    <button class="btn" v-else>
+    <button v-else class="btn">
         <slot />
     </button>
 </template>
@@ -13,9 +13,9 @@ export default {
     props: {
         href: {
             type: String,
-            default: '',
-        },
-    },
+            default: ''
+        }
+    }
 }
 </script>
 

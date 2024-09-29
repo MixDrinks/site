@@ -1,20 +1,20 @@
 <template>
     <NuxtLink :to="`/cocktails/${values.slug}`" class="cocktail">
         <div
-            class="cocktail__info cocktail-info"
             v-if="!!values.rating || !!values.visitCount"
+            class="cocktail__info cocktail-info"
         >
             <div
-                class="cocktail-info__rating cocktail-info-rating"
                 v-if="!!values.rating"
+                class="cocktail-info__rating cocktail-info-rating"
             >
                 <div class="cocktail-info-rating__label">
                     {{ Number(values.rating.toFixed(1)) }}
                 </div>
             </div>
             <div
-                class="cocktail-info__visit-count cocktail-info-visit-count"
                 v-if="!!values.visitCount"
+                class="cocktail-info__visit-count cocktail-info-visit-count"
             >
                 <div class="cocktail-info-visit-count__label">
                     {{ values.visitCount }}
@@ -49,9 +49,9 @@ export default {
     props: {
         values: {
             type: Object,
-            required: true,
-        },
-    },
+            required: true
+        }
+    }
 }
 </script>
 

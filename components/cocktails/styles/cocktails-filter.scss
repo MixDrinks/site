@@ -1,277 +1,281 @@
 .filter {
-  &__wrapper {
-    margin-top: $halfPadding;
-  }
+    &__wrapper {
+        margin-top: $halfPadding;
+    }
 
-  &__search {
-    margin-bottom: $halfPadding;
-  }
+    &__search {
+        margin-bottom: $halfPadding;
+    }
 
-  &__list {
-    max-height: 50vh;
-    overflow: auto;
-  }
+    &__list {
+        max-height: 50vh;
+        overflow: auto;
+    }
 }
 
 .filter-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  
-  @media (min-width: 1023px) {
-    cursor: pointer;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  &__title {
-    @include fontSize18B;
-    color: $colorBlack;
-  }
-
-  &__toggler {
-    position: relative;
-
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background-color: $colorMain;
-
-    &:hover {
-      background-color: $colorHover;
+    @media (min-width: 1023px) {
+        cursor: pointer;
     }
 
-    &::after,
-    &::before {
-      content: "";
-      position: absolute;
-      background-color: $colorWhite;
-      width: 8px;
-      height: 2px;
-      top: calc(50% - 1px);
-
-      transition: transform $defaultAnimTime;
+    &__title {
+        @include fontSize18B;
+        color: $colorBlack;
     }
 
-    &::after {
-      transform: rotate(-45deg);
-      left: calc(50% - 2px);
-    }
+    &__toggler {
+        position: relative;
 
-    &::before {
-      transform: rotate(45deg);
-      left: calc(50% - 6px);
-    }
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $colorMain;
 
-    &--close {
-      &::after {
-        transform: rotate(45deg);
-      }
+        &:hover {
+            background-color: $colorHover;
+        }
 
-      &::before {
-        transform: rotate(-45deg);
-      }
+        &::after,
+        &::before {
+            content: '';
+            position: absolute;
+            background-color: $colorWhite;
+            width: 8px;
+            height: 2px;
+            top: calc(50% - 1px);
+
+            transition: transform $defaultAnimTime;
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+            left: calc(50% - 2px);
+        }
+
+        &::before {
+            transform: rotate(45deg);
+            left: calc(50% - 6px);
+        }
+
+        &--close {
+            &::after {
+                transform: rotate(45deg);
+            }
+
+            &::before {
+                transform: rotate(-45deg);
+            }
+        }
     }
-  }
 }
 
 .filter-search-input {
-  position: relative;
-  display: block;
-  $self: &;
+    position: relative;
+    display: block;
+    $self: &;
 
-  &:hover {
-    #{$self}__value {
-      box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
+    &:hover {
+        #{$self}__value {
+            box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
+        }
+
+        #{$self}__label {
+            color: $colorMain;
+        }
     }
 
-    #{$self}__label {
-      color: $colorMain;
+    &--filled {
+        #{$self}__label {
+            top: 0%;
+            transform: translateY(0);
+        }
     }
-  }
 
-  &--filled {
-    #{$self}__label {
-      top: 0%;
-      transform: translateY(0);
+    &:not(:hover)#{&--filled} {
+        #{$self}__value {
+            box-shadow: inset 0px -2px 0px $colorMain;
+        }
     }
-  }
 
-  &:not(:hover)#{&--filled} {
-    #{$self}__value {
-      box-shadow: inset 0px -2px 0px $colorMain;
+    &__label {
+        position: absolute;
+        left: 0;
+        @include fontSize14;
+        color: rgba($colorMain, 0.8);
+        top: 50%;
+        transform: translateY(-50%);
+        transition:
+            top $defaultAnimTime,
+            transform $defaultAnimTime;
     }
-  }
 
-  &__label {
-    position: absolute;
-    left: 0;
-    @include fontSize14;
-    color: rgba($colorMain, 0.8);
-    top: 50%;
-    transform: translateY(-50%);
-    transition: top $defaultAnimTime, transform $defaultAnimTime;
-  }
+    &__value {
+        width: 100%;
 
-  &__value {
-    width: 100%;
+        border: 0;
+        padding-top: 20px;
+        padding-bottom: 7px;
+        box-shadow: inset 0px -2px 0px $colorMain;
 
-    border: 0;
-    padding-top: 20px;
-    padding-bottom: 7px;
-    box-shadow: inset 0px -2px 0px $colorMain;
+        @include fontSize16M;
 
-    @include fontSize16M;
+        color: $colorMain;
 
-    color: $colorMain;
-
-    @media (min-width: 1023px) {
-      padding-bottom: 12px;
-      @include fontSize18B;
+        @media (min-width: 1023px) {
+            padding-bottom: 12px;
+            @include fontSize18B;
+        }
     }
-  }
 }
 
 .filter-list {
-  @include defaultWrapperScroll;
+    @include defaultWrapperScroll;
 
-  &__item {
-    margin-right: 10px;
-  }
+    &__item {
+        margin-right: 10px;
+    }
 
-  &__text {
-    @include fontSize14;
-    color: $colorMain;
-  }
+    &__text {
+        @include fontSize14;
+        color: $colorMain;
+    }
 }
 
 .filter-list-item {
-  $self: &;
+    $self: &;
 
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  padding-top: 8px;
-  padding-bottom: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 
-  @media (min-width: 1023px) {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    cursor: pointer;
-  }
-
-  &:not(#{$self}--active):hover,
-  &:not(#{$self}--active):focus {
-    #{$self}__checkbox,
-    #{$self}__radio {
-      background-color: rgba($colorMain, 0.2);
+    @media (min-width: 1023px) {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        cursor: pointer;
     }
 
-    #{$self}__name {
-      color: $colorMain;
-    }
-  }
-
-  &--lock {
-    pointer-events: none;
-    position: relative;
-
-    &::after {
-      @include fullPseudoElement;
-      z-index: 1;
-      background-color: rgba($colorWhite, 0.8);
-    }
-  }
-
-  &--active {
-    #{$self}__checkbox {
-      background-color: $colorMain;
-
-      position: relative;
-
-      &::before {
-        @include fullPseudoElement;
-
-        background-image: url("/img/icons/check-mark.svg");
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-    }
-    #{$self}__radio {
-      &::after {
-        background-color: $colorMain;
-      }
-    }
-
-    &:hover {
-      #{$self}__radio {
-        &::after {
-          background-color: rgba($colorMain, 0.5);
+    &:not(#{$self}--active):hover,
+    &:not(#{$self}--active):focus {
+        #{$self}__checkbox,
+        #{$self}__radio {
+            background-color: rgba($colorMain, 0.2);
         }
-      }
+
+        #{$self}__name {
+            color: $colorMain;
+        }
     }
-  }
 
-  &__checkbox,
-  &__radio {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+    &--lock {
+        pointer-events: none;
+        position: relative;
 
-    border: 1px solid $colorMain;
-
-    background-color: transparent;
-    transition: border $defaultAnimTime, background-color $defaultAnimTime;
-  }
-
-  &__checkbox {
-    border-radius: 2px;
-  }
-
-  &__radio {
-    border-radius: 10px;
-    
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 4px;
-
-      background-color: transparent;
-
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-      transition: background-color $defaultAnimTime;
+        &::after {
+            @include fullPseudoElement;
+            z-index: 1;
+            background-color: rgba($colorWhite, 0.8);
+        }
     }
-  }
 
-  &__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @include fontSize16M;
-    color: $colorBlack;
+    &--active {
+        #{$self}__checkbox {
+            background-color: $colorMain;
 
-    transition: color $defaultAnimTime;
-    max-width: calc(100% - 80px);
+            position: relative;
 
-    &::first-letter {
-      text-transform: uppercase;
+            &::before {
+                @include fullPseudoElement;
+
+                background-image: url('/img/icons/check-mark.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        }
+        #{$self}__radio {
+            &::after {
+                background-color: $colorMain;
+            }
+        }
+
+        &:hover {
+            #{$self}__radio {
+                &::after {
+                    background-color: rgba($colorMain, 0.5);
+                }
+            }
+        }
     }
-  }
 
-  &__count {
-    @include defaultCount;
-  }
+    &__checkbox,
+    &__radio {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+
+        border: 1px solid $colorMain;
+
+        background-color: transparent;
+        transition:
+            border $defaultAnimTime,
+            background-color $defaultAnimTime;
+    }
+
+    &__checkbox {
+        border-radius: 2px;
+    }
+
+    &__radio {
+        border-radius: 10px;
+
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+
+            background-color: transparent;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            transition: background-color $defaultAnimTime;
+        }
+    }
+
+    &__name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include fontSize16M;
+        color: $colorBlack;
+
+        transition: color $defaultAnimTime;
+        max-width: calc(100% - 80px);
+
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+
+    &__count {
+        @include defaultCount;
+    }
 }
 
 .max-height-enter-active {
-  animation: max-height $defaultAnimTime;
+    animation: max-height $defaultAnimTime;
 }
 
 .max-height-leave-active {
-  animation: max-height $defaultAnimTime reverse;
+    animation: max-height $defaultAnimTime reverse;
 }

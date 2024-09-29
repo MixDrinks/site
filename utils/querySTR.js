@@ -10,7 +10,7 @@ export const query = (route, isNext) => {
             name: value,
             value: route.query[value]
         }
-    });
+    })
     if (!queryArr.length) {
         if (isNext) {
             return `?page=1`
@@ -19,11 +19,11 @@ export const query = (route, isNext) => {
     }
     if (queryArr.length === 1) {
         if (isNext && queryArr[0].name !== 'page') {
-            `?${queryArr[0].name}=${queryArr[0].value}&page=1`
+            ;`?${queryArr[0].name}=${queryArr[0].value}&page=1`
         }
         return `?${queryArr[0].name}=${queryArr[0].value}`
     }
     return queryArr.reduce((str, queryItem, index) => {
-        return str + `${index ? '&' : ''}${queryItem.name}=${queryItem.value}`;
+        return str + `${index ? '&' : ''}${queryItem.name}=${queryItem.value}`
     }, '?')
 }

@@ -1,7 +1,7 @@
 <template>
     <main class="wrapper">
         123
-        <!-- <BlogPage :postsData="postFull" @updatePage="updatePage" /> -->
+        <BlogPage :posts-data="postFull" @update-page="updatePage" />
     </main>
 </template>
 
@@ -17,10 +17,10 @@ export default defineComponent({
 
     setup() {
         useHead({
-            meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+            meta: [{ name: 'robots', content: 'noindex, nofollow' }]
         })
         return {}
-    },
+    }
 
     // async asyncData({ query, error, $axios }) {
     //     let page = ''

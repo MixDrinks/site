@@ -11,7 +11,8 @@
     border-radius: 8px;
     border: 1px solid rgba($colorMain, 0.1);
 
-    transition: transform $defaultAnimTime,
+    transition:
+        transform $defaultAnimTime,
         box-shadow $defaultAnimTime;
 
     @media (min-width: 1023px) {
@@ -28,12 +29,14 @@
         }
 
         transform: translateY(-4px);
-        box-shadow: 1px 4px rgba($colorHover, 0.3),
-        -5px -5px 40px rgba($colorHover, 0.1);
+        box-shadow:
+            1px 4px rgba($colorHover, 0.3),
+            -5px -5px 40px rgba($colorHover, 0.1);
 
         @media (min-width: 1023px) {
             transform: translateY(-10px);
-            box-shadow: 1px 10px rgba($colorHover, 0.3),
+            box-shadow:
+                1px 10px rgba($colorHover, 0.3),
                 -5px -5px 40px rgba($colorHover, 0.1);
         }
     }
@@ -88,7 +91,6 @@
         color: $colorMain;
         text-align: left;
 
-
         @include fontSize18B;
 
         transition: color $defaultAnimTime;
@@ -126,13 +128,13 @@
     }
 
     &::before {
-        content: "";
+        content: '';
         width: 16px;
         height: 16px;
         display: inline-block;
         background-color: $colorRating;
         mask-size: cover;
-        mask-image: url("/img/icons/star.svg");
+        mask-image: url('/img/icons/star.svg');
     }
 }
 
@@ -151,12 +153,12 @@
     }
 
     &::before {
-        content: "";
+        content: '';
         width: 16px;
         height: 16px;
         display: inline-block;
         background-color: $colorMain;
         mask-size: cover;
-        mask-image: url("/img/icons/eye.svg");
+        mask-image: url('/img/icons/eye.svg');
     }
 }

@@ -1,16 +1,16 @@
 <template>
-    <NuxtLink :class="btnClasses" :to="href" v-if="!!href" class="btn">
+    <NuxtLink v-if="!!href" :class="btnClasses" :to="href" class="btn">
         <span
             class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
-        ></span>
+        />
         <slot />
     </NuxtLink>
-    <button :class="btnClasses" v-else class="btn">
+    <button v-else :class="btnClasses" class="btn">
         <span
             class="btn__icon"
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
-        ></span>
+        />
         <slot />
     </button>
 </template>
@@ -21,34 +21,34 @@ export default {
     props: {
         href: {
             type: String,
-            default: '',
+            default: ''
         },
         lock: {
             type: Boolean,
-            default: false,
+            default: false
         },
         direction: {
             type: String,
-            default: 'top',
+            default: 'top'
         },
         icon: {
             type: String,
-            required: true,
+            required: true
         },
         type: {
             type: String,
-            default: 'big',
-        },
+            default: 'big'
+        }
     },
     computed: {
         btnClasses() {
             return [
                 { 'btn--lock': this.lock },
                 `btn--${this.direction}`,
-                `btn--${this.type}`,
+                `btn--${this.type}`
             ]
-        },
-    },
+        }
+    }
 }
 </script>
 

@@ -1,33 +1,33 @@
 <template>
     <div class="pagination">
         <TextBtn
-            class="pagination__load-more"
             v-show="!!nextPage"
+            class="pagination__load-more"
             :href="!!nextPage ? nextPage.link : '/'"
-            @click="loadMore"
             rel="nofollow"
+            @click="loadMore"
         >
             Показати ще {{ limit }}
         </TextBtn>
         <div class="pagination__controls pagination-controls">
             <ul class="pagination-controls__list pagination-controls-list">
                 <li
-                    class="pagination-controls-list__item pagination-controls-list-item"
                     v-for="(page, pageIndex) in pagination"
                     :key="`pagination-controls-list__item--${pageIndex}`"
+                    class="pagination-controls-list__item pagination-controls-list-item"
                 >
                     <TextBtn
-                        class="pagination-controls-list-item__link"
                         v-if="page.type === 'link'"
+                        class="pagination-controls-list-item__link"
                         :href="page.link"
                         rel="nofollow"
                     >
                         {{ page.title }}
                     </TextBtn>
                     <span
+                        v-else
                         class="pagination-controls-list-item__link"
                         :class="`pagination-controls-list-item__link--${page.type}`"
-                        v-else
                     >
                         {{ page.title }}
                     </span>
@@ -72,19 +72,20 @@ export default defineComponent({
     props: {
         totalItems: {
             type: Number,
-            required: true,
+            required: true
         },
         limit: {
             type: Number,
-            required: true,
-        },
+            required: true
+        }
     },
+    emits: ['loadMore'],
     setup(props, { emit }) {
         const route = useRoute()
         const differencePaginationIndex = 2
         const dotsObj = {
             title: '...',
-            type: 'dots',
+            type: 'dots'
         }
         const { totalItems, limit } = toRefs(props)
 
@@ -99,6 +100,7 @@ export default defineComponent({
             if (route.query.sort) {
                 return `?sort=${route.query.sort}`
             }
+            return false
         })
         const currentPage = computed(() => {
             if (route.query.page) {
@@ -113,26 +115,28 @@ export default defineComponent({
             if (unref(currentPage) != 0) {
                 return unref(allPageArr)[unref(currentPage) - 1]
             }
+            return false
         })
         const nextPage = computed(() => {
             if (unref(currentPage) != unref(allPageArr).length) {
                 return unref(allPageArr)[unref(currentPage) + 1]
             }
+            return false
         })
         const allPageArr = computed(() => {
-            let arr = []
+            const arr = []
             for (let index = 0; index < unref(pageCount); index++) {
                 arr.push({
                     title: index + 1,
                     link: getPage(index),
-                    type: 'link',
+                    type: 'link'
                 })
             }
             return arr
         })
         const currentPageObj = computed(() => ({
             ...unref(allPageArr)[unref(currentPage)],
-            type: 'current',
+            type: 'current'
         }))
         const prevPagesArr = computed(() => {
             if (unref(currentPage) > differencePaginationIndex) {
@@ -148,7 +152,7 @@ export default defineComponent({
                 return [
                     unref(nextPage),
                     dotsObj,
-                    unref(allPageArr)[unref(pageCount) - 1],
+                    unref(allPageArr)[unref(pageCount) - 1]
                 ]
             }
             return unref(allPageArr).slice(unref(currentPage) + 1)
@@ -157,7 +161,7 @@ export default defineComponent({
             return [
                 ...unref(prevPagesArr),
                 unref(currentPageObj),
-                ...unref(nextPagesArr),
+                ...unref(nextPagesArr)
             ]
         })
 
@@ -171,9 +175,9 @@ export default defineComponent({
             prevPage,
             nextPage,
             pagination,
-            loadMore,
+            loadMore
         }
-    },
+    }
 })
 </script>
 

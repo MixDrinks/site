@@ -24,7 +24,7 @@
                 <TitleH2
                     class="items-main-about__title"
                     :text="`Опис ${items.name}`"
-                ></TitleH2>
+                />
                 <p class="items-main-about__text">{{ items.about }}</p>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <TitleH2
                 class="items-cocktails__title"
                 :text="`Коктейлі з використанням ${items.name}`"
-            ></TitleH2>
+            />
             <CocktailsList
                 modificator="items"
                 :cocktails="cocktailsFull.cocktails"
@@ -41,10 +41,10 @@
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
             class="items__pagination"
-            :totalItems="cocktailsFull.totalCount"
+            :total-items="cocktailsFull.totalCount"
             :limit="24"
-            :itemsCount="cocktailsFull.cocktails.length"
-            @loadMore="loadMore"
+            :items-count="cocktailsFull.cocktails.length"
+            @load-more="loadMore"
         />
     </div>
 </template>
@@ -63,13 +63,14 @@ export default defineComponent({
     props: {
         items: {
             type: Object,
-            required: true,
+            required: true
         },
         cocktailsFull: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
+    emits: ['loadMore'],
     setup(props, { emit }) {
         const { items, cocktailsFull } = toRefs(props)
         const loadMore = (newQuery) => {
@@ -88,13 +89,13 @@ export default defineComponent({
             title: headTitle,
             description: headDescription,
             indexPage: unref(cocktailsFull).isAddToIndex,
-            image: unref(items).meta.ogImage,
+            image: unref(items).meta.ogImage
         })
 
         return {
-            loadMore,
+            loadMore
         }
-    },
+    }
 })
 </script>
 

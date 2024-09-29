@@ -2,23 +2,23 @@
     <div class="rating">
         <div
             class="rating__wrapper rating-wrapper"
-            @mouseleave="hoverItemIndex = null"
             :class="wrapperClasses"
+            @mouseleave="hoverItemIndex = null"
         >
             <div class="rating-wrapper__stars rating-wrapper-stars">
                 <div
-                    class="rating-wrapper-stars__item rating-wrapper-stars-item"
                     v-for="(star, starIndex) in stars"
                     :key="`rating-wrapper-stars__item-${starIndex}`"
-                    @mouseover="hoverItemIndex = starIndex"
+                    class="rating-wrapper-stars__item rating-wrapper-stars-item"
                     :class="getStarItemClasses(starIndex)"
+                    @mouseover="hoverItemIndex = starIndex"
                     @click="setRating(starIndex)"
                 >
-                    <div class="rating-wrapper-stars-item__start--gray"></div>
+                    <div class="rating-wrapper-stars-item__start--gray" />
                     <div
                         class="rating-wrapper-stars-item__start--full"
                         :style="'width:' + star.width"
-                    ></div>
+                    />
                 </div>
             </div>
             <div
@@ -44,9 +44,9 @@
                     MixDrinks
                 </span>
             </div>
-            <span v-else class="rating-wrapper__spacer"> </span>
+            <span v-else class="rating-wrapper__spacer" />
         </div>
-        <div class="rating__text" v-if="isSet">Дякуємо, що оцінили</div>
+        <div v-if="isSet" class="rating__text">Дякуємо, що оцінили</div>
     </div>
 </template>
 
@@ -59,20 +59,20 @@ export default defineComponent({
     props: {
         ratingCount: {
             type: Number,
-            default: 0,
+            default: 0
         },
         ratingValue: {
             type: Number,
-            default: null,
+            default: null
         },
         id: {
             type: Number,
-            required: true,
+            required: true
         },
         slug: {
             type: String,
-            required: true,
-        },
+            required: true
+        }
     },
 
     setup(props) {
@@ -90,8 +90,8 @@ export default defineComponent({
                 {
                     method: 'POST',
                     body: {
-                        value: starIndex + 1,
-                    },
+                        value: starIndex + 1
+                    }
                 }
             )
         }
@@ -99,7 +99,7 @@ export default defineComponent({
         const setRating = (starIndex) => {
             localStorage.setItem('ratinglist', [
                 ...unref(ratinglist),
-                unref(id),
+                unref(id)
             ])
             value.value = starIndex + 1
             isSet.value = true
@@ -110,7 +110,7 @@ export default defineComponent({
             if (unref(hoverItemIndex) !== null && !unref(isSet)) {
                 return {
                     'rating-wrapper-stars-item--hover':
-                        value <= unref(hoverItemIndex),
+                        value <= unref(hoverItemIndex)
                 }
             }
         }
@@ -134,7 +134,7 @@ export default defineComponent({
             return unref(ratingCount)
         })
         const stars = computed(() => {
-            let arr = []
+            const arr = []
             for (let index = 1; index <= 5; index++) {
                 let width
                 if (index < unref(actualRatingValue)) {
@@ -146,19 +146,19 @@ export default defineComponent({
                 }
                 arr.push({
                     id: index,
-                    width: width.toFixed(2) + '%',
+                    width: width.toFixed(2) + '%'
                 })
             }
             return arr
         })
         const wrapperClasses = computed(() => ({
-            'rating__wrapper--lock': unref(isSet),
+            'rating__wrapper--lock': unref(isSet)
         }))
 
         onMounted(() => {
             if (localStorage.getItem('ratinglist')) {
                 ratinglist.value = [
-                    ...localStorage.getItem('ratinglist').split(','),
+                    ...localStorage.getItem('ratinglist').split(',')
                 ]
                 isSet.value = unref(ratinglist).includes(unref(id).toString())
             }
@@ -174,9 +174,9 @@ export default defineComponent({
             actualReviewCount,
             actualRatingValue,
             stars,
-            setRating,
+            setRating
         }
-    },
+    }
 })
 </script>
 

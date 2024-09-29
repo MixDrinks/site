@@ -1,8 +1,8 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { MasterKeys } from './config';
+import { MasterKeys } from './config'
 import { schemaOrganization, schemaWebSite } from './utils/schema'
 
-const isDev = process.env.NODE_ENV;
+const isDev = process.env.NODE_ENV
 
 export default defineNuxtConfig({
     devtools: { enabled: MasterKeys[isDev].devtools },
@@ -14,76 +14,79 @@ export default defineNuxtConfig({
     app: {
         head: {
             htmlAttrs: {
-                lang: "uk",
+                lang: 'uk'
             },
             title: 'MixDrinks',
             meta: [
-                { charset: "utf-8" },
-                { name: "viewport", content: "width=device-width, initial-scale=1" },
-                { name: "msapplication-TileColor", content: "#603cba" },
-                { name: "theme-color", content: "#ffffff" },
+                { charset: 'utf-8' },
                 {
-                    hid: "description",
-                    name: "description",
-                    content: "Рецепти коктейлів на сайті MixDrinks",
+                    name: 'viewport',
+                    content: 'width=device-width, initial-scale=1'
                 },
+                { name: 'msapplication-TileColor', content: '#603cba' },
+                { name: 'theme-color', content: '#ffffff' },
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'Рецепти коктейлів на сайті MixDrinks'
+                }
             ],
             link: [
                 {
-                    rel: "apple-touch-icon",
-                    sizes: "180x180",
-                    href: "/favicon/apple-touch-icon.png",
+                    rel: 'apple-touch-icon',
+                    sizes: '180x180',
+                    href: '/favicon/apple-touch-icon.png'
                 },
                 {
-                    rel: "icon",
-                    type: "image/png",
-                    sizes: "32x32",
-                    href: "/favicon/favicon-32x32.png",
+                    rel: 'icon',
+                    type: 'image/png',
+                    sizes: '32x32',
+                    href: '/favicon/favicon-32x32.png'
                 },
                 {
-                    rel: "icon",
-                    type: "image/png",
-                    sizes: "16x16",
-                    href: "/favicon/favicon-16x16.png",
+                    rel: 'icon',
+                    type: 'image/png',
+                    sizes: '16x16',
+                    href: '/favicon/favicon-16x16.png'
                 },
-                { rel: "manifest", href: "/favicon/site.webmanifest" },
+                { rel: 'manifest', href: '/favicon/site.webmanifest' },
                 {
-                    rel: "mask-icon",
-                    href: "/favicon/safari-pinned-tab.svg",
-                    color: "#5bbad5",
+                    rel: 'mask-icon',
+                    href: '/favicon/safari-pinned-tab.svg',
+                    color: '#5bbad5'
                 },
                 {
-                    rel: "preconnect",
-                    href: MasterKeys[isDev].cdn,
-                },
+                    rel: 'preconnect',
+                    href: MasterKeys[isDev].cdn
+                }
             ],
             script: [
                 {
                     src: 'https://www.googletagmanager.com/gtag/js?id=G-8DWKDM4NCR',
-                    async: true,
+                    async: true
                 },
                 {
-                    src: '/scripts/googleAnalytics.js',
-                },
-                {
-                    type: 'application/ld+json',
-                    children: JSON.stringify(schemaOrganization),
+                    src: '/scripts/googleAnalytics.js'
                 },
                 {
                     type: 'application/ld+json',
-                    children: JSON.stringify(schemaWebSite),
+                    children: JSON.stringify(schemaOrganization)
                 },
-            ],
-        },
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify(schemaWebSite)
+                }
+            ]
+        }
     },
 
     router: {
-        prefetchLinks: false,
+        prefetchLinks: false
     },
 
-    modules: ['nuxt-simple-sitemap'],
+    modules: ['nuxt-simple-sitemap', '@nuxt/eslint'],
 
-    css: ["~~/assets/css/index.css"],
+    css: ['~~/assets/css/index.css'],
     vite: {
         css: {
             preprocessorOptions: {
@@ -104,5 +107,10 @@ export default defineNuxtConfig({
     },
     sitemap: {
         sources: ['https://newapi.mixdrinks.org/api/sitemap']
+    },
+    eslint: {
+        config: {
+            stylistic: true
+        }
     }
-});
+})

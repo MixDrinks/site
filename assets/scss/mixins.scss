@@ -36,7 +36,7 @@
 }
 
 @mixin fullPseudoElement {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -62,7 +62,7 @@
     margin-left: 10px;
     min-width: 19px;
 
-    @media(min-width: 1023px) {
+    @media (min-width: 1023px) {
         padding-left: 6px;
         padding-right: 6px;
         @include fontSize16M;
@@ -143,7 +143,6 @@
     font-weight: bold;
     letter-spacing: -0.02em;
 }
-
 
 @mixin fontSize24 {
     font-size: 24px;

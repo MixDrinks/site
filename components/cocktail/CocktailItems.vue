@@ -1,7 +1,7 @@
 <template>
     <div class="items">
-        <TitleH2 class="items__title" :text="title"></TitleH2>
-        <div class="items__counter counter" v-if="withCounter">
+        <TitleH2 class="items__title" :text="title" />
+        <div v-if="withCounter" class="items__counter counter">
             <IconBtn
                 class="counter__btn"
                 :lock="isDecLock"
@@ -23,9 +23,9 @@
         </div>
         <ul class="items__list list">
             <li
-                class="list__item"
                 v-for="(item, itemIndex) in items"
                 :key="`list__item--${itemIndex}`"
+                class="list__item"
             >
                 <div class="cart">
                     <picture class="cart__picture">
@@ -68,23 +68,23 @@ import TitleH2 from '../global/TitleH2.vue'
 import IconBtn from '../UI/IconBtn.vue'
 
 export default defineComponent({
-    components: { IconBtn },
     name: 'CocktailItems',
+    components: { IconBtn },
     items: { IconBtn, TitleH2 },
 
     props: {
         items: {
             type: Array,
-            required: true,
+            required: true
         },
         title: {
             type: String,
-            required: true,
+            required: true
         },
         withCounter: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
 
     setup() {
@@ -102,9 +102,9 @@ export default defineComponent({
             counter,
             inc,
             dec,
-            isDecLock,
+            isDecLock
         }
-    },
+    }
 })
 </script>
 <style lang="scss" scoped>

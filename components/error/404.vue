@@ -10,9 +10,9 @@ export default {
     props: {
         error: {
             type: Object,
-            default: () => {},
-        },
-    },
+            default: () => {}
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

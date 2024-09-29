@@ -1,9 +1,6 @@
 <template>
     <div class="recomendation">
-        <TitleH2
-            class="recomendation__title"
-            text="Рекомендуємо спробувати"
-        ></TitleH2>
+        <TitleH2 class="recomendation__title" text="Рекомендуємо спробувати" />
         <ul class="recomendation__list list">
             <li
                 v-for="(cocktail, cocktailIndex) in cocktails"
@@ -12,18 +9,18 @@
             >
                 <div class="cart">
                     <div
-                        class="cart__header cart-header"
                         v-if="!!cocktail.rating || !!cocktail.visitCount"
+                        class="cart__header cart-header"
                     >
                         <div
-                            class="cart-header__rating cart-header-rating"
                             v-if="!!cocktail.rating"
+                            class="cart-header__rating cart-header-rating"
                         >
                             {{ getRating(cocktail.rating) }}
                         </div>
                         <div
-                            class="cart-header__visit-count cart-header-visit-count"
                             v-if="!!cocktail.visitCount"
+                            class="cart-header__visit-count cart-header-visit-count"
                         >
                             {{ cocktail.visitCount }}
                         </div>
@@ -67,16 +64,16 @@ export default defineComponent({
     props: {
         cocktails: {
             type: Array,
-            required: true,
-        },
+            required: true
+        }
     },
     setup() {
         const getRating = (value) => Number(value.toFixed(1))
 
         return {
-            getRating,
+            getRating
         }
-    },
+    }
 })
 </script>
 <style lang="scss" scoped>

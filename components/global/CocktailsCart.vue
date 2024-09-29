@@ -1,18 +1,18 @@
 <template>
     <div class="cart">
         <div
-            class="cart__header cart-header"
             v-if="!!cocktail.rating || !!cocktail.visitCount"
+            class="cart__header cart-header"
         >
             <div
-                class="cart-header__rating cart-header-rating"
                 v-if="!!cocktail.rating"
+                class="cart-header__rating cart-header-rating"
             >
                 {{ getRating(cocktail.rating) }}
             </div>
             <div
-                class="cart-header__visit-count cart-header-visit-count"
                 v-if="!!cocktail.visitCount"
+                class="cart-header__visit-count cart-header-visit-count"
             >
                 {{ cocktail.visitCount }}
             </div>
@@ -48,12 +48,12 @@ export default defineComponent({
     props: {
         isLoadingLazy: {
             type: Boolean,
-            default: true,
+            default: true
         },
         cocktail: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
     setup(props) {
         const { isLoadingLazy } = toRefs(props)
@@ -62,9 +62,9 @@ export default defineComponent({
 
         return {
             loading,
-            getRating,
+            getRating
         }
-    },
+    }
 })
 </script>
 

@@ -49,7 +49,7 @@
     &__views {
         margin-bottom: 6px;
         @include fontSize16M;
-        letter-spacing: -.02em;
+        letter-spacing: -0.02em;
 
         @media (min-width: 1023px) {
             @include fontSize18;
@@ -78,7 +78,7 @@
         padding-left: unset;
         padding-right: unset;
 
-        overflow: inherit
+        overflow: inherit;
     }
 
     &__item {
@@ -93,7 +93,7 @@
     padding: 4px 8px;
     border-radius: 20px;
     background-color: $colorMain;
-    transition: background-color .4s;
+    transition: background-color 0.4s;
     font-style: italic;
     color: $colorWhite;
     white-space: nowrap;

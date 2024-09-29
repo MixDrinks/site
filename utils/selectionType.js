@@ -1,4 +1,4 @@
 export const filterType = {
-    single: "SINGLE",
-    multiple: "MULTIPLE",
-};
+    single: 'SINGLE',
+    multiple: 'MULTIPLE'
+}
