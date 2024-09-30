@@ -32,6 +32,20 @@
             grid-template-columns: repeat(6, 1fr);
         }
     }
+
+    &__ads {
+        max-width: 100%;
+        margin: 8px auto;
+
+        @media (min-width: 1023px) {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 1650px) {
+            width: 1200px;
+        }
+    }
 }
 
 .item {
@@ -104,4 +118,14 @@
             }
         }
     }
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+  transform: translateY(30px);
 }

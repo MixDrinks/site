@@ -7,6 +7,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useRoute, useNuxtApp, useAsyncData } from 'nuxt/app'
+import { getCocktail } from '~~/api/pages'
 
 import CocktailPage from '~~/components/cocktail/CocktailPage.vue'
 
@@ -18,11 +19,11 @@ export default defineComponent({
     async setup() {
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
-        const { data: cocktail } = await useAsyncData('coctail-page', () =>
-            $fetchWIXUP(
-                `https://newapi.mixdrinks.org/api/cocktail/${route.params.id}`
-            )
-        )
+
+        const getPath = () => `/${route.params.id}`
+
+        const { data: cocktail } = await useAsyncData(() => getCocktail(getPath(), $fetchWIXUP))
+        
         return {
             cocktail
         }

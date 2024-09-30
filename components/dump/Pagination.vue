@@ -165,9 +165,7 @@ export default defineComponent({
             ]
         })
 
-        const loadMore = () => {
-            emit('loadMore', unref(nextPage).link)
-        }
+        const loadMore = () => emit('loadMore')
 
         return {
             currentPage,

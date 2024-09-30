@@ -26,7 +26,7 @@ export default defineComponent({
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
 
-        const getPath = () => `glassware=${route.params.id}${query(route)}`
+        const getPath = () => `/glassware=${route.params.id}${query(route)}`
 
         const { data, refresh } = await useAsyncData(async () => {
                 const [cocktailsFull, items] = await Promise.all([

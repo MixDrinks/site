@@ -1,7 +1,7 @@
 <template>
     <main class="wrapper">
         <ItemsPage
-        @loadMore="loadMore"
+            @loadMore="loadMore"
             @updateCoctails="refresh"
             :cocktailsFull="data.cocktailsFull"
             :items="data.items"
@@ -12,10 +12,10 @@
 <script>
 import { defineComponent, unref } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
-
-import ItemsPage from '~~/components/items/ItemsPage.vue'
 import { getItems, getCoctails } from '~~/api/pages'
 import { query } from '~~/utils/querySTR'
+
+import ItemsPage from '~~/components/items/ItemsPage.vue'
 
 export default defineComponent({
     name: 'GoodsPage',
@@ -26,15 +26,15 @@ export default defineComponent({
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
 
-        const getPath = () => `goods=${route.params.id}${query(route)}`
+        const getPath = () => `/goods=${route.params.id}${query(route)}`
 
         const { data, refresh } = await useAsyncData(async () => {
-                const [cocktailsFull, items] = await Promise.all([
-                    getCoctails(getPath(), $fetchWIXUP),
-                    getItems(route.path)
-                ])
-                return { cocktailsFull, items }
-            })
+            const [cocktailsFull, items] = await Promise.all([
+                getCoctails(getPath(), $fetchWIXUP),
+                getItems(route.path)
+            ])
+            return { cocktailsFull, items }
+        })
 
         async function loadMore() {
             const { cocktails } = await getCoctails(getPath(), $fetchWIXUP)

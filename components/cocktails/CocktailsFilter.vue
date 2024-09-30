@@ -11,9 +11,7 @@
                     class="filter__search filter-search"
                 >
                     <label
-                        :class="{
-                            'filter-search-input--filled': !!searchValue
-                        }"
+                        :class="{'filter-search-input--filled': !!searchValue}"
                         class="filter-search__input filter-search-input"
                     >
                         <div class="filter-search-input__label">Пошук</div>

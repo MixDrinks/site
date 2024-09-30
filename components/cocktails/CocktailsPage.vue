@@ -1,6 +1,6 @@
 <template>
     <div class="cocktails">
-        <div class="cocktails__header cocktails-header">
+        <div ref="scrollEl" class="cocktails__header cocktails-header">
             <h1 class="cocktails-header__title">
                 {{ pageTitle }}
             </h1>
@@ -11,30 +11,11 @@
                 :filterList="allFilters"
                 :allCocktailsNumber="cocktailsFull.totalCount"
                 :futureCounts="cocktailsFull.futureCounts"
-                class="cocktails-body__filter"
             />
-            <div class="cocktails-body__wrapper">
-                <CocktailsList
-                    :cocktails="cocktailsFirst"
-                    isFirstList
-                    class="cocktails-body__list"
-                />
-                <div class="cocktails-body__ads">
-                    <ins
-                        class="adsbygoogle"
-                        style="display: block"
-                        data-ad-format="fluid"
-                        data-ad-layout-key="-gh-4+1q-51+45"
-                        data-ad-client="ca-pub-9033785625371866"
-                        data-ad-slot="2682031593"
-                    />
-                </div>
-                <CocktailsList
-                    v-if="checkLength"
-                    :cocktails="cocktailsSecond"
-                    class="cocktails-body__list"
-                />
-            </div>
+            <CocktailsList
+                :element="scrollEl" 
+                :cocktails="cocktailsFull.cocktails"
+            />
         </div>
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
@@ -47,13 +28,15 @@
 </template>
 
 <script>
+import { onBeforeMount, defineComponent, computed, toRefs, ref, unref, watch } from 'vue'
+import { useRoute } from 'nuxt/app'
+import { store } from '~~/store/filter'
+import { head } from '~~/utils/head'
+
 import CocktailsList from './../global/CocktailsList.vue'
 import CocktailsFilters from './CocktailsFilters.vue'
 import Pagination from '../dump/Pagination.vue'
 import CocktailsSorting from './CocktailsSorting.vue'
-import { onBeforeMount, defineComponent, computed, toRefs, unref } from 'vue'
-import { store } from '~~/store/filter'
-import { head } from '~~/utils/head'
 export default defineComponent({
     name: 'CocktailsPage',
     components: {
@@ -72,75 +55,49 @@ export default defineComponent({
             required: true
         }
     },
-    emits: ['loadMore'],
+    emits: ['loadMore', 'updateCoctails'],
     setup(props, { emit }) {
+        const route = useRoute()
+        const isLoadMore = ref(false)
         const { allFilters, cocktailsFull } = toRefs(props)
 
-        const checkLength = computed(
-            () => unref(cocktailsFull).cocktails.length > 12
-        )
-        const cocktailsFirst = computed(() =>
-            unref(checkLength)
-                ? unref(cocktailsFull).cocktails.slice(0, 12)
-                : unref(cocktailsFull).cocktails
-        )
-        const cocktailsSecond = computed(() =>
-            unref(checkLength) ? unref(cocktailsFull).cocktails.slice(12) : []
-        )
+        const loadMore = () => isLoadMore.value = true
+        
+        const scrollEl = ref(null)
 
-        const setOpenList = () =>
-            store.actions.setFiltersIsOpenList(unref(allFilters))
-
-        onBeforeMount(() => {
-            setOpenList()
+        watch(route, () => {
+            if(unref(isLoadMore)) {
+                emit('loadMore')
+                isLoadMore.value = false
+            } else {
+                emit('updateCoctails')
+            }
         })
 
-        const pageTitle = computed(() =>
-            unref(cocktailsFull).description
-                ? unref(cocktailsFull).description
-                : 'Коктейлі'
-        )
+        const setOpenList = () => store.actions.setFiltersIsOpenList(unref(allFilters))
 
-        const scripts = [
-            {
-                async: true,
-                src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                crossorigin: 'anonymous'
-            },
-            {
-                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
-            }
-        ]
+        onBeforeMount(() => setOpenList())
+
+        const pageTitle = computed(() => unref(cocktailsFull).description ? unref(cocktailsFull).description : 'Коктейлі')
 
         const headTitle = unref(cocktailsFull).description
-            ? `${
-                  unref(cocktailsFull).description
-              } 🍹 та рецепти до них в домашніх умовах`
+            ? `${unref(cocktailsFull).description} 🍹 та рецепти до них в домашніх умовах`
             : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
 
         const headDescription = unref(cocktailsFull).description
-            ? `${
-                  unref(cocktailsFull).description
-              } 🍸 з фото та рецептами, оберий який подобаєтья тобі`
+            ? `${unref(cocktailsFull).description} 🍸 з фото та рецептами, оберий який подобаєтья тобі`
             : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
 
         head({
             title: headTitle,
             description: headDescription,
             indexPage: unref(cocktailsFull).isAddToIndex,
-            scripts: scripts
         })
 
-        const loadMore = (newQuery) => {
-            emit('loadMore', newQuery)
-        }
-
         return {
-            cocktailsFirst,
-            cocktailsSecond,
-            checkLength,
             pageTitle,
-            loadMore
+            loadMore,
+            scrollEl
         }
     }
 })

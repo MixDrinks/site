@@ -28,13 +28,15 @@
                 <p class="items-main-about__text">{{ items.about }}</p>
             </div>
         </div>
+        <div ref="scrollEl"/>
         <Separator />
-        <div ref="cocktailsEl" class="items__cocktails items-cocktails">
+        <div class="items__cocktails items-cocktails">
             <TitleH2
                 :text="`Коктейлі з використанням ${items.name}`"
                 class="items-cocktails__title"
             />
             <CocktailsList
+                :element="scrollEl"
                 :cocktails="cocktailsFull.cocktails"
                 modificator="items"
             />
@@ -52,11 +54,12 @@
 <script>
 import { toRefs, defineComponent, unref, ref, watch} from 'vue'
 import { useRoute } from 'nuxt/app'
+import { head } from '~~/utils/head'
+
+import Separator from '../global/Separator.vue'
 import CocktailsList from '../global/CocktailsList.vue'
 import TitleH2 from '../global/TitleH2.vue'
 import Pagination from '../dump/Pagination.vue'
-import { head } from '~~/utils/head'
-import Separator from '../global/Separator.vue'
 
 export default defineComponent({
     name: 'ItemsPage',
@@ -75,25 +78,20 @@ export default defineComponent({
     emits: ['loadMore', 'updateCoctails'],
     setup(props, { emit }) {
         const route = useRoute()
-        const cocktailsEl = ref(null)
         const isLoadMore = ref(false)
         const { items, cocktailsFull } = toRefs(props)
 
         const loadMore = () => isLoadMore.value = true
+
+        const scrollEl = ref(null)
         
         watch(route, () => {
             if(unref(isLoadMore)) {
                 emit('loadMore')
+                isLoadMore.value = false
             } else {
-                if(unref(cocktailsFull).cocktails.length !== 24) {
-                    unref(cocktailsEl).scrollIntoView({ behavior: "instant", block: "start" });
-                }  else {
-                    unref(cocktailsEl).scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-                
                 emit('updateCoctails')
             }
-            isLoadMore.value = false
         })
 
         const headTitle = `Дізнайся в яких коктейлях 🍸 використовується ${unref(items).name}`
@@ -108,7 +106,7 @@ export default defineComponent({
 
         return {
             loadMore,
-            cocktailsEl
+            scrollEl
         }
     }
 })

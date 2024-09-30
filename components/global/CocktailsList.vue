@@ -1,18 +1,41 @@
 <template>
-    <div :class="listClasses" class="list">
-        <div
-            v-for="(cocktail, cocktailIndex) in cocktails"
-            :key="`item-${cocktailIndex}`"
-            :class="itemClasses"
-            class="list__item item"
-        >
-            <CocktailsCart :isLoadingLazy="!isFirstList" :cocktail="cocktail" />
+    <div ref="cocktailsEl" class="wrapper">
+        <TransitionGroup :class="listClasses" tag="div" class="list" name="list">
+            <div
+                v-for="(cocktail, cocktailIndex) in cocktailsFirst"
+                :key="`item-${cocktail.id}${cocktailIndex}`"
+                :class="itemClasses"
+                class="list__item item"
+            >
+                <CocktailsCart  :cocktail="cocktail" />
+            </div>
+        </TransitionGroup>
+        <div class="list__ads">
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-format="fluid"
+                data-ad-layout-key="-gh-4+1q-51+45"
+                data-ad-client="ca-pub-9033785625371866"
+                data-ad-slot="2682031593"
+            />
         </div>
+        <TransitionGroup :class="listClasses" tag="div" class="list" name="list">
+            <div
+                v-for="(cocktail) in cocktailsSecond"
+                :key="`item-${cocktail.id}`"
+                :class="itemClasses"
+                class="list__item item"
+            >
+                <CocktailsCart  :cocktail="cocktail" isLoadingLazy />
+            </div>
+        </TransitionGroup>
     </div>
 </template>
 
 <script>
-import { defineComponent, computed, toRefs, unref } from 'vue'
+import { useHead } from 'nuxt/app'
+import { defineComponent, computed, toRefs, unref, watch, ref } from 'vue'
 
 import CocktailsCart from './CocktailsCart.vue'
 
@@ -24,18 +47,31 @@ export default defineComponent({
             type: Array,
             required: true
         },
-        isFirstList: {
-            type: Boolean,
-            default: false
-        },
         modificator: {
             type: String,
             default: ''
+        },
+        element: {
+            type: Object,
+            default: () => {}
         }
     },
 
     setup(props) {
-        const { modificator } = toRefs(props)
+        useHead({
+            script: [
+                {
+                    async: true,
+                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
+                    crossorigin: 'anonymous'
+                },
+                {
+                    innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
+                }
+            ]
+        })
+        const { modificator, cocktails, element } = toRefs(props)
+        const cocktailsEl = ref(null)
 
         const listClasses = computed(() => ({
             [`list--${unref(modificator)}`]: Boolean(unref(modificator))
@@ -44,9 +80,30 @@ export default defineComponent({
             [`item--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
 
+        watch(cocktails, () => {
+            if(unref(cocktails).length <= 24) {
+                if(unref(element)) {
+                    unref(element).scrollIntoView({ behavior: "smooth", block: "start" })
+                } else {
+                    unref(cocktailsEl).scrollIntoView({ behavior: "smooth", block: "start" })
+                }
+            }
+        })
+
+        const checkLength = computed(() => unref(cocktails).length > 12)
+        const cocktailsFirst = computed(() =>
+            unref(checkLength)
+                ? unref(cocktails).slice(0, 12)
+                : unref(cocktails)
+        )
+        const cocktailsSecond = computed(() => unref(checkLength) ? unref(cocktails).slice(12) : [])
+
         return {
+            cocktailsFirst,
+            cocktailsSecond,
             itemClasses,
-            listClasses
+            listClasses,
+            cocktailsEl
         }
     }
 })
