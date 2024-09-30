@@ -24,7 +24,7 @@
         </div>
         <Pagination
             v-if="postsData.postCount > 24"
-            @update-page="updatePage"
+            @updatePage="updatePage"
             :totalItems="postsData.postCount"
             :limit="24"
             :itemsCount="postsData.posts.length"

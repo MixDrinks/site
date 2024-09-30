@@ -1,7 +1,8 @@
 <template>
     <main class="wrapper">
         <ItemsPage
-            @load-more="loadMore"
+        @loadMore="loadMore"
+            @updateCoctails="refresh"
             :cocktailsFull="data.cocktailsFull"
             :items="data.items"
         />
@@ -9,7 +10,7 @@
 </template>
 
 <script>
-import { defineComponent, unref, ref, watch } from 'vue'
+import { defineComponent, unref } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 
 import ItemsPage from '~~/components/items/ItemsPage.vue'
@@ -24,43 +25,29 @@ export default defineComponent({
     async setup() {
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
-        const isLoadMore = ref(false)
 
-        const getPath = (isNextPage) =>
-            `goods=${route.params.id}${query(route, isNextPage)}`
+        const getPath = () => `goods=${route.params.id}${query(route)}`
 
-        watch(route, () => {
-            if (!unref(isLoadMore)) {
-                refresh()
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: 0,
-                        left: 0
-                    })
-                }, 0)
-            }
-        })
-        const { data, refresh } = await useAsyncData('goods-page', async () => {
-            const [cocktailsFull, items] = await Promise.all([
-                getCoctails(getPath(), $fetchWIXUP),
-                getItems(route.path)
-            ])
-            return { cocktailsFull, items }
-        })
+        const { data, refresh } = await useAsyncData(async () => {
+                const [cocktailsFull, items] = await Promise.all([
+                    getCoctails(getPath(), $fetchWIXUP),
+                    getItems(route.path)
+                ])
+                return { cocktailsFull, items }
+            })
 
         async function loadMore() {
-            isLoadMore.value = true
-            const { cocktails } = await getCoctails(getPath(true), $fetchWIXUP)
+            const { cocktails } = await getCoctails(getPath(), $fetchWIXUP)
             data.value.cocktailsFull.cocktails = [
                 ...unref(data).cocktailsFull.cocktails,
                 ...cocktails
             ]
-            isLoadMore.value = false
         }
 
         return {
             data,
-            loadMore
+            loadMore,
+            refresh
         }
     }
 })

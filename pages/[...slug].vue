@@ -1,7 +1,7 @@
 <template>
     <main class="wrapper">
         <CocktailsPage
-            @load-more="loadMore"
+            @loadMore="loadMore"
             :cocktailsFull="data.cocktailsFull"
             :allFilters="data.allFilters"
         />
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { definePageMeta } from '#imports'
 import { defineComponent, unref, watch, ref } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 
@@ -19,7 +20,14 @@ export default defineComponent({
     components: {
         CocktailsPage
     },
+
     async setup() {
+        definePageMeta({
+            pageTransition: {
+                name: 'none'
+            }
+        })
+        
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
         const isLoadMore = ref(false)
@@ -51,7 +59,6 @@ export default defineComponent({
                 return { cocktailsFull, allFilters }
             }
         )
-
         async function getNewCoctails(newQuery) {
             return await $fetchWIXUP(getFilterRequestPath(newQuery))
         }

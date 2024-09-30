@@ -29,7 +29,7 @@
             </div>
         </div>
         <Separator />
-        <div class="items__cocktails items-cocktails">
+        <div ref="cocktailsEl" class="items__cocktails items-cocktails">
             <TitleH2
                 :text="`Коктейлі з використанням ${items.name}`"
                 class="items-cocktails__title"
@@ -41,17 +41,17 @@
         </div>
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
-            @load-more="loadMore"
+            @loadMore="loadMore"
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
-            :itemsCount="cocktailsFull.cocktails.length"
             class="items__pagination"
         />
     </div>
 </template>
 
 <script>
-import { toRefs, defineComponent, unref } from 'vue'
+import { toRefs, defineComponent, unref, ref, watch} from 'vue'
+import { useRoute } from 'nuxt/app'
 import CocktailsList from '../global/CocktailsList.vue'
 import TitleH2 from '../global/TitleH2.vue'
 import Pagination from '../dump/Pagination.vue'
@@ -70,22 +70,34 @@ export default defineComponent({
         cocktailsFull: {
             type: Object,
             required: true
-        }
+        },
     },
-    emits: ['loadMore'],
+    emits: ['loadMore', 'updateCoctails'],
     setup(props, { emit }) {
+        const route = useRoute()
+        const cocktailsEl = ref(null)
+        const isLoadMore = ref(false)
         const { items, cocktailsFull } = toRefs(props)
-        const loadMore = (newQuery) => {
-            emit('loadMore', newQuery)
-        }
 
-        const headTitle = `Дізнайся в яких коктейлях 🍸 використовується ${
-            unref(items).name
-        }`
+        const loadMore = () => isLoadMore.value = true
+        
+        watch(route, () => {
+            if(unref(isLoadMore)) {
+                emit('loadMore')
+            } else {
+                if(unref(cocktailsFull).cocktails.length !== 24) {
+                    unref(cocktailsEl).scrollIntoView({ behavior: "instant", block: "start" });
+                }  else {
+                    unref(cocktailsEl).scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+                
+                emit('updateCoctails')
+            }
+            isLoadMore.value = false
+        })
 
-        const headDescription = `${
-            unref(items).name
-        } використовується в представлених коктейлях 🍸 наведені рецепти та фото`
+        const headTitle = `Дізнайся в яких коктейлях 🍸 використовується ${unref(items).name}`
+        const headDescription = `${unref(items).name} використовується в представлених коктейлях 🍸 наведені рецепти та фото`
 
         head({
             title: headTitle,
@@ -95,7 +107,8 @@ export default defineComponent({
         })
 
         return {
-            loadMore
+            loadMore,
+            cocktailsEl
         }
     }
 })

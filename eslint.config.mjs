@@ -12,6 +12,7 @@ export default createConfigForNuxt({}).override('nuxt/vue/rules', {
             }
         ],
         'vue/attribute-hyphenation': ['error', 'never'],
+        'vue/v-on-event-hyphenation': ['error', 'never'],
         'vue/attributes-order': [
             'error',
             {

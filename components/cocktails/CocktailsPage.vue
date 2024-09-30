@@ -38,7 +38,7 @@
         </div>
         <Pagination
             v-if="cocktailsFull.totalCount > 24"
-            @load-more="loadMore"
+            @loadMore="loadMore"
             :totalItems="cocktailsFull.totalCount"
             :limit="24"
             class="cocktails__pagination"
