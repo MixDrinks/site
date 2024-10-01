@@ -98,7 +98,7 @@ import CocktailTags from './CocktailTags.vue'
 import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
-import { updateVisit } from '~~/api/other';
+import { updateVisit } from '~~/api/other'
 
 export default defineComponent({
     name: 'CocktailPage',

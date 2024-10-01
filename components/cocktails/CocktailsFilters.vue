@@ -1,9 +1,6 @@
 <template>
-    <div 
-        :class="filtersClasees"
-        class="filters"
-    >
-        <div  class="filters__main">
+    <div :class="filtersClasees" class="filters">
+        <div class="filters__main">
             <div class="filters__header filters-header">
                 <div class="filters-header__title filters-header-title">
                     Фільтри
@@ -20,40 +17,30 @@
                         type="short"
                         icon="/img/icons/trash.svg"
                     >
-                        Відмінити всі фільтри 
+                        Відмінити всі фільтри
                     </IconBtn>
                 </transition>
             </div>
-            <CocktailsTags 
+            <CocktailsTags
                 v-if="activeFilter.length"
                 :tags="activeFilter"
                 class="filters__tags"
             />
             <div class="filters__wrapper filters-wrapper">
                 <CocktailsFilter
-                    v-for="filterItem in filterListWithUrl"
-                    :key="filterItem.id"
-                    :filter="filterItem"
-                    class="filters-wrapper__item"
+                    v-for="filter in filterList"
+                    :key="filter.id"
+                    :filter="filter"
                 />
             </div>
         </div>
-        <div 
-            @click="changeFilterIsOpen"
-            class="filters__btn filters-btn"
-        >
+        <div @click="changeFilterIsOpen" class="filters__btn filters-btn">
             {{ btnText }}
-            <span 
-                v-if="isShowBtnCount" 
-                class="filters-btn__count"
-            >
+            <span v-if="isShowBtnCount" class="filters-btn__count">
                 {{ activeFilter.length }}
             </span>
         </div>
-        <div
-            @click="changeFilterIsOpen"
-            class="filters__background"
-        />
+        <div @click="changeFilterIsOpen" class="filters__background" />
     </div>
 </template>
 
@@ -76,61 +63,40 @@ export default defineComponent({
             type: Array,
             required: true
         },
-        futureCounts: {
-            type: Object,
-            required: true
-        },
         allCocktailsNumber: {
             type: Number,
             default: 0
-        },
+        }
     },
 
     setup(props) {
         const route = useRoute()
-        const { filterList, futureCounts } = toRefs(props)
-        const { isFilterOpen } = toRefs(store.getters)
 
-        const clearFilterUrl =  computed(() => `/${query(route, true)}`)
-        const filtersClasees = computed(() => ({ 'filters--hidden': !unref(isFilterOpen) }))
-        
-        const filterListWithUrl = computed(() => {
-            const futureFilters = {}
-            for (const filter in unref(futureCounts)) {
-                futureFilters[filter] = {}
-                unref(futureCounts)[filter].forEach((filterItem) => {
-                    futureFilters[filter][filterItem.id] = filterItem
-                })
-            }
-            return unref(filterList).map((filterItem) => ({
-                ...filterItem,
-                items: filterItem.items.map((item) => {
-                    const newValue = futureFilters[filterItem.id][item.id]
+        const { filterList } = toRefs(props)
 
-                    return {
-                        ...item,
-                        url: `/${newValue.query}${query(route, true)}`,
-                        count: newValue.count,
-                        rel: getRel(newValue.isAddToIndex),
-                        isActive: newValue.isActive,
-                        isAddToIndex: newValue.isAddToIndex
-                    }
-                }).sort((a, b) => (a.count > b.count ? -1 : 1))
-            }))
-        })
-        const activeFilter = computed(() => unref(filterListWithUrl).map((el) => el.items).flat().filter((item) => item.isActive))
-
-        const getRel = (value) => (value ? 'tag' : 'nofollow')
         const changeFilterIsOpen = () => store.actions.changeMainIsOpen()
-
-        const btnText = computed(() => unref(isFilterOpen) ? 'Застосувати' : 'Фільтр')
-        const isShowBtnCount = computed(() => unref(activeFilter).length && !unref(isFilterOpen))
+        const clearFilterUrl = computed(() => `/${query(route, true)}`)
+        const { isFilterOpen } = toRefs(store.getters)
+        const filtersClasees = computed(() => ({
+            'filters--hidden': !unref(isFilterOpen)
+        }))
+        const btnText = computed(() =>
+            unref(isFilterOpen) ? 'Застосувати' : 'Фільтр'
+        )
+        const isShowBtnCount = computed(
+            () => unref(activeFilter).length && !unref(isFilterOpen)
+        )
+        const activeFilter = computed(() =>
+            unref(filterList)
+                .map((el) => el.items)
+                .flat()
+                .filter((item) => item.isActive)
+        )
 
         return {
             activeFilter,
             filtersClasees,
             clearFilterUrl,
-            filterListWithUrl,
             isFilterOpen,
             changeFilterIsOpen,
             btnText,

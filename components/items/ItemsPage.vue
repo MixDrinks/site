@@ -28,7 +28,7 @@
                 <p class="items-main-about__text">{{ items.about }}</p>
             </div>
         </div>
-        <div ref="scrollEl"/>
+        <div ref="scrollEl" />
         <Separator />
         <div class="items__cocktails items-cocktails">
             <TitleH2
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { toRefs, defineComponent, unref, ref, watch} from 'vue'
+import { toRefs, defineComponent, unref, ref, watch } from 'vue'
 import { useRoute } from 'nuxt/app'
 import { head } from '~~/utils/head'
 
@@ -73,7 +73,7 @@ export default defineComponent({
         cocktailsFull: {
             type: Object,
             required: true
-        },
+        }
     },
     emits: ['loadMore', 'updateCoctails'],
     setup(props, { emit }) {
@@ -81,12 +81,12 @@ export default defineComponent({
         const isLoadMore = ref(false)
         const { items, cocktailsFull } = toRefs(props)
 
-        const loadMore = () => isLoadMore.value = true
+        const loadMore = () => (isLoadMore.value = true)
 
         const scrollEl = ref(null)
-        
+
         watch(route, () => {
-            if(unref(isLoadMore)) {
+            if (unref(isLoadMore)) {
                 emit('loadMore')
                 isLoadMore.value = false
             } else {

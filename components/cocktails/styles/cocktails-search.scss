@@ -8,13 +8,12 @@
             #{$self}__input {
                 box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
             }
-    
+
             #{$self}__label {
                 color: $colorMain;
             }
         }
     }
-
 
     &--filled {
         #{$self}__label {

@@ -52,7 +52,7 @@
 
 <script>
 import { ref, toRefs, unref, defineComponent, computed, onMounted } from 'vue'
-import { updateRating } from '~~/api/other';
+import { updateRating } from '~~/api/other'
 export default defineComponent({
     name: 'CocktailRating',
 

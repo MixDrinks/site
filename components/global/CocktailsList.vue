@@ -1,13 +1,18 @@
 <template>
     <div ref="cocktailsEl" class="wrapper">
-        <TransitionGroup :class="listClasses" tag="div" class="list" name="list">
+        <TransitionGroup
+            :class="listClasses"
+            tag="div"
+            class="list"
+            name="list"
+        >
             <div
                 v-for="(cocktail, cocktailIndex) in cocktailsFirst"
                 :key="`item-${cocktail.id}${cocktailIndex}`"
                 :class="itemClasses"
                 class="list__item item"
             >
-                <CocktailsCart  :cocktail="cocktail" />
+                <CocktailsCart :cocktail="cocktail" />
             </div>
         </TransitionGroup>
         <div class="list__ads">
@@ -20,14 +25,19 @@
                 data-ad-slot="2682031593"
             />
         </div>
-        <TransitionGroup :class="listClasses" tag="div" class="list" name="list">
+        <TransitionGroup
+            :class="listClasses"
+            tag="div"
+            class="list"
+            name="list"
+        >
             <div
-                v-for="(cocktail) in cocktailsSecond"
+                v-for="cocktail in cocktailsSecond"
                 :key="`item-${cocktail.id}`"
                 :class="itemClasses"
                 class="list__item item"
             >
-                <CocktailsCart  :cocktail="cocktail" isLoadingLazy />
+                <CocktailsCart :cocktail="cocktail" isLoadingLazy />
             </div>
         </TransitionGroup>
     </div>
@@ -81,11 +91,17 @@ export default defineComponent({
         }))
 
         watch(cocktails, () => {
-            if(unref(cocktails).length <= 24) {
-                if(unref(element)) {
-                    unref(element).scrollIntoView({ behavior: "smooth", block: "start" })
+            if (unref(cocktails).length <= 24) {
+                if (unref(element)) {
+                    unref(element).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    })
                 } else {
-                    unref(cocktailsEl).scrollIntoView({ behavior: "smooth", block: "start" })
+                    unref(cocktailsEl).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    })
                 }
             }
         })
@@ -96,7 +112,9 @@ export default defineComponent({
                 ? unref(cocktails).slice(0, 12)
                 : unref(cocktails)
         )
-        const cocktailsSecond = computed(() => unref(checkLength) ? unref(cocktails).slice(12) : [])
+        const cocktailsSecond = computed(() =>
+            unref(checkLength) ? unref(cocktails).slice(12) : []
+        )
 
         return {
             cocktailsFirst,

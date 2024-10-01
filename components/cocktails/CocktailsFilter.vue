@@ -1,31 +1,25 @@
 <template>
     <div class="filter">
-        <div 
-            @click="toggleList"
-            class="header"
-        >
+        <div @click="toggleList" class="header">
             <div class="header__title">
                 {{ filter.name }}
             </div>
-            <button  
-                :class="togglerClasses" 
-                title="Відкрити фільтр"  
-                class="header__toggler" 
+            <button
+                :class="togglerClasses"
+                title="Відкрити фільтр"
+                class="header__toggler"
             />
         </div>
         <transition name="max-height">
-            <div 
-                v-show="filterIsShow" 
-                class="filter__wrapper"
-            >   
-                <CocktailsSearch 
-                    v-if="searchIsShow" 
-                    v-model:value="searchValue" 
-                    class="filter__search" 
+            <div v-show="filterIsShow" class="filter__wrapper">
+                <CocktailsSearch
+                    v-if="searchIsShow"
+                    v-model:value="searchValue"
+                    class="filter__search"
                 />
                 <div class="filter__list filter-list">
-                    <template 
-                        v-for="item in listSearch" 
+                    <template
+                        v-for="item in listSearch"
                         :key="`filter-list__item-${item.name}`"
                     >
                         <NuxtLink
@@ -36,10 +30,10 @@
                             :class="getLinkClasses(item.isActive)"
                             class="filter-list__item filter-list-item"
                         >
-                            <span 
-                                :class="filterListItemClasses" 
+                            <span
+                                :class="filterListItemClasses"
                                 class="filter-list-item__flag"
-                             />
+                            />
                             <span class="filter-list-item__name">
                                 {{ item.name }}
                             </span>
@@ -54,10 +48,10 @@
                             v-else
                             class="filter-list__item filter-list-item filter-list-item--lock"
                         >
-                            <span 
-                                :class="filterListItemClasses" 
+                            <span
+                                :class="filterListItemClasses"
                                 class="filter-list-item__flag"
-                             />
+                            />
                             <span class="filter-list-item__name">
                                 {{ item.name }}
                             </span>
@@ -66,10 +60,7 @@
                             </span>
                         </span>
                     </template>
-                    <div
-                        v-if="listSearchIsEmpty"
-                        class="filter-list__text"
-                    >
+                    <div v-if="listSearchIsEmpty" class="filter-list__text">
                         Нічого не знайдено
                     </div>
                 </div>
@@ -106,24 +97,36 @@ export default defineComponent({
             return unref(filter).isOpen
         })
 
-        const toggleList = () => store.actions.updateFiltersIsOpenList(unref(filter).id)
-        const getLinkClasses = (value) => ({'filter-list-item--active': value})
+        const toggleList = () =>
+            store.actions.updateFiltersIsOpenList(unref(filter).id)
+        const getLinkClasses = (value) => ({
+            'filter-list-item--active': value
+        })
 
         const searchValue = ref('')
         const listSearch = computed(() => {
             if (unref(searchValue)) {
-                return unref(filter).items.filter((listItem) => listItem.name.toLowerCase().includes(unref(searchValue).toLowerCase()))
+                return unref(filter).items.filter((listItem) =>
+                    listItem.name
+                        .toLowerCase()
+                        .includes(unref(searchValue).toLowerCase())
+                )
             }
             return unref(filter).items
         })
-        
-        const togglerClasses = computed(() => ({'header__toggler--close': unref(filterIsShow)}))
-        const isSingleType = computed(() => unref(filter).selectionType === filterType.single)
+
+        const togglerClasses = computed(() => ({
+            'header__toggler--close': unref(filterIsShow)
+        }))
+        const isSingleType = computed(
+            () => unref(filter).selectionType === filterType.single
+        )
         const searchIsShow = computed(() => unref(filter).items.length > 6)
         const listSearchIsEmpty = computed(() => unref(listSearch).length === 0)
-        const filterListItemClasses = computed(() => unref(isSingleType) 
-            ? 'filter-list-item__flag--radio' 
-            : 'filter-list-item__flag--checkbox'
+        const filterListItemClasses = computed(() =>
+            unref(isSingleType)
+                ? 'filter-list-item__flag--radio'
+                : 'filter-list-item__flag--checkbox'
         )
 
         return {
@@ -135,7 +138,7 @@ export default defineComponent({
             searchIsShow,
             listSearchIsEmpty,
             filterListItemClasses,
-            searchValue,
+            searchValue
         }
     }
 })

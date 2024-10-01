@@ -29,12 +29,12 @@ export default defineComponent({
         const getPath = () => `/tools=${route.params.id}${query(route)}`
 
         const { data, refresh } = await useAsyncData(async () => {
-                const [cocktailsFull, items] = await Promise.all([
-                    getCoctails(getPath(), $fetchWIXUP),
-                    getItems(route.path)
-                ])
-                return { cocktailsFull, items }
-            })
+            const [cocktailsFull, items] = await Promise.all([
+                getCoctails(getPath(), $fetchWIXUP),
+                getItems(route.path)
+            ])
+            return { cocktailsFull, items }
+        })
 
         async function loadMore() {
             const { cocktails } = await getCoctails(getPath(), $fetchWIXUP)

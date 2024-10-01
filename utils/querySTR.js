@@ -5,11 +5,11 @@ export const query = (route, withoutPage) => {
             value: route.query[value]
         }
     })
-    if(withoutPage) {
-        queryArr = queryArr.filter(query => query.name !== 'page')
+    if (withoutPage) {
+        queryArr = queryArr.filter((query) => query.name !== 'page')
     }
     if (!queryArr.length) {
-        return ''    
+        return ''
     }
     if (queryArr.length === 1) {
         return `?${queryArr[0].name}=${queryArr[0].value}`

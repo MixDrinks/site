@@ -10,10 +10,10 @@
             <CocktailsFilters
                 :filterList="allFilters"
                 :allCocktailsNumber="cocktailsFull.totalCount"
-                :futureCounts="cocktailsFull.futureCounts"
             />
+            <!-- :futureCounts="cocktailsFull.futureCounts" -->
             <CocktailsList
-                :element="scrollEl" 
+                :element="scrollEl"
                 :cocktails="cocktailsFull.cocktails"
             />
         </div>
@@ -28,9 +28,8 @@
 </template>
 
 <script>
-import { onBeforeMount, defineComponent, computed, toRefs, ref, unref, watch } from 'vue'
+import { defineComponent, computed, toRefs, ref, unref, watch } from 'vue'
 import { useRoute } from 'nuxt/app'
-import { store } from '~~/store/filter'
 import { head } from '~~/utils/head'
 
 import CocktailsList from './../global/CocktailsList.vue'
@@ -59,14 +58,14 @@ export default defineComponent({
     setup(props, { emit }) {
         const route = useRoute()
         const isLoadMore = ref(false)
-        const { allFilters, cocktailsFull } = toRefs(props)
+        const { cocktailsFull } = toRefs(props)
 
-        const loadMore = () => isLoadMore.value = true
-        
+        const loadMore = () => (isLoadMore.value = true)
+
         const scrollEl = ref(null)
 
         watch(route, () => {
-            if(unref(isLoadMore)) {
+            if (unref(isLoadMore)) {
                 emit('loadMore')
                 isLoadMore.value = false
             } else {
@@ -74,11 +73,15 @@ export default defineComponent({
             }
         })
 
-        const setOpenList = () => store.actions.setFiltersIsOpenList(unref(allFilters))
+        // const setOpenList = () => store.actions.setFiltersIsOpenList(unref(allFilters))
 
-        onBeforeMount(() => setOpenList())
+        // onBeforeMount(() => setOpenList())
 
-        const pageTitle = computed(() => unref(cocktailsFull).description ? unref(cocktailsFull).description : 'Коктейлі')
+        const pageTitle = computed(() =>
+            unref(cocktailsFull).description
+                ? unref(cocktailsFull).description
+                : 'Коктейлі'
+        )
 
         const headTitle = unref(cocktailsFull).description
             ? `${unref(cocktailsFull).description} 🍹 та рецепти до них в домашніх умовах`
@@ -91,7 +94,7 @@ export default defineComponent({
         head({
             title: headTitle,
             description: headDescription,
-            indexPage: unref(cocktailsFull).isAddToIndex,
+            indexPage: unref(cocktailsFull).isAddToIndex
         })
 
         return {

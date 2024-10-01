@@ -22,8 +22,10 @@ export default defineComponent({
 
         const getPath = () => `/${route.params.id}`
 
-        const { data: cocktail } = await useAsyncData(() => getCocktail(getPath(), $fetchWIXUP))
-        
+        const { data: cocktail } = await useAsyncData(() =>
+            getCocktail(getPath(), $fetchWIXUP)
+        )
+
         return {
             cocktail
         }

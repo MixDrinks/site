@@ -8,5 +8,5 @@ export const getFilters = () => {
     return $fetch('https://newapi.mixdrinks.org/api/filters')
 }
 export const getCocktail = (path, fetchWIXUP) => {
-    return fetchWIXUP(`https://newapi.mixdrinks.org/api/cocktail${path}`)
+    return fetchWIXUP(`/api/cocktail${path}`)
 }

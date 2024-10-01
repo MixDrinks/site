@@ -1,4 +1,19 @@
 .filter {
+    &:not(:last-child) {
+        padding-bottom: $halfPadding;
+        border-bottom: 1px solid rgba($colorMain, 0.2);
+
+        @media (min-width: 1023px) {
+            padding-bottom: $defaultPadding;
+        }
+    }
+    &:not(:first-child) {
+        padding-top: $halfPadding;
+
+        @media (min-width: 1023px) {
+            padding-top: $defaultPadding;
+        }
+    }
     &__wrapper {
         margin-top: 8px;
         @media (min-width: 1023px) {
@@ -47,7 +62,6 @@
             }
         }
 
-
         &::after,
         &::before {
             content: '';
@@ -86,7 +100,7 @@
     @include defaultWrapperScroll;
 
     &__item {
-        margin-right: 6px;
+        margin-right: 10px;
     }
 
     &__text {
@@ -168,13 +182,13 @@
                 width: 8px;
                 height: 8px;
                 border-radius: 4px;
-    
+
                 background-color: transparent;
-    
+
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-    
+
                 transition: background-color $defaultAnimTime;
             }
         }
@@ -193,6 +207,9 @@
 
         transition: color $defaultAnimTime;
 
+        @media (min-width: 1023px) {
+            @include fontSize16M;
+        }
         &::first-letter {
             text-transform: uppercase;
         }

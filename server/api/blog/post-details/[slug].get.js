@@ -8,9 +8,7 @@ dotenv.config()
 const imageDomain = process.env.IMAGE_DOMAIN
 
 async function getBlockPost(slug) {
-    return db
-        .collection('blog')
-        .findOne({ slug: slug })
+    return db.collection('blog').findOne({ slug: slug })
 }
 
 export default defineEventHandler(async (req) => {
@@ -20,18 +18,22 @@ export default defineEventHandler(async (req) => {
 
     for (let i = 0; i < response.body.length; i++) {
         if (response.body[i].type === 'cocktail') {
-            const cocktailSlug = response.body[i].values.slug;
+            const cocktailSlug = response.body[i].values.slug
             try {
-                response.body[i].values = await getFullCocktailBySlug(cocktailSlug)
+                response.body[i].values =
+                    await getFullCocktailBySlug(cocktailSlug)
             } catch (error) {
-                console.error(`Failed to get cocktail details for slug ${cocktailSlug}: ${error}`);
+                console.error(
+                    `Failed to get cocktail details for slug ${cocktailSlug}: ${error}`
+                )
             }
         }
 
         if (response.body[i].type === 'image') {
-            response.body[i].values.imgUrl = `${imageDomain}/${response.body[i].values.imgUrl}`
+            response.body[i].values.imgUrl =
+                `${imageDomain}/${response.body[i].values.imgUrl}`
         }
     }
 
-    return response;
+    return response
 })

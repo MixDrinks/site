@@ -15,7 +15,7 @@ async function getAllPostList() {
 }
 
 export default defineEventHandler(async () => {
-    const postList = await getAllPostList();
+    const postList = await getAllPostList()
 
     const responsePostList = postList.map((post) => {
         const imageFullUrl = `${imageDomain}/${post.image}`
@@ -23,12 +23,12 @@ export default defineEventHandler(async () => {
         const postDto = {
             slug: post.slug,
             title: post.title,
-            image: imageFullUrl,
+            image: imageFullUrl
         }
         return postDto
-    });
+    })
 
     return {
-        posts: responsePostList,
+        posts: responsePostList
     }
 })
