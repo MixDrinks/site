@@ -1,5 +1,5 @@
 import { defineEventHandler } from 'h3'
-import { db } from '../utils/mongo'
+import { db } from '~/server/utils/mongo'
 
 async function getAllCocktailsSlug() {
     return db
