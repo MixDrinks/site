@@ -22,11 +22,10 @@
         position: relative;
         z-index: 1;
         padding: $halfPadding 10vw;
-        transform: translateY(0);
         transition: transform $defaultAnimTime;
 
         @media (min-width: 1023px) {
-            transform: none;
+            transition: none;
             position: static;
             z-index: unset;
             padding: unset;
@@ -75,12 +74,18 @@
         transition: background-color $defaultAnimTime;
 
         @media (min-width: 1023px) {
+            transition: none;
             display: none;
         }
     }
 
     &--hidden {
         pointer-events: none;
+
+        @media (min-width: 1023px) {
+            pointer-events: all;
+        }
+        
         #{$self}__main {
             transform: translateY(100%);
 

@@ -25,8 +25,8 @@
                 />
                 <div class="filter__list filter-list">
                     <template 
-                        v-for="(item, itemIndex) in listSearch" 
-                        :key="`filter-list__item-${itemIndex}`"
+                        v-for="item in listSearch" 
+                        :key="`filter-list__item-${item.name}`"
                     >
                         <NuxtLink
                             v-if="!!item.count"
@@ -112,7 +112,7 @@ export default defineComponent({
         const searchValue = ref('')
         const listSearch = computed(() => {
             if (unref(searchValue)) {
-                unref(filter).items.filter((listItem) => listItem.name.toLowerCase().includes(unref(searchValue).toLowerCase()))
+                return unref(filter).items.filter((listItem) => listItem.name.toLowerCase().includes(unref(searchValue).toLowerCase()))
             }
             return unref(filter).items
         })
