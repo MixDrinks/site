@@ -1,82 +1,76 @@
 <template>
     <div class="filter">
-        <div @click="toggleList" class="filter__header filter-header">
-            <div class="filter-header__title">{{ filterItem.name }}</div>
-            <div :class="togglerClasses" class="filter-header__toggler" />
+        <div 
+            @click="toggleList"
+            class="header"
+        >
+            <div class="header__title">
+                {{ filter.name }}
+            </div>
+            <button  
+                :class="togglerClasses" 
+                title="Відкрити фільтр"  
+                class="header__toggler" 
+            />
         </div>
         <transition name="max-height">
-            <div v-show="filterIsShow" class="filter__wrapper">
-                <div
-                    v-if="filterItem.items.length > 6"
-                    class="filter__search filter-search"
-                >
-                    <label
-                        :class="{'filter-search-input--filled': !!searchValue}"
-                        class="filter-search__input filter-search-input"
-                    >
-                        <div class="filter-search-input__label">Пошук</div>
-                        <input
-                            ref="searchInput"
-                            v-model="searchValue"
-                            class="filter-search-input__value"
-                            type="text"
-                        />
-                    </label>
-                </div>
+            <div 
+                v-show="filterIsShow" 
+                class="filter__wrapper"
+            >   
+                <CocktailsSearch 
+                    v-if="searchIsShow" 
+                    v-model:value="searchValue" 
+                    class="filter__search" 
+                />
                 <div class="filter__list filter-list">
-                    <div v-for="listItem in listSearch" :key="listItem.id">
+                    <template 
+                        v-for="(item, itemIndex) in listSearch" 
+                        :key="`filter-list__item-${itemIndex}`"
+                    >
                         <NuxtLink
-                            v-if="!!listItem.count"
-                            :title="listItem.name"
-                            :rel="getRel(listItem.isAddToIndex)"
-                            :class="getLinkClasses(listItem.isActive)"
-                            :to="`/${listItem.url + query}`"
+                            v-if="!!item.count"
+                            :title="item.name"
+                            :rel="item.rel"
+                            :to="item.url"
+                            :class="getLinkClasses(item.isActive)"
                             class="filter-list__item filter-list-item"
                         >
-                            <span
-                                v-if="
-                                    filterItem.selectionType ===
-                                    filterType.single
-                                "
-                                class="filter-list-item__radio"
-                            />
-                            <span v-else class="filter-list-item__checkbox" />
+                            <span 
+                                :class="filterListItemClasses" 
+                                class="filter-list-item__flag"
+                             />
                             <span class="filter-list-item__name">
-                                {{ listItem.selectionType }}
-                                {{ listItem.name }}
+                                {{ item.name }}
                             </span>
                             <span
-                                v-if="!listItem.isActive"
+                                v-if="!item.isActive"
                                 class="filter-list-item__count"
                             >
-                                {{ listItem.count }}
+                                {{ item.count }}
                             </span>
                         </NuxtLink>
-                        <div
+                        <span
                             v-else
                             class="filter-list__item filter-list-item filter-list-item--lock"
                         >
-                            <span
-                                v-if="
-                                    filterItem.selectionType ===
-                                    filterType.single
-                                "
-                                class="filter-list-item__radio"
-                            />
-                            <span v-else class="filter-list-item__checkbox" />
-                            <div class="filter-list-item__name">
-                                {{ listItem.name }}
-                            </div>
-                            <div class="filter-list-item__count">
-                                {{ listItem.count }}
-                            </div>
-                        </div>
-                    </div>
+                            <span 
+                                :class="filterListItemClasses" 
+                                class="filter-list-item__flag"
+                             />
+                            <span class="filter-list-item__name">
+                                {{ item.name }}
+                            </span>
+                            <span class="filter-list-item__count">
+                                {{ item.count }}
+                            </span>
+                        </span>
+                    </template>
                     <div
-                        v-if="listSearch.length === 0"
+                        v-if="listSearchIsEmpty"
                         class="filter-list__text"
                     >
-                        нічого не знайдено
+                        Нічого не знайдено
                     </div>
                 </div>
             </div>
@@ -85,84 +79,63 @@
 </template>
 
 <script>
-import { useRoute } from 'nuxt/app'
 import { store } from '~~/store/filter'
 import { computed, defineComponent, toRefs, unref, ref } from 'vue'
 import { filterType } from '~~/utils/selectionType'
+import CocktailsSearch from './CocktailsSearch.vue'
 
 export default defineComponent({
     name: 'CocktailsFilter',
+    components: { CocktailsSearch },
 
     props: {
-        filterItem: {
+        filter: {
             type: Object,
             required: true
         }
     },
+
     setup(props) {
-        const route = useRoute()
-        const { filterItem } = toRefs(props)
-        const searchValue = ref('')
+        const { filter } = toRefs(props)
         const { filtersIsOpenList, filtersListIsSet } = toRefs(store.getters)
 
-        const query = computed(() => {
-            if (route.query.sort) {
-                return `?sort=${route.query.sort}`
-            }
-            return ''
-        })
-        const filterItemSort = computed(() => {
-            const arr = [...unref(filterItem).items]
-            return arr.sort((a, b) => (a.count > b.count ? -1 : 1))
-        })
         const filterIsShow = computed(() => {
             if (unref(filtersListIsSet)) {
-                return !unref(filtersIsOpenList).includes(unref(filterItem).id)
+                return !unref(filtersIsOpenList).includes(unref(filter).id)
             }
-            return unref(filterItem).isOpen
+            return unref(filter).isOpen
         })
+
+        const toggleList = () => store.actions.updateFiltersIsOpenList(unref(filter).id)
+        const getLinkClasses = (value) => ({'filter-list-item--active': value})
+
+        const searchValue = ref('')
         const listSearch = computed(() => {
             if (unref(searchValue)) {
-                let arr = []
-                arr = unref(filterItemSort).filter((listItem) => {
-                    return listItem.name
-                        .toLowerCase()
-                        .includes(unref(searchValue).toLowerCase())
-                })
-                return arr
+                unref(filter).items.filter((listItem) => listItem.name.toLowerCase().includes(unref(searchValue).toLowerCase()))
             }
-            return unref(filterItemSort)
+            return unref(filter).items
         })
-        const togglerClasses = computed(() => {
-            if (unref(filtersListIsSet)) {
-                return {
-                    'filter-header__toggler--close': !unref(
-                        filtersIsOpenList
-                    ).includes(unref(filterItem).id)
-                }
-            }
-            return {
-                'filter-header__toggler--close': unref(filterItem).isOpen
-            }
-        })
-        const toggleList = () => {
-            store.actions.updateFiltersIsOpenList(unref(filterItem).id)
-        }
-        const getLinkClasses = (value) => ({
-            'filter-list-item--active': value
-        })
-        const getRel = (value) => (value ? 'tag' : 'nofollow')
+        
+        const togglerClasses = computed(() => ({'header__toggler--close': unref(filterIsShow)}))
+        const isSingleType = computed(() => unref(filter).selectionType === filterType.single)
+        const searchIsShow = computed(() => unref(filter).items.length > 6)
+        const listSearchIsEmpty = computed(() => unref(listSearch).length === 0)
+        const filterListItemClasses = computed(() => unref(isSingleType) 
+            ? 'filter-list-item__flag--radio' 
+            : 'filter-list-item__flag--checkbox'
+        )
 
         return {
             getLinkClasses,
-            getRel,
-            searchValue,
             toggleList,
             filterIsShow,
             listSearch,
-            query,
             togglerClasses,
-            filterType
+            searchIsShow,
+            listSearchIsEmpty,
+            filterListItemClasses,
+            searchValue,
         }
     }
 })

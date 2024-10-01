@@ -52,7 +52,7 @@
 
 <script>
 import { ref, toRefs, unref, defineComponent, computed, onMounted } from 'vue'
-
+import { updateRating } from '~~/api/other';
 export default defineComponent({
     name: 'CocktailRating',
 
@@ -82,18 +82,6 @@ export default defineComponent({
         const value = ref(null)
         const isSet = ref(false)
 
-        async function updateRating(starIndex) {
-            return await $fetch(
-                `https://newapi.mixdrinks.org/api/cocktail/${unref(slug)}/score`,
-                {
-                    method: 'POST',
-                    body: {
-                        value: starIndex + 1
-                    }
-                }
-            )
-        }
-
         const setRating = (starIndex) => {
             localStorage.setItem('ratinglist', [
                 ...unref(ratinglist),
@@ -101,7 +89,7 @@ export default defineComponent({
             ])
             value.value = starIndex + 1
             isSet.value = true
-            updateRating(starIndex)
+            updateRating(unref(slug), starIndex + 1)
         }
 
         const getStarItemClasses = (value) => {

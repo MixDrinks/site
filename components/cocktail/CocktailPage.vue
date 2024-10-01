@@ -93,11 +93,12 @@ import CocktailRecomendation from '../cocktail/CocktailRecomendation.vue'
 import Separator from '../global/Separator.vue'
 import CocktailRecipe from './CocktailRecipe.vue'
 import CocktailArticle from './CocktailArticle.vue'
+import CocktailTags from './CocktailTags.vue'
 
 import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
-import CocktailTags from './CocktailTags.vue'
+import { updateVisit } from '~~/api/other';
 
 export default defineComponent({
     name: 'CocktailPage',
@@ -118,19 +119,9 @@ export default defineComponent({
     },
     setup(props) {
         const { cocktail } = toRefs(props)
-        async function updateVisit() {
-            return await $fetch(
-                `https://newapi.mixdrinks.org/api/cocktail/${
-                    unref(cocktail).slug
-                }/visit`,
-                {
-                    method: 'POST'
-                }
-            )
-        }
 
         onBeforeUnmount(() => {
-            updateVisit()
+            updateVisit(unref(cocktail).slug)
         })
 
         const headTitle = `Коктейль ${unref(cocktail).name} 🍹 приготування в домашніх умовах за рецептом`

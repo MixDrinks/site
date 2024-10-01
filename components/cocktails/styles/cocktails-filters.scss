@@ -1,4 +1,5 @@
 .filters {
+    $self: &;
     position: fixed;
     right: 0;
     bottom: 0;
@@ -21,13 +22,11 @@
         position: relative;
         z-index: 1;
         padding: $halfPadding 10vw;
-
-        &--hidden {
-            display: none;
-        }
+        transform: translateY(0);
+        transition: transform $defaultAnimTime;
 
         @media (min-width: 1023px) {
-            display: block;
+            transform: none;
             position: static;
             z-index: unset;
             padding: unset;
@@ -39,18 +38,19 @@
         margin-bottom: $halfShortMargin;
     }
 
-    &__tag-cloud {
-        margin-top: $halfPadding;
-        margin-bottom: $halfPadding;
+    &__tags {
+        margin: $halfPadding -1px;
+        max-height: 90px;
 
         @media (min-width: 1023px) {
-            margin: -4px;
+            margin-left: -4px;
+            margin-right: -4px;
+            max-height: unset;
         }
     }
 
     &__wrapper {
         height: 50vh;
-
         overflow: auto;
         @include defaultWrapperScroll;
 
@@ -70,11 +70,27 @@
         bottom: 0;
         left: 0;
         top: 0;
-        background-color: rgba($colorBlack, 0.1);
+        background-color: rgba($colorBlack, 0.2);
         pointer-events: all;
+        transition: background-color $defaultAnimTime;
 
         @media (min-width: 1023px) {
             display: none;
+        }
+    }
+
+    &--hidden {
+        pointer-events: none;
+        #{$self}__main {
+            transform: translateY(100%);
+
+            @media (min-width: 1023px) {
+                transform: none;
+            }
+        }
+        #{$self}__background {
+            background-color: rgba($colorBlack, 0);
+            pointer-events: none;
         }
     }
 }
@@ -87,14 +103,11 @@
     padding: $halfPadding 10vw;
     background-color: $colorMain;
     border-top: 1px solid $colorWhite;
+    @include fontSize18B;
+    color: $colorWhite;
 
     @media (min-width: 1023px) {
         display: none;
-    }
-
-    &__text {
-        @include fontSize18B;
-        color: $colorWhite;
     }
 
     &__count {
@@ -106,7 +119,6 @@
         min-width: 25px;
         border-radius: 20px;
         margin-left: 10px;
-        @include fontSize18B;
         line-height: 1;
         background-color: $colorWhite;
         color: $colorMain;
@@ -125,96 +137,12 @@
 
     &__count {
         display: inline-block;
-        padding: 3px 10px 4px;
+        padding: 3px 8px 4px;
         border-radius: 20px;
         @include fontSize16M;
         line-height: 1;
         background-color: $colorMain;
         color: $colorWhite;
-    }
-}
-
-.filters-tag-cloud {
-    &__list {
-        overflow: auto;
-
-        max-height: 90px;
-
-        @media (min-width: 1023px) {
-            max-height: unset;
-        }
-    }
-}
-
-.filters-tag-cloud-list {
-    display: flex;
-    flex-wrap: wrap;
-
-    @include defaultWrapperScroll;
-
-    @media (min-width: 1023px) {
-        padding: $halfPadding 0;
-    }
-}
-
-.filters-tag-cloud-list-item {
-    padding: 1px;
-
-    @media (min-width: 1023px) {
-        padding: 4px;
-    }
-
-    &__link {
-        @include fontSize14;
-        color: $colorMain;
-
-        display: block;
-        padding: 3px 20px 3px 5px;
-
-        position: relative;
-
-        border: 1px solid $colorMain;
-        border-radius: 4px;
-
-        transition:
-            color $defaultAnimTime,
-            background-color $defaultAnimTime;
-
-        &::first-letter {
-            text-transform: uppercase;
-        }
-
-        &::after,
-        &::before {
-            content: '';
-            position: absolute;
-            height: 1px;
-            width: 13px;
-            background-color: $colorMain;
-
-            top: calc(50% - 0.5px);
-            right: 4px;
-
-            transition: background-color $defaultAnimTime;
-        }
-
-        &::after {
-            transform: rotate(45deg);
-        }
-
-        &::before {
-            transform: rotate(-45deg);
-        }
-
-        &:hover {
-            background-color: $colorMain;
-            color: $colorWhite;
-        }
-
-        &:hover::after,
-        &:hover::before {
-            background-color: $colorWhite;
-        }
     }
 }
 
@@ -229,18 +157,10 @@
         &:not(:last-child) {
             padding-bottom: $halfPadding;
             border-bottom: 1px solid rgba($colorMain, 0.2);
-
-            @media (min-width: 1023px) {
-                padding-bottom: $defaultPadding;
-            }
         }
 
         &:not(:first-child) {
             padding-top: $halfPadding;
-
-            @media (min-width: 1023px) {
-                padding-top: $defaultPadding;
-            }
         }
     }
 }
@@ -251,20 +171,4 @@
 
 .fate-in-leave-active {
     animation: fade-in $defaultAnimTime reverse;
-}
-
-.max-height-enter-active {
-    animation: max-height $defaultAnimTime;
-}
-
-.max-height-leave-active {
-    animation: max-height $defaultAnimTime reverse;
-}
-
-.opacity-enter-active {
-    animation: opacity $defaultAnimTime;
-}
-
-.opacity-leave-active {
-    animation: opacity $defaultAnimTime reverse;
 }

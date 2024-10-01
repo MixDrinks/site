@@ -1,10 +1,16 @@
 .filter {
     &__wrapper {
-        margin-top: $halfPadding;
+        margin-top: 8px;
+        @media (min-width: 1023px) {
+            margin-top: $halfPadding;
+        }
     }
 
     &__search {
-        margin-bottom: $halfPadding;
+        margin-bottom: 8px;
+        @media (min-width: 1023px) {
+            margin-bottom: $halfPadding;
+        }
     }
 
     &__list {
@@ -13,7 +19,7 @@
     }
 }
 
-.filter-header {
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -23,8 +29,8 @@
     }
 
     &__title {
-        @include fontSize18B;
         color: $colorBlack;
+        @include fontSize18B;
     }
 
     &__toggler {
@@ -35,9 +41,12 @@
         border-radius: 4px;
         background-color: $colorMain;
 
-        &:hover {
-            background-color: $colorHover;
+        @media (hover: hover) {
+            &:hover {
+                background-color: $colorHover;
+            }
         }
+
 
         &::after,
         &::before {
@@ -73,70 +82,11 @@
     }
 }
 
-.filter-search-input {
-    position: relative;
-    display: block;
-    $self: &;
-
-    &:hover {
-        #{$self}__value {
-            box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
-        }
-
-        #{$self}__label {
-            color: $colorMain;
-        }
-    }
-
-    &--filled {
-        #{$self}__label {
-            top: 0%;
-            transform: translateY(0);
-        }
-    }
-
-    &:not(:hover)#{&--filled} {
-        #{$self}__value {
-            box-shadow: inset 0px -2px 0px $colorMain;
-        }
-    }
-
-    &__label {
-        position: absolute;
-        left: 0;
-        @include fontSize14;
-        color: rgba($colorMain, 0.8);
-        top: 50%;
-        transform: translateY(-50%);
-        transition:
-            top $defaultAnimTime,
-            transform $defaultAnimTime;
-    }
-
-    &__value {
-        width: 100%;
-
-        border: 0;
-        padding-top: 20px;
-        padding-bottom: 7px;
-        box-shadow: inset 0px -2px 0px $colorMain;
-
-        @include fontSize16M;
-
-        color: $colorMain;
-
-        @media (min-width: 1023px) {
-            padding-bottom: 12px;
-            @include fontSize18B;
-        }
-    }
-}
-
 .filter-list {
     @include defaultWrapperScroll;
 
     &__item {
-        margin-right: 10px;
+        margin-right: 6px;
     }
 
     &__text {
@@ -147,31 +97,31 @@
 
 .filter-list-item {
     $self: &;
-
     display: flex;
     align-items: center;
-
     padding-top: 8px;
     padding-bottom: 8px;
 
     @media (min-width: 1023px) {
-        padding-top: 10px;
-        padding-bottom: 10px;
         cursor: pointer;
     }
-
-    &:not(#{$self}--active):hover,
-    &:not(#{$self}--active):focus {
-        #{$self}__checkbox,
-        #{$self}__radio {
-            background-color: rgba($colorMain, 0.2);
-        }
-
-        #{$self}__name {
-            color: $colorMain;
+    @media (hover: hover) {
+        &:hover {
+            #{$self}__name {
+                color: $colorMain;
+            }
+            #{$self}__flag {
+                &--radio {
+                    &::after {
+                        background-color: rgba($colorMain, 0.5);
+                    }
+                }
+                &--checkbox {
+                    background-color: rgba($colorMain, 0.5);
+                }
+            }
         }
     }
-
     &--lock {
         pointer-events: none;
         position: relative;
@@ -182,73 +132,55 @@
             background-color: rgba($colorWhite, 0.8);
         }
     }
-
     &--active {
-        #{$self}__checkbox {
-            background-color: $colorMain;
-
-            position: relative;
-
-            &::before {
-                @include fullPseudoElement;
-
+        #{$self}__flag {
+            &--radio {
+                &::after {
+                    background-color: $colorMain;
+                }
+            }
+            &--checkbox {
+                background-color: $colorMain;
                 background-image: url('/img/icons/check-mark.svg');
                 background-repeat: no-repeat;
                 background-position: center;
             }
         }
-        #{$self}__radio {
-            &::after {
-                background-color: $colorMain;
-            }
-        }
-
-        &:hover {
-            #{$self}__radio {
-                &::after {
-                    background-color: rgba($colorMain, 0.5);
-                }
-            }
-        }
     }
 
-    &__checkbox,
-    &__radio {
+    &__flag {
         width: 20px;
         height: 20px;
-        margin-right: 10px;
+        margin-right: 6px;
 
         border: 1px solid $colorMain;
 
         background-color: transparent;
-        transition:
-            border $defaultAnimTime,
-            background-color $defaultAnimTime;
-    }
+        transition: background-color $defaultAnimTime;
 
-    &__checkbox {
-        border-radius: 2px;
-    }
+        &--radio {
+            border-radius: 10px;
+            position: relative;
 
-    &__radio {
-        border-radius: 10px;
+            &::after {
+                content: '';
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                border-radius: 4px;
+    
+                background-color: transparent;
+    
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+    
+                transition: background-color $defaultAnimTime;
+            }
+        }
 
-        position: relative;
-
-        &::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 4px;
-
-            background-color: transparent;
-
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            transition: background-color $defaultAnimTime;
+        &--checkbox {
+            border-radius: 2px;
         }
     }
 
@@ -256,11 +188,10 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        @include fontSize16M;
+        @include fontSize14M;
         color: $colorBlack;
 
         transition: color $defaultAnimTime;
-        max-width: calc(100% - 80px);
 
         &::first-letter {
             text-transform: uppercase;
@@ -268,6 +199,8 @@
     }
 
     &__count {
+        flex-shrink: 0;
+        margin-left: 4px;
         @include defaultCount;
     }
 }

@@ -60,7 +60,7 @@
         border: 0;
         padding: 20px 40px 12px 0;
         box-shadow: inset 0px -2px 0px $colorWhite;
-
+        transition: box-shadow $defaultAnimTime;
         @include fontSize18B;
     }
 

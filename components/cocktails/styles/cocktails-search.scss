@@ -1,0 +1,63 @@
+.search {
+    position: relative;
+    display: block;
+    $self: &;
+
+    @media (hover: hover) {
+        &:hover {
+            #{$self}__input {
+                box-shadow: inset 0px -3px 0px rgba($colorMain, 0.8);
+            }
+    
+            #{$self}__label {
+                color: $colorMain;
+            }
+        }
+    }
+
+
+    &--filled {
+        #{$self}__label {
+            top: 0%;
+            transform: translateY(0);
+        }
+    }
+
+    @media (hover: hover) {
+        &:not(:hover)#{&--filled} {
+            #{$self}__input {
+                box-shadow: inset 0px -2px 0px $colorMain;
+            }
+        }
+    }
+
+    &__label {
+        position: absolute;
+        left: 0;
+        @include fontSize14;
+        color: rgba($colorMain, 0.8);
+        top: 50%;
+        transform: translateY(-50%);
+        transition:
+            top $defaultAnimTime,
+            transform $defaultAnimTime;
+    }
+
+    &__input {
+        width: 100%;
+        transition: box-shadow $defaultAnimTime;
+        border: 0;
+        padding-top: 20px;
+        padding-bottom: 7px;
+        box-shadow: inset 0px -2px 0px $colorMain;
+
+        @include fontSize16M;
+
+        color: $colorMain;
+
+        @media (min-width: 1023px) {
+            padding-bottom: 12px;
+            @include fontSize18B;
+        }
+    }
+}
