@@ -107,7 +107,7 @@ export default defineNuxtConfig({
         name: 'MixDrinks'
     },
     sitemap: {
-        sources: ['https://newapi.mixdrinks.org/api/sitemap']
+        sources: ['/api/sitemap']
     },
     eslint: {}
 })
