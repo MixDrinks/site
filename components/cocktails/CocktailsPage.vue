@@ -1,6 +1,6 @@
 <template>
     <div class="cocktails">
-        <div ref="scrollEl" class="cocktails__header cocktails-header">
+        <div class="cocktails__header cocktails-header">
             <h1 class="cocktails-header__title">
                 {{ pageTitle }}
             </h1>

@@ -1,5 +1,5 @@
 <template>
-    <div ref="cocktailsEl" class="wrapper">
+    <div class="wrapper">
         <TransitionGroup
             :class="listClasses"
             tag="div"
@@ -45,7 +45,7 @@
 
 <script>
 import { useHead } from 'nuxt/app'
-import { defineComponent, computed, toRefs, unref, watch, ref } from 'vue'
+import { defineComponent, computed, toRefs, unref, watch } from 'vue'
 
 import CocktailsCart from './CocktailsCart.vue'
 
@@ -81,7 +81,6 @@ export default defineComponent({
             ]
         })
         const { modificator, cocktails, element } = toRefs(props)
-        const cocktailsEl = ref(null)
 
         const listClasses = computed(() => ({
             [`list--${unref(modificator)}`]: Boolean(unref(modificator))
@@ -98,9 +97,10 @@ export default defineComponent({
                         block: 'start'
                     })
                 } else {
-                    unref(cocktailsEl).scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    window.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: 'smooth'
                     })
                 }
             }
@@ -120,8 +120,7 @@ export default defineComponent({
             cocktailsFirst,
             cocktailsSecond,
             itemClasses,
-            listClasses,
-            cocktailsEl
+            listClasses
         }
     }
 })

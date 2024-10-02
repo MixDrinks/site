@@ -62,12 +62,13 @@
         position: relative;
         padding-top: 100px;
         width: 100px;
-
         overflow: hidden;
+        border-radius: 8px;
 
         @media (min-width: 1023px) {
             padding-top: 100%;
             width: 100%;
+            border-radius: 25%;
         }
 
         &::before,
@@ -109,13 +110,8 @@
         left: 0;
         top: 0;
         object-fit: cover;
-        border-radius: 8px;
         color: transparent;
         z-index: 1;
-
-        @media (min-width: 1023px) {
-            border-radius: 25%;
-        }
     }
 
     &__name {
