@@ -8,19 +8,15 @@
         </div>
         <div class="cocktails__body cocktails-body">
             <CocktailsFilters
-                :filterList="allFilters"
-                :allCocktailsNumber="cocktailsFull.totalCount"
+                :filters="filters"
+                :cocktailsCount="info.cocktailsCount"
             />
-            <!-- :futureCounts="cocktailsFull.futureCounts" -->
-            <CocktailsList
-                :element="scrollEl"
-                :cocktails="cocktailsFull.cocktails"
-            />
+            <CocktailsList :element="scrollEl" :cocktails="cocktails" />
         </div>
         <Pagination
-            v-if="cocktailsFull.totalCount > 24"
+            v-if="info.cocktailsCount > 24"
             @loadMore="loadMore"
-            :totalItems="cocktailsFull.totalCount"
+            :totalItems="info.cocktailsCount"
             :limit="24"
             class="cocktails__pagination"
         />
@@ -45,11 +41,15 @@ export default defineComponent({
         CocktailsSorting
     },
     props: {
-        allFilters: {
+        filters: {
             type: Array,
             required: true
         },
-        cocktailsFull: {
+        cocktails: {
+            type: Object,
+            required: true
+        },
+        info: {
             type: Object,
             required: true
         }
@@ -58,7 +58,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const route = useRoute()
         const isLoadMore = ref(false)
-        const { cocktailsFull } = toRefs(props)
+        const { info } = toRefs(props)
 
         const loadMore = () => (isLoadMore.value = true)
 
@@ -73,28 +73,22 @@ export default defineComponent({
             }
         })
 
-        // const setOpenList = () => store.actions.setFiltersIsOpenList(unref(allFilters))
-
-        // onBeforeMount(() => setOpenList())
-
         const pageTitle = computed(() =>
-            unref(cocktailsFull).description
-                ? unref(cocktailsFull).description
-                : 'Коктейлі'
+            unref(info).title ? unref(info).title : 'Коктейлі'
         )
 
-        const headTitle = unref(cocktailsFull).description
-            ? `${unref(cocktailsFull).description} 🍹 та рецепти до них в домашніх умовах`
+        const headTitle = unref(info).title
+            ? `${unref(info).title} 🍹 та рецепти до них в домашніх умовах`
             : 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах'
 
-        const headDescription = unref(cocktailsFull).description
-            ? `${unref(cocktailsFull).description} 🍸 з фото та рецептами, оберий який подобаєтья тобі`
+        const headDescription = unref(info).title
+            ? `${unref(info).title} 🍸 з фото та рецептами, оберий який подобаєтья тобі`
             : 'Коктейлі алкогольні 🍸 та безалкогольні 🍹 з фото та рецептами, оберий який подобаєтья тобі'
 
         head({
             title: headTitle,
             description: headDescription,
-            indexPage: unref(cocktailsFull).isAddToIndex
+            indexPage: unref(info).isIndex
         })
 
         return {
