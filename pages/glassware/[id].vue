@@ -15,7 +15,7 @@ import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 
 import ItemsPage from '~~/components/items/ItemsPage.vue'
 import { getItems, getCoctails } from '~~/api/pages'
-import { query } from '~~/utils/querySTR'
+import { querySTR } from '~~/utils/querySTR'
 
 export default defineComponent({
     name: 'GlasswarePage',
@@ -26,7 +26,7 @@ export default defineComponent({
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
 
-        const getPath = () => `/glassware=${route.params.id}${query(route)}`
+        const getPath = () => `/glassware=${route.params.id}${querySTR(route)}`
 
         const { data, refresh } = await useAsyncData(async () => {
             const [cocktailsFull, items] = await Promise.all([
