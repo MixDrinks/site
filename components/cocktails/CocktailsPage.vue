@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, toRefs, ref, unref, watch } from 'vue'
-import { useRoute } from 'nuxt/app'
+import { defineComponent, computed, toRefs, ref, unref } from 'vue'
 import { head } from '~~/utils/head'
 
 import CocktailsList from './../global/CocktailsList.vue'
@@ -54,28 +53,15 @@ export default defineComponent({
             required: true
         }
     },
-    emits: ['loadMore', 'updateCoctails'],
+    emits: ['loadMore'],
     setup(props, { emit }) {
-        const route = useRoute()
-        const isLoadMore = ref(false)
         const { info } = toRefs(props)
-
-        const loadMore = () => (isLoadMore.value = true)
-
         const scrollEl = ref(null)
-
-        watch(route, () => {
-            if (unref(isLoadMore)) {
-                emit('loadMore')
-                isLoadMore.value = false
-            } else {
-                emit('updateCoctails')
-            }
-        })
-
         const pageTitle = computed(() =>
             unref(info).title ? unref(info).title : 'Коктейлі'
         )
+
+        const loadMore = () => emit('loadMore')
 
         const headTitle = unref(info).title
             ? `${unref(info).title} 🍹 та рецепти до них в домашніх умовах`

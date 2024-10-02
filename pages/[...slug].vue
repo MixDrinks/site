@@ -2,7 +2,6 @@
     <main class="wrapper">
         <CocktailsPage
             @loadMore="loadMore"
-            @updateCoctails="updateCoctails"
             :cocktails="cocktails"
             :filters="filters"
             :info="info"
@@ -12,7 +11,14 @@
 
 <script>
 import { definePageMeta } from '#imports'
-import { onBeforeMount, defineComponent, unref, computed } from 'vue'
+import {
+    onBeforeMount,
+    defineComponent,
+    unref,
+    computed,
+    ref,
+    watch
+} from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 import { getFilters, getCoctails } from '~~/api/pages'
 import { store } from '~~/store/filter'
@@ -33,14 +39,26 @@ export default defineComponent({
             }
         })
 
+        const route = useRoute()
+        let query = querySTR(route, true)
+
+        const isLoadMore = ref(false)
+        const loadMore = () => (isLoadMore.value = true)
+        watch(route, () => {
+            if (unref(isLoadMore)) {
+                addCocktails()
+                isLoadMore.value = false
+            } else {
+                refresh()
+                query = querySTR(route, true)
+            }
+        })
+
         const setOpenList = () =>
             store.actions.setFiltersIsOpenList(unref(data).filters)
-
         onBeforeMount(() => setOpenList())
 
         const { $fetchWIXUP } = useNuxtApp()
-        const route = useRoute()
-
         const getPath = () => route.fullPath
 
         const { data, refresh } = await useAsyncData(async () => {
@@ -51,7 +69,7 @@ export default defineComponent({
             return { cocktailsPage, filters }
         })
 
-        async function loadMore() {
+        async function addCocktails() {
             const { cocktails } = await getCoctails(getPath(), $fetchWIXUP)
             data.value.cocktailsPage.cocktails = [
                 ...unref(data).cocktailsPage.cocktails,
@@ -63,11 +81,14 @@ export default defineComponent({
         const futureCounts = computed(
             () => unref(data).cocktailsPage.futureCounts
         )
+
         const info = computed(() => ({
             title: unref(data).cocktailsPage.description,
             cocktailsCount: unref(data).cocktailsPage.totalCount,
             isIndex: unref(data).cocktailsPage.isAddToIndex
         }))
+
+        const getRel = (value) => (value ? 'tag' : 'nofollow')
         const futureFilters = computed(() => {
             const futureFilters = {}
             for (const filter in unref(futureCounts)) {
@@ -78,11 +99,6 @@ export default defineComponent({
             }
             return futureFilters
         })
-        let query = querySTR(route, true)
-        const updateCoctails = () => {
-            refresh()
-            query = querySTR(route, true)
-        }
 
         const filters = computed(() => {
             return unref(data).filters.map((filterItem) => ({
@@ -104,7 +120,6 @@ export default defineComponent({
                     .sort((a, b) => (a.count > b.count ? -1 : 1))
             }))
         })
-        const getRel = (value) => (value ? 'tag' : 'nofollow')
 
         return {
             data,
@@ -112,8 +127,7 @@ export default defineComponent({
             filters,
             info,
             cocktails,
-            route,
-            updateCoctails
+            route
         }
     }
 })
