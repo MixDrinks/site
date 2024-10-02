@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, toRef, unref } from 'vue'
+import { computed, defineComponent, toRefs, unref } from 'vue'
 
 export default defineComponent({
     name: 'IconBtn',
@@ -43,7 +43,7 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const { lock, direction, type } = toRef(props)
+        const { lock, direction, type } = toRefs(props)
         const btnClasses = computed(() => [
             { 'btn--lock': unref(lock) },
             `btn--${unref(direction)}`,
