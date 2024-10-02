@@ -28,7 +28,5 @@ export default defineEventHandler(async () => {
         return postDto
     })
 
-    return {
-        posts: responsePostList
-    }
+    return responsePostList
 })

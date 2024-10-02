@@ -5,7 +5,9 @@
     </div>
 </template>
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     name: 'Error404',
     props: {
         error: {
@@ -13,7 +15,7 @@ export default {
             default: () => {}
         }
     }
-}
+})
 </script>
 <style lang="scss" scoped>
 @import './styles/404';

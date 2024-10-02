@@ -122,7 +122,6 @@ export default defineComponent({
         })
 
         return {
-            data,
             loadMore,
             filters,
             info,

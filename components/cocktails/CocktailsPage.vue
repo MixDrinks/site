@@ -31,6 +31,7 @@ import CocktailsList from './../global/CocktailsList.vue'
 import CocktailsFilters from './CocktailsFilters.vue'
 import Pagination from '../dump/Pagination.vue'
 import CocktailsSorting from './CocktailsSorting.vue'
+
 export default defineComponent({
     name: 'CocktailsPage',
     components: {

@@ -32,33 +32,36 @@
 .body {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     margin: -10px;
 
     &__post {
-        height: 200px;
+        position: relative;
         margin: 10px;
         width: calc(100% - 20px);
         z-index: 1;
-
-        @media (min-width: 767px) {
-            width: calc(50% - 20px);
+        @media (min-width: 567px) {
+            width: calc(100% / 2 - 20px);
+        }
+        @media (min-width: 991px) {
+            width: calc(100% / 3 - 20px);
         }
 
-        @media (min-width: 1440px) {
-            width: calc(25% - 20px);
+        @media (min-width: 1500px) {
+            width: calc(100% / 4 - 20px);
         }
     }
 }
 
 .post {
+    height: 100%;
     $self: &;
-    display: flex;
-    align-items: flex-end;
+    text-align: center;
     border-radius: 10px;
-    position: relative;
-    padding: 20px 30px;
     overflow: hidden;
+    position: relative;
+    border: 1px solid rgb(231, 226, 222);
+    display: flex;
+    flex-direction: column;
 
     transition:
         transform $defaultAnimTime,
@@ -82,34 +85,28 @@
         }
     }
 
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
-        background-color: $colorMain;
-        opacity: 0.6;
-        mix-blend-mode: color-burn;
-    }
-
     &__img {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -2;
+        height: 200px;
         width: 100%;
         object-fit: cover;
         max-width: unset;
+        display: block;
     }
 
     &__title {
-        @include fontSize18M;
-        color: $colorWhite;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include fontSize16M;
+        color: $colorMain;
+        padding: 10px 20px;
+        min-height: 100px;
 
+        @media (min-width: 567px) {
+            padding: 20px 40px;
+            @include fontSize18M;
+        }
         &::after {
             position: absolute;
             top: 0;

@@ -1,13 +1,14 @@
 <template>
     <main class="wrapper">
-        123
-        <BlogPage @updatePage="updatePage" :postsData="postFull" />
+        <BlogPage :posts="posts" />
     </main>
 </template>
 
 <script>
-import { useHead } from 'nuxt/app'
+import { useHead, useRoute, useAsyncData } from 'nuxt/app'
 import { defineComponent } from 'vue'
+import { querySTR } from '~~/utils/querySTR'
+import { getPosts } from '~~/api/pages'
 
 import BlogPage from '~~/components/blog/BlogPage.vue'
 
@@ -15,11 +16,18 @@ export default defineComponent({
     name: 'BlogPage',
     components: { BlogPage },
 
-    setup() {
+    async setup() {
         useHead({
             meta: [{ name: 'robots', content: 'noindex, nofollow' }]
         })
-        return {}
+        const route = useRoute()
+        const getPath = () => `/${querySTR(route)}`
+
+        const { data: posts } = await useAsyncData(() => getPosts(getPath()))
+
+        return {
+            posts
+        }
     }
 
     // async asyncData({ query, error, $axios }) {

@@ -7,6 +7,12 @@ export const getCoctails = (path, fetchWIXUP) => {
 export const getFilters = () => {
     return $fetch('https://newapi.mixdrinks.org/api/filters')
 }
+export const getPosts = (path) => {
+    return $fetch(`/api/blog/post-list${path}`)
+}
+export const getPost = (path) => {
+    return $fetch(`/api/blog/post-details${path}`)
+}
 export const getCocktail = (path, fetchWIXUP) => {
     return fetchWIXUP(`/api/cocktail${path}`)
 }

@@ -8,7 +8,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     name: 'TextBtn',
     props: {
         href: {
@@ -16,7 +18,7 @@ export default {
             default: ''
         }
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

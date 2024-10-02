@@ -16,6 +16,7 @@ export default defineEventHandler(async (req) => {
 
     const response = await getBlockPost(slug)
 
+    response.image = `${imageDomain}/${response.image}`
     for (let i = 0; i < response.body.length; i++) {
         if (response.body[i].type === 'cocktail') {
             const cocktailSlug = response.body[i].values.slug
