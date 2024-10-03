@@ -21,7 +21,7 @@ import {
 } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 import { getFilters, getCoctails } from '~~/api/pages'
-import { store } from '~~/store/filter'
+import { filterStore } from '~~/store/filter'
 import { querySTR } from '~~/utils/querySTR'
 
 import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
@@ -55,7 +55,7 @@ export default defineComponent({
         })
 
         const setOpenList = () =>
-            store.actions.setFiltersIsOpenList(unref(data).filters)
+            filterStore.actions.setFiltersIsOpenList(unref(data).filters)
         onBeforeMount(() => setOpenList())
 
         const { $fetchWIXUP } = useNuxtApp()

@@ -8,7 +8,11 @@
                 class="list__item item"
             >
                 <Transition
-                    :style="{ transitionDelay: `${cocktailIndex * 0.1}s` }"
+                    :style="
+                        isMounted
+                            ? { transitionDelay: `${cocktailIndex / 10}s` }
+                            : false
+                    "
                     appear
                     name="list"
                     mode="in-out"
@@ -35,9 +39,14 @@
                 class="list__item item"
             >
                 <Transition
-                    :style="{
-                        transitionDelay: getTransitionDelay(cocktailIndex)
-                    }"
+                    :style="
+                        isMounted
+                            ? {
+                                  transitionDelay:
+                                      getTransitionDelay(cocktailIndex)
+                              }
+                            : false
+                    "
                     appear
                     name="list"
                     mode="in-out"
@@ -142,10 +151,10 @@ export default defineComponent({
 
         const getTransitionDelay = (index) => {
             if (index / 12 < 1) {
-                return `${(index + 12) * 0.1}s`
+                return `${(index + 12) / 10}s`
             }
 
-            return `${((index + 12) % 24) * 0.1}s`
+            return `${((index + 12) % 24) / 10}s`
         }
 
         return {

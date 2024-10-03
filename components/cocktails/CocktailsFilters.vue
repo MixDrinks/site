@@ -45,7 +45,7 @@
 <script>
 import { computed, defineComponent, toRefs, unref } from 'vue'
 import { useRoute } from 'nuxt/app'
-import { store } from '~~/store/filter'
+import { filterStore } from '~~/store/filter'
 import { querySTR } from '~~/utils/querySTR'
 
 import IconBtn from '../UI/IconBtn.vue'
@@ -72,9 +72,9 @@ export default defineComponent({
 
         const { filters } = toRefs(props)
 
-        const changeFilterIsOpen = () => store.actions.changeMainIsOpen()
+        const changeFilterIsOpen = () => filterStore.actions.changeMainIsOpen()
         const clearFilterUrl = computed(() => `/${querySTR(route, true)}`)
-        const { isFilterOpen } = toRefs(store.getters)
+        const { isFilterOpen } = toRefs(filterStore.getters)
         const filtersClasees = computed(() => ({
             'filters--hidden': !unref(isFilterOpen)
         }))

@@ -29,7 +29,7 @@ function setFiltersIsOpenList(list) {
     state.listIsSet = true
 }
 
-export const store = readonly({
+export const filterStore = readonly({
     getters: {
         isFilterOpen: computed(() => state.mainIsOpen),
         filtersIsOpenList: computed(() => state.filtersIsOpenList),
