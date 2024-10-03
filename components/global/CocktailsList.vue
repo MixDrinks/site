@@ -1,20 +1,22 @@
 <template>
     <div class="wrapper">
-        <TransitionGroup
-            :class="listClasses"
-            tag="div"
-            class="list"
-            name="list"
-        >
+        <div :class="listClasses" class="list">
             <div
                 v-for="(cocktail, cocktailIndex) in cocktailsFirst"
                 :key="`item-${cocktail.id}${cocktailIndex}`"
                 :class="itemClasses"
                 class="list__item item"
             >
-                <CocktailsCart :cocktail="cocktail" />
+                <Transition
+                    :style="{ transitionDelay: `${cocktailIndex * 0.1}s` }"
+                    appear
+                    name="list"
+                    mode="in-out"
+                >
+                    <CocktailsCart v-show="isMounted" :cocktail="cocktail" />
+                </Transition>
             </div>
-        </TransitionGroup>
+        </div>
         <div class="list__ads">
             <ins
                 class="adsbygoogle"
@@ -25,27 +27,43 @@
                 data-ad-slot="2682031593"
             />
         </div>
-        <TransitionGroup
-            :class="listClasses"
-            tag="div"
-            class="list"
-            name="list"
-        >
+        <div :class="listClasses" class="list">
             <div
-                v-for="cocktail in cocktailsSecond"
-                :key="`item-${cocktail.id}`"
+                v-for="(cocktail, cocktailIndex) in cocktailsSecond"
+                :key="`item-${cocktail.id}${cocktailIndex}`"
                 :class="itemClasses"
                 class="list__item item"
             >
-                <CocktailsCart :cocktail="cocktail" isLoadingLazy />
+                <Transition
+                    :style="{
+                        transitionDelay: getTransitionDelay(cocktailIndex)
+                    }"
+                    appear
+                    name="list"
+                    mode="in-out"
+                >
+                    <CocktailsCart
+                        v-show="isMounted"
+                        :cocktail="cocktail"
+                        isLoadingLazy
+                    />
+                </Transition>
             </div>
-        </TransitionGroup>
+        </div>
     </div>
 </template>
 
 <script>
 import { useHead } from 'nuxt/app'
-import { defineComponent, computed, toRefs, unref, watch } from 'vue'
+import {
+    defineComponent,
+    computed,
+    toRefs,
+    unref,
+    watch,
+    ref,
+    onMounted
+} from 'vue'
 
 import CocktailsCart from './CocktailsCart.vue'
 
@@ -89,6 +107,12 @@ export default defineComponent({
             [`item--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
 
+        const isMounted = ref(false)
+
+        onMounted(() => {
+            isMounted.value = true
+        })
+
         watch(cocktails, () => {
             if (unref(cocktails).length <= 24) {
                 if (unref(element)) {
@@ -116,11 +140,21 @@ export default defineComponent({
             unref(checkLength) ? unref(cocktails).slice(12) : []
         )
 
+        const getTransitionDelay = (index) => {
+            if (index / 12 < 1) {
+                return `${(index + 12) * 0.1}s`
+            }
+
+            return `${((index + 12) % 24) * 0.1}s`
+        }
+
         return {
             cocktailsFirst,
             cocktailsSecond,
             itemClasses,
-            listClasses
+            listClasses,
+            isMounted,
+            getTransitionDelay
         }
     }
 })

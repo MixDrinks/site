@@ -8,21 +8,19 @@
                         {{ cocktailsCount }}
                     </span>
                 </div>
-                <transition appear name="fate-in">
-                    <IconBtn
-                        v-show="activeFilter.length"
-                        @click="changeFilterIsOpen"
-                        :href="clearFilterUrl"
-                        class="filters-header__close"
-                        type="short"
-                        icon="/img/icons/trash.svg"
-                    >
-                        Відмінити всі фільтри
-                    </IconBtn>
-                </transition>
+                <IconBtn
+                    v-show="activeFilter.length"
+                    @click="changeFilterIsOpen"
+                    :href="clearFilterUrl"
+                    class="filters-header__close"
+                    type="short"
+                    icon="/img/icons/trash.svg"
+                >
+                    Відмінити всі фільтри
+                </IconBtn>
             </div>
             <CocktailsTags
-                v-if="activeFilter.length"
+                v-show="activeFilter.length"
                 :tags="activeFilter"
                 class="filters__tags"
             />

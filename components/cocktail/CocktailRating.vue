@@ -16,7 +16,7 @@
                 >
                     <div class="rating-wrapper-stars-item__start--gray" />
                     <div
-                        :style="'width:' + star.width"
+                        :style="{ width: star.width }"
                         class="rating-wrapper-stars-item__start--full"
                     />
                 </div>
