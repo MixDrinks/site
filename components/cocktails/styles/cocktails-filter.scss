@@ -15,9 +15,13 @@
         }
     }
     &__wrapper {
-        margin-top: 8px;
+        overflow: hidden;
+        transition: height 0.4s;
+    }
+    &__animations {
+        padding-top: 8px;
         @media (min-width: 1023px) {
-            margin-top: $halfPadding;
+            padding-top: $halfPadding;
         }
     }
 
@@ -221,12 +225,4 @@
         margin-left: 4px;
         @include defaultCount;
     }
-}
-
-.max-height-enter-active {
-    animation: max-height $defaultAnimTime;
-}
-
-.max-height-leave-active {
-    animation: max-height $defaultAnimTime reverse;
 }

@@ -10,8 +10,8 @@
                 class="header__toggler"
             />
         </div>
-        <transition name="max-height">
-            <div v-show="filterIsShow" class="filter__wrapper">
+        <div :style="{ height: height }" class="filter__wrapper">
+            <div ref="animations" class="filter__animations">
                 <CocktailsSearch
                     v-if="searchIsShow"
                     v-model:value="searchValue"
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
@@ -96,9 +96,15 @@ export default defineComponent({
             }
             return unref(filter).isOpen
         })
-
         const toggleList = () =>
             store.actions.updateFiltersIsOpenList(unref(filter).id)
+        const animations = ref('')
+        const height = computed(() => {
+            if (unref(filterIsShow)) {
+                return `${unref(animations).offsetHeight}px`
+            }
+            return `0px`
+        })
         const getLinkClasses = (value) => ({
             'filter-list-item--active': value
         })
@@ -138,7 +144,9 @@ export default defineComponent({
             searchIsShow,
             listSearchIsEmpty,
             filterListItemClasses,
-            searchValue
+            searchValue,
+            animations,
+            height
         }
     }
 })
