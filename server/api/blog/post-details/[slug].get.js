@@ -37,7 +37,9 @@ export default defineEventHandler(async (req) => {
         }
 
         if (response.body[i].type === 'cocktail_collection') {
-            const cocktails = await getCocktailsBySlugs(response.body[i].values.slugs)
+            const cocktails = await getCocktailsBySlugs(
+                response.body[i].values.slugs
+            )
             response.body[i].values = cocktails
         }
     }
@@ -45,9 +47,9 @@ export default defineEventHandler(async (req) => {
     const tags = response.tags.map((tag) => {
         return {
             slug: tag.slug,
-            name: tag.name,
+            name: tag.name
         }
-    });
+    })
 
     response.tags = tags
 
