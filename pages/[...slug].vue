@@ -2,20 +2,27 @@
     <main class="wrapper">
         <CocktailsPage
             @loadMore="loadMore"
-            @updateCoctails="refresh"
-            :cocktailsFull="data.cocktailsFull"
-            :allFilters="allFilters"
+            :cocktails="cocktails"
+            :filters="filters"
+            :info="info"
         />
     </main>
 </template>
 
 <script>
 import { definePageMeta } from '#imports'
-import { onBeforeMount, defineComponent, unref, computed } from 'vue'
+import {
+    onBeforeMount,
+    defineComponent,
+    unref,
+    computed,
+    ref,
+    watch
+} from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 import { getFilters, getCoctails } from '~~/api/pages'
-import { store } from '~~/store/filter'
-import { query } from '~~/utils/querySTR'
+import { filterStore } from '~~/store/filter'
+import { querySTR } from '~~/utils/querySTR'
 
 import CocktailsPage from '~~/components/cocktails/CocktailsPage.vue'
 
@@ -32,51 +39,78 @@ export default defineComponent({
             }
         })
 
-        const setOpenList = () =>
-            store.actions.setFiltersIsOpenList(unref(data).allFilters)
+        const route = useRoute()
+        let query = querySTR(route, true)
 
+        const isLoadMore = ref(false)
+        const loadMore = () => (isLoadMore.value = true)
+        watch(route, () => {
+            if (unref(isLoadMore)) {
+                addCocktails()
+                isLoadMore.value = false
+            } else {
+                refresh()
+                query = querySTR(route, true)
+            }
+        })
+
+        const setOpenList = () =>
+            filterStore.actions.setFiltersIsOpenList(unref(data).filters)
         onBeforeMount(() => setOpenList())
 
         const { $fetchWIXUP } = useNuxtApp()
-        const route = useRoute()
-
         const getPath = () => route.fullPath
 
         const { data, refresh } = await useAsyncData(async () => {
-            const [cocktailsFull, allFilters] = await Promise.all([
+            const [cocktailsPage, filters] = await Promise.all([
                 getCoctails(getPath(), $fetchWIXUP),
                 getFilters()
             ])
-            return { cocktailsFull, allFilters }
+            return { cocktailsPage, filters }
         })
 
-        async function loadMore() {
+        async function addCocktails() {
             const { cocktails } = await getCoctails(getPath(), $fetchWIXUP)
-            data.value.cocktailsFull.cocktails = [
-                ...unref(data).cocktailsFull.cocktails,
+            data.value.cocktailsPage.cocktails = [
+                ...unref(data).cocktailsPage.cocktails,
                 ...cocktails
             ]
         }
 
-        const allFilters = computed(() => {
+        const cocktails = computed(() => unref(data).cocktailsPage.cocktails)
+        const futureCounts = computed(
+            () => unref(data).cocktailsPage.futureCounts
+        )
+
+        const info = computed(() => ({
+            title: unref(data).cocktailsPage.description,
+            cocktailsCount: unref(data).cocktailsPage.totalCount,
+            isIndex: unref(data).cocktailsPage.isAddToIndex
+        }))
+
+        const getRel = (value) => (value ? 'tag' : 'nofollow')
+        const futureFilters = computed(() => {
             const futureFilters = {}
-            for (const filter in unref(data).cocktailsFull.futureCounts) {
+            for (const filter in unref(futureCounts)) {
                 futureFilters[filter] = {}
-                unref(data).cocktailsFull.futureCounts[filter].forEach(
-                    (filterItem) => {
-                        futureFilters[filter][filterItem.id] = filterItem
-                    }
-                )
+                unref(futureCounts)[filter].forEach((filterItem) => {
+                    futureFilters[filter][filterItem.id] = filterItem
+                })
             }
-            return unref(data).allFilters.map((filterItem) => ({
+            return futureFilters
+        })
+
+        const filters = computed(() => {
+            return unref(data).filters.map((filterItem) => ({
                 ...filterItem,
                 items: filterItem.items
                     .map((item) => {
-                        const newValue = futureFilters[filterItem.id][item.id]
+                        const newValue =
+                            unref(futureFilters)[filterItem.id][item.id]
 
                         return {
                             ...item,
-                            url: `/${newValue.query}${query(route, true)}`,
+                            url: `/${newValue.query}${query}`,
                             count: newValue.count,
                             rel: getRel(newValue.isAddToIndex),
                             isActive: newValue.isActive,
@@ -86,13 +120,13 @@ export default defineComponent({
                     .sort((a, b) => (a.count > b.count ? -1 : 1))
             }))
         })
-        const getRel = (value) => (value ? 'tag' : 'nofollow')
 
         return {
-            data,
             loadMore,
-            refresh,
-            allFilters
+            filters,
+            info,
+            cocktails,
+            route
         }
     }
 })

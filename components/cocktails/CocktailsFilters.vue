@@ -5,30 +5,28 @@
                 <div class="filters-header__title filters-header-title">
                     Фільтри
                     <span class="filters-header-title__count">
-                        {{ allCocktailsNumber }}
+                        {{ cocktailsCount }}
                     </span>
                 </div>
-                <transition appear name="fate-in">
-                    <IconBtn
-                        v-show="activeFilter.length"
-                        @click="changeFilterIsOpen"
-                        :href="clearFilterUrl"
-                        class="filters-header__close"
-                        type="short"
-                        icon="/img/icons/trash.svg"
-                    >
-                        Відмінити всі фільтри
-                    </IconBtn>
-                </transition>
+                <IconBtn
+                    v-show="activeFilter.length"
+                    @click="changeFilterIsOpen"
+                    :href="clearFilterUrl"
+                    class="filters-header__close"
+                    type="short"
+                    icon="/img/icons/trash.svg"
+                >
+                    Відмінити всі фільтри
+                </IconBtn>
             </div>
             <CocktailsTags
-                v-if="activeFilter.length"
+                v-show="activeFilter.length"
                 :tags="activeFilter"
                 class="filters__tags"
             />
             <div class="filters__wrapper filters-wrapper">
                 <CocktailsFilter
-                    v-for="filter in filterList"
+                    v-for="filter in filters"
                     :key="filter.id"
                     :filter="filter"
                 />
@@ -47,8 +45,8 @@
 <script>
 import { computed, defineComponent, toRefs, unref } from 'vue'
 import { useRoute } from 'nuxt/app'
-import { store } from '~~/store/filter'
-import { query } from '~~/utils/querySTR'
+import { filterStore } from '~~/store/filter'
+import { querySTR } from '~~/utils/querySTR'
 
 import IconBtn from '../UI/IconBtn.vue'
 import CocktailsFilter from './CocktailsFilter.vue'
@@ -59,11 +57,11 @@ export default defineComponent({
     components: { IconBtn, CocktailsFilter, CocktailsTags },
 
     props: {
-        filterList: {
+        filters: {
             type: Array,
             required: true
         },
-        allCocktailsNumber: {
+        cocktailsCount: {
             type: Number,
             default: 0
         }
@@ -72,11 +70,11 @@ export default defineComponent({
     setup(props) {
         const route = useRoute()
 
-        const { filterList } = toRefs(props)
+        const { filters } = toRefs(props)
 
-        const changeFilterIsOpen = () => store.actions.changeMainIsOpen()
-        const clearFilterUrl = computed(() => `/${query(route, true)}`)
-        const { isFilterOpen } = toRefs(store.getters)
+        const changeFilterIsOpen = () => filterStore.actions.changeMainIsOpen()
+        const clearFilterUrl = computed(() => `/${querySTR(route, true)}`)
+        const { isFilterOpen } = toRefs(filterStore.getters)
         const filtersClasees = computed(() => ({
             'filters--hidden': !unref(isFilterOpen)
         }))
@@ -87,7 +85,7 @@ export default defineComponent({
             () => unref(activeFilter).length && !unref(isFilterOpen)
         )
         const activeFilter = computed(() =>
-            unref(filterList)
+            unref(filters)
                 .map((el) => el.items)
                 .flat()
                 .filter((item) => item.isActive)

@@ -16,7 +16,9 @@
 </template>
 
 <script>
-export default {
+import { computed, defineComponent, toRefs, unref } from 'vue'
+
+export default defineComponent({
     name: 'IconBtn',
     props: {
         href: {
@@ -40,16 +42,19 @@ export default {
             default: 'big'
         }
     },
-    computed: {
-        btnClasses() {
-            return [
-                { 'btn--lock': this.lock },
-                `btn--${this.direction}`,
-                `btn--${this.type}`
-            ]
+    setup(props) {
+        const { lock, direction, type } = toRefs(props)
+        const btnClasses = computed(() => [
+            { 'btn--lock': unref(lock) },
+            `btn--${unref(direction)}`,
+            `btn--${unref(type)}`
+        ])
+
+        return {
+            btnClasses
         }
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

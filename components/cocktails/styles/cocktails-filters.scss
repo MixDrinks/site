@@ -158,11 +158,3 @@
         padding-right: unset;
     }
 }
-
-.fate-in-enter-active {
-    animation: fade-in $defaultAnimTime;
-}
-
-.fate-in-leave-active {
-    animation: fade-in $defaultAnimTime reverse;
-}

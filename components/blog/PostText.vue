@@ -5,7 +5,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     name: 'PostText',
     props: {
         values: {
@@ -13,7 +15,7 @@ export default {
             required: true
         }
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

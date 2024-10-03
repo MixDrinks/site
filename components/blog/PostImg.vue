@@ -1,7 +1,7 @@
 <template>
     <img
+        :src="values.imgUrl"
         alt=""
-        src="https://mixdrinks-cdn.vovastelmashchuk.site/cocktails/561/560/561.webp"
         class="post__img"
         width="410"
         height="200"
@@ -10,7 +10,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     name: 'PostImg',
     props: {
         values: {
@@ -18,7 +20,7 @@ export default {
             required: true
         }
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

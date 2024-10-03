@@ -82,11 +82,12 @@
 }
 
 .cart {
+    height: 100%;
     position: relative;
     display: block;
     $self: &;
     padding: 10px;
-
+    text-align: center;
     border-radius: 8px;
 
     transition:
@@ -130,7 +131,6 @@
 
     &__name {
         color: $colorMain;
-        text-align: left;
         @include fontSize16M;
         margin-top: 10px;
         transition: color $defaultAnimTime;

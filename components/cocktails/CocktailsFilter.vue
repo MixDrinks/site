@@ -10,8 +10,8 @@
                 class="header__toggler"
             />
         </div>
-        <transition name="max-height">
-            <div v-show="filterIsShow" class="filter__wrapper">
+        <div :style="{ height: height }" class="filter__wrapper">
+            <div ref="animations" class="filter__animations">
                 <CocktailsSearch
                     v-if="searchIsShow"
                     v-model:value="searchValue"
@@ -65,12 +65,12 @@
                     </div>
                 </div>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
 <script>
-import { store } from '~~/store/filter'
+import { filterStore } from '~~/store/filter'
 import { computed, defineComponent, toRefs, unref, ref } from 'vue'
 import { filterType } from '~~/utils/selectionType'
 import CocktailsSearch from './CocktailsSearch.vue'
@@ -88,7 +88,9 @@ export default defineComponent({
 
     setup(props) {
         const { filter } = toRefs(props)
-        const { filtersIsOpenList, filtersListIsSet } = toRefs(store.getters)
+        const { filtersIsOpenList, filtersListIsSet } = toRefs(
+            filterStore.getters
+        )
 
         const filterIsShow = computed(() => {
             if (unref(filtersListIsSet)) {
@@ -96,9 +98,15 @@ export default defineComponent({
             }
             return unref(filter).isOpen
         })
-
         const toggleList = () =>
-            store.actions.updateFiltersIsOpenList(unref(filter).id)
+            filterStore.actions.updateFiltersIsOpenList(unref(filter).id)
+        const animations = ref('')
+        const height = computed(() => {
+            if (unref(filterIsShow)) {
+                return `${unref(animations).offsetHeight}px`
+            }
+            return `0px`
+        })
         const getLinkClasses = (value) => ({
             'filter-list-item--active': value
         })
@@ -138,7 +146,9 @@ export default defineComponent({
             searchIsShow,
             listSearchIsEmpty,
             filterListItemClasses,
-            searchValue
+            searchValue,
+            animations,
+            height
         }
     }
 })

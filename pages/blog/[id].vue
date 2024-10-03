@@ -1,24 +1,57 @@
 <template>
     <main class="wrapper">
-        <PostPage :postData="postData" />
+        <div class="post">
+            <div class="post__header header">
+                <h1 class="header__title">
+                    {{ post.title }}
+                </h1>
+                <img
+                    :alt="post.title"
+                    :src="post.image"
+                    class="post__img"
+                    width="410"
+                    height="200"
+                    title=""
+                />
+            </div>
+            <div class="post__body body">
+                <div
+                    v-for="(bodyItem, itemIndex) in post.body"
+                    :key="`body__item-${itemIndex}`"
+                    class="body__item item"
+                >
+                    <component
+                        :is="types[bodyItem.type]"
+                        :values="bodyItem.values"
+                    />
+                </div>
+            </div>
+        </div>
     </main>
 </template>
 
 <script>
-import { useHead } from 'nuxt/app'
+import { useHead, useRoute, useAsyncData } from 'nuxt/app'
 import { defineComponent } from 'vue'
-
-import PostPage from '~~/components/blog/PostPage.vue'
+import { getPost } from '~~/api/pages'
+import { types } from '~~/utils/postItemType'
 
 export default defineComponent({
     name: 'PostPage',
-    components: { PostPage },
 
-    setup() {
+    async setup() {
         useHead({
             meta: [{ name: 'robots', content: 'noindex, nofollow' }]
         })
-        return {}
+        const route = useRoute()
+        const getPath = () => `/${route.params.id}`
+
+        const { data: post } = await useAsyncData(() => getPost(getPath()))
+
+        return {
+            post,
+            types
+        }
     }
 
     // async asyncData({ route, error, $axios }) {
@@ -96,4 +129,5 @@ export default defineComponent({
 .wrapper {
     @include defaultWrapper;
 }
+@import './../../components/blog/styles/post-page.scss';
 </style>

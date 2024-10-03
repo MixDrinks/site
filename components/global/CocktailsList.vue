@@ -1,20 +1,26 @@
 <template>
-    <div ref="cocktailsEl" class="wrapper">
-        <TransitionGroup
-            :class="listClasses"
-            tag="div"
-            class="list"
-            name="list"
-        >
+    <div class="wrapper">
+        <div :class="listClasses" class="list">
             <div
                 v-for="(cocktail, cocktailIndex) in cocktailsFirst"
                 :key="`item-${cocktail.id}${cocktailIndex}`"
                 :class="itemClasses"
                 class="list__item item"
             >
-                <CocktailsCart :cocktail="cocktail" />
+                <Transition
+                    :style="
+                        isMounted
+                            ? { transitionDelay: `${cocktailIndex / 10}s` }
+                            : false
+                    "
+                    appear
+                    name="list"
+                    mode="in-out"
+                >
+                    <CocktailsCart v-show="isMounted" :cocktail="cocktail" />
+                </Transition>
             </div>
-        </TransitionGroup>
+        </div>
         <div class="list__ads">
             <ins
                 class="adsbygoogle"
@@ -25,27 +31,48 @@
                 data-ad-slot="2682031593"
             />
         </div>
-        <TransitionGroup
-            :class="listClasses"
-            tag="div"
-            class="list"
-            name="list"
-        >
+        <div :class="listClasses" class="list">
             <div
-                v-for="cocktail in cocktailsSecond"
-                :key="`item-${cocktail.id}`"
+                v-for="(cocktail, cocktailIndex) in cocktailsSecond"
+                :key="`item-${cocktail.id}${cocktailIndex}`"
                 :class="itemClasses"
                 class="list__item item"
             >
-                <CocktailsCart :cocktail="cocktail" isLoadingLazy />
+                <Transition
+                    :style="
+                        isMounted
+                            ? {
+                                  transitionDelay:
+                                      getTransitionDelay(cocktailIndex)
+                              }
+                            : false
+                    "
+                    appear
+                    name="list"
+                    mode="in-out"
+                >
+                    <CocktailsCart
+                        v-show="isMounted"
+                        :cocktail="cocktail"
+                        isLoadingLazy
+                    />
+                </Transition>
             </div>
-        </TransitionGroup>
+        </div>
     </div>
 </template>
 
 <script>
 import { useHead } from 'nuxt/app'
-import { defineComponent, computed, toRefs, unref, watch, ref } from 'vue'
+import {
+    defineComponent,
+    computed,
+    toRefs,
+    unref,
+    watch,
+    ref,
+    onMounted
+} from 'vue'
 
 import CocktailsCart from './CocktailsCart.vue'
 
@@ -81,7 +108,6 @@ export default defineComponent({
             ]
         })
         const { modificator, cocktails, element } = toRefs(props)
-        const cocktailsEl = ref(null)
 
         const listClasses = computed(() => ({
             [`list--${unref(modificator)}`]: Boolean(unref(modificator))
@@ -89,6 +115,12 @@ export default defineComponent({
         const itemClasses = computed(() => ({
             [`item--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
+
+        const isMounted = ref(false)
+
+        onMounted(() => {
+            isMounted.value = true
+        })
 
         watch(cocktails, () => {
             if (unref(cocktails).length <= 24) {
@@ -98,9 +130,10 @@ export default defineComponent({
                         block: 'start'
                     })
                 } else {
-                    unref(cocktailsEl).scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    window.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: 'smooth'
                     })
                 }
             }
@@ -116,12 +149,21 @@ export default defineComponent({
             unref(checkLength) ? unref(cocktails).slice(12) : []
         )
 
+        const getTransitionDelay = (index) => {
+            if (index / 12 < 1) {
+                return `${(index + 12) / 10}s`
+            }
+
+            return `${((index + 12) % 24) / 10}s`
+        }
+
         return {
             cocktailsFirst,
             cocktailsSecond,
             itemClasses,
             listClasses,
-            cocktailsEl
+            isMounted,
+            getTransitionDelay
         }
     }
 })

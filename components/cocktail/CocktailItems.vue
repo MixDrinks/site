@@ -1,5 +1,5 @@
 <template>
-    <div class="items">
+    <div :class="itemsClasses" class="items">
         <TitleH2 :text="title" class="items__title" />
         <div v-if="withCounter" class="items__counter counter">
             <IconBtn
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref, unref } from 'vue'
+import { computed, defineComponent, ref, toRefs, unref } from 'vue'
 import TitleH2 from '../global/TitleH2.vue'
 import IconBtn from '../UI/IconBtn.vue'
 
@@ -84,10 +84,15 @@ export default defineComponent({
         withCounter: {
             type: Boolean,
             default: false
+        },
+        size: {
+            type: String,
+            default: ''
         }
     },
 
-    setup() {
+    setup(props) {
+        const { size } = toRefs(props)
         const counter = ref(1)
 
         const inc = () => counter.value++
@@ -96,13 +101,16 @@ export default defineComponent({
         }
         const getAmount = (value) => value * unref(counter)
         const isDecLock = computed(() => unref(counter) === 1)
-
+        const itemsClasses = computed(() => ({
+            [`items--size-${unref(size)}`]: Boolean(unref(size))
+        }))
         return {
             getAmount,
             counter,
             inc,
             dec,
-            isDecLock
+            isDecLock,
+            itemsClasses
         }
     }
 })

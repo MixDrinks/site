@@ -8,10 +8,13 @@
     </div>
 </template>
 <script>
+import { defineComponent } from 'vue'
+
 import SiteFooter from '~~/components/dump/Footer.vue'
 import SiteHader from '~~/components/dump/Header.vue'
 import Error404 from '~~/components/error/404'
-export default {
+
+export default defineComponent({
     name: 'Error',
     components: {
         Error404,
@@ -24,7 +27,7 @@ export default {
             default: () => {}
         }
     }
-}
+})
 </script>
 <style lang="scss" scoped>
 .main {

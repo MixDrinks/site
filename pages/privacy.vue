@@ -49,43 +49,20 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+import { head } from '~~/utils/head'
+
+export default defineComponent({
     name: 'Privacy',
-    head() {
-        return {
-            title: 'Колекція коктейлів 🍹 та рецептів до них в домашніх умовах',
-            link: [{ rel: 'canonical', href: this.canonical }],
-            meta: [
-                {
-                    hid: 'description',
-                    name: 'description',
-                    content: `Політика конфіденційності MixDrinks`
-                },
-                {
-                    hid: 'og:title',
-                    name: 'og:title',
-                    content: `Політика конфіденційності`
-                },
-                {
-                    hid: 'og:description',
-                    property: 'og:description',
-                    content: `Політика конфіденційності MixDrinks`
-                },
-                {
-                    hid: 'og:url',
-                    property: 'og:url',
-                    content: `${this.canonical}`
-                },
-                { name: 'robots', content: 'noindex, nofollow' }
-            ]
-        }
-    },
-    computed: {
-        canonical() {
-            return process.env.baseUrl + this.$nuxt.$route.path
-        }
+
+    setup() {
+        head({
+            title: 'Політика конфіденційності',
+            description: 'Політика конфіденційності MixDrinks',
+            indexPage: true
+        })
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,4 @@
-export const query = (route, withoutPage) => {
+export const querySTR = (route, withoutPage) => {
     let queryArr = Object.keys(route.query).map((value) => {
         return {
             name: value,

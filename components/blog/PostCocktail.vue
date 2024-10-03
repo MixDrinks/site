@@ -1,26 +1,5 @@
 <template>
-    <NuxtLink :to="`/cocktails/${values.slug}`" class="cocktail">
-        <div
-            v-if="!!values.rating || !!values.visitCount"
-            class="cocktail__info cocktail-info"
-        >
-            <div
-                v-if="!!values.rating"
-                class="cocktail-info__rating cocktail-info-rating"
-            >
-                <div class="cocktail-info-rating__label">
-                    {{ Number(values.rating.toFixed(1)) }}
-                </div>
-            </div>
-            <div
-                v-if="!!values.visitCount"
-                class="cocktail-info__visit-count cocktail-info-visit-count"
-            >
-                <div class="cocktail-info-visit-count__label">
-                    {{ values.visitCount }}
-                </div>
-            </div>
-        </div>
+    <div class="cocktail">
         <picture class="cocktail__picture">
             <source
                 v-for="img in values.images"
@@ -37,15 +16,23 @@
                 title=""
             />
         </picture>
-        <div class="cocktail__name">
-            {{ values.name }}
+        <div class="cocktail__info info">
+            <CocktailTags :tags="values.tags" class="info__tags" />
+            <CocktailItems
+                :title="`Склад коктейлю ${values.name}`"
+                :items="values.goods"
+                size="m"
+            />
         </div>
-    </NuxtLink>
+    </div>
 </template>
 
 <script>
+import CocktailItems from '../cocktail/CocktailItems.vue'
+import CocktailTags from '../cocktail/CocktailTags.vue'
 export default {
     name: 'PostCocktail',
+    components: { CocktailTags, CocktailItems },
     props: {
         values: {
             type: Object,

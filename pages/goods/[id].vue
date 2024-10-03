@@ -13,7 +13,7 @@
 import { defineComponent, unref } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 import { getItems, getCoctails } from '~~/api/pages'
-import { query } from '~~/utils/querySTR'
+import { querySTR } from '~~/utils/querySTR'
 
 import ItemsPage from '~~/components/items/ItemsPage.vue'
 
@@ -26,7 +26,7 @@ export default defineComponent({
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
 
-        const getPath = () => `/goods=${route.params.id}${query(route)}`
+        const getPath = () => `/goods=${route.params.id}${querySTR(route)}`
 
         const { data, refresh } = await useAsyncData(async () => {
             const [cocktailsFull, items] = await Promise.all([
