@@ -2,6 +2,7 @@ import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 import { getFullCocktailBySlug } from '~/server/utils/cocktail/details'
 import * as dotenv from 'dotenv'
+import { getCocktailsBySlugs } from '~~/server/utils/cocktail/list'
 
 dotenv.config()
 
@@ -33,6 +34,11 @@ export default defineEventHandler(async (req) => {
         if (response.body[i].type === 'image') {
             response.body[i].values.imgUrl =
                 `${imageDomain}/${response.body[i].values.imgUrl}`
+        }
+
+        if (response.body[i].type === 'cocktail_collection') {
+            const cocktails = await getCocktailsBySlugs(response.body[i].values.slugs)
+            response.body[i].values = cocktails
         }
     }
 
