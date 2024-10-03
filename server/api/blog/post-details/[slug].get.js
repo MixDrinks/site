@@ -7,14 +7,14 @@ dotenv.config()
 
 const imageDomain = process.env.IMAGE_DOMAIN
 
-async function getBlockPost(slug) {
+async function getBlogPost(slug) {
     return db.collection('blog').findOne({ slug: slug })
 }
 
 export default defineEventHandler(async (req) => {
     const slug = req.context.params.slug
 
-    const response = await getBlockPost(slug)
+    const response = await getBlogPost(slug)
 
     for (let i = 0; i < response.body.length; i++) {
         if (response.body[i].type === 'cocktail') {
@@ -34,6 +34,15 @@ export default defineEventHandler(async (req) => {
                 `${imageDomain}/${response.body[i].values.imgUrl}`
         }
     }
+
+    const tags = response.tags.map((tag) => {
+        return {
+            slug: tag.slug,
+            name: tag.name,
+        }
+    });
+
+    response.tags = tags
 
     return response
 })
