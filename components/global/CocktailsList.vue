@@ -8,11 +8,7 @@
                 class="list__item item"
             >
                 <Transition
-                    :style="
-                        isMounted
-                            ? { transitionDelay: `${cocktailIndex / 10}s` }
-                            : false
-                    "
+                    :style="getTransitionDelay(cocktailIndex, true)"
                     appear
                     name="list"
                     mode="in-out"
@@ -21,16 +17,18 @@
                 </Transition>
             </div>
         </div>
-        <div class="list__ads">
-            <ins
-                class="adsbygoogle"
-                style="display: block"
-                data-ad-format="fluid"
-                data-ad-layout-key="-gh-4+1q-51+45"
-                data-ad-client="ca-pub-9033785625371866"
-                data-ad-slot="2682031593"
-            />
-        </div>
+        <ClientOnly>
+            <div class="list__ads">
+                <ins
+                    class="adsbygoogle"
+                    style="display: block"
+                    data-ad-format="fluid"
+                    data-ad-layout-key="-gh-4+1q-51+45"
+                    data-ad-client="ca-pub-9033785625371866"
+                    data-ad-slot="2682031593"
+                />
+            </div>
+        </ClientOnly>
         <div :class="listClasses" class="list">
             <div
                 v-for="(cocktail, cocktailIndex) in cocktailsSecond"
@@ -39,14 +37,7 @@
                 class="list__item item"
             >
                 <Transition
-                    :style="
-                        isMounted
-                            ? {
-                                  transitionDelay:
-                                      getTransitionDelay(cocktailIndex)
-                              }
-                            : false
-                    "
+                    :style="getTransitionDelay(cocktailIndex)"
                     appear
                     name="list"
                     mode="in-out"
@@ -149,12 +140,22 @@ export default defineComponent({
             unref(checkLength) ? unref(cocktails).slice(12) : []
         )
 
-        const getTransitionDelay = (index) => {
-            if (index / 12 < 1) {
-                return `${(index + 12) / 10}s`
+        const getTransitionDelay = (index, isFirst) => {
+            const divisor = 20
+            console.log(index)
+            if (unref(isMounted)) {
+                if (isFirst) {
+                    return { transitionDelay: `${index / divisor}s` }
+                }
+
+                if (index / 12 < 1) {
+                    return { transitionDelay: `${(index + 12) / divisor}s` }
+                }
+
+                return { transitionDelay: `${((index + 12) % 24) / divisor}s` }
             }
 
-            return `${((index + 12) % 24) / 10}s`
+            return false
         }
 
         return {

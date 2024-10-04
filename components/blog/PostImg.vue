@@ -2,7 +2,7 @@
     <img
         :src="values.imgUrl"
         alt=""
-        class="post__img"
+        class="img"
         width="410"
         height="200"
         title=""

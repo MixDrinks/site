@@ -2,17 +2,13 @@
     <main class="wrapper">
         <div class="post">
             <div class="post__header header">
+                <CocktailTags :tags="tags" class="header__tags" />
+                <div class="header__time">
+                    {{ date }}
+                </div>
                 <h1 class="header__title">
                     {{ post.title }}
                 </h1>
-                <img
-                    :alt="post.title"
-                    :src="post.image"
-                    class="post__img"
-                    width="410"
-                    height="200"
-                    title=""
-                />
             </div>
             <div class="post__body body">
                 <div
@@ -32,12 +28,14 @@
 
 <script>
 import { useHead, useRoute, useAsyncData } from 'nuxt/app'
-import { defineComponent } from 'vue'
+import { computed, defineComponent, unref } from 'vue'
 import { getPost } from '~~/api/pages'
+import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
 import { types } from '~~/utils/postItemType'
 
 export default defineComponent({
     name: 'PostPage',
+    components: { CocktailTags },
 
     async setup() {
         useHead({
@@ -48,40 +46,30 @@ export default defineComponent({
 
         const { data: post } = await useAsyncData(() => getPost(getPath()))
 
+        const tags = computed(() =>
+            unref(post).tags.map((tag) => ({
+                name: tag.name,
+                url: `blog/${tag.slug}`
+            }))
+        )
+
+        const date = computed(() => {
+            const date = new Date(unref(post).published_at)
+
+            const day = String(date.getUTCDate()).padStart(2, '0')
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0')
+            const year = date.getUTCFullYear()
+
+            return `${day}.${month}.${year}`
+        })
+
         return {
             post,
-            types
+            types,
+            tags,
+            date
         }
     }
-
-    // async asyncData({ route, error, $axios }) {
-    //     const post = await $axios
-    //         .get(`/blog/post-details/${route.params.id}`, {
-    //             withCredentials: false,
-    //         })
-    //         .catch(() => {
-    //             return error({
-    //                 statusCode: 404,
-    //                 message: 'This page could not be found',
-    //             })
-    //         })
-
-    //     return {
-    //         postData: post.data,
-    //     }
-    // },
-
-    // computed: {
-    //     canonical() {
-    //         return process.env.baseUrl + this.$nuxt.$route.path
-    //     },
-    //     title() {
-    //         return 'post title'
-    //     },
-    //     description() {
-    //         return `post description`
-    //     },
-    // },
 
     // head() {
     //     return {
