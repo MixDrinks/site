@@ -151,6 +151,11 @@
     font-size: 24px;
     line-height: 32px;
 }
+@mixin fontSize24M {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+}
 
 @mixin fontSize24B {
     @include fontSize24;
@@ -161,6 +166,11 @@
 @mixin fontSize32 {
     font-size: 32px;
     line-height: 40px;
+}
+@mixin fontSize32M {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
 }
 
 @mixin fontSize32B {

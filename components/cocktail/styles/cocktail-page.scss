@@ -1,6 +1,5 @@
 .cocktail {
     &__tags {
-        @include scrollNone;
         margin: 28px -40px $halfShortMargin;
 
         @media (min-width: 1023px) {

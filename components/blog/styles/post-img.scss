@@ -1,6 +1,15 @@
 .img {
     display: block;
     width: 956px;
-    height: 544px;
     margin-bottom: 32px;
+    max-width: calc(100% + 80px);
+    height: 100%;
+    margin-left: -40px;
+    margin-right: -40px;
+
+    @media (min-width: 1023px) {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+    }
 }

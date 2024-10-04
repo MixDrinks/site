@@ -142,7 +142,6 @@ export default defineComponent({
 
         const getTransitionDelay = (index, isFirst) => {
             const divisor = 20
-            console.log(index)
             if (unref(isMounted)) {
                 if (isFirst) {
                     return { transitionDelay: `${index / divisor}s` }

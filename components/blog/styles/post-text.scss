@@ -1,3 +1,8 @@
 .text {
-    @include fontSize18M;
+    @include fontSize16;
+    text-align: justify;
+
+    @media (min-width: 1023px) {
+        @include fontSize18M;
+    }
 }

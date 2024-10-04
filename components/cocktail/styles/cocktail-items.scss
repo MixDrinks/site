@@ -64,8 +64,10 @@ $cart: '.cart';
             margin-bottom: 0;
         }
         #{$self}__list {
-            margin: 0;
-            padding: 0;
+            @media (min-width: 1023px) {
+                margin: initial;
+                padding: initial;
+            }
         }
     }
 }

@@ -11,9 +11,21 @@
 }
 .header {
     &__title {
-        @include fontSize32;
-        font-weight: 600;
-        line-height: 1.5;
+        text-align: center;
+        @include fontSize24M;
+
+        @media (min-width: 1023px) {
+            text-align: left;
+            @include fontSize32M;
+            line-height: 1.5;
+        }
+    }
+    &__tags {
+        margin: 28px -40px $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin: $halfShortMargin auto $shortMargin;
+        }
     }
 }
 .body {

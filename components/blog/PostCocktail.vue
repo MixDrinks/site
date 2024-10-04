@@ -21,6 +21,7 @@
             <CocktailItems
                 :title="`Склад коктейлю ${values.name}`"
                 :items="values.goods"
+                class="info__items"
                 size="m"
             />
         </div>

@@ -1,3 +1,9 @@
-.text {
-    @include fontSize32B;
+.title {
+    text-align: center;
+    @include fontSize18B;
+
+    @media (min-width: 1023px) {
+        text-align: left;
+        @include fontSize24B;
+    }
 }
