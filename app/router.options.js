@@ -1,12 +1,12 @@
 import { useNuxtApp } from 'nuxt/app'
 
 export default {
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(to) {
         const nuxtApp = useNuxtApp()
 
-        if (savedPosition) {
-            return savedPosition
-        }
+        // if (savedPosition) {
+        //     return savedPosition
+        // }
 
         if (to.name === 'slug') {
             return false

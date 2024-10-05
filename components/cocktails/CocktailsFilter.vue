@@ -71,7 +71,15 @@
 
 <script>
 import { filterStore } from '~~/store/filter'
-import { computed, defineComponent, toRefs, unref, ref } from 'vue'
+import {
+    computed,
+    defineComponent,
+    toRefs,
+    unref,
+    ref,
+    onUpdated,
+    onMounted
+} from 'vue'
 import { filterType } from '~~/utils/selectionType'
 import CocktailsSearch from './CocktailsSearch.vue'
 
@@ -98,12 +106,15 @@ export default defineComponent({
             }
             return unref(filter).isOpen
         })
-        const toggleList = () =>
+        const toggleList = () => {
             filterStore.actions.updateFiltersIsOpenList(unref(filter).id)
+        }
+
         const animations = ref('')
+        const animationsHeight = ref(unref(animations).offsetHeight)
         const height = computed(() => {
             if (unref(filterIsShow)) {
-                return `${unref(animations).offsetHeight}px`
+                return `${unref(animationsHeight)}px`
             }
             return `0px`
         })
@@ -112,6 +123,7 @@ export default defineComponent({
         })
 
         const searchValue = ref('')
+
         const listSearch = computed(() => {
             if (unref(searchValue)) {
                 return unref(filter).items.filter((listItem) =>
@@ -122,6 +134,13 @@ export default defineComponent({
             }
             return unref(filter).items
         })
+
+        onMounted(
+            () => (animationsHeight.value = unref(animations).offsetHeight)
+        )
+        onUpdated(
+            () => (animationsHeight.value = unref(animations).offsetHeight)
+        )
 
         const togglerClasses = computed(() => ({
             'header__toggler--close': unref(filterIsShow)
