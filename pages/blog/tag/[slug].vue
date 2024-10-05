@@ -22,7 +22,9 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${route.params.slug}`
 
-        const { data: response } = await useAsyncData(() => getPostsByTag(getPath()))
+        const { data: response } = await useAsyncData(() =>
+            getPostsByTag(getPath())
+        )
 
         const posts = response.value?.posts || []
 

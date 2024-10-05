@@ -15,9 +15,7 @@ async function getPostsWithTag(tagSlug) {
 }
 
 async function getTag(tagSlug) {
-    return db
-        .collection('blogTags')
-        .findOne({ slug: tagSlug })
+    return db.collection('blogTags').findOne({ slug: tagSlug })
 }
 
 export default defineEventHandler(async (req) => {
