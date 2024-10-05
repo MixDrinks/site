@@ -13,11 +13,16 @@
                     name="list"
                     mode="in-out"
                 >
-                    <CocktailsCart v-show="isMounted" :cocktail="cocktail" />
+                    <div class="item__animation">
+                        <CocktailsCart
+                            v-show="isMounted"
+                            :cocktail="cocktail"
+                        />
+                    </div>
                 </Transition>
             </div>
         </div>
-        <ClientOnly>
+        <ClientOnly v-if="ads">
             <div class="list__ads">
                 <ins
                     class="adsbygoogle"
@@ -29,7 +34,7 @@
                 />
             </div>
         </ClientOnly>
-        <div :class="listClasses" class="list">
+        <div v-if="cocktailsSecond.length" :class="listClasses" class="list">
             <div
                 v-for="(cocktail, cocktailIndex) in cocktailsSecond"
                 :key="`item-${cocktail.id}${cocktailIndex}`"
@@ -42,11 +47,13 @@
                     name="list"
                     mode="in-out"
                 >
-                    <CocktailsCart
-                        v-show="isMounted"
-                        :cocktail="cocktail"
-                        isLoadingLazy
-                    />
+                    <div class="item__animation">
+                        <CocktailsCart
+                            v-show="isMounted"
+                            :cocktail="cocktail"
+                            isLoadingLazy
+                        />
+                    </div>
                 </Transition>
             </div>
         </div>
@@ -82,6 +89,10 @@ export default defineComponent({
         element: {
             type: Object,
             default: () => {}
+        },
+        ads: {
+            type: Boolean,
+            default: true
         }
     },
 
