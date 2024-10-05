@@ -46,19 +46,21 @@
             width: 1200px;
         }
     }
+
+    &__item {
+        @media (max-width: 1024px) {
+            &:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+    }
 }
 
 .item {
     position: relative;
 
-    @media (min-width: 1023px) {
-        padding-bottom: 30px;
-    }
-
-    @media (max-width: 1024px) {
-        &:not(:last-child) {
-            padding-bottom: 8px;
-        }
+    &__animation {
+        height: 100%;
     }
 
     &--items {
