@@ -23,7 +23,9 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${querySTR(route)}`
 
-        const { data: posts } = await useAsyncData(() => getPosts(getPath()))
+        const { data: response } = await useAsyncData(() => getPosts(getPath()))
+
+        const posts = response.value?.posts || []
 
         return {
             posts

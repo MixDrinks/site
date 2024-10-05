@@ -10,6 +10,9 @@ export const getFilters = () => {
 export const getPosts = (path) => {
     return $fetch(`/api/blog/post-list${path}`)
 }
+export const getPostsByTag = (path) => {
+    return $fetch(`/api/blog/tag${path}`)
+}
 export const getPost = (path) => {
     return $fetch(`/api/blog/post-details${path}`)
 }
