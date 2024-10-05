@@ -118,6 +118,10 @@
     @include fontSize16;
     font-weight: 600;
 }
+@mixin fontSize16B {
+    @include fontSize16;
+    font-weight: 700;
+}
 
 @mixin fontSize18 {
     font-size: 18px;

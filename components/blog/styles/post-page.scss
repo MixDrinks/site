@@ -8,6 +8,13 @@
 
     &__body {
     }
+    &__date {
+        margin-top: $halfShortMargin;
+
+        @media (min-width: 1023px) {
+            margin-top: $shortMargin;
+        }
+    }
 }
 .header {
     &__title {

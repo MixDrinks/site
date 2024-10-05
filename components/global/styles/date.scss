@@ -1,0 +1,49 @@
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include fontSize16;
+
+    @media (min-width: 1023px) {
+        @include fontSize18;
+    }
+    &__text {
+        margin-right: 10px;
+    }
+
+    &__item {
+        flex-shrink: 0;
+        margin-left: 4px;
+        margin-right: 4px;
+        height: 24x;
+        min-width: 24px;
+        padding: 3px 6px;
+        background-color: $colorMain;
+        color: $colorWhite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        @include fontSize16B;
+        border-radius: 4px;
+
+        @media (min-width: 1023px) {
+            @include fontSize18B;
+            height: 30px;
+            min-width: 30px;
+        }
+
+        &:not(:last-child) {
+            &::after {
+                content: '';
+                position: absolute;
+                right: -6px;
+                background-color: $colorMain;
+                width: 4px;
+                height: 4px;
+                bottom: 0;
+                border-radius: 50%;
+            }
+        }
+    }
+}

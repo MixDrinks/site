@@ -3,9 +3,6 @@
         <div class="post">
             <div class="post__header header">
                 <CocktailTags :tags="tags" class="header__tags" />
-                <div class="header__time">
-                    {{ date }}
-                </div>
                 <h1 class="header__title">
                     {{ post.title }}
                 </h1>
@@ -22,6 +19,7 @@
                     />
                 </div>
             </div>
+            <Date :date="post.published_at" class="post__date" />
         </div>
     </main>
 </template>
@@ -30,12 +28,14 @@
 import { useHead, useRoute, useAsyncData } from 'nuxt/app'
 import { computed, defineComponent, unref } from 'vue'
 import { getPost } from '~~/api/pages'
-import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
 import { types } from '~~/utils/postItemType'
+
+import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
+import Date from '~~/components/global/Date.vue'
 
 export default defineComponent({
     name: 'PostPage',
-    components: { CocktailTags },
+    components: { CocktailTags, Date },
 
     async setup() {
         useHead({
@@ -53,21 +53,10 @@ export default defineComponent({
             }))
         )
 
-        const date = computed(() => {
-            const date = new Date(unref(post).published_at)
-
-            const day = String(date.getUTCDate()).padStart(2, '0')
-            const month = String(date.getUTCMonth() + 1).padStart(2, '0')
-            const year = date.getUTCFullYear()
-
-            return `${day}.${month}.${year}`
-        })
-
         return {
             post,
             types,
-            tags,
-            date
+            tags
         }
     }
 
