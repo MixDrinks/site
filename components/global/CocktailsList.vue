@@ -13,11 +13,8 @@
                     name="list"
                     mode="in-out"
                 >
-                    <div class="item__animation">
-                        <CocktailsCart
-                            v-show="isMounted"
-                            :cocktail="cocktail"
-                        />
+                    <div v-show="isMounted" class="item__animation">
+                        <CocktailsCart :cocktail="cocktail" />
                     </div>
                 </Transition>
             </div>
@@ -47,12 +44,8 @@
                     name="list"
                     mode="in-out"
                 >
-                    <div class="item__animation">
-                        <CocktailsCart
-                            v-show="isMounted"
-                            :cocktail="cocktail"
-                            isLoadingLazy
-                        />
+                    <div v-show="isMounted" class="item__animation">
+                        <CocktailsCart :cocktail="cocktail" isLoadingLazy />
                     </div>
                 </Transition>
             </div>
