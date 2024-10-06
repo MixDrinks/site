@@ -1,6 +1,6 @@
 <template>
     <main class="wrapper">
-        <BlogPage :posts="posts" />
+        <BlogPage :posts="data.posts" />
     </main>
 </template>
 
@@ -23,12 +23,10 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${querySTR(route)}`
 
-        const { data: response } = await useAsyncData(() => getPosts(getPath()))
-
-        const posts = response.value?.posts || []
+        const { data } = await useAsyncData(() => getPosts(getPath()))
 
         return {
-            posts
+            data
         }
     }
 
