@@ -49,7 +49,7 @@ export default defineComponent({
         const tags = computed(() =>
             unref(post).tags.map((tag) => ({
                 name: tag.name,
-                url: `blog/${tag.slug}`
+                url: `blog/tag/${tag.slug}`
             }))
         )
 

@@ -14,10 +14,15 @@ async function getPostsWithTag(tagSlug) {
         .toArray()
 }
 
+async function getTag(tagSlug) {
+    return db.collection('blogTags').findOne({ slug: tagSlug })
+}
+
 export default defineEventHandler(async (req) => {
     const tagSlug = req.context.params.tag
 
     const postList = await getPostsWithTag(tagSlug)
+    const tag = await getTag(tagSlug)
 
     const responsePostList = postList.map((post) => {
         const imageFullUrl = `${imageDomain}/${post.image}`
@@ -30,5 +35,11 @@ export default defineEventHandler(async (req) => {
         return postDto
     })
 
-    return responsePostList
+    return {
+        tag: {
+            name: tag.name,
+            slug: tag.slug
+        },
+        posts: responsePostList
+    }
 })
