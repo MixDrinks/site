@@ -93,6 +93,7 @@
     }
 
     &__animations {
+        overflow: hidden;
         transition: height $defaultAnimTime;
     }
 
