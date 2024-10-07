@@ -19,18 +19,16 @@
                 </Transition>
             </div>
         </div>
-        <ClientOnly v-if="ads">
-            <div class="list__ads">
-                <ins
-                    class="adsbygoogle"
-                    style="display: block"
-                    data-ad-format="fluid"
-                    data-ad-layout-key="-gh-4+1q-51+45"
-                    data-ad-client="ca-pub-9033785625371866"
-                    data-ad-slot="2682031593"
-                />
-            </div>
-        </ClientOnly>
+        <div v-if="ads" class="list__ads">
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-format="fluid"
+                data-ad-layout-key="-gh-4+1q-51+45"
+                data-ad-client="ca-pub-9033785625371866"
+                data-ad-slot="2682031593"
+            />
+        </div>
         <div v-if="cocktailsSecond.length" :class="listClasses" class="list">
             <div
                 v-for="(cocktail, cocktailIndex) in cocktailsSecond"
