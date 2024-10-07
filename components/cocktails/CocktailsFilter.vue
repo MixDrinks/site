@@ -22,19 +22,24 @@
                         v-for="item in listSearch"
                         :key="`filter-list__item-${item.name}`"
                     >
-                        <NuxtLink
-                            v-if="!!item.count"
-                            :title="item.name"
-                            :rel="item.rel"
-                            :to="item.url"
-                            :class="getLinkClasses(item.isActive)"
+                        <div
+                            :class="getLinkClasses(item)"
                             class="filter-list__item filter-list-item"
                         >
                             <span
                                 :class="filterListItemClasses"
                                 class="filter-list-item__flag"
                             />
-                            <span class="filter-list-item__name">
+                            <NuxtLink
+                                v-if="!!item.count"
+                                :title="item.name"
+                                :rel="item.rel"
+                                :to="item.url"
+                                class="filter-list-item__name filter-list-item__name--link"
+                            >
+                                {{ item.name }}
+                            </NuxtLink>
+                            <span v-else class="filter-list-item__name">
                                 {{ item.name }}
                             </span>
                             <span
@@ -43,22 +48,7 @@
                             >
                                 {{ item.count }}
                             </span>
-                        </NuxtLink>
-                        <span
-                            v-else
-                            class="filter-list__item filter-list-item filter-list-item--lock"
-                        >
-                            <span
-                                :class="filterListItemClasses"
-                                class="filter-list-item__flag"
-                            />
-                            <span class="filter-list-item__name">
-                                {{ item.name }}
-                            </span>
-                            <span class="filter-list-item__count">
-                                {{ item.count }}
-                            </span>
-                        </span>
+                        </div>
                     </template>
                     <div v-if="listSearchIsEmpty" class="filter-list__text">
                         Нічого не знайдено
@@ -118,8 +108,9 @@ export default defineComponent({
             }
             return `0px`
         })
-        const getLinkClasses = (value) => ({
-            'filter-list-item--active': value
+        const getLinkClasses = (item) => ({
+            'filter-list-item--active': item.isActive,
+            'filter-list-item--lock': !item.count
         })
 
         const searchValue = ref('')

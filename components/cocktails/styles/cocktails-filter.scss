@@ -119,6 +119,7 @@
     align-items: center;
     padding-top: 8px;
     padding-bottom: 8px;
+    position: relative;
 
     @media (min-width: 1023px) {
         cursor: pointer;
@@ -142,7 +143,6 @@
     }
     &--lock {
         pointer-events: none;
-        position: relative;
 
         &::after {
             @include fullPseudoElement;
@@ -217,6 +217,12 @@
         }
         &::first-letter {
             text-transform: uppercase;
+        }
+
+        &--link {
+            &::after {
+                @include fullPseudoElement;
+            }
         }
     }
 
