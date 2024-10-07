@@ -46,16 +46,18 @@
                 :receipt="cocktail.receipt"
                 class="cocktail-body__recipe"
             />
-            <div class="cocktail-body__ads">
-                <ins
-                    class="adsbygoogle"
-                    style="display: block"
-                    data-ad-format="fluid"
-                    data-ad-layout-key="-gh-4+1q-51+45"
-                    data-ad-client="ca-pub-9033785625371866"
-                    data-ad-slot="2682031593"
-                />
-            </div>
+            <ClientOnly>
+                <div class="cocktail-body__ads">
+                    <ins
+                        class="adsbygoogle"
+                        style="display: block"
+                        data-ad-format="fluid"
+                        data-ad-layout-key="-gh-4+1q-51+45"
+                        data-ad-client="ca-pub-9033785625371866"
+                        data-ad-slot="2682031593"
+                    />
+                </div>
+            </ClientOnly>
             <Separator />
             <CocktailItems
                 :title="`Склад коктейлю ${cocktail.name}`"

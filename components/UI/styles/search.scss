@@ -7,6 +7,7 @@
         position: absolute;
         top: 100%;
         width: 100%;
+        overflow: hidden;
     }
 }
 
@@ -25,13 +26,13 @@
         }
     }
 
-    &:not(:hover)#{&--filled} {
+    &:not(:hover)#{&--focus} {
         #{$self}__input {
             box-shadow: inset 0px -2px 0px $colorWhite;
         }
     }
 
-    &--filled {
+    &--focus {
         #{$self}__label {
             top: 0%;
             transform: translateY(0);
@@ -81,18 +82,32 @@
     border-radius: 0 0 10px 10px;
     background-color: $colorWhite;
     padding: $halfPadding $defaultPadding;
+    opacity: 0;
+    filter: blur(4px);
+    transition:
+        opacity $defaultAnimTime,
+        filter $defaultAnimTime;
 
     &__list {
         max-height: 200px;
-        overflow: auto;
+    }
+
+    &__animations {
+        transition: height $defaultAnimTime;
+    }
+
+    &--filled {
+        opacity: 1;
+        filter: blur(0);
     }
 }
 
-.search-result-list {
+.list {
+    overflow: auto;
     @include defaultWrapperScroll;
 }
 
-.search-result-list-item {
+.list-item {
     &__span,
     &__link {
         overflow: hidden;
@@ -109,45 +124,29 @@
 
         &:after {
             content: '';
-
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
-
             height: 2px;
-
             background-color: $colorHover;
-
             transform: translateX(-100%);
-
             transition: transform $defaultAnimTime;
-
             z-index: 1;
         }
 
-        &:hover::after {
-            transform: translateX(0);
+        @media (hover: hover) {
+            &:hover::after {
+                transform: translateX(0);
+            }
         }
-    }
-}
 
-.max-height-enter-active {
-    animation: max-height $defaultAnimTime;
-    overflow: hidden;
-}
-
-.max-height-leave-active {
-    animation: max-height 0.1s reverse;
-    overflow: hidden;
-}
-
-@keyframes max-height {
-    0% {
-        max-height: 0;
-    }
-
-    100% {
-        max-height: 232px;
+        &--active {
+            font-weight: 700;
+            pointer-events: none;
+            &::after {
+                transform: translateX(0);
+            }
+        }
     }
 }
