@@ -94,9 +94,6 @@ export default defineComponent({
                     async: true,
                     src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
                     crossorigin: 'anonymous'
-                },
-                {
-                    innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
                 }
             ]
         })
@@ -113,6 +110,7 @@ export default defineComponent({
 
         onMounted(() => {
             isMounted.value = true
+            ;(adsbygoogle = window.adsbygoogle || []).push({})
         })
 
         watch(cocktails, () => {

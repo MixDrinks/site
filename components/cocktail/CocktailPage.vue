@@ -95,7 +95,7 @@ import CocktailRecipe from './CocktailRecipe.vue'
 import CocktailArticle from './CocktailArticle.vue'
 import CocktailTags from './CocktailTags.vue'
 
-import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
+import { onBeforeUnmount, toRefs, defineComponent, unref, onMounted } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
 import { updateVisit } from '~~/api/other'
@@ -123,6 +123,9 @@ export default defineComponent({
         onBeforeUnmount(() => {
             updateVisit(unref(cocktail).slug)
         })
+        onMounted(() => {
+            ;(adsbygoogle = window.adsbygoogle || []).push({})
+        })
 
         const headTitle = `Коктейль ${unref(cocktail).name} 🍹 приготування в домашніх умовах за рецептом`
         const headDescription = `Як приготувати коктейль ${unref(cocktail).name} 🍹 в домашніх умовах, вcі інгрідієнти які вам потрібні та рецепт для коктейля наведені на cторінці!`
@@ -136,9 +139,6 @@ export default defineComponent({
                 async: true,
                 src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
                 crossorigin: 'anonymous'
-            },
-            {
-                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
             }
         ]
 
