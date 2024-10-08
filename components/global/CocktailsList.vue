@@ -97,7 +97,7 @@ export default defineComponent({
                 }
             ]
         })
-        const { modificator, cocktails, element } = toRefs(props)
+        const { modificator, cocktails, element, ads } = toRefs(props)
 
         const listClasses = computed(() => ({
             [`list--${unref(modificator)}`]: Boolean(unref(modificator))
@@ -110,7 +110,10 @@ export default defineComponent({
 
         onMounted(() => {
             isMounted.value = true
-            ;(adsbygoogle = window.adsbygoogle || []).push({})
+
+            if (unref(ads)) {
+                ;(adsbygoogle = window.adsbygoogle || []).push({})
+            }
         })
 
         watch(cocktails, () => {
