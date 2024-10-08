@@ -8,6 +8,15 @@
 
     &__body {
     }
+
+    &__breadCrumbs {
+        margin-bottom: 12px;
+
+        @media (min-width: 1023px) {
+            margin-bottom: $halfShortMargin;
+        }
+    }
+
     &__date {
         margin-top: $halfShortMargin;
 
@@ -28,10 +37,13 @@
         }
     }
     &__tags {
-        margin: 28px -40px $halfShortMargin;
+        margin-bottom: $halfShortMargin;
+        margin-left: -40px;
+        margin-right: -40px;
 
         @media (min-width: 1023px) {
-            margin: $halfShortMargin auto $shortMargin;
+            margin-left: auto;
+            margin-right: auto;
         }
     }
 }

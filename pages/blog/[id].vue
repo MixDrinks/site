@@ -1,6 +1,7 @@
 <template>
     <main class="wrapper">
         <div class="post">
+            <BreadCrumbs :breadCrumbs="breadCrumbs" class="post__breadCrumbs" />
             <div class="post__header header">
                 <CocktailTags :tags="tags" class="header__tags" />
                 <h1 class="header__title">
@@ -32,10 +33,11 @@ import { types } from '~~/utils/postItemType'
 
 import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
 import Date from '~~/components/global/Date.vue'
+import BreadCrumbs from '~~/components/global/BreadCrumbs.vue'
 
 export default defineComponent({
     name: 'PostPage',
-    components: { CocktailTags, Date },
+    components: { CocktailTags, Date, BreadCrumbs },
 
     async setup() {
         useHead({
@@ -53,10 +55,21 @@ export default defineComponent({
             }))
         )
 
+        const breadCrumbs = [
+            {
+                name: 'Блог',
+                slug: '/blog'
+            },
+            {
+                name: unref(post).title
+            }
+        ]
+
         return {
             post,
             types,
-            tags
+            tags,
+            breadCrumbs
         }
     }
 

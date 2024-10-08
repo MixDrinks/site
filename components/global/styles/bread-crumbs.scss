@@ -1,0 +1,65 @@
+.bread-crumbs {
+    &__item {
+        display: inline;
+        margin-left: -6px;
+
+        &:not(:last-child) {
+            position: relative;
+            margin-right: 12px;
+
+            @media (min-width: 1023px) {
+                margin-right: 24px;
+            }
+            &::after {
+                pointer-events: none;
+                content: '';
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                border-top: 1px solid $colorMain;
+                border-right: 1px solid $colorMain;
+                transform: translateY(-50%) rotate(45deg);
+                top: 56%;
+                left: calc(100% - 2px);
+
+                @media (min-width: 1023px) {
+                    width: 8px;
+                    height: 8px;
+                    left: calc(100% + 2px);
+                }
+            }
+        }
+    }
+    &__link {
+        border-radius: 4px;
+        color: $colorMain;
+        @include fontSize14;
+        padding: 1px 6px;
+        background-color: transparent;
+        transition:
+            background-color $defaultAnimTime,
+            color $defaultAnimTime;
+
+        &:focus {
+            background-color: $colorMain;
+            color: $colorWhite;
+        }
+
+        @media (min-width: 1023px) {
+            @include fontSize18;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: $colorMain;
+                color: $colorWhite;
+            }
+        }
+
+        &--active {
+            pointer-events: none;
+            font-weight: 600;
+            color: $colorHover;
+        }
+    }
+}
