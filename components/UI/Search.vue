@@ -21,7 +21,7 @@
                     >
                         <NuxtLink
                             v-if="checkSlug(listItem.slug)"
-                            :to="`/cocktails/${listItem.slug}`"
+                            :to="`/${pages.cocktail.slug}/${listItem.slug}`"
                             class="list-item__link"
                         >
                             {{ listItem.name }}
@@ -57,6 +57,8 @@ import {
     onMounted
 } from 'vue'
 import { useRoute } from 'nuxt/app'
+import { pages } from '../../utils/pages'
+
 export default defineComponent({
     name: 'Search',
 
@@ -125,7 +127,8 @@ export default defineComponent({
             animations,
             height,
             resultClasses,
-            checkSlug
+            checkSlug,
+            pages
         }
     }
 })

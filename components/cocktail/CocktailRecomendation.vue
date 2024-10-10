@@ -43,7 +43,7 @@
                         />
                     </picture>
                     <NuxtLink
-                        :to="`/cocktails/${cocktail.slug}`"
+                        :to="`/${pages.cocktail.slug}/${cocktail.slug}`"
                         class="cart__name"
                     >
                         {{ cocktail.name }}
@@ -56,7 +56,9 @@
 
 <script>
 import TitleH2 from '../global/TitleH2.vue'
+
 import { defineComponent } from 'vue'
+import { pages } from '../../utils/pages'
 
 export default defineComponent({
     name: 'CocktailRecomendation',
@@ -71,7 +73,8 @@ export default defineComponent({
         const getRating = (value) => Number(value.toFixed(1))
 
         return {
-            getRating
+            getRating,
+            pages
         }
     }
 })

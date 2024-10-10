@@ -25,7 +25,7 @@
                     </a>
                     <!-- <NuxtLink
                         class="footer-content-communication-item__link"
-                        to="/blog"
+                        :to="`/${pages.blog.slug}`"
                     >
                         Блог
                     </NuxtLink> -->
@@ -57,8 +57,8 @@
                         Документація проєкту
                     </a>
                     <NuxtLink
+                        :to="`/${pages.privacy.slug}`"
                         class="footer-content-about-item__link"
-                        to="/privacy"
                     >
                         Політика конфіденційності
                     </NuxtLink>
@@ -95,9 +95,16 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { pages } from '../../utils/pages'
 
 export default defineComponent({
-    name: 'SiteFooter'
+    name: 'SiteFooter',
+
+    setup() {
+        return {
+            pages
+        }
+    }
 })
 </script>
 

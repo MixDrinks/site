@@ -19,7 +19,10 @@
                         height="200"
                         title=""
                     />
-                    <NuxtLink :to="`/blog/${post.slug}`" class="post__title">
+                    <NuxtLink
+                        :to="`/${pages.blog.slug}/${post.slug}`"
+                        class="post__title"
+                    >
                         {{ post.title }}
                     </NuxtLink>
                 </div>
@@ -29,7 +32,10 @@
 </template>
 
 <script>
+import { pages } from '../../utils/pages'
+
 import BreadCrumbs from '../global/BreadCrumbs.vue'
+
 export default {
     name: 'BlogPage',
     components: { BreadCrumbs },
@@ -47,7 +53,8 @@ export default {
         ]
 
         return {
-            breadCrumbs
+            breadCrumbs,
+            pages
         }
     }
 }

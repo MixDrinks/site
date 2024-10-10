@@ -30,6 +30,7 @@ import { useHead, useRoute, useAsyncData } from 'nuxt/app'
 import { computed, defineComponent, unref } from 'vue'
 import { getPost } from '~~/api/pages'
 import { types } from '~~/utils/postItemType'
+import { pages } from '../../utils/pages'
 
 import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
 import Date from '~~/components/global/Date.vue'
@@ -51,14 +52,14 @@ export default defineComponent({
         const tags = computed(() =>
             unref(post).tags.map((tag) => ({
                 name: tag.name,
-                url: `blog/tag/${tag.slug}`
+                url: `${pages.blog.slug}/t/${tag.slug}`
             }))
         )
 
         const breadCrumbs = [
             {
                 name: 'Блог',
-                slug: '/blog'
+                slug: `/${pages.blog.slug}`
             },
             {
                 name: unref(post).title
