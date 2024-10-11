@@ -56,6 +56,7 @@ import {
     onUpdated,
     onMounted
 } from 'vue'
+import { getListSearch } from '~~/api/other'
 import { useRoute } from 'nuxt/app'
 import { pages } from '../../utils/pages'
 
@@ -73,9 +74,7 @@ export default defineComponent({
         const removeFocus = () => (focusInput.value = false)
 
         async function setListSearch() {
-            listSearch.value = await $fetch(
-                `https://newapi.mixdrinks.org/api/cocktails/all`
-            )
+            listSearch.value = await getListSearch()
         }
 
         const height = computed(() => {

@@ -11,3 +11,5 @@ export const updateVisit = (slug) => {
         method: 'POST'
     })
 }
+export const getListSearch = () =>
+    $fetch('https://newapi.mixdrinks.org/api/cocktails/all')

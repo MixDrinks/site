@@ -52,7 +52,7 @@ export default defineComponent({
         const tags = computed(() =>
             unref(post).tags.map((tag) => ({
                 name: tag.name,
-                url: `${pages.blog.slug}/t/${tag.slug}`
+                url: `${pages.blog.slug}/${pages.blog.tag}/${tag.slug}`
             }))
         )
 
@@ -73,46 +73,6 @@ export default defineComponent({
             breadCrumbs
         }
     }
-
-    // head() {
-    //     return {
-    //         title: this.title,
-    //         link: [{ rel: 'canonical', href: this.canonical }],
-    //         meta: [
-    //             {
-    //                 hid: 'description',
-    //                 name: 'description',
-    //                 content: this.description,
-    //             },
-    //             {
-    //                 hid: 'og:title',
-    //                 name: 'og:title',
-    //                 content: this.title,
-    //             },
-    //             {
-    //                 hid: 'og:description',
-    //                 property: 'og:description',
-    //                 content: this.description,
-    //             },
-    //             {
-    //                 hid: 'og:url',
-    //                 property: 'og:url',
-    //                 content: `${this.canonical}`,
-    //             },
-    //             {
-    //                 hid: 'og:image',
-    //                 property: 'og:image',
-    //                 content: `${this.post.meta.ogImage}`,
-    //             },
-
-    //         ],
-    //     }
-    // },
-    // mounted() {
-    //     this.$axios.post(`/post/${this.post.slug}/visit`, {
-    //         withCredentials: true,
-    //     })
-    // },
 })
 </script>
 

@@ -16,5 +16,8 @@ export const pages = {
     },
     privacy: {
         slug: 'privacy'
+    },
+    tag: {
+        slug: 't'
     }
 }
