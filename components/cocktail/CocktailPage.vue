@@ -132,6 +132,7 @@ export default defineComponent({
 
         const scripts = [
             {
+                async: true,
                 type: 'application/ld+json',
                 children: schemaRecipe(unref(cocktail), headDescription)
             },

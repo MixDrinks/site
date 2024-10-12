@@ -65,17 +65,20 @@ export default defineNuxtConfig({
             ],
             script: [
                 {
-                    src: 'https://www.googletagmanager.com/gtag/js?id=G-8DWKDM4NCR',
-                    async: true
+                    async: true,
+                    src: 'https://www.googletagmanager.com/gtag/js?id=G-8DWKDM4NCR'
                 },
                 {
+                    async: true,
                     src: '/scripts/googleAnalytics.js'
                 },
                 {
+                    async: true,
                     type: 'application/ld+json',
                     children: JSON.stringify(schemaOrganization)
                 },
                 {
+                    async: true,
                     type: 'application/ld+json',
                     children: JSON.stringify(schemaWebSite)
                 }
