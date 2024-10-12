@@ -1,23 +1,14 @@
 <template>
     <div class="wrapper">
         <div :class="listClasses" class="list">
-            <div
+            <CocktailsCart
                 v-for="(cocktail, cocktailIndex) in cocktailsFirst"
-                :key="`item-${cocktail.id}${cocktailIndex}`"
-                :class="itemClasses"
-                class="list__item item"
-            >
-                <Transition
-                    :style="getTransitionDelay(cocktailIndex, true)"
-                    appear
-                    name="list"
-                    mode="in-out"
-                >
-                    <div v-show="isMounted" class="item__animation">
-                        <CocktailsCart :cocktail="cocktail" />
-                    </div>
-                </Transition>
-            </div>
+                :key="`list__cart-${cocktail.id}${cocktailIndex}`"
+                :style="getAnimationDelay(cocktailIndex, true)"
+                :cocktail="cocktail"
+                :class="cartClasses"
+                class="list__cart"
+            />
         </div>
         <div v-if="ads" class="list__ads">
             <ins
@@ -30,23 +21,15 @@
             />
         </div>
         <div v-if="cocktailsSecond.length" :class="listClasses" class="list">
-            <div
-                v-for="(cocktail, cocktailIndex) in cocktailsSecond"
-                :key="`item-${cocktail.id}${cocktailIndex}`"
-                :class="itemClasses"
-                class="list__item item"
-            >
-                <Transition
-                    :style="getTransitionDelay(cocktailIndex)"
-                    appear
-                    name="list"
-                    mode="in-out"
-                >
-                    <div v-show="isMounted" class="item__animation">
-                        <CocktailsCart :cocktail="cocktail" isLoadingLazy />
-                    </div>
-                </Transition>
-            </div>
+            <CocktailsCart
+                v-for="(cocktail, cocktailIndex) in cocktailsFirst"
+                :key="`list__cart-${cocktail.id}${cocktailIndex}`"
+                :style="getAnimationDelay(cocktailIndex)"
+                :cocktail="cocktail"
+                :class="cartClasses"
+                isLoadingLazy
+                class="list__cart"
+            />
         </div>
     </div>
 </template>
@@ -102,8 +85,8 @@ export default defineComponent({
         const listClasses = computed(() => ({
             [`list--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
-        const itemClasses = computed(() => ({
-            [`item--${unref(modificator)}`]: Boolean(unref(modificator))
+        const cartClasses = computed(() => ({
+            [`list__cart--${unref(modificator)}`]: Boolean(unref(modificator))
         }))
 
         const isMounted = ref(false)
@@ -143,18 +126,18 @@ export default defineComponent({
             unref(checkLength) ? unref(cocktails).slice(12) : []
         )
 
-        const getTransitionDelay = (index, isFirst) => {
+        const getAnimationDelay = (index, isFirst) => {
             const divisor = 20
             if (unref(isMounted)) {
                 if (isFirst) {
-                    return { transitionDelay: `${index / divisor}s` }
+                    return { animationDelay: `${index / divisor}s` }
                 }
 
                 if (index / 12 < 1) {
-                    return { transitionDelay: `${(index + 12) / divisor}s` }
+                    return { animationDelay: `${(index + 12) / divisor}s` }
                 }
 
-                return { transitionDelay: `${((index + 12) % 24) / divisor}s` }
+                return { animationDelay: `${((index + 12) % 24) / divisor}s` }
             }
 
             return false
@@ -163,10 +146,9 @@ export default defineComponent({
         return {
             cocktailsFirst,
             cocktailsSecond,
-            itemClasses,
+            cartClasses,
             listClasses,
-            isMounted,
-            getTransitionDelay
+            getAnimationDelay
         }
     }
 })
