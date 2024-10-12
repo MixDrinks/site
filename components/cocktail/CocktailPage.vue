@@ -47,14 +47,7 @@
                 class="cocktail-body__recipe"
             />
             <div class="cocktail-body__ads">
-                <ins
-                    class="adsbygoogle"
-                    style="display: block"
-                    data-ad-format="fluid"
-                    data-ad-layout-key="-gh-4+1q-51+45"
-                    data-ad-client="ca-pub-9033785625371866"
-                    data-ad-slot="2682031593"
-                />
+                <Advertising />
             </div>
             <Separator />
             <CocktailItems
@@ -94,8 +87,9 @@ import Separator from '../global/Separator.vue'
 import CocktailRecipe from './CocktailRecipe.vue'
 import CocktailArticle from './CocktailArticle.vue'
 import CocktailTags from './CocktailTags.vue'
+import Advertising from '../global/Advertising.vue'
 
-import { onBeforeUnmount, toRefs, defineComponent, unref, onMounted } from 'vue'
+import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
 import { schemaRecipe } from '~~/utils/schemaRecipe'
 import { updateVisit } from '~~/api/other'
@@ -109,7 +103,8 @@ export default defineComponent({
         Separator,
         CocktailRecipe,
         CocktailArticle,
-        CocktailTags
+        CocktailTags,
+        Advertising
     },
     props: {
         cocktail: {
@@ -123,9 +118,6 @@ export default defineComponent({
         onBeforeUnmount(() => {
             updateVisit(unref(cocktail).slug)
         })
-        onMounted(() => {
-            ;(adsbygoogle = window.adsbygoogle || []).push({})
-        })
 
         const headTitle = `Коктейль ${unref(cocktail).name} 🍹 приготування в домашніх умовах за рецептом`
         const headDescription = `Як приготувати коктейль ${unref(cocktail).name} 🍹 в домашніх умовах, вcі інгрідієнти які вам потрібні та рецепт для коктейля наведені на cторінці!`
@@ -135,11 +127,6 @@ export default defineComponent({
                 async: true,
                 type: 'application/ld+json',
                 children: schemaRecipe(unref(cocktail), headDescription)
-            },
-            {
-                async: true,
-                src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                crossorigin: 'anonymous'
             }
         ]
 

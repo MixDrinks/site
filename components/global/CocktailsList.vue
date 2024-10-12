@@ -11,14 +11,7 @@
             />
         </div>
         <div v-if="ads" class="list__ads">
-            <ins
-                class="adsbygoogle"
-                style="display: block"
-                data-ad-format="fluid"
-                data-ad-layout-key="-gh-4+1q-51+45"
-                data-ad-client="ca-pub-9033785625371866"
-                data-ad-slot="2682031593"
-            />
+            <Advertising />
         </div>
         <div v-if="cocktailsSecond.length" :class="listClasses" class="list">
             <CocktailsCart
@@ -35,7 +28,6 @@
 </template>
 
 <script>
-import { useHead } from 'nuxt/app'
 import {
     defineComponent,
     computed,
@@ -46,11 +38,12 @@ import {
     onMounted
 } from 'vue'
 
+import Advertising from './Advertising.vue'
 import CocktailsCart from './CocktailsCart.vue'
 
 export default defineComponent({
     name: 'CocktailsList',
-    components: { CocktailsCart },
+    components: { CocktailsCart, Advertising },
     props: {
         cocktails: {
             type: Array,
@@ -71,16 +64,7 @@ export default defineComponent({
     },
 
     setup(props) {
-        useHead({
-            script: [
-                {
-                    async: true,
-                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                    crossorigin: 'anonymous'
-                }
-            ]
-        })
-        const { modificator, cocktails, element, ads } = toRefs(props)
+        const { modificator, cocktails, element } = toRefs(props)
 
         const listClasses = computed(() => ({
             [`list--${unref(modificator)}`]: Boolean(unref(modificator))
@@ -93,10 +77,6 @@ export default defineComponent({
 
         onMounted(() => {
             isMounted.value = true
-
-            if (unref(ads)) {
-                ;(adsbygoogle = window.adsbygoogle || []).push({})
-            }
         })
 
         watch(cocktails, () => {
