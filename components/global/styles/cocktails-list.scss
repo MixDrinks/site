@@ -56,12 +56,12 @@
             0% {
                 opacity: 0;
                 filter: blur(1rem);
-                transform: translateY(10px);
+                top: 10px;
             }
             100% {
                 opacity: 1;
                 filter: blur(0);
-                transform: translateY(0);
+                top: 0;
             }
         }
 

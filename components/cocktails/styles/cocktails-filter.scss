@@ -60,10 +60,8 @@
         border-radius: 4px;
         background-color: $colorMain;
 
-        @media (hover: hover) {
-            &:hover {
-                background-color: $colorHover;
-            }
+        &:hover {
+            background-color: $colorHover;
         }
 
         &::after,
@@ -124,20 +122,18 @@
     @media (min-width: 1023px) {
         cursor: pointer;
     }
-    @media (hover: hover) {
-        &:hover {
-            #{$self}__name {
-                color: $colorMain;
-            }
-            #{$self}__flag {
-                &--radio {
-                    &::after {
-                        background-color: rgba($colorMain, 0.5);
-                    }
-                }
-                &--checkbox {
+    &:hover {
+        #{$self}__name {
+            color: $colorMain;
+        }
+        #{$self}__flag {
+            &--radio {
+                &::after {
                     background-color: rgba($colorMain, 0.5);
                 }
+            }
+            &--checkbox {
+                background-color: rgba($colorMain, 0.5);
             }
         }
     }

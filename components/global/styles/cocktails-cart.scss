@@ -101,7 +101,17 @@
 
         &::after {
             z-index: 1;
+            border-radius: 8px;
             @include fullPseudoElement;
+            transition: box-shadow $defaultAnimTime;
+        }
+
+        @media (hover: none) {
+            &:focus {
+                &::after {
+                    box-shadow: 0 0 30px rgba($colorHover, 0.4);
+                }
+            }
         }
     }
 }
