@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { defineComponent, onBeforeUnmount, onMounted } from 'vue'
+import { defineComponent, onMounted, onBeforeUnmount } from 'vue'
 
 export default defineComponent({
     name: 'Advertising',
@@ -28,26 +28,17 @@ export default defineComponent({
             }
         }
 
-        const loadFun = () => {
-            if (!window.adsbygoogle) {
-                loadAdsByGoogle()
-            }
-        }
-
-        onMounted(() => {
-            if (document.readyState === 'complete') {
-                loadFun()
-            } else {
-                window.addEventListener('load', loadFun)
-            }
-        })
         onBeforeUnmount(() => {
-            window.removeEventListener('load', loadFun)
+            window.removeEventListener('scroll', loadAdsByGoogle)
         })
 
         onMounted(() => {
             if (window.adsbygoogle) {
                 ;(adsbygoogle = window.adsbygoogle || []).push({})
+            } else {
+                window.addEventListener('scroll', loadAdsByGoogle, {
+                    once: true
+                })
             }
         })
     }
