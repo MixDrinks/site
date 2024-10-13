@@ -61,7 +61,9 @@ export default defineComponent({
     },
     setup(props) {
         const { isLoadingLazy } = toRefs(props)
-        const loading = computed(() => (unref(isLoadingLazy) ? 'lazy' : false))
+        const loading = computed(() =>
+            unref(isLoadingLazy) ? 'lazy' : 'eager'
+        )
         const getRating = (value) => Number(value.toFixed(1))
 
         return {

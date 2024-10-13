@@ -7,6 +7,7 @@
                 :style="getAnimationDelay(cocktailIndex, true)"
                 :cocktail="cocktail"
                 :class="cartClasses"
+                :isLoadingLazy="false"
                 class="list__cart"
             />
         </div>
@@ -15,12 +16,11 @@
         </div>
         <div v-if="cocktailsSecond.length" :class="listClasses" class="list">
             <CocktailsCart
-                v-for="(cocktail, cocktailIndex) in cocktailsFirst"
+                v-for="(cocktail, cocktailIndex) in cocktailsSecond"
                 :key="`list__cart-${cocktail.id}${cocktailIndex}`"
                 :style="getAnimationDelay(cocktailIndex)"
                 :cocktail="cocktail"
                 :class="cartClasses"
-                isLoadingLazy
                 class="list__cart"
             />
         </div>
