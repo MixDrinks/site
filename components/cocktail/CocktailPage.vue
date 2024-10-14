@@ -37,7 +37,7 @@
                     :alt="`Зображення коктейля ${cocktail.name}`"
                     :title="cocktail.name"
                     width="332"
-                    height="208"
+                    height="332"
                     class="cocktail-body__img"
                 />
             </picture>
