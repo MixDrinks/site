@@ -16,10 +16,46 @@ export default defineNuxtConfig({
         buildCache: true
     },
 
+    build: {
+        treeShake: true,
+        extractCSS: true,
+        optimization: {
+            splitChunks: {
+                layouts: true,
+                pages: true,
+                commons: true
+            }
+        }
+    },
+
     nitro: {
+        compressPublicAssets: true,
         routeRules: {
-          "/img/**": { headers: { 'cache-control': `public,max-age=${year},s-maxage=${year}` } },
-          "/scripts/**": { headers: { 'cache-control': `public,max-age=${year},s-maxage=${year}` } },
+            '/img/**': {
+                headers: {
+                    'cache-control': `public,max-age=${year},s-maxage=${year}`
+                }
+            },
+            '/scripts/**': {
+                headers: {
+                    'cache-control': `public,max-age=${year},s-maxage=${year}`
+                }
+            }
+        },
+        storage: {
+            cache: {
+                driver: 'redis'
+            }
+        },
+        compress: {
+            brotli: {
+                enabled: true,
+                zlevel: 11
+            },
+            gzip: {
+                enabled: true,
+                level: 9
+            }
         }
     },
 
