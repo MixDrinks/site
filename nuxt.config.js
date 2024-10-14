@@ -3,12 +3,24 @@ import { MasterKeys } from './config'
 import { schemaOrganization, schemaWebSite } from './utils/schema'
 
 const isDev = process.env.NODE_ENV
+const year = 60 * 60 * 24 * 365
 
 export default defineNuxtConfig({
     devtools: { enabled: MasterKeys[isDev].devtools },
 
     imports: {
         autoImport: false
+    },
+
+    experimental: {
+        buildCache: true
+    },
+
+    nitro: {
+        routeRules: {
+          "/img/**": { headers: { 'cache-control': `public,max-age=${year},s-maxage=${year}` } },
+          "/scripts/**": { headers: { 'cache-control': `public,max-age=${year},s-maxage=${year}` } },
+        }
     },
 
     ssr: true,
