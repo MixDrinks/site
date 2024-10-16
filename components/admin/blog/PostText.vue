@@ -1,9 +1,6 @@
 <template>
     <div class="text">
-        <h2 class="text__label">Текст</h2>
-        <p class="text__value">
-            {{ values.text }}
-        </p>
+        {{ values.text }}
     </div>
 </template>
 

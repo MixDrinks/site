@@ -1,9 +1,6 @@
 <template>
     <div class="cocktail">
-        <h2 class="cocktail__label">Коктейль</h2>
-        <p class="cocktail__value">
-            {{ values.name }}
-        </p>
+        {{ values.name }}
     </div>
 </template>
 

@@ -25,3 +25,11 @@ export const adminTypes = {
     cocktail: PostAdminCocktail,
     cocktail_collection: PostAdminCocktails
 }
+
+export const typesTitle = {
+    image: 'Картинка',
+    title_h2: 'Заголовок H2',
+    text: 'Текст',
+    cocktail: 'Коктейль',
+    cocktail_collection: 'Коктейлі'
+}

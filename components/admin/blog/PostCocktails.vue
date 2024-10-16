@@ -1,6 +1,5 @@
 <template>
     <div class="cocktails">
-        <h2 class="cocktails__label">Коктейлі</h2>
         <div
             v-for="(cocktail, cocktailIndex) in values"
             :key="`cocktail__value-${cocktailIndex}`"
