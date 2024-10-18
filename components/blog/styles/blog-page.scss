@@ -7,6 +7,14 @@
         }
     }
 
+    &__breadCrumbs {
+        margin-bottom: 12px;
+
+        @media (min-width: 1023px) {
+            margin-bottom: $halfShortMargin;
+        }
+    }
+
     &__body {
         margin-top: $halfShortMargin;
         margin-bottom: $halfShortMargin;

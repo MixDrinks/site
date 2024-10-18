@@ -1,6 +1,6 @@
 <template>
     <main class="wrapper">
-        <BlogPage :posts="posts" />
+        <BlogPage :posts="data.posts" />
     </main>
 </template>
 
@@ -12,7 +12,7 @@ import { getPostsByTag } from '~~/api/pages'
 import BlogPage from '~~/components/blog/BlogPage.vue'
 
 export default defineComponent({
-    name: 'BlogPage',
+    name: 'TagPage',
     components: { BlogPage },
 
     async setup() {
@@ -22,14 +22,10 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${route.params.slug}`
 
-        const { data: response } = await useAsyncData(() =>
-            getPostsByTag(getPath())
-        )
-
-        const posts = response.value?.posts || []
+        const { data } = await useAsyncData(() => getPostsByTag(getPath()))
 
         return {
-            posts
+            data
         }
     }
 })

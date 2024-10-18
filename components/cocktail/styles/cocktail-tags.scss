@@ -36,13 +36,9 @@
         border-radius: 4px;
         @include fontSize16M;
     }
-
-    @media (hover: hover) {
-        &:hover {
-            background-color: $colorHover;
-        }
+    &:hover {
+        background-color: $colorHover;
     }
-
     &::first-letter {
         text-transform: uppercase;
     }

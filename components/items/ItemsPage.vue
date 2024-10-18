@@ -15,8 +15,8 @@
                 <img
                     :alt="`Зображення ${items.name}`"
                     class="items-main__img"
-                    width="500"
-                    height="500"
+                    width="332"
+                    height="332"
                     title=""
                 />
             </picture>

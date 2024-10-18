@@ -34,7 +34,10 @@
                 height="100"
             />
         </picture>
-        <NuxtLink :to="`/cocktails/${cocktail.slug}`" class="cart__name">
+        <NuxtLink
+            :to="`/${pages.cocktail.slug}/${cocktail.slug}`"
+            class="cart__name"
+        >
             {{ cocktail.name }}
         </NuxtLink>
     </div>
@@ -42,6 +45,7 @@
 
 <script>
 import { computed, defineComponent, toRefs, unref } from 'vue'
+import { pages } from '../../utils/pages'
 
 export default defineComponent({
     name: 'CocktailsCart',
@@ -57,10 +61,13 @@ export default defineComponent({
     },
     setup(props) {
         const { isLoadingLazy } = toRefs(props)
-        const loading = computed(() => (unref(isLoadingLazy) ? 'lazy' : false))
+        const loading = computed(() =>
+            unref(isLoadingLazy) ? 'lazy' : 'eager'
+        )
         const getRating = (value) => Number(value.toFixed(1))
 
         return {
+            pages,
             loading,
             getRating
         }

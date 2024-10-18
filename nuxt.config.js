@@ -3,12 +3,60 @@ import { MasterKeys } from './config'
 import { schemaOrganization, schemaWebSite } from './utils/schema'
 
 const isDev = process.env.NODE_ENV
+const year = 60 * 60 * 24 * 365
 
 export default defineNuxtConfig({
     devtools: { enabled: MasterKeys[isDev].devtools },
 
     imports: {
         autoImport: false
+    },
+
+    experimental: {
+        buildCache: true
+    },
+
+    build: {
+        treeShake: true,
+        extractCSS: true,
+        optimization: {
+            splitChunks: {
+                layouts: true,
+                pages: true,
+                commons: true
+            }
+        }
+    },
+
+    nitro: {
+        compressPublicAssets: true,
+        routeRules: {
+            '/img/**': {
+                headers: {
+                    'cache-control': `public,max-age=${year},s-maxage=${year}`
+                }
+            },
+            '/scripts/**': {
+                headers: {
+                    'cache-control': `public,max-age=${year},s-maxage=${year}`
+                }
+            }
+        },
+        storage: {
+            cache: {
+                driver: 'redis'
+            }
+        },
+        compress: {
+            brotli: {
+                enabled: true,
+                zlevel: 11
+            },
+            gzip: {
+                enabled: true,
+                level: 9
+            }
+        }
     },
 
     ssr: true,
@@ -65,17 +113,20 @@ export default defineNuxtConfig({
             ],
             script: [
                 {
-                    src: 'https://www.googletagmanager.com/gtag/js?id=G-8DWKDM4NCR',
-                    async: true
+                    async: true,
+                    src: 'https://www.googletagmanager.com/gtag/js?id=G-8DWKDM4NCR'
                 },
                 {
+                    async: true,
                     src: '/scripts/googleAnalytics.js'
                 },
                 {
+                    async: true,
                     type: 'application/ld+json',
                     children: JSON.stringify(schemaOrganization)
                 },
                 {
+                    async: true,
                     type: 'application/ld+json',
                     children: JSON.stringify(schemaWebSite)
                 }
@@ -97,7 +148,6 @@ export default defineNuxtConfig({
                     additionalData: `
                         @import "./assets/scss/variables.scss";
                         @import "./assets/scss/mixins.scss";
-                        @import "./assets/scss/keyframes.scss";
                     `
                 }
             }

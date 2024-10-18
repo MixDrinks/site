@@ -20,7 +20,7 @@ export default defineComponent({
         const { $fetchWIXUP } = useNuxtApp()
         const route = useRoute()
 
-        const getPath = () => `/${route.params.id}`
+        const getPath = () => `/${route.params.cocktail}`
 
         const { data: cocktail } = await useAsyncData(() =>
             getCocktail(getPath(), $fetchWIXUP)

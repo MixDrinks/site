@@ -60,10 +60,8 @@
         border-radius: 4px;
         background-color: $colorMain;
 
-        @media (hover: hover) {
-            &:hover {
-                background-color: $colorHover;
-            }
+        &:hover {
+            background-color: $colorHover;
         }
 
         &::after,
@@ -119,30 +117,28 @@
     align-items: center;
     padding-top: 8px;
     padding-bottom: 8px;
+    position: relative;
 
     @media (min-width: 1023px) {
         cursor: pointer;
     }
-    @media (hover: hover) {
-        &:hover {
-            #{$self}__name {
-                color: $colorMain;
-            }
-            #{$self}__flag {
-                &--radio {
-                    &::after {
-                        background-color: rgba($colorMain, 0.5);
-                    }
-                }
-                &--checkbox {
+    &:hover {
+        #{$self}__name {
+            color: $colorMain;
+        }
+        #{$self}__flag {
+            &--radio {
+                &::after {
                     background-color: rgba($colorMain, 0.5);
                 }
+            }
+            &--checkbox {
+                background-color: rgba($colorMain, 0.5);
             }
         }
     }
     &--lock {
         pointer-events: none;
-        position: relative;
 
         &::after {
             @include fullPseudoElement;
@@ -217,6 +213,12 @@
         }
         &::first-letter {
             text-transform: uppercase;
+        }
+
+        &--link {
+            &::after {
+                @include fullPseudoElement;
+            }
         }
     }
 

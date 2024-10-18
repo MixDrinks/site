@@ -1,6 +1,7 @@
 <template>
     <main class="wrapper">
         <div class="post">
+            <BreadCrumbs :breadCrumbs="breadCrumbs" class="post__breadCrumbs" />
             <div class="post__header header">
                 <CocktailTags :tags="tags" class="header__tags" />
                 <h1 class="header__title">
@@ -29,13 +30,15 @@ import { useHead, useRoute, useAsyncData } from 'nuxt/app'
 import { computed, defineComponent, unref } from 'vue'
 import { getPost } from '~~/api/pages'
 import { types } from '~~/utils/postItemType'
+import { pages } from '../../utils/pages'
 
 import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
 import Date from '~~/components/global/Date.vue'
+import BreadCrumbs from '~~/components/global/BreadCrumbs.vue'
 
 export default defineComponent({
     name: 'PostPage',
-    components: { CocktailTags, Date },
+    components: { CocktailTags, Date, BreadCrumbs },
 
     async setup() {
         useHead({
@@ -49,56 +52,27 @@ export default defineComponent({
         const tags = computed(() =>
             unref(post).tags.map((tag) => ({
                 name: tag.name,
-                url: `blog/tag/${tag.slug}`
+                url: `${pages.blog.slug}/${pages.blog.tag}/${tag.slug}`
             }))
         )
+
+        const breadCrumbs = [
+            {
+                name: 'Блог',
+                slug: `/${pages.blog.slug}`
+            },
+            {
+                name: unref(post).title
+            }
+        ]
 
         return {
             post,
             types,
-            tags
+            tags,
+            breadCrumbs
         }
     }
-
-    // head() {
-    //     return {
-    //         title: this.title,
-    //         link: [{ rel: 'canonical', href: this.canonical }],
-    //         meta: [
-    //             {
-    //                 hid: 'description',
-    //                 name: 'description',
-    //                 content: this.description,
-    //             },
-    //             {
-    //                 hid: 'og:title',
-    //                 name: 'og:title',
-    //                 content: this.title,
-    //             },
-    //             {
-    //                 hid: 'og:description',
-    //                 property: 'og:description',
-    //                 content: this.description,
-    //             },
-    //             {
-    //                 hid: 'og:url',
-    //                 property: 'og:url',
-    //                 content: `${this.canonical}`,
-    //             },
-    //             {
-    //                 hid: 'og:image',
-    //                 property: 'og:image',
-    //                 content: `${this.post.meta.ogImage}`,
-    //             },
-
-    //         ],
-    //     }
-    // },
-    // mounted() {
-    //     this.$axios.post(`/post/${this.post.slug}/visit`, {
-    //         withCredentials: true,
-    //     })
-    // },
 })
 </script>
 

@@ -1,5 +1,6 @@
 <template>
     <div class="blog">
+        <BreadCrumbs :breadCrumbs="breadCrumbs" class="blog__breadCrumbs" />
         <div class="blog__header header">
             <h1 class="header__title">Блог</h1>
         </div>
@@ -18,7 +19,10 @@
                         height="200"
                         title=""
                     />
-                    <NuxtLink :to="`/blog/${post.slug}`" class="post__title">
+                    <NuxtLink
+                        :to="`/${pages.blog.slug}/${post.slug}`"
+                        class="post__title"
+                    >
                         {{ post.title }}
                     </NuxtLink>
                 </div>
@@ -28,12 +32,29 @@
 </template>
 
 <script>
+import { pages } from '../../utils/pages'
+
+import BreadCrumbs from '../global/BreadCrumbs.vue'
+
 export default {
     name: 'BlogPage',
+    components: { BreadCrumbs },
     props: {
         posts: {
             type: Object,
             required: true
+        }
+    },
+    setup() {
+        const breadCrumbs = [
+            {
+                name: 'Блог'
+            }
+        ]
+
+        return {
+            breadCrumbs,
+            pages
         }
     }
 }

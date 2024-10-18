@@ -37,7 +37,7 @@
                     :alt="`Зображення коктейля ${cocktail.name}`"
                     :title="cocktail.name"
                     width="332"
-                    height="208"
+                    height="332"
                     class="cocktail-body__img"
                 />
             </picture>
@@ -47,14 +47,7 @@
                 class="cocktail-body__recipe"
             />
             <div class="cocktail-body__ads">
-                <ins
-                    class="adsbygoogle"
-                    style="display: block"
-                    data-ad-format="fluid"
-                    data-ad-layout-key="-gh-4+1q-51+45"
-                    data-ad-client="ca-pub-9033785625371866"
-                    data-ad-slot="2682031593"
-                />
+                <Advertising />
             </div>
             <Separator />
             <CocktailItems
@@ -94,6 +87,7 @@ import Separator from '../global/Separator.vue'
 import CocktailRecipe from './CocktailRecipe.vue'
 import CocktailArticle from './CocktailArticle.vue'
 import CocktailTags from './CocktailTags.vue'
+import Advertising from '../global/Advertising.vue'
 
 import { onBeforeUnmount, toRefs, defineComponent, unref } from 'vue'
 import { head } from '~~/utils/head'
@@ -109,7 +103,8 @@ export default defineComponent({
         Separator,
         CocktailRecipe,
         CocktailArticle,
-        CocktailTags
+        CocktailTags,
+        Advertising
     },
     props: {
         cocktail: {
@@ -129,16 +124,9 @@ export default defineComponent({
 
         const scripts = [
             {
+                async: true,
                 type: 'application/ld+json',
                 children: schemaRecipe(unref(cocktail), headDescription)
-            },
-            {
-                async: true,
-                src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033785625371866',
-                crossorigin: 'anonymous'
-            },
-            {
-                innerHTML: `;(adsbygoogle = window.adsbygoogle || []).push({})`
             }
         ]
 
