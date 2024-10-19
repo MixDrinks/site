@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const { username, password } = body
 
+    console.log('username:', username)
+
     const { sessionId, expiresAt, error } = await addSessionToUser(
         username,
         password
