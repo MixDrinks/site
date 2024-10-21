@@ -160,7 +160,10 @@ export default defineNuxtConfig({
     },
 
     sitemap: {
-        sources: ['/api/sitemap']
+        sources: ['/api/sitemap'],
+        exclude: [
+            '/admin/**',
+        ]
     },
 
     eslint: {},
