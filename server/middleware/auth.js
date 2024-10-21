@@ -10,4 +10,3 @@ export default defineEventHandler(async (event) => {
         event.context.auth = { username: user.username }
     }
 })
-

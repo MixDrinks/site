@@ -1,7 +1,7 @@
 <template>
-  <main class="wrapper">
-    <LoginPage />
-  </main>
+    <main class="wrapper">
+        <LoginPage />
+    </main>
 </template>
 
 <script>
@@ -11,22 +11,22 @@ import { useHead } from 'nuxt/app'
 import LoginPage from '~~/components/admin/LoginPage.vue'
 
 export default defineComponent({
-  name: 'LoginPageWrapper',
-  components: { LoginPage },
+    name: 'LoginPageWrapper',
+    components: { LoginPage },
 
-  setup() {
-    // Optionally, you can set meta tags or SEO related content.
-    useHead({
-      meta: [{ name: 'robots', content: 'noindex, nofollow' }]
-    })
+    setup() {
+        // Optionally, you can set meta tags or SEO related content.
+        useHead({
+            meta: [{ name: 'robots', content: 'noindex, nofollow' }]
+        })
 
-    return {}
-  }
+        return {}
+    }
 })
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
-  @include defaultWrapper;
+    @include defaultWrapper;
 }
 </style>
