@@ -1,0 +1,134 @@
+.blog {
+    &__header {
+        min-height: 64px;
+    }
+    &__setting {
+        min-height: 64px;
+    }
+}
+.header {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(43, 43, 56);
+}
+.setting {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(43, 43, 56);
+}
+.title {
+    display: flex;
+    align-items: center;
+
+    &__label {
+        color: rgb(255 255 255);
+        @include fontSize18M;
+    }
+    &__count {
+        margin-left: 10px;
+        @include fontSize14M;
+        color: rgb(96 165 250);
+        padding: 2px 6px;
+        border-radius: 6px;
+        background-color: rgb(29 39 61);
+        box-shadow: 0 0 2px rgb(96 165 250);
+        line-height: 1;
+    }
+}
+.search {
+    &__label {
+        display: flex;
+        align-items: center;
+    }
+    &__input {
+        color: rgb(255 255 255);
+        padding: 6px 10px;
+        border-radius: 8px;
+        background-color: rgb(41 48 63 / 68%);
+        box-shadow: none;
+        border: 1px solid rgb(43, 43, 56);
+
+        &:focus {
+            background-color: rgba(108, 121, 148, 0.68);
+        }
+    }
+    &__title {
+        margin-right: 10px;
+        color: rgb(255 255 255);
+    }
+}
+.table {
+    &__item {
+        min-height: 54px;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgb(43, 43, 56);
+        }
+    }
+}
+.item {
+    cursor: pointer;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    color: rgb(116 116 133);
+
+    transition:
+        color 0.1s,
+        background-color 0.1s;
+
+    &:hover {
+        color: rgb(255 255 255);
+        background-color: rgb(96 165 250 / 6%);
+    }
+
+    &__name {
+        @include fontSize16;
+        flex: 1;
+    }
+
+    &__image {
+        flex-shrink: 0;
+        margin-left: 10px;
+    }
+
+    &__btn {
+        flex-shrink: 0;
+        margin-left: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
+.name {
+    &__label {
+        display: block;
+    }
+}
+.image {
+    border-radius: 10px;
+}
+.btn {
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 0.1s;
+
+    &:hover {
+        background-color: rgb(96 165 250 / 6%);
+    }
+
+    &__dot {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background-color: rgb(255 255 255);
+    }
+}
