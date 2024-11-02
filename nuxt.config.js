@@ -7,7 +7,6 @@ const year = 60 * 60 * 24 * 365
 
 export default defineNuxtConfig({
     devtools: { enabled: MasterKeys[isDev].devtools },
-
     imports: {
         autoImport: false
     },
@@ -138,7 +137,7 @@ export default defineNuxtConfig({
         prefetchLinks: false
     },
 
-    modules: ['nuxt-simple-sitemap', '@nuxt/eslint'],
+    modules: ['@nuxt/eslint', '@nuxtjs/sitemap'],
     css: ['~~/assets/css/index.css'],
 
     vite: {
@@ -160,7 +159,7 @@ export default defineNuxtConfig({
     },
 
     sitemap: {
-        sources: ['/api/sitemap'],
+        sources: ['https://mixdrinks.org/api/sitemap'],
         exclude: ['/admin/**']
     },
 
