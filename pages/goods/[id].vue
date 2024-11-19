@@ -12,7 +12,7 @@
 <script>
 import { defineComponent, unref } from 'vue'
 import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
-import { getItems, getCoctails } from '~~/api/pages'
+import { getGood, getCoctails } from '~~/api/pages'
 import { querySTR } from '~~/utils/querySTR'
 
 import ItemsPage from '~~/components/items/ItemsPage.vue'
@@ -31,7 +31,7 @@ export default defineComponent({
         const { data, refresh } = await useAsyncData(async () => {
             const [cocktailsFull, items] = await Promise.all([
                 getCoctails(getPath(), $fetchWIXUP),
-                getItems(route.path)
+                getGood(route.path)
             ])
             return { cocktailsFull, items }
         })
