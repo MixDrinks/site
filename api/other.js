@@ -6,10 +6,12 @@ export const updateRating = (slug, value) => {
         }
     })
 }
+
 export const updateVisit = (slug) => {
-    $fetch(`https://newapi.mixdrinks.org/api/cocktail/${slug}/visit`, {
+    $fetch(`/api/cocktail/${slug}/visit`, {
         method: 'POST'
     })
 }
+
 export const getListSearch = () =>
-    $fetch('https://newapi.mixdrinks.org/api/cocktails/all')
+    $fetch('/api/cocktails/all')
