@@ -8,6 +8,7 @@ async function getAllCocktails() {
         .project({ name: 1, slug: 1, _id: 0 })
         .toArray();
 }
+
 export default defineEventHandler(async (req) => {
     const cocktails = await getAllCocktails();
     return cocktails;
