@@ -1,10 +1,10 @@
-export const getItems = (path) => {
-    return $fetch(`https://newapi.mixdrinks.org/api${path}`)
-}
 export const getGood = (path) => {
     return $fetch(`/api${path}`)
 }
 export const getTool = (path) => {
+    return $fetch(`/api${path}`)
+}
+export const getGlassware = (path) => {
     return $fetch(`/api${path}`)
 }
 export const getCoctails = (path, fetchWIXUP) => {
