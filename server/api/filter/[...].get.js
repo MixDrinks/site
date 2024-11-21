@@ -3,13 +3,16 @@ import { getCocktailFilterState } from '~/server/utils/filters/filters'
 import { DescriptionBuilder } from '~/server/utils/filters/description'
 
 export default defineEventHandler(async (req) => {
-    const filterString = req.context.params._
+    let filterString = req.context.params._ || '';
+    console.log('filterString', filterString)
+
     const filterPairs = filterString.split('/');
+    console.log('filterPairs', filterPairs)
 
     const query = getQuery(req)
     const isRequestHasQuery = Object.keys(query).length > 0
 
-    const sortType = query.sort;
+    const sortType = query.sort || 'most-popular';
 
     const page = query.page || 0;
     const start = page * 24;
@@ -25,8 +28,6 @@ export default defineEventHandler(async (req) => {
     }
 
     const response = await getCocktailFilterState(filter, start, limit, sortType);
-
-    console.log('filter', filter)
 
     if (isRequestHasQuery) {
         response.isAddToIndex = false;
