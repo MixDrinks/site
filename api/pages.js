@@ -11,7 +11,7 @@ export const getCoctails = (path, fetchWIXUP) => {
     return fetchWIXUP(`https://newapi.mixdrinks.org/api/filter${path}`)
 }
 export const getFilters = () => {
-    return $fetch('https://newapi.mixdrinks.org/api/filters')
+    return $fetch('/api/filters')
 }
 export const getPosts = (path) => {
     return $fetch(`/api/blog/post-list${path}`)
