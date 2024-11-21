@@ -1,5 +1,5 @@
 export const updateRating = (slug, value) => {
-    $fetch(`https://newapi.mixdrinks.org/api/cocktail/${slug}/score`, {
+    $fetch(`/api/cocktail/${slug}/score`, {
         method: 'POST',
         body: {
             value: value
