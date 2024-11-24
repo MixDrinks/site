@@ -5,8 +5,6 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const { username, password } = body
 
-    console.log('username:', username)
-
     const { sessionId, expiresAt, error } = await addSessionToUser(
         username,
         password
@@ -20,7 +18,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (sessionId && expiresAt) {
-        setCookie(event, 'sessionId', sessionId)
+        setCookie(event, 'sessionId', sessionId, { expires: new Date(expiresAt) })
         return {
             status: 'success'
         }
