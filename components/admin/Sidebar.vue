@@ -17,6 +17,14 @@
                     <span class="link__label"> Блог </span>
                 </NuxtLink>
             </li>
+            <li class="menu__item">
+                <NuxtLink
+                    :to="`/admin/upload`"
+                    class="menu__link link"
+                >
+                    <span class="link__label"> Upload </span>
+                </NuxtLink>
+            </li>
         </ul>
     </div>
 </template>

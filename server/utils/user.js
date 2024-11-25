@@ -1,19 +1,6 @@
 import { db } from '~/server/utils/mongo'
 import { compareSync } from 'bcrypt'
-
-function generateSessionId() {
-    const count = 64
-    let result = ''
-    const characters =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    const charactersLength = characters.length
-    for (let i = 0; i < count; i++) {
-        result += characters.charAt(
-            Math.floor(Math.random() * charactersLength)
-        )
-    }
-    return result
-}
+import { generateSessionId } from '~/server/utils/string'
 
 export async function addSessionToUser(username, password) {
     const user = await db.collection('users').findOne({ username: username })
@@ -32,7 +19,7 @@ export async function addSessionToUser(username, password) {
         }
     }
 
-    const sessionId = generateSessionId()
+    const sessionId = generateSessionId(64)
 
     const expiresAt = new Date()
     expiresAt.setFullYear(expiresAt.getFullYear() + 1)
