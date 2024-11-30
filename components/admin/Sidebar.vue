@@ -19,7 +19,7 @@
             </li>
             <li class="menu__item">
                 <NuxtLink
-                    :to="`/admin/upload`"
+                    :to="`/admin/images`"
                     class="menu__link link"
                 >
                     <span class="link__label"> Upload </span>
