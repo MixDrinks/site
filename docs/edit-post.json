@@ -1,0 +1,36 @@
+{
+    "title": "new test title",
+    "image": "images/i2-lp770f.jpg",
+    "body": [
+        {
+            "type": "title_h2",
+            "values": {
+                "title": "new test title h2"
+            }
+        },
+        {
+            "type": "text",
+            "values": {
+                "text": "new Test text - text - text"
+            }
+        },
+        {
+            "type": "image",
+            "values": {
+                "imgUrl": "blog/images/top-5-american-cocktails.webp"
+            }
+        },
+        {
+            "type": "cocktail",
+            "values": {
+                "slug": "marharyta"
+            }
+        },
+        {
+            "type": "cocktail_collection",
+            "values": {
+                "slugs": ["ronald-kleiton", "dzhek-rouz", "dzhu-dzhulep"]
+            }
+        }
+    ]
+}
