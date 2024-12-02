@@ -5,7 +5,7 @@
         </div>
         <form @submit.prevent="handleLogin" class="login__form">
             <div class="login__input-group">
-                <label for="username" class="login__label">Username</label>
+                <label for="username" class="login__label"> Username </label>
                 <input
                     id="username"
                     v-model="username"
@@ -16,7 +16,7 @@
                 />
             </div>
             <div class="login__input-group">
-                <label for="password" class="login__label">Password</label>
+                <label for="password" class="login__label"> Password </label>
                 <input
                     id="password"
                     v-model="password"
@@ -32,26 +32,34 @@
 </template>
 
 <script>
-import { useFetch } from 'nuxt/app'
+import { useFetch, useRouter } from 'nuxt/app'
+import { unref, defineComponent, ref, onMounted } from 'vue'
+import { authStore } from '~~/store/auth'
 
-export default {
+export default defineComponent({
     name: 'LoginPage',
-    data() {
-        return {
-            username: '',
-            password: ''
-        }
-    },
-    methods: {
-        async handleLogin() {
+
+    setup() {
+        const router = useRouter()
+
+        const username = ref('')
+        const password = ref('')
+
+        async function handleLogin() {
             try {
-                const { error } = await useFetch('/api/login', {
+                const { status, error } = await useFetch('/api/login', {
                     method: 'POST',
                     body: { username: this.username, password: this.password },
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 })
+
+                if (unref(status) === 'success') {
+                    authStore.actions.updateUserAuth(true)
+
+                    router.push({ path: '/admin' })
+                }
 
                 if (error.value) {
                     this.errorMessage =
@@ -66,8 +74,20 @@ export default {
                 console.error(err)
             }
         }
+
+        onMounted(() => {
+            if (authStore.getters.isAuth) {
+                router.push({ path: '/admin' })
+            }
+        })
+
+        return {
+            handleLogin,
+            username,
+            password
+        }
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

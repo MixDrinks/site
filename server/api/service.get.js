@@ -10,5 +10,6 @@ export default defineEventHandler(async (event) => {
     }
     const safeUsername = event.context?.auth?.username || 'User not logged in'
     response.username = safeUsername
+    response.isAuth = !!event.context?.auth?.username
     return response
 })

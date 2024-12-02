@@ -1,9 +1,7 @@
 <template>
     <div class="image-upload">
         <div class="image-upload__header">
-            <h1 class="image-upload__title">
-                Upload Image
-            </h1>
+            <h1 class="image-upload__title">Upload Image</h1>
         </div>
         <form
             @submit.prevent="handleUpload"
