@@ -18,10 +18,7 @@
                 </NuxtLink>
             </li>
             <li class="menu__item">
-                <NuxtLink
-                    :to="`/admin/images`"
-                    class="menu__link link"
-                >
+                <NuxtLink :to="`/admin/images`" class="menu__link link">
                     <span class="link__label"> Upload </span>
                 </NuxtLink>
             </li>

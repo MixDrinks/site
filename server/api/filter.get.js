@@ -6,24 +6,24 @@ export default defineEventHandler(async (req) => {
     const query = getQuery(req)
     const isRequestHasQuery = Object.keys(query).length > 0
 
-    const sortType = query.sort || 'most-popular';
+    const sortType = query.sort || 'most-popular'
 
-    const page = query.page || 0;
-    const start = page * 24;
-    const limit = 24;
+    const page = query.page || 0
+    const start = page * 24
+    const limit = 24
 
-    const response = await getCocktailFilterState({}, start, limit, sortType);
+    const response = await getCocktailFilterState({}, start, limit, sortType)
 
     if (isRequestHasQuery) {
-        response.isAddToIndex = false;
+        response.isAddToIndex = false
     }
 
-    const descriptionBuilder = new DescriptionBuilder();
-    const description = await descriptionBuilder.buildDescription({});
+    const descriptionBuilder = new DescriptionBuilder()
+    const description = await descriptionBuilder.buildDescription({})
 
     if (description) {
-        response.description = description;
+        response.description = description
     }
 
-    return response;
+    return response
 })

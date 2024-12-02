@@ -13,5 +13,4 @@ export const updateVisit = (slug) => {
     })
 }
 
-export const getListSearch = () =>
-    $fetch('/api/cocktails/all')
+export const getListSearch = () => $fetch('/api/cocktails/all')

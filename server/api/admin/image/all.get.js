@@ -6,17 +6,17 @@ dotenv.config()
 const imageDomain = process.env.IMAGE_DOMAIN
 
 export default defineEventHandler(async (event) => {
-    const isAuth = event.context?.auth?.username || false;
+    const isAuth = event.context?.auth?.username || false
     if (!isAuth) {
         throw createError({
             statusCode: 401,
-            statusMessage: 'Unauthorized',
-        });
+            statusMessage: 'Unauthorized'
+        })
     }
     const images = await db.collection('images').find().toArray()
     return {
-        images: images.map(image => ({
-            url: `${imageDomain}/${image.key}`,
+        images: images.map((image) => ({
+            url: `${imageDomain}/${image.key}`
         }))
     }
 })

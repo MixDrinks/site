@@ -1,16 +1,16 @@
 import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 
-const filterDataCache = {};
+const filterDataCache = {}
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
     if (filterDataCache.data) {
-        return filterDataCache.data;
+        return filterDataCache.data
     }
-    const response = await getFiltersData();
-    filterDataCache.data = response;
+    const response = await getFiltersData()
+    filterDataCache.data = response
 
-    return response;
+    return response
 })
 
 async function getAlcoholoVolume() {
@@ -23,12 +23,12 @@ async function getAlcoholoVolume() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
     return alcoholVolumes
 }
@@ -43,12 +43,12 @@ async function getTastes() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
     return tastes
 }
@@ -63,12 +63,12 @@ async function getGlasswares() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
     return glasswares
 }
@@ -83,14 +83,14 @@ async function getGoods() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
-    return goods;
+    return goods
 }
 
 async function getTagsData() {
@@ -103,14 +103,14 @@ async function getTagsData() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
-    return tags;
+    return tags
 }
 
 async function getToolsData() {
@@ -123,14 +123,14 @@ async function getToolsData() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
-    return tools;
+    return tools
 }
 
 async function getAlcohole() {
@@ -143,14 +143,14 @@ async function getAlcohole() {
                     id: 1,
                     name: 1,
                     slug: 1,
-                    count: { $size: "$cocktailSlugs" }
+                    count: { $size: '$cocktailSlugs' }
                 }
             },
             { $sort: { count: -1 } }
         ])
-        .toArray();
+        .toArray()
 
-    return alcohol;
+    return alcohol
 }
 
 async function getFiltersData() {
@@ -161,7 +161,7 @@ async function getFiltersData() {
             name: 'Міцність',
             items: await getAlcoholoVolume(),
             selectionType: 'SINGLE',
-            isOpen: true,
+            isOpen: true
         },
         {
             id: 3,
@@ -169,7 +169,7 @@ async function getFiltersData() {
             name: 'Смак',
             items: await getTastes(),
             selectionType: 'MULTIPLE',
-            isOpen: false,
+            isOpen: false
         },
         {
             id: 1,
@@ -177,7 +177,7 @@ async function getFiltersData() {
             name: 'Інгрідієнти',
             items: await getGoods(),
             selectionType: 'MULTIPLE',
-            isOpen: false,
+            isOpen: false
         },
         {
             id: 6,
@@ -185,7 +185,7 @@ async function getFiltersData() {
             name: 'Категорія алкоголю',
             items: await getAlcohole(),
             selectionType: 'MULTIPLE',
-            isOpen: false,
+            isOpen: false
         },
         {
             id: 5,
@@ -193,7 +193,7 @@ async function getFiltersData() {
             name: 'Стакан',
             items: await getGlasswares(),
             selectionType: 'SINGLE',
-            isOpen: false,
+            isOpen: false
         },
         {
             id: 2,
@@ -201,7 +201,7 @@ async function getFiltersData() {
             name: 'Приладдя',
             items: await getToolsData(),
             selectionType: 'MULTIPLE',
-            isOpen: false,
+            isOpen: false
         },
         {
             id: 0,
@@ -209,7 +209,7 @@ async function getFiltersData() {
             name: 'Інше',
             items: await getTagsData(),
             selectionType: 'MULTIPLE',
-            isOpen: false,
-        },
+            isOpen: false
+        }
     ]
 }

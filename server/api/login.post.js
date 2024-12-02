@@ -18,7 +18,9 @@ export default defineEventHandler(async (event) => {
     }
 
     if (sessionId && expiresAt) {
-        setCookie(event, 'sessionId', sessionId, { expires: new Date(expiresAt) })
+        setCookie(event, 'sessionId', sessionId, {
+            expires: new Date(expiresAt)
+        })
         return {
             status: 'success'
         }

@@ -1,34 +1,36 @@
 <template>
     <div class="image-upload">
         <div class="image-upload__header">
-            <h1 class="image-upload__title">Upload Image</h1>
+            <h1 class="image-upload__title">
+                Upload Image
+            </h1>
         </div>
         <form
             @submit.prevent="handleUpload"
-            class="image-upload__form"
             @dragover.prevent
             @drop.prevent="handleDrop"
+            class="image-upload__form"
         >
             <div
-                class="image-upload__drag-area"
                 @dragover.prevent
                 @dragenter.prevent
                 @drop.prevent="handleDrop"
+                class="image-upload__drag-area"
             >
                 <p class="image-upload__drag-text">
                     Drag and drop an image here, or
                 </p>
                 <input
-                    type="file"
                     ref="fileInput"
                     @change="handleFileChange"
+                    hidden
+                    type="file"
                     accept="image/*"
                     class="image-upload__input"
-                    hidden
                 />
                 <button
-                    type="button"
                     @click="browseFiles"
+                    type="button"
                     class="image-upload__browse-button"
                 >
                     Browse
@@ -42,9 +44,9 @@
                 />
             </div>
             <button
+                :disabled="!selectedFile"
                 type="submit"
                 class="image-upload__submit"
-                :disabled="!selectedFile"
             >
                 Upload
             </button>
@@ -56,7 +58,7 @@
 </template>
 
 <script>
-import { useFetch } from 'nuxt/app';
+import { useFetch } from 'nuxt/app'
 
 export default {
     name: 'ImageUpload',
@@ -64,65 +66,69 @@ export default {
         return {
             selectedFile: null,
             previewImage: null,
-            errorMessage: '',
-        };
+            errorMessage: ''
+        }
     },
     methods: {
         browseFiles() {
-            this.$refs.fileInput.click();
+            this.$refs.fileInput.click()
         },
         handleFileChange(event) {
-            const file = event.target.files[0];
-            this.processFile(file);
+            const file = event.target.files[0]
+            this.processFile(file)
         },
         handleDrop(event) {
-            const file = event.dataTransfer.files[0];
-            this.processFile(file);
+            const file = event.dataTransfer.files[0]
+            this.processFile(file)
         },
         processFile(file) {
             if (file && file.type.startsWith('image/')) {
-                this.selectedFile = file;
-                this.errorMessage = '';
+                this.selectedFile = file
+                this.errorMessage = ''
 
                 // Generate a preview
-                const reader = new FileReader();
+                const reader = new FileReader()
                 reader.onload = (e) => {
-                    this.previewImage = e.target.result;
-                };
-                reader.readAsDataURL(file);
+                    this.previewImage = e.target.result
+                }
+                reader.readAsDataURL(file)
             } else {
-                this.errorMessage = 'Please select a valid image file.';
-                this.selectedFile = null;
-                this.previewImage = null;
+                this.errorMessage = 'Please select a valid image file.'
+                this.selectedFile = null
+                this.previewImage = null
             }
         },
         async handleUpload() {
-            if (!this.selectedFile) return;
+            if (!this.selectedFile) return
 
-            const formData = new FormData();
-            formData.append('file', this.selectedFile);
+            const formData = new FormData()
+            formData.append('file', this.selectedFile)
 
             try {
-                const { data, error } = await useFetch('/api/admin/image/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
+                const { data, error } = await useFetch(
+                    '/api/admin/image/upload',
+                    {
+                        method: 'POST',
+                        body: formData
+                    }
+                )
 
                 if (error.value) {
-                    this.errorMessage = 'Upload failed. Please try again.';
-                    return;
+                    this.errorMessage = 'Upload failed. Please try again.'
+                    return
                 }
 
-                console.log('Upload successful:', data.value);
-                this.selectedFile = null;
-                this.previewImage = null;
+                console.log('Upload successful:', data.value)
+                this.selectedFile = null
+                this.previewImage = null
             } catch (err) {
-                this.errorMessage = 'Something went wrong. Please try again later.';
-                console.error(err);
+                this.errorMessage =
+                    'Something went wrong. Please try again later.'
+                console.error(err)
             }
-        },
-    },
-};
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>

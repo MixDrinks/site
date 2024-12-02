@@ -1,19 +1,19 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
-const bucketName = process.env.BUCKET_NAME;
+const bucketName = process.env.BUCKET_NAME
 
 const client = new S3Client({
     endpoint: process.env.S3_ENDPOINT,
     credentials: {
         accessKeyId: process.env.S3_ACCESS_KEY,
-        secretAccessKey: process.env.S3_SECRET_KEY,
+        secretAccessKey: process.env.S3_SECRET_KEY
     },
-    region: process.env.S3_REGION,
-});
+    region: process.env.S3_REGION
+})
 
 export async function uploadFileToS3(fileData, key, fileType) {
     const command = new PutObjectCommand({
@@ -21,8 +21,8 @@ export async function uploadFileToS3(fileData, key, fileType) {
         Key: key,
         Body: fileData,
         ContentType: fileType,
-        ACL: 'public-read',
-    });
+        ACL: 'public-read'
+    })
 
-    await client.send(command);
+    await client.send(command)
 }

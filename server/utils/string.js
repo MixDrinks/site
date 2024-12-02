@@ -10,5 +10,3 @@ export function generateSessionId(count) {
     }
     return result
 }
-
-
