@@ -1,9 +1,7 @@
 import { MongoClient } from 'mongodb'
-import * as dotenv from 'dotenv'
+import { getConfig } from '~/server/utils/config'
 
-dotenv.config()
-
-const mongoUrl = process.env.DB_URL
+const mongoUrl = getConfig().mongoUri
 
 const client = new MongoClient(mongoUrl, {
     socketTimeoutMS: 10000,

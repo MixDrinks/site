@@ -1,12 +1,9 @@
 import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 import { getFullCocktailBySlug } from '~/server/utils/cocktail/details'
-import * as dotenv from 'dotenv'
 import { getCocktailsBySlugs } from '~~/server/utils/cocktail/list'
 
-dotenv.config()
-
-const imageDomain = process.env.IMAGE_DOMAIN
+const imageDomain = useRuntimeConfig().public.imageDomain
 
 async function getBlogPost(slug) {
     return db.collection('blog').findOne({ slug: slug })

@@ -1,8 +1,8 @@
 import { db } from '~/server/utils/mongo'
-import * as dotenv from 'dotenv'
 
-dotenv.config()
-const imageDomain = process.env.IMAGE_DOMAIN
+const runtimeConfig = useRuntimeConfig().public
+
+const imageDomain = runtimeConfig.imageDomain
 
 const formats = ['webp', 'jpg']
 const buildCocktailInListImage = (slug) => {

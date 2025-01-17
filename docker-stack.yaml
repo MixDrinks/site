@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  kickstart:
+    image: ghcr.io/mixdrinks/site:${GIT_COMMIT_SHA:-latest}
+    ports:
+      - "40001:3000"
+    environment:
+      - NUXT_PUBLIC_SECRET_FILE=/run/secrets/mixdrinks-secret
+    secrets:
+      - kickstart-secret
+    deploy:
+      update_config:
+        order: start-first
+
+secrets:
+  mixdrinks-secret:
+    external: true

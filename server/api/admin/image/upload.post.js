@@ -1,9 +1,6 @@
 import { defineEventHandler, readMultipartFormData, createError } from 'h3'
-import { uploadFileToS3 } from '~/server/utils/s3'
 import { generateSessionId } from '~/server/utils/string'
 import { db } from '~/server/utils/mongo'
-
-const s3ImagesPath = 'images'
 
 export default defineEventHandler(async (event) => {
     const isAuth = event.context?.auth?.username || false
@@ -30,26 +27,29 @@ export default defineEventHandler(async (event) => {
         .slice(0, -1)
         .join('.')
         .replace(/[^a-zA-Z0-9]/g, '-')
-    const fileExtension = array[array.length - 1]
 
     const fileSuffix = generateSessionId(6).toLowerCase()
-    const fileKey = `${s3ImagesPath}/${fileName}-${fileSuffix}.${fileExtension}`
+    const fileKey = `${fileName}-${fileSuffix}`.toLowerCase()
 
-    await db.collection('images').insertOne({
-        key: fileKey
-    })
+    const buffer = Buffer.from(file.data)
 
     try {
-        await uploadFileToS3(file.data, fileKey, file.type)
+        await db.collection('images').insertOne({
+            key: fileKey,
+            originalFilename: file.filename,
+            contentType: file.type,
+            data: buffer,
+            createdAt: new Date()
+        })
+
         return {
-            success: true,
-            message: 'File uploaded successfully'
+            fileKey: fileKey
         }
     } catch (error) {
-        console.error('S3 upload error:', error)
+        console.error('MongoDB insert error:', error)
         throw createError({
             statusCode: 500,
-            statusMessage: 'Error uploading file to S3'
+            statusMessage: 'Error saving file to MongoDB'
         })
     }
 })

@@ -6,9 +6,16 @@ const isDev = process.env.NODE_ENV
 const year = 60 * 60 * 24 * 365
 
 export default defineNuxtConfig({
+    runtimeConfig: {
+        public: {
+            secretFile: '.secret.json',
+            gitCommitSha: 'from-nuxt-config-js',
+            imageDomain: 'https://mixdrinks-cdn.vovastelmashchuk.site'
+        }
+    },
     devtools: { enabled: MasterKeys[isDev].devtools },
     imports: {
-        autoImport: false
+        autoImport: true
     },
 
     experimental: {
@@ -164,5 +171,5 @@ export default defineNuxtConfig({
     },
 
     eslint: {},
-    compatibilityDate: '2024-10-01'
+    compatibilityDate: '2024-11-01'
 })
