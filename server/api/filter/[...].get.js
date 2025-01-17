@@ -4,10 +4,8 @@ import { DescriptionBuilder } from '~/server/utils/filters/description'
 
 export default defineEventHandler(async (req) => {
     let filterString = req.context.params._ || ''
-    console.log('filterString', filterString)
 
     const filterPairs = filterString.split('/')
-    console.log('filterPairs', filterPairs)
 
     const query = getQuery(req)
     const isRequestHasQuery = Object.keys(query).length > 0
