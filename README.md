@@ -29,12 +29,7 @@ Tech stack
 -   VueJs
 -   NuxtJs
 
-For update sitemap.xml from backend api
-
-```bash
-curl https://api.mixdrinks.org/sitemap.xml --output static/sitemap.xml -H 'Content-Type: application/xml' -H 'Accept: application/xml'
-```
-
 ## CI
 
-Add docker image publish
+Github action build the docker image and push it to the github container registry. And publish the image to Hetzner Cloud.
+Using docker stack.
