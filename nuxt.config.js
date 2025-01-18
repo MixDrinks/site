@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         public: {
             secretFile: '.secret.json',
             gitCommitSha: 'from-nuxt-config-js',
-            imageDomain: 'https://mixdrinks-cdn.vovastelmashchuk.site'
+            imageDomain: 'https://image.mixdrinks.org',
         }
     },
     devtools: { enabled: MasterKeys[isDev].devtools },
