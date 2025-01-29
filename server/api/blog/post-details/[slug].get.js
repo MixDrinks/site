@@ -2,7 +2,6 @@ import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 import { getFullCocktailBySlug } from '~/server/utils/cocktail/details'
 import { getCocktailsBySlugs } from '~~/server/utils/cocktail/list'
-import { useRuntimeConfig } from 'nuxt/app'
 
 const imageDomain = useRuntimeConfig().public.imageDomain
 
