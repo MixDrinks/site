@@ -5,7 +5,7 @@
             :key="`tags__item-${tagIndex}`"
             class="tags__item"
         >
-            <Nuxtlink
+            <NuxtLink
                 :to="`/${tag.url}`"
                 prefetchOn="interaction"
                 class="tags-link"

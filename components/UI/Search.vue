@@ -19,7 +19,7 @@
                         :key="`list__item-${itemIndex}`"
                         class="list__item list-item"
                     >
-                        <Nuxtlink
+                        <NuxtLink
                             v-if="checkSlug(listItem.slug)"
                             :to="`/${pages.cocktail.slug}/${listItem.slug}`"
                             prefetchOn="interaction"

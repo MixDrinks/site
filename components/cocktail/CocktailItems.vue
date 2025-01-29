@@ -45,7 +45,7 @@
                             loading="lazy"
                         />
                     </picture>
-                    <Nuxtlink
+                    <NuxtLink
                         :to="`/${item.url}`"
                         prefetchOn="interaction"
                         class="cart__label cart__label--link"

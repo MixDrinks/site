@@ -34,7 +34,7 @@
                 height="100"
             />
         </picture>
-        <Nuxtlink
+        <NuxtLink
             :to="`/${pages.cocktail.slug}/${cocktail.slug}`"
             prefetchOn="interaction"
             class="cart__name"

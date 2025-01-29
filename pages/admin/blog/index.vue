@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="table">
-            <Nuxtlink
+            <NuxtLink
                 v-for="(post, postIndex) in data.posts"
                 :key="`table__item--${postIndex}`"
                 :to="`/admin/${pages.blog.slug}/${post.slug}`"

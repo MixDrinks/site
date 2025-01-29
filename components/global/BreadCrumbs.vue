@@ -12,7 +12,7 @@
             itemtype="https://schema.org/ListItem"
             class="bread-crumbs__item"
         >
-            <Nuxtlink
+            <NuxtLink
                 v-if="breadCrumb.slug"
                 :to="breadCrumb.slug"
                 prefetchOn="interaction"

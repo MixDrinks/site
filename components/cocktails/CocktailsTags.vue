@@ -1,6 +1,6 @@
 <template>
     <div class="tags">
-        <Nuxtlink
+        <NuxtLink
             v-for="(tagItem, tagIndex) in tags"
             :key="`tags__item-${tagIndex}`"
             :title="tagItem.name"

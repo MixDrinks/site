@@ -19,7 +19,7 @@
                         height="200"
                         title=""
                     />
-                    <Nuxtlink
+                    <NuxtLink
                         :to="`/${pages.blog.slug}/${post.slug}`"
                         prefetchOn="interaction"
                         class="post__title"

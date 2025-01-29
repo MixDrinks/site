@@ -23,7 +23,7 @@
                     >
                         Форма зворотного зв'язку
                     </a>
-                    <!-- <Nuxtlink prefetchOn="interaction"
+                    <!-- <NuxtLink prefetchOn="interaction"
                         class="footer-content-communication-item__link"
                         :to="`/${pages.blog.slug}`"
                     >
@@ -56,7 +56,7 @@
                     >
                         Документація проєкту
                     </a>
-                    <Nuxtlink
+                    <NuxtLink
                         :to="`/${pages.privacy.slug}`"
                         prefetchOn="interaction"
                         class="footer-content-about-item__link"

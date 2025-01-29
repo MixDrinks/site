@@ -30,7 +30,7 @@
                                 :class="filterListItemClasses"
                                 class="filter-list-item__flag"
                             />
-                            <Nuxtlink
+                            <NuxtLink
                                 v-if="!!item.count"
                                 :title="item.name"
                                 :rel="item.rel"

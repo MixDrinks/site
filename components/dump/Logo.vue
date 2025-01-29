@@ -2,7 +2,7 @@
     <div v-if="isHomePage" class="logo">
         <span class="logo--highlight">mix</span>drinks
     </div>
-    <Nuxtlink v-else prefetchOn="interaction" class="logo" to="/">
+    <NuxtLink v-else prefetchOn="interaction" class="logo" to="/">
         <span class="logo--highlight">mix</span>drinks
     </Nuxtlink>
 </template>

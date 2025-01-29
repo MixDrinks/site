@@ -14,12 +14,14 @@ export default defineNuxtConfig({
         }
     },
     devtools: { enabled: MasterKeys[isDev].devtools },
+    
     imports: {
         autoImport: true
     },
 
     experimental: {
-        buildCache: true
+        buildCache: true,
+        crossOriginPrefetch: true,
     },
 
     build: {
