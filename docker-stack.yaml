@@ -1,19 +1,19 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  app:
-    image: ghcr.io/mixdrinks/site:${GIT_COMMIT_SHA:-latest}
-    ports:
-      - "40001:3000"
-    environment:
-      - NUXT_PUBLIC_SECRET_FILE=/run/secrets/mixdrinks-secret
-      - NUXT_PUBLIC_IMAGE_DOMAIN=https://image.mixdrinks.org
-    secrets:
-      - mixdrinks-secret
-    deploy:
-      update_config:
-        order: start-first
+    app:
+        image: ghcr.io/mixdrinks/site:${GIT_COMMIT_SHA:-latest}
+        ports:
+            - '40001:3000'
+        environment:
+            - NUXT_PUBLIC_SECRET_FILE=/run/secrets/mixdrinks-secret
+            - NUXT_PUBLIC_IMAGE_DOMAIN=https://image.mixdrinks.org
+        secrets:
+            - mixdrinks-secret
+        deploy:
+            update_config:
+                order: start-first
 
 secrets:
-  mixdrinks-secret:
-    external: true
+    mixdrinks-secret:
+        external: true

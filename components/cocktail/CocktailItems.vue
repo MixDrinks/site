@@ -45,12 +45,13 @@
                             loading="lazy"
                         />
                     </picture>
-                    <NuxtLink
+                    <Nuxtlink
                         :to="`/${item.url}`"
+                        prefetchOn="interaction"
                         class="cart__label cart__label--link"
                     >
                         {{ item.name }}
-                    </NuxtLink>
+                    </Nuxtlink>
                     <p v-if="item.amount" class="cart__label">
                         <strong>
                             {{ getAmount(item.amount) }} {{ item.unit }}.

@@ -7,13 +7,14 @@
                 :key="`sorting-list__item-${sortItem.id}`"
                 class="sorting-list__item sorting-list-item"
             >
-                <NuxtLink
+                <Nuxtlink
                     :class="getLinkClasses(sortItem.isActive)"
                     :to="sortItem.url"
+                    prefetchOn="interaction"
                     class="sorting-list-item__link"
                 >
                     {{ sortItem.name }}
-                </NuxtLink>
+                </Nuxtlink>
             </li>
         </ul>
     </div>

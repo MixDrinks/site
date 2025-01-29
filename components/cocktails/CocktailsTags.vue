@@ -1,15 +1,16 @@
 <template>
     <div class="tags">
-        <NuxtLink
+        <Nuxtlink
             v-for="(tagItem, tagIndex) in tags"
             :key="`tags__item-${tagIndex}`"
             :title="tagItem.name"
             :to="tagItem.url"
             :rel="tagItem.rel"
+            prefetchOn="interaction"
             class="tags__item tags-item"
         >
             {{ tagItem.name }}
-        </NuxtLink>
+        </Nuxtlink>
     </div>
 </template>
 

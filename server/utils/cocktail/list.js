@@ -1,4 +1,6 @@
 import { db } from '~/server/utils/mongo'
+import { useRuntimeConfig } from 'nuxt/app'
+
 const imageDomain = useRuntimeConfig().imageDomain
 
 const formats = ['webp', 'jpg']

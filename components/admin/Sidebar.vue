@@ -5,22 +5,31 @@
         </header>
         <ul class="menu">
             <li class="menu__item">
-                <NuxtLink :to="`/admin`" class="menu__link link">
+                <Nuxtlink
+                    :to="`/admin`"
+                    prefetchOn="interaction"
+                    class="menu__link link"
+                >
                     <span class="link__label"> Головна </span>
-                </NuxtLink>
+                </Nuxtlink>
             </li>
             <li class="menu__item">
-                <NuxtLink
+                <Nuxtlink
                     :to="`/admin/${pages.blog.slug}`"
+                    prefetchOn="interaction"
                     class="menu__link link"
                 >
                     <span class="link__label"> Блог </span>
-                </NuxtLink>
+                </Nuxtlink>
             </li>
             <li class="menu__item">
-                <NuxtLink :to="`/admin/images`" class="menu__link link">
+                <Nuxtlink
+                    :to="`/admin/images`"
+                    prefetchOn="interaction"
+                    class="menu__link link"
+                >
                     <span class="link__label"> Upload </span>
-                </NuxtLink>
+                </Nuxtlink>
             </li>
         </ul>
     </div>

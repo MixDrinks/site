@@ -1,4 +1,5 @@
 import { db } from '~/server/utils/mongo'
+import { useRuntimeConfig } from 'nuxt/app'
 
 const imageDomain = useRuntimeConfig().public.imageDomain
 

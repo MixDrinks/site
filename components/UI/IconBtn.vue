@@ -1,11 +1,17 @@
 <template>
-    <NuxtLink v-if="!!href" :class="btnClasses" :to="href" class="btn">
+    <Nuxtlink
+        v-if="!!href"
+        :class="btnClasses"
+        :to="href"
+        prefetchOn="interaction"
+        class="btn"
+    >
         <span
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"
             class="btn__icon"
         />
         <slot />
-    </NuxtLink>
+    </Nuxtlink>
     <button v-else :class="btnClasses" class="btn">
         <span
             :style="`mask-image: url(${icon}); -webkit-mask-image: url(${icon})`"

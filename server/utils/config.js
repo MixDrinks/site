@@ -1,4 +1,6 @@
 import fs from 'fs'
+import { useRuntimeConfig } from 'nuxt/app'
+
 const runtimeConfig = useRuntimeConfig().public
 
 export function getConfig() {

@@ -5,9 +5,13 @@
             :key="`tags__item-${tagIndex}`"
             class="tags__item"
         >
-            <NuxtLink :to="`/${tag.url}`" class="tags-link">
+            <Nuxtlink
+                :to="`/${tag.url}`"
+                prefetchOn="interaction"
+                class="tags-link"
+            >
                 {{ tag.name }}
-            </NuxtLink>
+            </Nuxtlink>
         </li>
     </ul>
 </template>
