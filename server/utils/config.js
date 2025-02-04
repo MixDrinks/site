@@ -1,4 +1,5 @@
 import fs from 'fs'
+
 const runtimeConfig = useRuntimeConfig().public
 
 export function getConfig() {

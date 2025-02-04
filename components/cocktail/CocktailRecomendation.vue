@@ -44,10 +44,11 @@
                     </picture>
                     <NuxtLink
                         :to="`/${pages.cocktail.slug}/${cocktail.slug}`"
+                        prefetchOn="interaction"
                         class="cart__name"
                     >
                         {{ cocktail.name }}
-                    </NuxtLink>
+                    </Nuxtlink>
                 </div>
             </li>
         </ul>

@@ -19,6 +19,7 @@
                 v-for="(post, postIndex) in data.posts"
                 :key="`table__item--${postIndex}`"
                 :to="`/admin/${pages.blog.slug}/${post.slug}`"
+                prefetchOn="interaction"
                 class="table__item item"
             >
                 <div class="item__name name">
@@ -39,7 +40,7 @@
                     <span class="btn__dot" />
                     <span class="btn__dot" />
                 </div>
-            </NuxtLink>
+            </Nuxtlink>
         </div>
     </div>
 </template>

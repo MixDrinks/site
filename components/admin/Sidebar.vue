@@ -5,20 +5,29 @@
         </header>
         <ul class="menu">
             <li class="menu__item">
-                <NuxtLink :to="`/admin`" class="menu__link link">
+                <NuxtLink
+                    :to="`/admin`"
+                    prefetchOn="interaction"
+                    class="menu__link link"
+                >
                     <span class="link__label"> Головна </span>
                 </NuxtLink>
             </li>
             <li class="menu__item">
                 <NuxtLink
                     :to="`/admin/${pages.blog.slug}`"
+                    prefetchOn="interaction"
                     class="menu__link link"
                 >
                     <span class="link__label"> Блог </span>
                 </NuxtLink>
             </li>
             <li class="menu__item">
-                <NuxtLink :to="`/admin/images`" class="menu__link link">
+                <NuxtLink
+                    :to="`/admin/images`"
+                    prefetchOn="interaction"
+                    class="menu__link link"
+                >
                     <span class="link__label"> Upload </span>
                 </NuxtLink>
             </li>
@@ -29,13 +38,14 @@
 <script>
 import { defineComponent } from 'vue'
 import { pages } from '../../utils/pages'
+import { NuxtLink } from '#components';
 
 import Logo from '../dump/Logo.vue'
 
 export default defineComponent({
     name: 'Sidebar',
 
-    components: { Logo },
+    components: { Logo, NuxtLink },
 
     setup() {
         return {

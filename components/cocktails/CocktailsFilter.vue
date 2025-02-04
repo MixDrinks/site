@@ -35,10 +35,11 @@
                                 :title="item.name"
                                 :rel="item.rel"
                                 :to="item.url"
+                                prefetchOn="interaction"
                                 class="filter-list-item__name filter-list-item__name--link"
                             >
                                 {{ item.name }}
-                            </NuxtLink>
+                            </Nuxtlink>
                             <span v-else class="filter-list-item__name">
                                 {{ item.name }}
                             </span>

@@ -2,9 +2,9 @@
     <div v-if="isHomePage" class="logo">
         <span class="logo--highlight">mix</span>drinks
     </div>
-    <NuxtLink v-else class="logo" to="/">
+    <NuxtLink v-else prefetchOn="interaction" class="logo" to="/">
         <span class="logo--highlight">mix</span>drinks
-    </NuxtLink>
+    </Nuxtlink>
 </template>
 
 <script>

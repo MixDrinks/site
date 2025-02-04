@@ -10,10 +10,11 @@
                 <NuxtLink
                     :class="getLinkClasses(sortItem.isActive)"
                     :to="sortItem.url"
+                    prefetchOn="interaction"
                     class="sorting-list-item__link"
                 >
                     {{ sortItem.name }}
-                </NuxtLink>
+                </Nuxtlink>
             </li>
         </ul>
     </div>

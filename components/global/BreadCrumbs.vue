@@ -15,12 +15,13 @@
             <NuxtLink
                 v-if="breadCrumb.slug"
                 :to="breadCrumb.slug"
+                prefetchOn="interaction"
                 itemprop="item"
                 class="bread-crumbs__link"
             >
                 <span itemprop="name">{{ breadCrumb.name }}</span>
                 <meta :content="breadCrumbIndex + 1" itemprop="position" />
-            </NuxtLink>
+            </Nuxtlink>
             <span
                 v-else
                 itemprop="item"

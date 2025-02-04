@@ -6,10 +6,11 @@
             :title="tagItem.name"
             :to="tagItem.url"
             :rel="tagItem.rel"
+            prefetchOn="interaction"
             class="tags__item tags-item"
         >
             {{ tagItem.name }}
-        </NuxtLink>
+        </Nuxtlink>
     </div>
 </template>
 

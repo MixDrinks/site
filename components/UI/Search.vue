@@ -22,10 +22,11 @@
                         <NuxtLink
                             v-if="checkSlug(listItem.slug)"
                             :to="`/${pages.cocktail.slug}/${listItem.slug}`"
+                            prefetchOn="interaction"
                             class="list-item__link"
                         >
                             {{ listItem.name }}
-                        </NuxtLink>
+                        </Nuxtlink>
                         <span
                             v-else
                             class="list-item__link list-item__link--active"

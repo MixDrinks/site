@@ -21,10 +21,11 @@
                     />
                     <NuxtLink
                         :to="`/${pages.blog.slug}/${post.slug}`"
+                        prefetchOn="interaction"
                         class="post__title"
                     >
                         {{ post.title }}
-                    </NuxtLink>
+                    </Nuxtlink>
                 </div>
             </div>
         </div>
