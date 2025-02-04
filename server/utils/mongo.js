@@ -17,3 +17,23 @@ client
     })
 
 export const db = client.db()
+
+let client2
+let db2
+
+export async function connectDB() {
+    if (!client2) {
+        try {
+            client2 = new MongoClient(mongoUrl)
+            await client2.connect()
+            console.log('Connected to MongoDB')
+        } catch (error) {
+            console.error('Failed to connect to MongoDB', error)
+            throw error
+        }
+    }
+    if (!db2) {
+        db2 = client2.db()
+    }
+    return db2
+}

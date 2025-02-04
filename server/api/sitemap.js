@@ -1,7 +1,8 @@
 import { defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { connectDB } from '~/server/utils/mongo'
 
 async function getAllCocktailsSlug() {
+    const db = await connectDB()
     return db
         .collection('cocktails')
         .find()
@@ -10,14 +11,17 @@ async function getAllCocktailsSlug() {
 }
 
 async function getAllToolsSlug() {
+    const db = await connectDB()
     return db.collection('tools').find().project({ slug: 1, _id: 0 }).toArray()
 }
 
 async function getAllGoodsSlug() {
+    const db = await connectDB()
     return db.collection('goods').find().project({ slug: 1, _id: 0 }).toArray()
 }
 
 async function getAllGlasswareSlug() {
+    const db = await connectDB()
     return db
         .collection('glassware')
         .find()
@@ -26,14 +30,17 @@ async function getAllGlasswareSlug() {
 }
 
 async function getAllTagsSlug() {
+    const db = await connectDB()
     return db.collection('tags').find().project({ slug: 1, _id: 0 }).toArray()
 }
 
 async function getAllTastesSlug() {
+    const db = await connectDB()
     return db.collection('tastes').find().project({ slug: 1, _id: 0 }).toArray()
 }
 
 async function getAllAlcoholVolumeSlug() {
+    const db = await connectDB()
     return db
         .collection('alcoholVolume')
         .find()
@@ -42,6 +49,7 @@ async function getAllAlcoholVolumeSlug() {
 }
 
 async function getAllAlcoholSlugs() {
+    const db = await connectDB()
     return db
         .collection('alcohol')
         .find()
