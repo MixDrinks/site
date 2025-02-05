@@ -59,7 +59,7 @@ async function getAllAlcoholSlugs() {
         .toArray()
 }
 
-export default defineSitemapEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
     const cocktails = (await getAllCocktailsSlug()).map(
         (cocktail) => `cocktails/${cocktail.slug}`
     )
