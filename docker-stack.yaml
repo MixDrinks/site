@@ -8,6 +8,7 @@ services:
         environment:
             - NUXT_PUBLIC_SECRET_FILE=/run/secrets/mixdrinks-secret
             - NUXT_PUBLIC_IMAGE_DOMAIN=https://image.mixdrinks.org
+            - NUXT_DOMAIN=https://mixdrinks.org
         secrets:
             - mixdrinks-secret
         deploy:
