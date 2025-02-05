@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://mixdrinks.org/sitemap.xml
+Sitemap: https://mixdrinks.org/api/sitemap.xml

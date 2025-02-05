@@ -1,5 +1,7 @@
-import { defineEventHandler } from 'h3'
 import { connectDB } from '~/server/utils/mongo'
+import { getDomain } from '~~/server/utils/config'
+
+const domain = getDomain()
 
 async function getAllCocktailsSlug() {
     const db = await connectDB()
@@ -57,7 +59,7 @@ async function getAllAlcoholSlugs() {
         .toArray()
 }
 
-export default defineEventHandler(async () => {
+export default defineSitemapEventHandler(async (event) => {
     const cocktails = (await getAllCocktailsSlug()).map(
         (cocktail) => `cocktails/${cocktail.slug}`
     )
@@ -98,5 +100,22 @@ export default defineEventHandler(async () => {
         .concat(glasswareFilter)
         .concat(alcoholFilter)
 
-    return urls
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${urls
+        .map(
+            (url) => `
+      <url>
+        <loc>${domain}/${url}</loc>
+        <lastmod>${url.lastmod || new Date().toISOString()}</lastmod>
+        <changefreq>yearly</changefreq>
+      </url>
+    `
+        )
+        .join('')}
+  </urlset>`
+
+    event.node.res.setHeader('Content-Type', 'application/xml')
+
+    return sitemap
 })

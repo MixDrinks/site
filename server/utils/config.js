@@ -10,3 +10,7 @@ export function getConfig() {
 export function getCommitSha() {
     return runtimeConfig.gitCommitSha || 'unknown'
 }
+
+export function getDomain() {
+    return runtimeConfig.domain
+}

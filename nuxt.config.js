@@ -10,18 +10,19 @@ export default defineNuxtConfig({
         public: {
             secretFile: '.secret.json',
             gitCommitSha: 'from-nuxt-config-js',
-            imageDomain: 'https://image.mixdrinks.org'
+            imageDomain: 'https://image.mixdrinks.org',
+            domain: 'https://mixdrinks.org'
         }
     },
     devtools: { enabled: MasterKeys[isDev].devtools },
-    
+
     imports: {
         autoImport: true
     },
 
     experimental: {
         buildCache: true,
-        crossOriginPrefetch: true,
+        crossOriginPrefetch: true
     },
 
     build: {
@@ -168,10 +169,13 @@ export default defineNuxtConfig({
     },
 
     sitemap: {
-        sources: ['https://mixdrinks.org/api/sitemap'],
+        posts: {
+            include: ['/blog/**'],
+            defaults: { priority: 0.7 }
+        },
         exclude: ['/admin/**']
     },
 
     eslint: {},
-    compatibilityDate: '2024-11-01'
+    compatibilityDate: '2025-02-05'
 })
