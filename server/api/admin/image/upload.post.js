@@ -1,6 +1,7 @@
 import { defineEventHandler, readMultipartFormData, createError } from 'h3'
 import { generateSessionId } from '~/server/utils/string'
-import { db } from '~/server/utils/mongo'
+import { getBlogImageBucket } from '~/server/utils/mongo'
+import { Readable } from 'stream'
 
 export default defineEventHandler(async (event) => {
     const isAuth = event.context?.auth?.username || false
@@ -33,23 +34,30 @@ export default defineEventHandler(async (event) => {
 
     const buffer = Buffer.from(file.data)
 
-    try {
-        await db.collection('images').insertOne({
-            key: fileKey,
-            originalFilename: file.filename,
+    const bucket = await getBlogImageBucket()
+
+    await new Promise((resolve, reject) => {
+        const readableStream = Readable.from(buffer)
+        const uploadStream = bucket.openUploadStream(fileKey, {
             contentType: file.type,
-            data: buffer,
-            createdAt: new Date()
+            metadata: {
+                originalFilename: file.filename,
+                createdAt: new Date()
+            }
         })
 
-        return {
-            fileKey: fileKey
-        }
-    } catch (error) {
-        console.error('MongoDB insert error:', error)
-        throw createError({
-            statusCode: 500,
-            statusMessage: 'Error saving file to MongoDB'
-        })
+        readableStream
+            .pipe(uploadStream)
+            .on('error', (error) => {
+                console.error('Error uploading to GridFS:', error)
+                reject(error)
+            })
+            .on('finish', () => {
+                resolve()
+            })
+    })
+
+    return {
+        fileKey: fileKey
     }
 })

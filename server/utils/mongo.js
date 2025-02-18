@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, GridFSBucket } from 'mongodb'
 import { getConfig } from '~/server/utils/config'
 
 const mongoUrl = getConfig().mongoUri
@@ -36,4 +36,19 @@ export async function connectDB() {
         db2 = client2.db()
     }
     return db2
+}
+
+let blogImageBucket
+
+/**
+ * @returns {Promise<GridFSBucket>}
+ */
+export async function getBlogImageBucket() {
+    await connectDB()
+    if (!blogImageBucket) {
+        blogImageBucket = new GridFSBucket(db, {
+            bucketName: 'blogImages'
+        })
+    }
+    return blogImageBucket
 }

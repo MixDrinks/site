@@ -1,5 +1,5 @@
 import { defineEventHandler, createError } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { db, getBlogImageBucket } from '~/server/utils/mongo'
 
 export default defineEventHandler(async (event) => {
     const isAuth = event.context?.auth?.username || false
@@ -9,10 +9,11 @@ export default defineEventHandler(async (event) => {
             statusMessage: 'Unauthorized'
         })
     }
-    const images = await db.collection('images').find().toArray()
+    const bucket = await getBlogImageBucket()
+    const allImages = await bucket.find().toArray()
     return {
-        images: images.map((image) => ({
-            url: `api/image/${image.key}`
+        images: allImages.map((image) => ({
+            url: `api/image/${image.filename}`
         }))
     }
 })
