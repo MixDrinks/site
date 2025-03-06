@@ -13,6 +13,7 @@ export default defineComponent({
     setup() {
         definePageMeta({
             layout: 'admin',
+            middleware: 'auth',
             pageTransition: {
                 name: 'none'
             }

@@ -60,6 +60,7 @@ export default defineComponent({
     async setup() {
         definePageMeta({
             layout: 'admin',
+            middleware: 'auth',
             pageTransition: {
                 name: 'none'
             }
