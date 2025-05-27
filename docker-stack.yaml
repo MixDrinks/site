@@ -14,7 +14,12 @@ services:
         deploy:
             update_config:
                 order: start-first
-
+        networks:
+            - infra_reverse-proxy
 secrets:
     mixdrinks:
+        external: true
+
+networks:
+    infra_reverse-proxy:
         external: true
