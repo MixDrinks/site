@@ -29,8 +29,10 @@ export default defineEventHandler(async (event) => {
         .join('.')
         .replace(/[^a-zA-Z0-9]/g, '-')
 
+    const format = array.pop()
+
     const fileSuffix = generateSessionId(6).toLowerCase()
-    const fileKey = `${fileName}-${fileSuffix}`.toLowerCase()
+    const fileKey = `${fileName}-${fileSuffix}.${format}`.toLowerCase()
 
     const buffer = Buffer.from(file.data)
 

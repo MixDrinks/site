@@ -1,7 +1,5 @@
 import { db } from '~/server/utils/mongo'
 
-const imageDomain = useRuntimeConfig().imageDomain
-
 const formats = ['webp', 'jpg']
 
 const buildCocktailInListImage = (slug) => {

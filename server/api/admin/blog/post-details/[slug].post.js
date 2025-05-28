@@ -17,9 +17,6 @@ export default defineEventHandler(async (req) => {
     const httpBody = await readBody(req)
     const { title, image, tags, body } = httpBody
 
-    console.log('slug', slug)
-    console.log('body', body)
-
     validateBody(body)
     insertOrUpdatePost(slug, title, image, tags || [], body)
 

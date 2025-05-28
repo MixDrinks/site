@@ -3,8 +3,6 @@ import { db } from '~/server/utils/mongo'
 import { getFullCocktailBySlug } from '~/server/utils/cocktail/details'
 import { getCocktailsBySlugs } from '~~/server/utils/cocktail/list'
 
-const imageDomain = useRuntimeConfig().public.imageDomain
-
 async function getBlogPost(slug) {
     return db.collection('blog').findOne({ slug: slug })
 }

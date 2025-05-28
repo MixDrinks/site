@@ -1,8 +1,6 @@
 import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 
-const imageDomain = useRuntimeConfig().public.imageDomain
-
 const formats = ['webp', 'jpg']
 
 const buildOgImage = (slug) => {

@@ -1,10 +1,10 @@
 import { getBlogImageBucket } from '~/server/utils/mongo'
 
 export default defineEventHandler(async (event) => {
-    const slug = event.context.params.slug
+    const name = event.context.params.name
 
     const bucket = await getBlogImageBucket()
-    const readStream = bucket.openDownloadStreamByName(slug)
+    const readStream = bucket.openDownloadStreamByName(name)
 
     setResponseHeaders(event, {
         'Content-Type': 'image/jpeg',

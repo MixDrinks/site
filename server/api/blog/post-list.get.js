@@ -1,7 +1,6 @@
 import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 
-const imageDomain = useRuntimeConfig().public.imageDomain
 
 async function getAllPostList() {
     return db
