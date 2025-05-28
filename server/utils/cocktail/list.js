@@ -12,7 +12,7 @@ const buildCocktailInListImage = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/cocktails/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/cocktail/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))

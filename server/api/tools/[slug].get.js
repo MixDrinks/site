@@ -5,8 +5,8 @@ const imageDomain = useRuntimeConfig().public.imageDomain
 
 const formats = ['webp', 'jpg']
 
-const buildOgImage = (id) => {
-    return `${imageDomain}/goods/${id}/256/${id}.jpg`
+const buildOgImage = (slug) => {
+    return `/api/image/goods/${slug}-256.jpg`
 }
 
 const buildToolDetailsImage = (slug) => {
@@ -17,7 +17,7 @@ const buildToolDetailsImage = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/tools/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/tool/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))

@@ -4,8 +4,8 @@ const imageDomain = useRuntimeConfig().public.imageDomain
 
 const formats = ['webp', 'jpg']
 
-const buildOgImage = (id) => {
-    return `${imageDomain}/cocktails/${id}/256/${id}.jpg`
+const buildOgImage = (slug) => {
+    return `/api/image/cocktail/${slug}-256.jpg`
 }
 
 const buildGoodsImageInFeed = (slug) => {
@@ -16,7 +16,7 @@ const buildGoodsImageInFeed = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/goods/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/good/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -31,7 +31,7 @@ const buildToolsImageInFeed = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/tools/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/tool/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -46,7 +46,7 @@ const buildGlasswaresImageInFeed = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/glasswares/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/glassware/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -61,7 +61,7 @@ const buildCocktailDetailsImage = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/cocktails/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/cocktail/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -76,7 +76,7 @@ const buildRecommendationCocktailImage = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/cocktails/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/cocktail/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -213,7 +213,7 @@ export async function getFullCocktailBySlug(slug) {
         }
 
         const meta = {
-            ogImage: buildOgImage(cocktail.id)
+            ogImage: buildOgImage(cocktail.slug)
         }
 
         const rawText = cocktail.article?.chapters

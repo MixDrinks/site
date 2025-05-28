@@ -5,8 +5,8 @@ const imageDomain = useRuntimeConfig().public.imageDomain
 
 const formats = ['webp', 'jpg']
 
-const buildOgImage = (id) => {
-    return `${imageDomain}/goods/${id}/256/${id}.jpg`
+const buildOgImage = (slug) => {
+    return `/api/image/good/${slug}-256.jpg`
 }
 
 const buildGoodDetailsImage = (slug) => {
@@ -17,7 +17,7 @@ const buildGoodDetailsImage = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/goods/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/good/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -39,7 +39,7 @@ export default defineEventHandler(async (req) => {
         about: good.about,
         images: buildGoodDetailsImage(good.slug),
         meta: {
-            ogImage: buildOgImage(good.id)
+            ogImage: buildOgImage(good.slug)
         }
     }
 })

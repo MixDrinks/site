@@ -52,3 +52,64 @@ export async function getBlogImageBucket() {
     }
     return blogImageBucket
 }
+
+let glasswareBucket
+
+/**
+ * @returns {Promise<GridFSBucket>}
+ */
+export async function getGlasswareBucket() {
+    await connectDB()
+    if (!glasswareBucket) {
+        glasswareBucket = new GridFSBucket(db, {
+            bucketName: 'glassware-images'
+        })
+    }
+    return glasswareBucket
+}
+
+let toolsBucket
+
+/**
+ * @returns {Promise<GridFSBucket>}
+ */
+export async function getToolsBucket() {
+    await connectDB()
+    if (!toolsBucket) {
+        toolsBucket = new GridFSBucket(db, {
+            bucketName: 'toolsImages'
+        })
+    }
+    return toolsBucket
+}
+
+let goodsBucket
+
+/**
+ * @returns {Promise<GridFSBucket>}
+ */
+export async function getGoodsBucket() {
+    await connectDB()
+    if (!goodsBucket) {
+        goodsBucket = new GridFSBucket(db, {
+            bucketName: 'goodsImages'
+        })
+    }
+
+    return goodsBucket
+}
+
+let cocktailBucket
+
+/**
+ * @returns {Promise<GridFSBucket>}
+ */
+export async function getCocktailBucket() {
+    await connectDB()
+    if (!cocktailBucket) {
+        cocktailBucket = new GridFSBucket(db, {
+            bucketName: 'cocktailsImages'
+        })
+    }
+    return cocktailBucket
+}

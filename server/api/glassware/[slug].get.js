@@ -5,8 +5,8 @@ const imageDomain = useRuntimeConfig().public.imageDomain
 
 const formats = ['webp', 'jpg']
 
-const buildOgImage = (id) => {
-    return `${imageDomain}/goods/${id}/256/${id}.jpg`
+const buildOgImage = (slug) => {
+    return `/api/image/glassware/${slug}-334.jpg`
 }
 
 const buildGlasswareDetailsImage = (slug) => {
@@ -17,7 +17,7 @@ const buildGlasswareDetailsImage = (slug) => {
 
     return formats.flatMap((format) =>
         sizes.map((size) => ({
-            srcset: `${imageDomain}/v2/glasswares/${slug}/${size.imageSize}.${format}`,
+            srcset: `/api/image/glassware/${slug}-${size.imageSize}.${format}`,
             media: `screen and (min-width: ${size.responseSize})`,
             type: `image/${format}`
         }))
@@ -39,7 +39,7 @@ export default defineEventHandler(async (req) => {
         about: glassware.about,
         images: buildGlasswareDetailsImage(glassware.slug),
         meta: {
-            ogImage: buildOgImage(glassware.id)
+            ogImage: buildOgImage(glassware.slug)
         }
     }
 })
