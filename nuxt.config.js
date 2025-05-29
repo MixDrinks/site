@@ -10,7 +10,6 @@ export default defineNuxtConfig({
         public: {
             secretFile: '.secret.json',
             gitCommitSha: 'from-nuxt-config-js',
-            imageDomain: 'https://image.mixdrinks.org',
             domain: 'https://mixdrinks.org'
         }
     },

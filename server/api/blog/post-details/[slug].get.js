@@ -12,7 +12,6 @@ export default defineEventHandler(async (req) => {
 
     const response = await getBlogPost(slug)
 
-    response.image = `${imageDomain}/${response.image}`
     for (let i = 0; i < response.body.length; i++) {
         if (response.body[i].type === 'cocktail') {
             const cocktailSlug = response.body[i].values.slug
@@ -28,7 +27,7 @@ export default defineEventHandler(async (req) => {
 
         if (response.body[i].type === 'image') {
             response.body[i].values.imgUrl =
-                `${imageDomain}/${response.body[i].values.imgUrl}`
+                `/api/image/blog/${response.body[i].values.imageKey}`
         }
 
         if (response.body[i].type === 'cocktail_collection') {
