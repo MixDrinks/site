@@ -1,7 +1,6 @@
 import { connectDB } from '~/server/utils/mongo'
-import { getDomain } from '~~/server/utils/config'
 
-const domain = getDomain()
+const domain = useRuntimeConfig().public.domain 
 
 async function getAllCocktailsSlug() {
     const db = await connectDB()

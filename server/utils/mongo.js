@@ -1,7 +1,6 @@
 import { MongoClient, GridFSBucket } from 'mongodb'
-import { getConfig } from '~/server/utils/config'
 
-const mongoUrl = getConfig().mongoUri
+const mongoUrl = useRuntimeConfig().mongoUri
 
 const client = new MongoClient(mongoUrl, {
     socketTimeoutMS: 10000,

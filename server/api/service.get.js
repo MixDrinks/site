@@ -1,6 +1,5 @@
 import { defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
-import { getCommitSha } from '~~/server/utils/config'
 
 export default defineEventHandler(async (event) => {
     const response = {}
@@ -12,7 +11,7 @@ export default defineEventHandler(async (event) => {
     let commitSha = 'init unknown'
 
     try {
-        commitSha = getCommitSha()
+        commitSha = useRuntimeConfig().public.gitCommitSha
     } catch (e) {
         console.error(e)
         commitSha = `Error getting commit sha ${e}`

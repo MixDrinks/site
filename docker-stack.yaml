@@ -6,18 +6,14 @@ services:
         ports:
             - '40001:3000'
         environment:
-            - NUXT_PUBLIC_SECRET_FILE=/run/secrets/mixdrinks
-            - NUXT_DOMAIN=https://mixdrinks.org
-        secrets:
-            - mixdrinks
+            - NUXT_PUBLIC_DOMAIN=https://mixdrinks.org
+            - NUXT_PUBLIC_GIT_COMMIT_SHA=${GIT_COMMIT_SHA}
+            - NUXT_MONGO_URI=${MONGO_URI}
         deploy:
             update_config:
                 order: start-first
         networks:
             - infra_reverse-proxy
-secrets:
-    mixdrinks:
-        external: true
 
 networks:
     infra_reverse-proxy:

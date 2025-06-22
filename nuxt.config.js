@@ -7,9 +7,9 @@ const year = 60 * 60 * 24 * 365
 
 export default defineNuxtConfig({
     runtimeConfig: {
+        mongoUri: '',
         public: {
-            secretFile: '.secret.json',
-            gitCommitSha: 'from-nuxt-config-js',
+            gitCommitSha: '',
             domain: 'https://mixdrinks.org'
         }
     },
