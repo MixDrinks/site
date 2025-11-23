@@ -12,10 +12,10 @@ services:
                 order: start-first
         networks:
             - infra_reverse-proxy
-            - infra_mongo
+            - infra_mongo-rs-net
 
 networks:
     infra_reverse-proxy:
         external: true
-    infra_mongo:
+    infra_mongo-rs-net:
         external: true
