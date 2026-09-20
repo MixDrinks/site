@@ -50,11 +50,6 @@ export default defineNuxtConfig({
                 }
             }
         },
-        storage: {
-            cache: {
-                driver: 'redis'
-            }
-        },
         compress: {
             brotli: {
                 enabled: true,
