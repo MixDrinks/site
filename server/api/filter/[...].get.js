@@ -3,9 +3,9 @@ import { getCocktailFilterState } from '~/server/utils/filters/filters'
 import { DescriptionBuilder } from '~/server/utils/filters/description'
 
 export default defineEventHandler(async (req) => {
-    let filterString = req.context.params._ || ''
+    const filterString = req.context.params._ || ''
 
-    const filterPairs = filterString.split('/')
+    const filterPairs = filterString.split('/').filter((pair) => pair !== '')
 
     const query = getQuery(req)
     const isRequestHasQuery = Object.keys(query).length > 0
@@ -17,14 +17,14 @@ export default defineEventHandler(async (req) => {
     const limit = 24
 
     const filter = {}
-    try {
-        filterPairs.forEach((pair) => {
-            const [key, value] = pair.split('=')
-            filter[key] = value.split(',')
-        })
-    } catch (e) {
-        console.warn(e)
-    }
+    filterPairs.forEach((pair) => {
+        const [key, value] = pair.split('=')
+        if (!key || !value) {
+            console.warn(`Ignoring malformed filter segment "${pair}"`)
+            return
+        }
+        filter[key] = value.split(',')
+    })
 
     const response = await getCocktailFilterState(
         filter,
