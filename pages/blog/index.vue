@@ -11,6 +11,7 @@ import { querySTR } from '~~/utils/querySTR'
 import { getPosts } from '~~/api/pages'
 
 import BlogPage from '~~/components/blog/BlogPage.vue'
+import { throwIfPageError } from '~~/utils/pageError'
 
 export default defineComponent({
     name: 'BlogPage',
@@ -23,7 +24,8 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${querySTR(route)}`
 
-        const { data } = await useAsyncData(() => getPosts(getPath()))
+        const { data, error } = await useAsyncData(() => getPosts(getPath()))
+        throwIfPageError(error)
 
         return {
             data

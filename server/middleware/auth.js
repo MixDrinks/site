@@ -4,6 +4,8 @@ import { getUserBySessionId } from '~/server/utils/user'
 export default defineEventHandler(async (event) => {
     const cookie = parseCookies(event)
     const sessionId = cookie.sessionId
+    if (!sessionId) return
+
     const user = await getUserBySessionId(sessionId)
 
     if (user) {

@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3'
+import { createError, defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 import { getFullCocktailBySlug } from '~/server/utils/cocktail/details'
 import { getCocktailsBySlugs } from '~~/server/utils/cocktail/list'
@@ -11,6 +11,13 @@ export default defineEventHandler(async (req) => {
     const slug = req.context.params.slug
 
     const response = await getBlogPost(slug)
+
+    if (!response) {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Post not found'
+        })
+    }
 
     for (let i = 0; i < response.body.length; i++) {
         if (response.body[i].type === 'cocktail') {

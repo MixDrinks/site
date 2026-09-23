@@ -35,6 +35,7 @@ import { pages } from '../../utils/pages'
 import CocktailTags from '~~/components/cocktail/CocktailTags.vue'
 import Date from '~~/components/global/Date.vue'
 import BreadCrumbs from '~~/components/global/BreadCrumbs.vue'
+import { throwIfPageError } from '~~/utils/pageError'
 
 export default defineComponent({
     name: 'PostPage',
@@ -47,7 +48,10 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${route.params.id}`
 
-        const { data: post } = await useAsyncData(() => getPost(getPath()))
+        const { data: post, error } = await useAsyncData(() =>
+            getPost(getPath())
+        )
+        throwIfPageError(error)
 
         const tags = computed(() =>
             unref(post).tags.map((tag) => ({

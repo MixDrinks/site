@@ -21,5 +21,9 @@ ENV PORT=$PORT
 ENV NODE_ENV=production
 
 COPY --from=build /src/.output /src/.output
+COPY --link docker-healthcheck.mjs /src/docker-healthcheck.mjs
+
+HEALTHCHECK --interval=30s --timeout=20s --start-period=60s --retries=3 \
+    CMD [ "node", "/src/docker-healthcheck.mjs" ]
 
 CMD [ "node", ".output/server/index.mjs" ]

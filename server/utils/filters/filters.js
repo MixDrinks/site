@@ -1,4 +1,9 @@
 import { db } from '~/server/utils/mongo'
+import {
+    filterGroups,
+    getFilterSnapshot,
+    popcount
+} from '~/server/utils/filters/cache'
 
 const formats = ['webp', 'jpg']
 const buildCocktailInListImage = (slug) => {
@@ -16,117 +21,82 @@ const buildCocktailInListImage = (slug) => {
     )
 }
 
-const filterCache = {
-    alcoholVolumes: {},
-    tastes: {},
-    glassware: {},
-    goods: {},
-    tools: {},
-    tags: {},
-    alcohol: {}
+const SINGLE_SELECTION_GROUPS = ['alcohol-volume', 'glassware']
+/**
+ * Drops unknown filter groups and duplicate values so a malformed URL can not
+ * break the handler; unknown values inside a known group simply match nothing.
+ */
+export function normalizeFilters(rawFilters) {
+    const filters = {}
+    Object.entries(rawFilters).forEach(([group, values]) => {
+        if (!filterGroups[group]) return
+        const unique = [...new Set(values.filter((value) => value !== ''))]
+        if (unique.length > 0) filters[group] = unique
+    })
+    return filters
 }
 
-const filterSlugToIdMap = {}
-
-const keyMapping = {
-    'alcohol-volume': 'alcoholVolumes',
-    taste: 'tastes',
-    glassware: 'glassware',
-    goods: 'goods',
-    tools: 'tools',
-    tags: 'tags',
-    alcohol: 'alcohol'
+function getItemCocktails(snapshot, group, slug) {
+    return snapshot.groups[group][slug]?.bits || snapshot.emptyBits
 }
 
-async function initializeFilterCache() {
-    const alcoholVolumes = await db
-        .collection('alcoholVolumes')
-        .find()
-        .toArray()
-    const tastes = await db.collection('tastes').find().toArray()
-    const glassware = await db.collection('glassware').find().toArray()
-    const goods = await db.collection('goods').find().toArray()
-    const tools = await db.collection('tools').find().toArray()
-    const tags = await db.collection('tags').find().toArray()
-    const alcohol = await db.collection('alcohol').find().toArray()
-
-    alcoholVolumes.forEach(
-        (av) =>
-            (filterCache.alcoholVolumes[av.slug] = new Set(av.cocktailSlugs))
-    )
-    tastes.forEach(
-        (taste) =>
-            (filterCache.tastes[taste.slug] = new Set(taste.cocktailSlugs))
-    )
-    glassware.forEach(
-        (gw) => (filterCache.glassware[gw.slug] = new Set(gw.cocktailSlugs))
-    )
-    goods.forEach(
-        (good) => (filterCache.goods[good.slug] = new Set(good.cocktailSlugs))
-    )
-    tools.forEach(
-        (tool) => (filterCache.tools[tool.slug] = new Set(tool.cocktailSlugs))
-    )
-    tags.forEach(
-        (tag) => (filterCache.tags[tag.slug] = new Set(tag.cocktailSlugs))
-    )
-    alcohol.forEach(
-        (al) => (filterCache.alcohol[al.slug] = new Set(al.cocktailSlugs))
-    )
-
-    alcoholVolumes.forEach((av) => (filterSlugToIdMap[av.slug] = av.id))
-    tastes.forEach((taste) => (filterSlugToIdMap[taste.slug] = taste.id))
-    glassware.forEach((gw) => (filterSlugToIdMap[gw.slug] = gw.id))
-    goods.forEach((good) => (filterSlugToIdMap[good.slug] = good.id))
-    tools.forEach((tool) => (filterSlugToIdMap[tool.slug] = tool.id))
-    tags.forEach((tag) => (filterSlugToIdMap[tag.slug] = tag.id))
-    alcohol.forEach((al) => (filterSlugToIdMap[al.slug] = al.id))
-
-    console.log('Filter cache initialized')
-}
-
-function getCocktailIds(searchParams) {
-    if (Object.keys(searchParams).length === 0)
-        throw new Error('Filters must not be empty')
-
-    return Object.entries(searchParams)
-        .map(([filterGroup, filterIds]) => {
-            if (filterIds.length === 0)
-                throw new Error(`Filter group ${filterGroup} must not be empty`)
-
-            const mappedKey = keyMapping[filterGroup]
-            const selectedFilters = filterIds.map(
-                (id) => filterCache[mappedKey][id] || new Set()
-            )
-
-            if (selectedFilters.length === 0) {
-                throw new Error(
-                    `Filter group ${mappedKey} is empty or does not contain filter ids ${filterIds}`
-                )
-            }
-
-            return selectedFilters.reduce((acc, cocktailSlugs) => {
-                return new Set(
-                    [...acc].filter((slug) => cocktailSlugs.has(slug))
-                )
-            })
-        })
-        .reduce((acc, cocktailSlugs) => {
-            return new Set([...acc].filter((slug) => cocktailSlugs.has(slug)))
-        })
-}
-
-async function getCocktailCountByFilter(filters) {
-    if (Object.keys(filters).every((key) => filters[key].length === 0)) {
-        return await db.collection('cocktails').countDocuments()
+// ANDs `base` (null means "every cocktail") with each bitset in `sets`.
+function intersect(base, sets) {
+    if (sets.length === 0) return base
+    const result = Uint32Array.from(base || sets[0])
+    for (const set of sets) {
+        for (let i = 0; i < result.length; i++) result[i] &= set[i]
     }
+    return result
+}
 
-    const cocktailIds = getCocktailIds(filters)
-    return cocktailIds.size
+function countIntersection(base, set) {
+    if (base === null) return popcount(set)
+    let count = 0
+    for (let i = 0; i < set.length; i++) {
+        let v = base[i] & set[i]
+        v = v - ((v >>> 1) & 0x55555555)
+        v = (v & 0x33333333) + ((v >>> 2) & 0x33333333)
+        count += (((v + (v >>> 4)) & 0x0f0f0f0f) * 0x01010101) >>> 24
+    }
+    return count
+}
+
+function bitsToSlugs(snapshot, bits) {
+    const slugs = []
+    for (let word = 0; word < bits.length; word++) {
+        let v = bits[word]
+        while (v !== 0) {
+            const low = v & -v
+            slugs.push(snapshot.slugs[(word << 5) + 31 - Math.clz32(low)])
+            v ^= low
+        }
+    }
+    return slugs
+}
+
+// Bitset of cocktails matching every selected value, optionally ignoring one
+// group. Returns null when nothing constrains the result (i.e. all cocktails match).
+function getMatchingBits(snapshot, filters, excludeGroup = null) {
+    const sets = []
+    Object.entries(filters).forEach(([group, values]) => {
+        if (group === excludeGroup) return
+        values.forEach((slug) =>
+            sets.push(getItemCocktails(snapshot, group, slug))
+        )
+    })
+    return intersect(null, sets)
+}
+
+function selectedCount(filters) {
+    return Object.values(filters).reduce(
+        (acc, values) => acc + values.length,
+        0
+    )
 }
 
 async function getCocktailSubsetByFilter(
-    filters,
+    matchingSlugs,
     skip,
     limit,
     sortType = 'most-popular'
@@ -134,11 +104,7 @@ async function getCocktailSubsetByFilter(
     let cocktails
 
     const matchStage = {
-        $match: {
-            ...(filters && Object.keys(filters).length > 0
-                ? { slug: { $in: Array.from(getCocktailIds(filters)) } }
-                : {}) // Add filter condition if filters are present
-        }
+        $match: matchingSlugs === null ? {} : { slug: { $in: matchingSlugs } }
     }
 
     const addFieldsStage = {
@@ -200,128 +166,123 @@ async function getCocktailSubsetByFilter(
 }
 
 function filterToPath(filters) {
-    let path = ''
-    Object.keys(filters)
+    return Object.keys(filters)
         .sort()
-        .forEach((filterKey) => {
-            const filterValue = filters[filterKey].sort()
-            if (filterValue.length != 0) {
-                path += filterKey + '=' + filterValue.join(',') + '/'
-            }
-        })
-
-    path = path.slice(0, -1)
-    return path
+        .filter((group) => filters[group].length > 0)
+        .map((group) => `${group}=${[...filters[group]].sort().join(',')}`)
+        .join('/')
 }
 
-async function buildFutureCounter(inputFilters, filterKey) {
-    const mappedKey = keyMapping[filterKey]
-    const allFilterValues = Object.keys(filterCache[mappedKey])
+function buildFutureCounter(snapshot, filters, group) {
+    const isSingle = SINGLE_SELECTION_GROUPS.includes(group)
+    const current = filters[group] || []
+    const otherGroups = { ...filters }
+    delete otherGroups[group]
 
-    const future = await Promise.all(
-        allFilterValues.map(async (filterValue) => {
-            const filters = structuredClone(inputFilters)
-            const theFilterValue = filters[filterKey] || []
+    // Cocktails matching every other group; the group itself is varied below.
+    const others = getMatchingBits(snapshot, filters, group)
+    // ...and additionally every value already selected in this group.
+    const othersWithCurrent = isSingle
+        ? others
+        : intersect(
+              others,
+              current.map((slug) => getItemCocktails(snapshot, group, slug))
+          )
 
-            const isInclude = theFilterValue.includes(filterValue)
+    return Object.values(snapshot.groups[group])
+        .map((item) => {
+            const isInclude = current.includes(item.slug)
 
-            if (filterKey === 'alcohol-volume' || filterKey === 'glassware') {
-                theFilterValue.splice(theFilterValue.indexOf(filterValue), 1)
-            }
-
-            if (isInclude) {
-                theFilterValue.splice(theFilterValue.indexOf(filterValue), 1)
+            let nextValues
+            if (isSingle) {
+                nextValues = isInclude ? [] : [item.slug]
             } else {
-                theFilterValue.push(filterValue)
+                nextValues = isInclude
+                    ? current.filter((slug) => slug !== item.slug)
+                    : [...current, item.slug]
             }
 
-            const futureFilter = { ...filters, [filterKey]: theFilterValue }
-            // Clean up empty filter groups
-            Object.keys(futureFilter).forEach((key) => {
-                if (futureFilter[key].length === 0) {
-                    delete futureFilter[key]
-                }
-            })
+            const futureFilter = { ...otherGroups }
+            if (nextValues.length > 0) futureFilter[group] = nextValues
 
             if (Object.keys(futureFilter).length === 0) {
-                const totalCount = await db
-                    .collection('cocktails')
-                    .countDocuments()
-
                 return {
-                    id: filterSlugToIdMap[filterValue],
+                    id: item.id,
                     query: '',
-                    count: totalCount,
+                    count: snapshot.totalCount,
                     isActive: true,
                     isAddToIndex: false
                 }
             }
 
-            const futureSelectedFilterCount = Object.keys(futureFilter).reduce(
-                (acc, key) => acc + futureFilter[key].length,
-                0
-            )
-            const isAddToIndex = futureSelectedFilterCount < 3
-
-            const count = getCocktailIds(futureFilter).size
+            let count
+            if (!isInclude) {
+                count = countIntersection(othersWithCurrent, item.bits)
+            } else if (isSingle) {
+                count = others === null ? snapshot.totalCount : popcount(others)
+            } else {
+                // Deselecting a value: recompute the group without it.
+                const rest = intersect(
+                    others,
+                    nextValues.map((slug) =>
+                        getItemCocktails(snapshot, group, slug)
+                    )
+                )
+                count = rest === null ? snapshot.totalCount : popcount(rest)
+            }
 
             return {
-                id: filterSlugToIdMap[filterValue],
+                id: item.id,
                 query: filterToPath(futureFilter),
                 count: count,
                 isActive: isInclude,
-                isAddToIndex: isAddToIndex
+                isAddToIndex: selectedCount(futureFilter) < 3
             }
         })
-    )
-
-    return future.sort((a, b) => b.count - a.count)
+        .sort((a, b) => b.count - a.count)
 }
 
-export async function getCocktailFilterState(filters, skip, limit, sortType) {
-    const [
-        totalCount,
-        cocktails,
-        alcoholVolumeFuture,
-        tasteFuture,
-        glasswareFuture,
-        toolsFuture,
-        goodsFuture,
-        tagsFuture,
-        alcoholFuture
-    ] = await Promise.all([
-        getCocktailCountByFilter(filters),
-        getCocktailSubsetByFilter(filters, skip, limit, sortType),
-        buildFutureCounter(filters, 'alcohol-volume'),
-        buildFutureCounter(filters, 'taste'),
-        buildFutureCounter(filters, 'glassware'),
-        buildFutureCounter(filters, 'tools'),
-        buildFutureCounter(filters, 'goods'),
-        buildFutureCounter(filters, 'tags'),
-        buildFutureCounter(filters, 'alcohol')
-    ])
+export async function getCocktailFilterState(
+    rawFilters,
+    skip,
+    limit,
+    sortType
+) {
+    const filters = normalizeFilters(rawFilters)
+    const snapshot = await getFilterSnapshot()
+    const matchingBits = getMatchingBits(snapshot, filters)
 
-    const selectedFilterCount = Object.keys(filters).reduce(
-        (acc, key) => acc + filters[key].length,
-        0
-    )
-    const isAddToIndex = selectedFilterCount < 3
+    const totalCount =
+        matchingBits === null ? snapshot.totalCount : popcount(matchingBits)
+
+    const cocktails =
+        totalCount === 0
+            ? []
+            : await getCocktailSubsetByFilter(
+                  matchingBits && bitsToSlugs(snapshot, matchingBits),
+                  skip,
+                  limit,
+                  sortType
+              )
+
+    const futureCounts = {}
+    const groupIds = {
+        tags: 0,
+        goods: 1,
+        tools: 2,
+        taste: 3,
+        'alcohol-volume': 4,
+        glassware: 5,
+        alcohol: 6
+    }
+    Object.entries(groupIds).forEach(([group, id]) => {
+        futureCounts[id] = buildFutureCounter(snapshot, filters, group)
+    })
 
     return {
         totalCount,
         cocktails,
-        futureCounts: {
-            0: tagsFuture,
-            1: goodsFuture,
-            2: toolsFuture,
-            3: tasteFuture,
-            4: alcoholVolumeFuture,
-            5: glasswareFuture,
-            6: alcoholFuture
-        },
-        isAddToIndex: isAddToIndex
+        futureCounts,
+        isAddToIndex: selectedCount(filters) < 3
     }
 }
-
-// Initialize the filter cache when the application starts
-initializeFilterCache()

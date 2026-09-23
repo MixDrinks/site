@@ -1,20 +1,10 @@
-import { defineEventHandler, getQuery } from 'h3'
-import { getCocktailFilterState } from '~/server/utils/filters/filters'
-import { DescriptionBuilder } from '~/server/utils/filters/description'
+import { defineEventHandler } from 'h3'
+import { handleFilterRequest } from '~/server/utils/filters/request'
 
-export default defineEventHandler(async (req) => {
-    const filterString = req.context.params._ || ''
+export default defineEventHandler((event) => {
+    const filterString = event.context.params._ || ''
 
     const filterPairs = filterString.split('/').filter((pair) => pair !== '')
-
-    const query = getQuery(req)
-    const isRequestHasQuery = Object.keys(query).length > 0
-
-    const sortType = query.sort || 'most-popular'
-
-    const page = query.page || 0
-    const start = page * 24
-    const limit = 24
 
     const filter = {}
     filterPairs.forEach((pair) => {
@@ -26,23 +16,5 @@ export default defineEventHandler(async (req) => {
         filter[key] = value.split(',')
     })
 
-    const response = await getCocktailFilterState(
-        filter,
-        start,
-        limit,
-        sortType
-    )
-
-    if (isRequestHasQuery) {
-        response.isAddToIndex = false
-    }
-
-    const descriptionBuilder = new DescriptionBuilder()
-    const description = await descriptionBuilder.buildDescription(filter)
-
-    if (description) {
-        response.description = description
-    }
-
-    return response
+    return handleFilterRequest(event, filter)
 })

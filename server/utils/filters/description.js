@@ -1,11 +1,13 @@
-import { db } from '~/server/utils/mongo'
+import { getFilterSnapshot } from '~/server/utils/filters/cache'
 
 export class DescriptionBuilder {
     async buildDescription(filters) {
+        const snapshot = await getFilterSnapshot()
         let description = ''
 
         // Start building the description
-        description += await this.addAlcoholVolumeDescriptionIfExist(
+        description += this.addAlcoholVolumeDescriptionIfExist(
+            snapshot,
             filters['alcohol-volume']
         )
 
@@ -15,15 +17,23 @@ export class DescriptionBuilder {
             description += ' '
         }
 
-        description += await this.addTasteDescriptionIfExist(filters['taste'])
+        description += this.addTasteDescriptionIfExist(
+            snapshot,
+            filters['taste']
+        )
         description += 'коктейлі' // COCKTAIL_NAME
 
-        description += await this.addAlchoholDescriptionIfExist(
+        description += this.addAlchoholDescriptionIfExist(
+            snapshot,
             filters['alcohol']
         )
-        description += await this.addTagsDescriptionIfExist(filters['tags'])
-        description += await this.addGoodsDescriptionIfExist(filters['goods'])
-        description += await this.addGlasswareDescriptionIfExist(
+        description += this.addTagsDescriptionIfExist(snapshot, filters['tags'])
+        description += this.addGoodsDescriptionIfExist(
+            snapshot,
+            filters['goods']
+        )
+        description += this.addGlasswareDescriptionIfExist(
+            snapshot,
             filters['glassware']
         )
 
@@ -45,12 +55,17 @@ export class DescriptionBuilder {
         return description
     }
 
-    async addGlasswareDescriptionIfExist(glasswareSlugs) {
+    // Selected items of a group, in the collection's natural order.
+    selectedItems(snapshot, group, slugs) {
+        if (!(slugs?.length > 0)) return []
+        return Object.values(snapshot.groups[group]).filter((item) =>
+            slugs.includes(item.slug)
+        )
+    }
+
+    addGlasswareDescriptionIfExist(snapshot, glasswareSlugs) {
         if (glasswareSlugs?.length > 0) {
-            const glasswareSlug = glasswareSlugs[0]
-            const glassware = await db
-                .collection('glassware')
-                .findOne({ slug: glasswareSlug })
+            const glassware = snapshot.groups.glassware[glasswareSlugs[0]]
             if (glassware) {
                 return ` в ${this.capitalize(glassware.name)}`
             }
@@ -58,65 +73,44 @@ export class DescriptionBuilder {
         return ''
     }
 
-    async addGoodsDescriptionIfExist(goodSlugs) {
-        if (goodSlugs?.length > 0) {
-            const goods = await db
-                .collection('goods')
-                .find({ slug: { $in: goodSlugs } })
-                .toArray()
-            if (goods.length > 0) {
-                return ` з ${goods.map((g) => this.capitalize(g.name)).join(', ')}`
-            }
+    addGoodsDescriptionIfExist(snapshot, goodSlugs) {
+        const goods = this.selectedItems(snapshot, 'goods', goodSlugs)
+        if (goods.length > 0) {
+            return ` з ${goods.map((g) => this.capitalize(g.name)).join(', ')}`
         }
         return ''
     }
 
-    async addTagsDescriptionIfExist(tagsSlugs) {
-        if (tagsSlugs?.length > 0) {
-            const tags = await db
-                .collection('tags')
-                .find({ slug: { $in: tagsSlugs } })
-                .sort({ slug: 1 })
-                .toArray()
-            if (tags.length > 0) {
-                return ` ${tags.map((t) => this.capitalize(t.name)).join(', ')}`
-            }
+    addTagsDescriptionIfExist(snapshot, tagsSlugs) {
+        const tags = this.selectedItems(snapshot, 'tags', tagsSlugs).sort(
+            (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0)
+        )
+        if (tags.length > 0) {
+            return ` ${tags.map((t) => this.capitalize(t.name)).join(', ')}`
         }
         return ''
     }
 
-    async addAlchoholDescriptionIfExist(alcoholSlugs) {
+    addAlchoholDescriptionIfExist(snapshot, alcoholSlugs) {
+        const alcohols = this.selectedItems(snapshot, 'alcohol', alcoholSlugs)
+        if (alcohols.length > 0) {
+            return ` з ${alcohols.map((t) => this.capitalize(t.name)).join(', ')}`
+        }
+        return ''
+    }
+
+    addTasteDescriptionIfExist(snapshot, tasteSlugs) {
+        const tastes = this.selectedItems(snapshot, 'taste', tasteSlugs)
+        if (tastes.length > 0) {
+            return `${tastes.map((t) => this.capitalize(t.name)).join(', ')} `
+        }
+        return ''
+    }
+
+    addAlcoholVolumeDescriptionIfExist(snapshot, alcoholSlugs) {
         if (alcoholSlugs?.length > 0) {
-            const alcohols = await db
-                .collection('alcohol')
-                .find({ slug: { $in: alcoholSlugs } })
-                .toArray()
-            if (alcohols.length > 0) {
-                return ` з ${alcohols.map((t) => this.capitalize(t.name)).join(', ')}`
-            }
-        }
-        return ''
-    }
-
-    async addTasteDescriptionIfExist(tasteSlugs) {
-        if (tasteSlugs?.length > 0) {
-            const tastes = await db
-                .collection('tastes')
-                .find({ slug: { $in: tasteSlugs } })
-                .toArray()
-            if (tastes.length > 0) {
-                return `${tastes.map((t) => this.capitalize(t.name)).join(', ')} `
-            }
-        }
-        return ''
-    }
-
-    async addAlcoholVolumeDescriptionIfExist(alcoholSlugs) {
-        if (alcoholSlugs?.length > 0) {
-            const alcoholSlug = alcoholSlugs[0]
-            const alcoholVolume = await db
-                .collection('alcoholVolumes')
-                .findOne({ slug: alcoholSlug })
+            const alcoholVolume =
+                snapshot.groups['alcohol-volume'][alcoholSlugs[0]]
             if (alcoholVolume) {
                 return this.capitalize(alcoholVolume.name)
             }

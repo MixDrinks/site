@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3'
+import { createError, defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 
 const formats = ['webp', 'jpg']
@@ -30,6 +30,14 @@ export default defineEventHandler(async (req) => {
     const slug = req.context.params.slug
 
     const tool = await getToolBySlug(slug)
+
+    if (!tool) {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tool not found'
+        })
+    }
+
     return {
         id: tool.id,
         slug: tool.slug,

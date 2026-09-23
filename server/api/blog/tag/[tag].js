@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3'
+import { createError, defineEventHandler } from 'h3'
 import { db } from '~/server/utils/mongo'
 
 async function getPostsWithTag(tagSlug) {
@@ -18,6 +18,13 @@ export default defineEventHandler(async (req) => {
 
     const postList = await getPostsWithTag(tagSlug)
     const tag = await getTag(tagSlug)
+
+    if (!tag) {
+        throw createError({
+            statusCode: 404,
+            statusMessage: 'Tag not found'
+        })
+    }
 
     const responsePostList = postList.map((post) => {
         const imageFullUrl = `/api/image/blog/${post.imageKey}`

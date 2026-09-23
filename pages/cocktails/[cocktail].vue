@@ -10,6 +10,7 @@ import { useRoute, useNuxtApp, useAsyncData } from 'nuxt/app'
 import { getCocktail } from '~~/api/pages'
 
 import CocktailPage from '~~/components/cocktail/CocktailPage.vue'
+import { throwIfPageError } from '~~/utils/pageError'
 
 export default defineComponent({
     name: 'Cocktail',
@@ -22,9 +23,10 @@ export default defineComponent({
 
         const getPath = () => `/${route.params.cocktail}`
 
-        const { data: cocktail } = await useAsyncData(() =>
+        const { data: cocktail, error } = await useAsyncData(() =>
             getCocktail(getPath(), $fetchWIXUP)
         )
+        throwIfPageError(error)
 
         return {
             cocktail

@@ -7,9 +7,20 @@ services:
             - NUXT_PUBLIC_DOMAIN=https://mixdrinks.org
             - NUXT_PUBLIC_GIT_COMMIT_SHA=${GIT_COMMIT_SHA}
             - NUXT_MONGO_URI=${MONGO_URI}
+        healthcheck:
+            test: ['CMD', 'node', '/src/docker-healthcheck.mjs']
+            interval: 30s
+            timeout: 20s
+            start_period: 60s
+            retries: 3
         deploy:
+            restart_policy:
+                condition: any
+                delay: 5s
             update_config:
                 order: start-first
+                failure_action: rollback
+                monitor: 90s
         networks:
             - infra_reverse-proxy
             - infra_mongo-rs-net

@@ -16,6 +16,7 @@ import { useAsyncData, useNuxtApp, useRoute } from 'nuxt/app'
 import ItemsPage from '~~/components/items/ItemsPage.vue'
 import { getGlassware, getCoctails } from '~~/api/pages'
 import { querySTR } from '~~/utils/querySTR'
+import { throwIfPageError } from '~~/utils/pageError'
 
 export default defineComponent({
     name: 'GlasswarePage',
@@ -28,13 +29,14 @@ export default defineComponent({
 
         const getPath = () => `/glassware=${route.params.id}${querySTR(route)}`
 
-        const { data, refresh } = await useAsyncData(async () => {
+        const { data, refresh, error } = await useAsyncData(async () => {
             const [cocktailsFull, items] = await Promise.all([
                 getCoctails(getPath(), $fetchWIXUP),
                 getGlassware(route.path)
             ])
             return { cocktailsFull, items }
         })
+        throwIfPageError(error)
 
         async function loadMore() {
             const { cocktails } = await getCoctails(getPath(), $fetchWIXUP)

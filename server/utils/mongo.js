@@ -4,7 +4,8 @@ const mongoUrl = useRuntimeConfig().mongoUri
 
 const client = new MongoClient(mongoUrl, {
     socketTimeoutMS: 10000,
-    connectTimeoutMS: 10000
+    connectTimeoutMS: 10000,
+    serverSelectionTimeoutMS: 10000
 })
 
 client
@@ -17,24 +18,27 @@ client
 
 export const db = client.db()
 
-let client2
-let db2
-
 export async function connectDB() {
-    if (!client2) {
-        try {
-            client2 = new MongoClient(mongoUrl)
-            await client2.connect()
-            console.log('Connected to MongoDB')
-        } catch (error) {
-            console.error('Failed to connect to MongoDB', error)
-            throw error
-        }
+    return db
+}
+
+/**
+ * Round-trips to the server so callers can tell a live connection from a
+ * dead one. Rejects if MongoDB does not answer within `timeoutMs`.
+ */
+export async function pingDB(timeoutMs = 3000) {
+    let timer
+    const timeout = new Promise((_, reject) => {
+        timer = setTimeout(
+            () => reject(new Error('MongoDB ping timed out')),
+            timeoutMs
+        )
+    })
+    try {
+        await Promise.race([db.command({ ping: 1 }), timeout])
+    } finally {
+        clearTimeout(timer)
     }
-    if (!db2) {
-        db2 = client2.db()
-    }
-    return db2
 }
 
 let blogImageBucket

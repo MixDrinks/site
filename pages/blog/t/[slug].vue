@@ -10,6 +10,7 @@ import { defineComponent } from 'vue'
 import { getPostsByTag } from '~~/api/pages'
 
 import BlogPage from '~~/components/blog/BlogPage.vue'
+import { throwIfPageError } from '~~/utils/pageError'
 
 export default defineComponent({
     name: 'TagPage',
@@ -22,7 +23,10 @@ export default defineComponent({
         const route = useRoute()
         const getPath = () => `/${route.params.slug}`
 
-        const { data } = await useAsyncData(() => getPostsByTag(getPath()))
+        const { data, error } = await useAsyncData(() =>
+            getPostsByTag(getPath())
+        )
+        throwIfPageError(error)
 
         return {
             data
