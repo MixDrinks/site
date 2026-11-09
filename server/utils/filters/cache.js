@@ -1,6 +1,6 @@
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
-// Filter group query name -> MongoDB collection holding its items.
+// Filter group query name -> catalog_items.kind holding its items.
 export const filterGroups = {
     'alcohol-volume': 'alcoholVolumes',
     taste: 'tastes',
@@ -29,26 +29,21 @@ export function popcount(bits) {
 }
 
 async function loadSnapshot() {
-    const [totalCount, ...collections] = await Promise.all([
-        db.collection('cocktails').countDocuments(),
-        ...Object.values(filterGroups).map((collection) =>
-            db
-                .collection(collection)
-                .find(
-                    {},
-                    {
-                        projection: {
-                            _id: 0,
-                            id: 1,
-                            slug: 1,
-                            name: 1,
-                            cocktailSlugs: 1
-                        }
-                    }
-                )
-                .toArray()
+    const kinds = Object.values(filterGroups)
+    const [countResult, itemsResult] = await Promise.all([
+        pool.query('SELECT count(*)::int AS count FROM cocktails'),
+        pool.query(
+            `SELECT kind, id, slug, name, cocktail_slugs AS "cocktailSlugs"
+             FROM catalog_items
+             WHERE kind = ANY($1)
+             ORDER BY kind, position`,
+            [kinds]
         )
     ])
+    const totalCount = countResult.rows[0].count
+    const collections = kinds.map((kind) =>
+        itemsResult.rows.filter((item) => item.kind === kind)
+    )
 
     // Every cocktail referenced by a filter gets a bit index, so an item's
     // cocktails are stored as a bitset and filter combinations become cheap

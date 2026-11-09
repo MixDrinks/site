@@ -1,63 +1,30 @@
-import { connectDB } from '~/server/utils/mongo'
+import { defineEventHandler } from 'h3'
+import { pool } from '~/server/utils/postgres'
 
-const domain = useRuntimeConfig().public.domain 
+const domain = useRuntimeConfig().public.domain
 
 async function getAllCocktailsSlug() {
-    const db = await connectDB()
-    return db
-        .collection('cocktails')
-        .find()
-        .project({ slug: 1, _id: 0 })
-        .toArray()
+    const { rows } = await pool.query(
+        'SELECT slug FROM cocktails ORDER BY position'
+    )
+    return rows
 }
 
-async function getAllToolsSlug() {
-    const db = await connectDB()
-    return db.collection('tools').find().project({ slug: 1, _id: 0 }).toArray()
+async function getCatalogSlugs(kind) {
+    const { rows } = await pool.query(
+        'SELECT slug FROM catalog_items WHERE kind = $1 ORDER BY position',
+        [kind]
+    )
+    return rows
 }
 
-async function getAllGoodsSlug() {
-    const db = await connectDB()
-    return db.collection('goods').find().project({ slug: 1, _id: 0 }).toArray()
-}
-
-async function getAllGlasswareSlug() {
-    const db = await connectDB()
-    return db
-        .collection('glassware')
-        .find()
-        .project({ slug: 1, _id: 0 })
-        .toArray()
-}
-
-async function getAllTagsSlug() {
-    const db = await connectDB()
-    return db.collection('tags').find().project({ slug: 1, _id: 0 }).toArray()
-}
-
-async function getAllTastesSlug() {
-    const db = await connectDB()
-    return db.collection('tastes').find().project({ slug: 1, _id: 0 }).toArray()
-}
-
-async function getAllAlcoholVolumeSlug() {
-    const db = await connectDB()
-    return db
-        .collection('alcoholVolume')
-        .find()
-        .project({ slug: 1, _id: 0 })
-        .toArray()
-}
-
-async function getAllAlcoholSlugs() {
-    const db = await connectDB()
-    return db
-        .collection('alcohol')
-        .find()
-        .project({ slug: 1, _id: 0 })
-        .toArray()
-}
-
+const getAllToolsSlug = () => getCatalogSlugs('tools')
+const getAllGoodsSlug = () => getCatalogSlugs('goods')
+const getAllGlasswareSlug = () => getCatalogSlugs('glassware')
+const getAllTagsSlug = () => getCatalogSlugs('tags')
+const getAllTastesSlug = () => getCatalogSlugs('tastes')
+const getAllAlcoholVolumeSlug = () => getCatalogSlugs('alcoholVolume')
+const getAllAlcoholSlugs = () => getCatalogSlugs('alcohol')
 export default defineEventHandler(async (event) => {
     const cocktails = (await getAllCocktailsSlug()).map(
         (cocktail) => `cocktails/${cocktail.slug}`

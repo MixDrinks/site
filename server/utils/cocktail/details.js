@@ -1,4 +1,4 @@
-import { db } from '~/server/utils/mongo'
+import { pool, cocktailFromRow } from '~/server/utils/postgres'
 
 const formats = ['webp', 'jpg']
 
@@ -105,21 +105,17 @@ async function getRecommendations(cocktail) {
 
         const countToFull = maxRecommendations - recommendationCocktails.length
 
-        const classCocktails = await db
-            .collection('cocktails')
-            .find({ slug: { $in: slugsWithoutExist } })
-            .sort({ visitCount: -1 })
-            .limit(countToFull)
-            .project({
-                _id: 0,
-                id: 1,
-                slug: 1,
-                name: 1,
-                ratingCount: 1,
-                ratingValue: 1,
-                visitCount: 1
-            })
-            .toArray()
+        const { rows: classCocktails } = await pool.query(
+            `SELECT id, slug, name,
+                    rating_count AS "ratingCount",
+                    rating_value AS "ratingValue",
+                    visit_count AS "visitCount"
+             FROM cocktails
+             WHERE slug = ANY($1)
+             ORDER BY visit_count DESC, position
+             LIMIT $2`,
+            [slugsWithoutExist, countToFull]
+        )
 
         recommendationCocktails.push(...classCocktails)
     }
@@ -137,7 +133,11 @@ async function getRecommendations(cocktail) {
 }
 
 async function getCocktailBySlug(slug) {
-    return db.collection('cocktails').findOne({ slug: slug })
+    const { rows } = await pool.query(
+        'SELECT * FROM cocktails WHERE slug = $1',
+        [slug]
+    )
+    return rows[0] ? cocktailFromRow(rows[0]) : null
 }
 
 export async function getFullCocktailBySlug(slug) {

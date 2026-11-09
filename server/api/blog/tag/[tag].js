@@ -1,16 +1,23 @@
 import { createError, defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 async function getPostsWithTag(tagSlug) {
-    return db
-        .collection('blog')
-        .find({ 'tags.slug': tagSlug })
-        .project({ _id: 0, slug: 1, title: 1, imageKey: 1 })
-        .toArray()
+    const { rows } = await pool.query(
+        `SELECT slug, title, data->>'imageKey' AS "imageKey"
+         FROM blog_posts
+         WHERE data->'tags' @> jsonb_build_array(jsonb_build_object('slug', $1::text))
+         ORDER BY position`,
+        [tagSlug]
+    )
+    return rows
 }
 
 async function getTag(tagSlug) {
-    return db.collection('blogTags').findOne({ slug: tagSlug })
+    const { rows } = await pool.query(
+        'SELECT slug, name FROM blog_tags WHERE slug = $1',
+        [tagSlug]
+    )
+    return rows[0] || null
 }
 
 export default defineEventHandler(async (req) => {

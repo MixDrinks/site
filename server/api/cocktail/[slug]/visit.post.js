@@ -1,25 +1,20 @@
 import { defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 async function addVisitToCocktail(slug) {
-    return db.collection('cocktails').updateOne(
-        {
-            slug: slug
-        },
-        {
-            $inc: {
-                visitCount: 1
-            }
-        }
+    const { rowCount } = await pool.query(
+        'UPDATE cocktails SET visit_count = visit_count + 1 WHERE slug = $1',
+        [slug]
     )
+    return rowCount > 0
 }
 
 export default defineEventHandler(async (req) => {
     const slug = req.context.params.slug
 
-    const scoreInfo = await addVisitToCocktail(slug)
+    const isUpdated = await addVisitToCocktail(slug)
 
-    if (!scoreInfo) {
+    if (!isUpdated) {
         return {
             error: 'Cocktail not found'
         }

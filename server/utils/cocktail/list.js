@@ -1,4 +1,8 @@
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
+
+// Average rating, 0 when the cocktail has not been rated yet.
+export const RATING_SCORE_SQL =
+    'CASE WHEN rating_count > 0 THEN rating_value / rating_count ELSE 0 END'
 
 const formats = ['webp', 'jpg']
 
@@ -18,50 +22,19 @@ const buildCocktailInListImage = (slug) => {
 }
 
 export async function getCocktailsBySlugs(slugs) {
-    const matchStage = {
-        $match: {
-            slug: { $in: Array.from(slugs) }
-        }
-    }
-
-    const addFieldsStage = {
-        $addFields: {
-            ratingScore: {
-                $cond: {
-                    if: { $gt: [{ $ifNull: ['$ratingCount', 0] }, 0] },
-                    then: {
-                        $divide: [
-                            { $ifNull: ['$ratingValue', 0] },
-                            { $ifNull: ['$ratingCount', 1] }
-                        ]
-                    },
-                    else: 0
-                }
-            }
-        }
-    }
-
-    const projectStage = {
-        $project: {
-            _id: 0,
-            slug: 1,
-            name: 1,
-            visitCount: 1,
-            ratingScore: 1,
-            ratingCount: 1
-        }
-    }
-
-    const cocktails = await db
-        .collection('cocktails')
-        .aggregate([matchStage, addFieldsStage, projectStage])
-        .toArray()
+    const { rows: cocktails } = await pool.query(
+        `SELECT slug, name,
+                visit_count AS "visitCount",
+                rating_count AS "ratingCount",
+                ${RATING_SCORE_SQL} AS rating
+         FROM cocktails
+         WHERE slug = ANY($1)
+         ORDER BY position`,
+        [Array.from(slugs)]
+    )
 
     cocktails.forEach((cocktail) => {
-        cocktail.rating = cocktail.ratingScore
         cocktail.images = buildCocktailInListImage(cocktail.slug)
-
-        delete cocktail.ratingScore
     })
     return cocktails
 }

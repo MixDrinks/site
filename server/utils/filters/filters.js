@@ -1,4 +1,5 @@
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
+import { RATING_SCORE_SQL } from '~/server/utils/cocktail/list'
 import {
     filterGroups,
     getFilterSnapshot,
@@ -101,65 +102,32 @@ async function getCocktailSubsetByFilter(
     limit,
     sortType = 'most-popular'
 ) {
-    let cocktails
+    const orderBy =
+        sortType === 'most-popular'
+            ? 'visit_count DESC, id DESC'
+            : 'rating DESC, rating_count DESC, visit_count DESC, id DESC'
 
-    const matchStage = {
-        $match: matchingSlugs === null ? {} : { slug: { $in: matchingSlugs } }
+    const params = [skip, limit]
+    let where = ''
+    if (matchingSlugs !== null) {
+        params.push(matchingSlugs)
+        where = 'WHERE slug = ANY($3)'
     }
 
-    const addFieldsStage = {
-        $addFields: {
-            ratingScore: {
-                $cond: {
-                    if: { $gt: [{ $ifNull: ['$ratingCount', 0] }, 0] }, // Check if ratingCount > 0, else default to 0
-                    then: {
-                        $divide: [
-                            { $ifNull: ['$ratingValue', 0] },
-                            { $ifNull: ['$ratingCount', 1] }
-                        ]
-                    }, // Safely divide ratingValue by ratingCount, default to 0/1
-                    else: 0 // If ratingCount is 0 or missing, set ratingScore to 0
-                }
-            }
-        }
-    }
-
-    const sortStage = {
-        $sort:
-            sortType === 'most-popular'
-                ? { visitCount: -1, id: -1 }
-                : { ratingScore: -1, ratingCount: -1, visitCount: -1, id: -1 }
-    }
-
-    const projectStage = {
-        $project: {
-            _id: 0,
-            id: 1,
-            slug: 1,
-            name: 1,
-            visitCount: 1,
-            ratingScore: 1,
-            ratingCount: 1
-        }
-    }
-
-    cocktails = await db
-        .collection('cocktails')
-        .aggregate([
-            matchStage,
-            addFieldsStage,
-            sortStage,
-            { $skip: skip },
-            { $limit: limit },
-            projectStage
-        ])
-        .toArray()
+    const { rows: cocktails } = await pool.query(
+        `SELECT id, slug, name,
+                visit_count AS "visitCount",
+                rating_count AS "ratingCount",
+                ${RATING_SCORE_SQL} AS rating
+         FROM cocktails
+         ${where}
+         ORDER BY ${orderBy}
+         OFFSET $1 LIMIT $2`,
+        params
+    )
 
     cocktails.forEach((cocktail) => {
-        cocktail.rating = cocktail.ratingScore
         cocktail.images = buildCocktailInListImage(cocktail.slug)
-
-        delete cocktail.ratingScore
     })
 
     return cocktails

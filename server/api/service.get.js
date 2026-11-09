@@ -1,9 +1,9 @@
 import { defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 export default defineEventHandler(async (event) => {
     const response = {}
-    if (!db) {
+    if (!pool) {
         response.isDbConnected = false
     } else {
         response.isDbConnected = true

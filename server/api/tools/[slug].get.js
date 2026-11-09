@@ -1,5 +1,5 @@
 import { createError, defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 const formats = ['webp', 'jpg']
 
@@ -23,7 +23,14 @@ const buildToolDetailsImage = (slug) => {
 }
 
 async function getToolBySlug(slug) {
-    return db.collection('tools').findOne({ slug: slug })
+    const { rows } = await pool.query(
+        `SELECT id, slug, name, data FROM catalog_items
+         WHERE kind = 'tools' AND slug = $1`,
+        [slug]
+    )
+    if (rows.length === 0) return null
+    const { data, ...item } = rows[0]
+    return { ...data, ...item }
 }
 
 export default defineEventHandler(async (req) => {

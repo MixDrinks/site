@@ -1,12 +1,11 @@
 import { defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 async function getAllCocktails() {
-    return db
-        .collection('cocktails')
-        .find({})
-        .project({ name: 1, slug: 1, _id: 0 })
-        .toArray()
+    const { rows } = await pool.query(
+        'SELECT name, slug FROM cocktails ORDER BY position'
+    )
+    return rows
 }
 
 export default defineEventHandler(async () => {

@@ -1,10 +1,15 @@
 import { createError, defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 import { getFullCocktailBySlug } from '~/server/utils/cocktail/details'
 import { getCocktailsBySlugs } from '~~/server/utils/cocktail/list'
 
 async function getBlogPost(slug) {
-    return db.collection('blog').findOne({ slug: slug })
+    const { rows } = await pool.query(
+        'SELECT slug, title, data FROM blog_posts WHERE slug = $1',
+        [slug]
+    )
+    if (rows.length === 0) return null
+    return { ...rows[0].data, slug: rows[0].slug, title: rows[0].title }
 }
 
 export default defineEventHandler(async (req) => {

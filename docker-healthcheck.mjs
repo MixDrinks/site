@@ -1,4 +1,4 @@
-// Container health probe: the API health endpoint (MongoDB reachable) and the
+// Container health probe: the API health endpoint (PostgreSQL reachable) and the
 // main page (SSR renders) must both answer 200 within the timeout.
 const port = process.env.PORT || 3000
 const base = `http://127.0.0.1:${port}`

@@ -6,7 +6,7 @@ services:
         environment:
             - NUXT_PUBLIC_DOMAIN=https://mixdrinks.org
             - NUXT_PUBLIC_GIT_COMMIT_SHA=${GIT_COMMIT_SHA}
-            - NUXT_MONGO_URI=${MONGO_URI}
+            - NUXT_POSTGRES_URI=${POSTGRES_URI}
         healthcheck:
             test: ['CMD', 'node', '/src/docker-healthcheck.mjs']
             interval: 30s
@@ -23,10 +23,7 @@ services:
                 monitor: 90s
         networks:
             - infra_reverse-proxy
-            - infra_mongo-rs-net
 
 networks:
     infra_reverse-proxy:
-        external: true
-    infra_mongo-rs-net:
         external: true

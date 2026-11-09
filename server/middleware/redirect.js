@@ -1,6 +1,6 @@
 import { defineEventHandler, getRequestURL, sendRedirect } from 'h3'
 
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000
 
@@ -9,16 +9,16 @@ let loadedAt = 0
 let loading = null
 
 // Redirects are few and rarely change: keep them in memory instead of
-// querying MongoDB on every request (including assets and API calls).
+// querying the database on every request (including assets and API calls).
 async function getRedirects() {
     const isStale = Date.now() - loadedAt > REFRESH_INTERVAL_MS
     if (!loading && (!redirects || isStale)) {
-        loading = db
-            .collection('redirects')
-            .find({}, { projection: { _id: 0, from: 1, to: 1 } })
-            .toArray()
-            .then((items) => {
-                redirects = new Map(items.map((item) => [item.from, item.to]))
+        loading = pool
+            .query('SELECT from_path, to_path FROM redirects')
+            .then(({ rows }) => {
+                redirects = new Map(
+                    rows.map((row) => [row.from_path, row.to_path])
+                )
                 loadedAt = Date.now()
                 return redirects
             })

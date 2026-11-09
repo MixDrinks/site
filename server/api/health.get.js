@@ -1,7 +1,7 @@
 import { defineEventHandler, setResponseStatus, setResponseHeader } from 'h3'
-import { pingDB } from '~/server/utils/mongo'
+import { pingDB } from '~/server/utils/postgres'
 
-// Used by the container HEALTHCHECK: returns 503 when MongoDB is unreachable
+// Used by the container HEALTHCHECK: returns 503 when PostgreSQL is unreachable
 // so Docker Swarm marks the task unhealthy and replaces it.
 export default defineEventHandler(async (event) => {
     setResponseHeader(event, 'cache-control', 'no-store')

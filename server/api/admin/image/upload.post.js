@@ -1,7 +1,6 @@
 import { defineEventHandler, readMultipartFormData, createError } from 'h3'
 import { generateSessionId } from '~/server/utils/string'
-import { getBlogImageBucket } from '~/server/utils/mongo'
-import { Readable } from 'stream'
+import { imageBuckets, saveImage } from '~/server/utils/postgres'
 
 export default defineEventHandler(async (event) => {
     const isAuth = event.context?.auth?.username || false
@@ -36,27 +35,9 @@ export default defineEventHandler(async (event) => {
 
     const buffer = Buffer.from(file.data)
 
-    const bucket = await getBlogImageBucket()
-
-    await new Promise((resolve, reject) => {
-        const readableStream = Readable.from(buffer)
-        const uploadStream = bucket.openUploadStream(fileKey, {
-            contentType: file.type,
-            metadata: {
-                originalFilename: file.filename,
-                createdAt: new Date()
-            }
-        })
-
-        readableStream
-            .pipe(uploadStream)
-            .on('error', (error) => {
-                console.error('Error uploading to GridFS:', error)
-                reject(error)
-            })
-            .on('finish', () => {
-                resolve()
-            })
+    await saveImage(imageBuckets.blog, fileKey, file.type || null, buffer, {
+        originalFilename: file.filename,
+        createdAt: new Date()
     })
 
     return {

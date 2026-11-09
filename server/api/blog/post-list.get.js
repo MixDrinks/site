@@ -1,12 +1,13 @@
 import { defineEventHandler } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 
 async function getAllPostList() {
-    return db
-        .collection('blog')
-        .find()
-        .project({ _id: 0, slug: 1, title: 1, imageKey: 1 })
-        .toArray()
+    const { rows } = await pool.query(
+        `SELECT slug, title, data->>'imageKey' AS "imageKey"
+         FROM blog_posts
+         ORDER BY position`
+    )
+    return rows
 }
 
 export default defineEventHandler(async () => {

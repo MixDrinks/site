@@ -1,5 +1,5 @@
 import { defineEventHandler, readBody, createError } from 'h3'
-import { db } from '~/server/utils/mongo'
+import { pool } from '~/server/utils/postgres'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
@@ -18,27 +18,27 @@ export default defineEventHandler(async (req) => {
     const { title, image, tags, body } = httpBody
 
     validateBody(body)
-    insertOrUpdatePost(slug, title, image, tags || [], body)
+    await insertOrUpdatePost(slug, title, image, tags || [], body)
 
     return {
         ok: true
     }
 })
 
+// Upsert that, like MongoDB's $set, overwrites only these fields and keeps
+// any others already stored on the post (e.g. imageKey).
 function insertOrUpdatePost(slug, title, image, tags, body) {
-    return db.collection('blog').updateOne(
-        { slug },
-        {
-            $set: {
-                slug,
-                title,
-                image,
-                tags,
-                body,
-                published_at: new Date()
-            }
-        },
-        { upsert: true }
+    const fields = {
+        image: image ?? null,
+        tags,
+        body,
+        published_at: new Date().toISOString()
+    }
+    return pool.query(
+        `INSERT INTO blog_posts (slug, title, data) VALUES ($1, $2, $3)
+         ON CONFLICT (slug) DO UPDATE
+         SET title = EXCLUDED.title, data = blog_posts.data || EXCLUDED.data`,
+        [slug, title ?? null, fields]
     )
 }
 
