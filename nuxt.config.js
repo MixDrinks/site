@@ -49,16 +49,6 @@ export default defineNuxtConfig({
                     'cache-control': `public,max-age=${year},s-maxage=${year}`
                 }
             }
-        },
-        compress: {
-            brotli: {
-                enabled: true,
-                zlevel: 11
-            },
-            gzip: {
-                enabled: true,
-                level: 9
-            }
         }
     },
 

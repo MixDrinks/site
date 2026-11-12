@@ -1,2 +1,13 @@
 User-agent: *
+# Filter pages with 3+ selected values are noindex (see isAddToIndex in
+# server/utils/filters/filters.js); keep crawlers out of that combinatorial
+# space. Segments are "group=a,b" joined by "/".
+Disallow: /*=*/*=*/*=
+Disallow: /*=*,*,
+Disallow: /*=*,*/*=
+Disallow: /*=*/*=*,
+# Sorting variants duplicate the canonical page.
+Disallow: /*?sort=
+Disallow: /*&sort=
+
 Sitemap: https://mixdrinks.org/api/sitemap.xml
