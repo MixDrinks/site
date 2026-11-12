@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
     setResponseHeaders(event, {
         'Content-Type': `image/${format}`,
-        'Cache-Control': 'public, max-age=86400' // Cache for 1 day
+        'Cache-Control': 'public, max-age=31536000, immutable' // Cache for 1 year
     })
     return image.data
 })
